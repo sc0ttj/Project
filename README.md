@@ -1,7 +1,7 @@
 Project
 ==================
 
-1. Installation: you only need to do that once!
+1. Installation: you only need to do this once!
 
   - open a terminal in this folder and run this command:
 
