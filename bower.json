@@ -1,0 +1,9 @@
+{
+  "name": "your-app",
+  "version": "0.0.1",
+  "main": "www/app.js",
+  "dependencies": {
+    "chibi" : "3.0.8"
+  },
+  "overrides": {}
+}
