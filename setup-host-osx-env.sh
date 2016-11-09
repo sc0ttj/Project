@@ -2,12 +2,14 @@
 
 set -a
 
+WORKDIR="`pwd`"
+
 # log errors to stdout
 build_error() {
 	echo
 	echo "Error: $1"
-	echo "Check ${HOME}/ to see downloaded programs."
-	echo "Check ${HOME}/Project/ to see downloaded project"
+	echo "Check ${HOME}/Downloads to see downloaded programs."
+	echo "Check $WORKDIR to see downloaded project"
 	exit 1
 }
 
@@ -25,6 +27,5 @@ echo "Install CHROME"
 echo "Install GIT"
 echo "Install NodeJS "
 echo "Install NPM"
-echo "Install https://github.com/sc0ttj/Project to ~/Project/"
 
 exit 0

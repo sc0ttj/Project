@@ -9,6 +9,7 @@ YELLOW="\e[33m"
 BLUE="\e[34m"
 COL_END="\e[0m"
 
+WORKDIR="`pwd`"
 
 # log errors to stdout
 error() {
@@ -82,7 +83,7 @@ fi
 VBOX_VERSION=$(vboxheadless --version | head -1)
 
 # google chrome
-if [ "`which google-chrome-stable`" = "" ] ;then
+if [ "`which google-chrome-stable`" = "" -a "`which google-chrome`" = "" ] ;then
 	echo 'Installing Google Chrome...'
 	sudo echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' >> /etc/apt/sources.list
 	wget -C -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
@@ -184,12 +185,11 @@ sudo apt-get -qq clean
 echo 
 
 
+cd "$WORKDIR"
+
 
 echo "4. Setting up the project source code"
 echo
-cd ${HOME}
-mkdir Project &>/dev/null
-cd ${HOME}/Project || error "Could not enter 'Project' dir in $HOME"
 if [ "$(ls -A .)" = "" ];then
 	git clone https://github.com/sc0ttj/Project.git . || error "Could not add https://github.com/sc0ttj/Project"
 fi
@@ -214,7 +214,7 @@ else
 	echo -e "  Vagrant box ${BOLD}'ubuntu/trusty64'${COL_END} already installed."
 fi
 echo -e "  Starting vagrant.. Please wait..."
-[ -f Vagrantfile ] || error "Could not find ${HOME}/Project/Vagrantfile"
+[ -f Vagrantfile ] || error "Could not find ${WORKDIR}/Vagrantfile"
 # create a log file
 rm /tmp/vagrant.log &>/dev/null
 touch /tmp/vagrant.log
@@ -227,24 +227,32 @@ echo -e "  Vagrant loaded successfully."
 #------------------------------------------------------
 
 echo -e "$GREEN $BOLD
-Setup Complete $COL_END
 
-  Watch project changes:		$YELLOW brunch watch & $COL_END  
-  Edit the code in: 			$BLUE ${HOME}/Project/app $COL_END
-  View the code at: 			$BLUE http://localhost:8080/ $COL_END
+Setup Complete $COL_END
+---------------------------------------------------------
+
+  Run the following command (to auto build code changes and refresh browser):
+
+  	${YELLOW}brunch watch $COL_END  
+
+  Edit the code in:		$BLUE ${WORKDIR}/app $COL_END
+  View the code at:		$BLUE http://localhost:8080/ $COL_END
 
 ---------------------------------------------------------
 
 From now on, you can just run:
 
-    $YELLOW cd ~/Project && vagrant up $COL_END
+    ${YELLOW}cd $WORKDIR && vagrant up 
+    brunch watch $COL_END
+
+(Use Ctrl-C to kill brunch watch)
 
 If you cant see your code changes in the browser, 
 delete your browser cache, then run:
 
-	$YELLOW cd ~/Project; vagrant halt; vagrant up --provision $COL_END
+	$YELLOW cd $WORKDIR; vagrant halt; vagrant up --provision $COL_END
 
-Now refresh http://localhost:8080 in your browser.
+Now run ${YELLOW}brunch watch${COL_END} again, or refresh http://localhost:8080 in your browser.
 
 ---------------------------------------------------------
 
