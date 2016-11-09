@@ -1,23 +1,17 @@
 Project
 ==================
 
-1. Installation:
+1. Installation: you only need to do that once!
 
-  - you only need to do this once:
-  - open a terminal and run these commands:
+  - open a terminal in this folder and run this command:
 
-      cd ~/Project
       ./setup-host-ubuntu-env.sh
 
 
-2. Project setup:
-
-  - do this every time you login or boot up your PC:
-
+2. Project setup: do this every time you login or boot up your PC
 
   a. in a terminal, run the following commands:
 
-      cd ~/Project
       npm install
       bower update
       vagrant up
