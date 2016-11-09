@@ -25,6 +25,6 @@ echo "Install CHROME"
 echo "Install GIT"
 echo "Install NodeJS "
 echo "Install NPM"
-echo "Install [github repo here] to ~/Project/"
+echo "Install https://github.com/sc0ttj/Project to ~/Project/"
 
 exit 0

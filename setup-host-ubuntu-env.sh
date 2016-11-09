@@ -187,11 +187,19 @@ echo
 
 echo "4. Setting up the project source code"
 echo
-cd ${HOME}/Project
-# TODO git clone [URL] .
-[ -f package.json ] && npm install
-[ -f bower.json ] && bower update
-[ -f Gemfile ] && bundler
+cd ${HOME}
+mkdir Project &>/dev/null
+cd ${HOME}/Project || error "Could not enter 'Project' dir in $HOME"
+if [ "$(ls -A .)" = "" ];then
+	git clone https://github.com/sc0ttj/Project.git . || error "Could not add https://github.com/sc0ttj/Project"
+fi
+if [ "`cat package.json | grep '"url": "https://github.com/sc0ttj/Project"' | cut -f4 -d'"' `" = "https://github.com/sc0ttj/Project" ];then
+	[ -f package.json ] && npm install &>/dev/null
+	[ -f bower.json ] && bower update &>/dev/null
+	[ -f Gemfile ] && bundler &>/dev/null
+else 
+	error "Could not setup https://github.com/sc0ttj/Project"
+fi
 echo
 
 
