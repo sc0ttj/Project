@@ -25,6 +25,7 @@ exports.config = {
         'js/app.js': /^src\/app/,
         'cms/js/cms.js': /^src\/cms/,
         'js/vendor.js': /^(vendor|bower_components)/,
+        'cms/js/vendor.js': /^src\/cms\/js\/vendor/,
         'test/js/test.js': /^test(\/|\\)(?!vendor)/,
         'test/js/test-vendor.js': /^test(\/|\\)(?=vendor)/
       },
@@ -38,6 +39,7 @@ exports.config = {
         'css/app.css': /^src\/app/,
         'cms/css/cms.css': /^src\/cms/,
         'css/vendor.css': /^(vendor|bower_components)/,
+        'cms/css/vendor.css': /^src\/cms\/css\/vendor/,
         'test/css/test.css': /^test/
       },
       order: {

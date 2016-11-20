@@ -2,15 +2,25 @@
 
 var cms = {
 
+  templater: require('modules/templater'),
+
   init: function() {
     console.log('cms js initialised');
+    $('body').addClass('with-js');
+    this.setLayoutInElem();
+  },
 
-    var Model = require('./models/model');
-    console.log('Model:', Model.family.kids);
+  setLayoutInElem: function (){
+    var data = {
+      header: 'New Header',
+      paras: [
+        {para: 'Lorem ipsumthing dolor sit about.' },
+        {para: 'Double lorem ipsumthing dolor sit.'}
+      ]
+    };
 
-    var Controller = require('./controllers/controller');
-    Controller.init();
-
+    var elem = $("#template");
+    this.templater.setLayoutInElem(elem, data);
   }
 };
 

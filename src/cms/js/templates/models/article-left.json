@@ -1,0 +1,10 @@
+{
+  "article-sections": [{
+    "article-section": {
+      "article-header": "Example Header",
+      "article-paras" : [{
+        "article-para": "Lorem Ipsomething donor sit amet blah."
+      }]
+    }
+  }]
+}
