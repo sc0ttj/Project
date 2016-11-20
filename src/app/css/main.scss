@@ -1,5 +1,10 @@
 $border-color: #333;
 
-.section {
-	border: 1px solid $border-color;
+.page-body {
+  padding:4px;
 }
+
+.section {
+	border-bottom: 0px solid $border-color;
+}
+

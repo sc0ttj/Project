@@ -6,12 +6,10 @@ var cms = {
     console.log('cms js initialised');
 
     var Model = require('./models/model');
-    var Controller = require('./controllers/controller');
-
-    Controller.init();
-
     console.log('Model:', Model.family.kids);
-    console.log('Controller:', Controller);
+
+    var Controller = require('./controllers/controller');
+    Controller.init();
 
   }
 };

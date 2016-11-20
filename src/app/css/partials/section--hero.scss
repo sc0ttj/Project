@@ -1,7 +1,8 @@
-$background-color: red;
+$background-color: #cc0000;
 
-.section--hero {
+.hero-centre {
 	background: $background-color;
 	color: white;
-	padding: 10px;
+	padding: 12px;
+  margin-bottom:12px;
 }
