@@ -1,19 +1,14 @@
-var view = function (){
+module.exports = {
 
-  function init () {
+  init: function () {
     console.log('view initialised by controller');
     $('body').addClass('with-js');
-  }
+  },
 
-  function clickOn(elem){
+  clickOn: function(elem){
     $(elem).on('click', function(){
       console.log(elem + ' was clicked');
     });
   }
 
-  return {
-    init: init,
-    clickOn: clickOn
-  }
-
-}();
+};

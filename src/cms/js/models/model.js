@@ -1,4 +1,4 @@
-var model = {
+module.exports = {
   name: 'bob',
   age: 21,
   family: {
