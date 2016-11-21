@@ -4,12 +4,12 @@ module.exports = {
     console.log('templater initialised');
   },
 
-  setTemplateOnElem: function(elem, data){
-    Transparency.render(document.getElementById(elem), data);
+  setOnElem: function(elem, data){
+    Transparency.render(elem, data);
   },
 
   //http://stackoverflow.com/questions/19706046/how-to-read-an-external-local-json-file-in-javascript
-  getTemplateFromJsonFile: function(file, callback){
+  getJsonFile: function(file, callback){
       var theFile = new XMLHttpRequest();
       theFile.overrideMimeType("application/json");
       theFile.open("GET", 'cms/templates/models/' + file + '.json', true);
