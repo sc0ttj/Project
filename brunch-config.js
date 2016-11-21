@@ -1,14 +1,16 @@
 exports.config = {
-  conventions: {
-    assets: [
-      /^src\/(app)\/assets[\\/]/,
-      /^src\/(cms)\/assets[\\/]/
-    ]
-  },
-
   paths: {
     'public': 'www',
+    /* files to combine and minify */
     'watched': ['src/app', 'src/cms/', 'vendor']
+  },
+
+  conventions: {
+    /* custom asset folders - src/app and src/cms */
+    assets: [
+      /* src/app/assets and src/cms/assets */
+      /^src\/(app|cms)\/assets[\\/]/
+    ]
   },
 
   modules: {
@@ -25,6 +27,7 @@ exports.config = {
         'js/app.js': /^src\/app/,
         'cms/js/cms.js': /^src\/cms/,
         'js/vendor.js': /^(vendor|bower_components)/,
+        'cms/js/vendor.js': /^src\/cms\/js\/vendor/,
         'test/js/test.js': /^test(\/|\\)(?!vendor)/,
         'test/js/test-vendor.js': /^test(\/|\\)(?=vendor)/
       },
@@ -38,6 +41,7 @@ exports.config = {
         'css/app.css': /^src\/app/,
         'cms/css/cms.css': /^src\/cms/,
         'css/vendor.css': /^(vendor|bower_components)/,
+        'cms/css/vendor.css': /^src\/cms\/css\/vendor/,
         'test/css/test.css': /^test/
       },
       order: {
@@ -55,7 +59,13 @@ exports.config = {
       pattern: /^src\/cms\/.*\.js?$/,
       warnOnly: true,
       config: {rules: {'array-callback-return': 'warn'}}
-    }
+    },
+    // plugin to move /src/cms/templates/* to /www/cms/templates/*
+    assetsmanager: {
+        copyTo: {
+            'cms/templates/' : [ 'src/cms/templates/*' ],
+        }
+    },
   }
 
 };

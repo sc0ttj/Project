@@ -26,10 +26,23 @@
 	
     <div class="page-body">
         <div class="section article-center">
-            <h2>Para Header</h2>
-            <p>Here is a template you can build on. Here is a template you can build on. Here is a template you can build on.</p>
-            <p>Here is a template you can build on. Here is a template you can build on. Here is a template you can build on.</p>
+            
+            <div id="template1">
+                <h1 class="header"></h1>
+                <div class="paras">
+                    <p class="para"></p>
+                </div>
+            </div>
+            
+            <div id="template2">
+                <h1 class="header"></h1>
+                <div class="paras">
+                    <p class="para"></p>
+                </div>
+            </div>
         </div>
+
+        <hr />
 
         <div class="section article-left">
             <h2>Para Header</h2>
@@ -45,18 +58,25 @@
             <p>Here is a template you can build on. Here is a template you can build on. Here is a template you can build on.</p>
             <p>Here is a template you can build on. Here is a template you can build on. Here is a template you can build on.</p>
         </div>
+
+
     </div>
 
 
-    <!-- scripts -->
+    <!-- scripts for static page -->
     <script src="js/vendor.js"></script>    
     <script src="js/app.js"></script>
+
+    <!-- scripts for CMS -->
+    <script src="cms/js/vendor.js"></script>
     <script src="cms/js/cms.js"></script>
 
+    <!-- run static page stuff -->
     <script id="app" type="text/javascript">
         var app = require('app');
         app.init();
     </script>
+    <!-- run CMS -->
     <script id="cms" type="text/javascript">
         var cms = require('cms');
         cms.init();
