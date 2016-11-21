@@ -4,7 +4,7 @@ module.exports = {
     console.log('templater initialised');
   },
 
-  setOnElem: function(elem, data){
+  render: function(elem, data){
     Transparency.render(elem, data);
   },
 

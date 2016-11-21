@@ -8,84 +8,80 @@ var cms = {
     console.log('cms js initialised');
     $('body').addClass('with-js');
     // Do JSON + template HTML = output HTML
-    this.example();
-    this.fromFileExample();
-    this.htmlImportsExample();
+    this.setTemplateExample('#template1');
+    this.setTemplateFromFileExample('#template2', "article-left");
+    this.setTemplateFrominlineScriptExample('#template3', "article-left");
+    this.setTemplateFromHtmlImportsExample('#template4', "article-left");
   },
 
   // Example methods below
 
-  example: function (){
-    var elem1 = document.querySelector('#template1');
-    var data1 = {
+  setTemplateExample: function (elem){
+    var container = document.querySelector(elem);
+    var data = {
       header: 'New Header Added by CMS',
       paras: [
         {para: 'We used a var containing JSON.' },
-        {para: 'Lorem ipsumthing dolor sit about.' },
-        {para: 'Double lorem ipsumthing dolor sit.'}
+        {para: 'Lorem ipsumthing dolor sit about.' }
       ]
     };
-    this.templater.setOnElem(elem1, data1);
+    this.templater.render(container, data);
   },
 
-  fromFileExample: function(){
+  setTemplateFromFileExample: function(elem, templateName){
     var self = this;
-    var elem2 = document.querySelector('#template2');
-    var data2 = this.templater.getJsonFile("article-left", function (txt){
-      var data = JSON.parse(txt);
-      self.templater.setOnElem(elem2, data);
+    var container = document.querySelector(elem);
+    var data = this.templater.getJsonFile(templateName, function (txt){
+      var json = JSON.parse(txt);
+      self.templater.render(container, json);
+    });
+  },
+
+  setTemplateFrominlineScriptExample: function(elem, templateName){
+    var self = this;
+    var container = document.querySelector(elem);
+    var tmpl = document.getElementById(templateName + '-tmpl-script').innerHTML;
+
+    var wrapper = document.createElement('div');
+    wrapper.innerHTML = tmpl;
+
+    container.appendChild(wrapper);
+    var data = this.templater.getJsonFile(templateName, function (txt){
+      var json = JSON.parse(txt);
+      self.templater.render(container, json);
     });
   },
 
   //https://www.html5rocks.com/en/tutorials/webcomponents/imports/
   //http://www.hongkiat.com/blog/html-import/
-  htmlImportsExample: function(){
+  setTemplateFromHtmlImportsExample: function(elem, templateName){
     var self = this;
-    var elem3 = document.querySelector('#template3');
-    var tmplFile = this.getTmplFromHMTLImport();
-    elem3.appendChild(tmplFile);
-    var json = this.templater.getJsonFile("article-left", function (txt){
-      var data = JSON.parse(txt);
-      self.templater.setOnElem(elem3, data);
+    var container = document.querySelector(elem);
+    var tmplFile = this.getTmplFromHMTLImport(templateName);
+    container.appendChild(tmplFile);
+    var data = this.templater.getJsonFile(templateName, function (txt){
+      var json = JSON.parse(txt);
+      self.templater.render(container, json);
     });
   },
 
-  hasHTMLImports: function(){
-    return 'import' in document.createElement('link');
-  },
+  // helpers
 
-  // setHtmlImports: function (){
-  //   var link = document.createElement('link');
-  //   link.id = 'article-left-tmpl';
-  //   link.rel = 'import';
-  //   link.href = '/cms/templates/layouts/article-left.tmpl';
-  //   document.head.appendChild(link);
-  // },
-
-  getTmplFromHMTLImport: function () {
+  getTmplFromHMTLImport: function (templateName) {
     var self = this;
     if (!self.hasHTMLImports()) {
       console.log('html imports will NOT work');
       // Use other libraries/require systems to load files.
       return false;
     }
-    // this.setHtmlImports();
-    var templateUrl = document.querySelector('#article-left-tmpl');
-    var tmpl = templateUrl.import.querySelector('.article-left-tmpl');
+    var templateLink = document.querySelector('#' + templateName + '-tmpl');
+    var tmpl = templateLink.import.querySelector('.' + templateName + '-tmpl');
     return tmpl;
   },
 
-
-  // TO DO
-
-  editPageText: function (){
-    return true;
+  hasHTMLImports: function(){
+    return 'import' in document.createElement('link');
   },
-
-  saveAsNewPage: function(){
-    return true;
-  }
-
 
 };
 
