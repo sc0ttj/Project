@@ -8,10 +8,10 @@ var cms = {
     console.log('cms js initialised');
     $('body').addClass('with-js');
     // Do JSON + template HTML = output HTML
-    this.setTemplate_Example('#template1');
-    this.setTemplateFromFile_Example('#template2', "article-left");
-    this.setTemplateFrominlineScript_Example('#template3', "article-left");
-    this.setTemplateFromHtmlImports_Example('#template4', "article-left");
+    this.setTemplate_Example('#container1');
+    this.setTemplateFromFile_Example('#container2', "article-left");
+    this.setTemplateFrominlineScript_Example('#container3', "article-left");
+    this.setTemplateFromHtmlImports_Example('#container4', "article-left");
   },
 
   // Example methods below
