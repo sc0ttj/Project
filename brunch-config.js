@@ -1,14 +1,16 @@
 exports.config = {
-  conventions: {
-    assets: [
-      /^src\/(app)\/assets[\\/]/,
-      /^src\/(cms)\/assets[\\/]/
-    ]
-  },
-
   paths: {
     'public': 'www',
+    /* files to combine and minify */
     'watched': ['src/app', 'src/cms/', 'vendor']
+  },
+
+  conventions: {
+    /* custom asset folders - src/app and src/cms */
+    assets: [
+      /* src/app/assets and src/cms/assets */
+      /^src\/(app|cms)\/assets[\\/]/
+    ]
   },
 
   modules: {
@@ -57,7 +59,13 @@ exports.config = {
       pattern: /^src\/cms\/.*\.js?$/,
       warnOnly: true,
       config: {rules: {'array-callback-return': 'warn'}}
-    }
+    },
+    // plugin to move /src/cms/templates/* to /www/cms/templates/*
+    assetsmanager: {
+        copyTo: {
+            'cms/templates/' : [ 'src/cms/templates/*' ],
+        }
+    },
   }
 
 };

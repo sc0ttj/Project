@@ -7,21 +7,45 @@ var cms = {
   init: function() {
     console.log('cms js initialised');
     $('body').addClass('with-js');
-    this.setLayoutInElem();
+    // Do JSON + template HTML = output HTML
+    this.applyTemplateExample();
+    this.applyTemplateFromFileExample();
   },
 
-  setLayoutInElem: function (){
-    var data = {
-      header: 'New Header',
+  // Example methods below
+
+  applyTemplateExample: function (){
+    var elem1 = "template1";
+    var data1 = {
+      header: 'New Header Added by CMS',
       paras: [
         {para: 'Lorem ipsumthing dolor sit about.' },
         {para: 'Double lorem ipsumthing dolor sit.'}
       ]
     };
+    this.templater.setTemplateOnElem(elem1, data1);
+  },
 
-    var elem = $("#template");
-    this.templater.setLayoutInElem(elem, data);
+  applyTemplateFromFileExample: function(){
+    var self = this;
+    var elem2 = 'template2';
+    var data2 = this.templater.getTemplateFromJsonFile("article-left", function (txt){
+      var data = JSON.parse(txt);
+      self.templater.setTemplateOnElem(elem2, data);
+    });
+  },
+
+  // TO DO
+
+  editPageText: function (){
+    return true;
+  },
+
+  saveAsNewPage: function(){
+    return true;
   }
+
+
 };
 
 module.exports = cms;

@@ -1,0 +1,7 @@
+{
+  "header": "Another Header from CMS",
+  "paras": [
+    {"para": "Lorem ipsumthing dolor sit about." },
+    {"para": "Double lorem ipsumthing dolor sit."}
+  ]
+}
