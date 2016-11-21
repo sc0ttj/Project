@@ -19,6 +19,18 @@ module.exports = {
         }
       }
       theFile.send(null);
+  },
+
+  getTmplFile: function(file, callback){
+      var theFile = new XMLHttpRequest();
+      theFile.overrideMimeType("application/text");
+      theFile.open("GET", 'cms/templates/layouts/' + file + '.tmpl', true);
+      theFile.onreadystatechange = function(){
+        if (theFile.readyState === 4 && theFile.status == "200") {
+          callback(theFile.responseText);
+        }
+      }
+      theFile.send(null);
   }
 
 }
