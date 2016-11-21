@@ -78,7 +78,7 @@ var cms = {
     var html = '';
     switch(tmplName){
       case 'article-left':
-        html = '<div class="' + tmplName + '-tmpl-div"><h1 class="header"></h1><div class="paras"><p class="para"></p></div></div>';
+        html = '<div class="' + tmplName + '-tmpl-div"><h2 class="header"></h2><div class="paras"><p class="para"></p></div></div>';
         break;
     }
     return html;
