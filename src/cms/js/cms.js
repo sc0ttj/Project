@@ -19,6 +19,7 @@ var cms = {
     var data1 = {
       header: 'New Header Added by CMS',
       paras: [
+        {para: 'We used a var containing JSON.' },
         {para: 'Lorem ipsumthing dolor sit about.' },
         {para: 'Double lorem ipsumthing dolor sit.'}
       ]
