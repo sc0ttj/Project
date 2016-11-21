@@ -8,44 +8,80 @@ var cms = {
     console.log('cms js initialised');
     $('body').addClass('with-js');
     // Do JSON + template HTML = output HTML
-    this.applyTemplateExample();
-    this.applyTemplateFromFileExample();
+    this.setTemplateExample('#template1');
+    this.setTemplateFromFileExample('#template2', "article-left");
+    this.setTemplateFrominlineScriptExample('#template3', "article-left");
+    this.setTemplateFromHtmlImportsExample('#template4', "article-left");
   },
 
   // Example methods below
 
-  applyTemplateExample: function (){
-    var elem1 = "template1";
-    var data1 = {
+  setTemplateExample: function (elem){
+    var container = document.querySelector(elem);
+    var data = {
       header: 'New Header Added by CMS',
       paras: [
         {para: 'We used a var containing JSON.' },
-        {para: 'Lorem ipsumthing dolor sit about.' },
-        {para: 'Double lorem ipsumthing dolor sit.'}
+        {para: 'Lorem ipsumthing dolor sit about.' }
       ]
     };
-    this.templater.setTemplateOnElem(elem1, data1);
+    this.templater.render(container, data);
   },
 
-  applyTemplateFromFileExample: function(){
+  setTemplateFromFileExample: function(elem, templateName){
     var self = this;
-    var elem2 = 'template2';
-    var data2 = this.templater.getTemplateFromJsonFile("article-left", function (txt){
-      var data = JSON.parse(txt);
-      self.templater.setTemplateOnElem(elem2, data);
+    var container = document.querySelector(elem);
+    var data = this.templater.getJsonFile(templateName, function (txt){
+      var json = JSON.parse(txt);
+      self.templater.render(container, json);
     });
   },
 
-  // TO DO
+  setTemplateFrominlineScriptExample: function(elem, templateName){
+    var self = this;
+    var container = document.querySelector(elem);
+    var tmpl = document.getElementById(templateName + '-tmpl-script').innerHTML;
 
-  editPageText: function (){
-    return true;
+    var wrapper = document.createElement('div');
+    wrapper.innerHTML = tmpl;
+
+    container.appendChild(wrapper);
+    var data = this.templater.getJsonFile(templateName, function (txt){
+      var json = JSON.parse(txt);
+      self.templater.render(container, json);
+    });
   },
 
-  saveAsNewPage: function(){
-    return true;
-  }
+  //https://www.html5rocks.com/en/tutorials/webcomponents/imports/
+  //http://www.hongkiat.com/blog/html-import/
+  setTemplateFromHtmlImportsExample: function(elem, templateName){
+    var self = this;
+    var container = document.querySelector(elem);
+    var tmplFile = this.getTmplFromHMTLImport(templateName);
+    container.appendChild(tmplFile);
+    var data = this.templater.getJsonFile(templateName, function (txt){
+      var json = JSON.parse(txt);
+      self.templater.render(container, json);
+    });
+  },
 
+  // helpers
+
+  getTmplFromHMTLImport: function (templateName) {
+    var self = this;
+    if (!self.hasHTMLImports()) {
+      console.log('html imports will NOT work');
+      // Use other libraries/require systems to load files.
+      return false;
+    }
+    var templateLink = document.querySelector('#' + templateName + '-tmpl');
+    var tmpl = templateLink.import.querySelector('.' + templateName + '-tmpl');
+    return tmpl;
+  },
+
+  hasHTMLImports: function(){
+    return 'import' in document.createElement('link');
+  },
 
 };
 
