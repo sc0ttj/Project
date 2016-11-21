@@ -8,14 +8,14 @@ var cms = {
     console.log('cms js initialised');
     $('body').addClass('with-js');
     // Do JSON + template HTML = output HTML
-    this.Example();
-    this.FromFileExample();
-    this.FromTwoFilesExample();
+    this.example();
+    this.fromFileExample();
+    this.htmlImportsExample();
   },
 
   // Example methods below
 
-  Example: function (){
+  example: function (){
     var elem1 = document.querySelector('#template1');
     var data1 = {
       header: 'New Header Added by CMS',
@@ -28,7 +28,7 @@ var cms = {
     this.templater.setOnElem(elem1, data1);
   },
 
-  FromFileExample: function(){
+  fromFileExample: function(){
     var self = this;
     var elem2 = document.querySelector('#template2');
     var data2 = this.templater.getJsonFile("article-left", function (txt){
@@ -39,10 +39,10 @@ var cms = {
 
   //https://www.html5rocks.com/en/tutorials/webcomponents/imports/
   //http://www.hongkiat.com/blog/html-import/
-  FromTwoFilesExample: function(){
+  htmlImportsExample: function(){
     var self = this;
     var elem3 = document.querySelector('#template3');
-    var tmplFile = this.getTmpl();
+    var tmplFile = this.getTmplFromHMTLImport();
     elem3.appendChild(tmplFile);
     var json = this.templater.getJsonFile("article-left", function (txt){
       var data = JSON.parse(txt);
@@ -62,7 +62,7 @@ var cms = {
   //   document.head.appendChild(link);
   // },
 
-  getTmpl: function () {
+  getTmplFromHMTLImport: function () {
     var self = this;
     if (!self.hasHTMLImports()) {
       console.log('html imports will NOT work');
