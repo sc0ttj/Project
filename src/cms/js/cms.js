@@ -1,119 +1,53 @@
 "use strict";
 
-var cms = {
+module.exports = {
 
   templater: require('modules/templater'),
 
   init: function() {
     
     // cut the mustard here
-
-    console.log('cms js initialised');
     $('body').addClass('with-js');
-
-    // get markup already in page and add json
-    this.setTemplate_Example('#container1');
-    this.setTemplateFromFile_Example('#container2', 'article-left');
-    // get both markup and json from elsewhere and add both to page
-    this.setTemplateFromString_Example('#container3', 'article-left');
-    this.setTemplateFromTmpFile_Example('#container4', 'article-left');
-    this.setTemplateFromHtmlImports_Example('#container5', 'article-left');
+    this.templater.init();
+    
+    // needs markup in page
+    this.setTemplate('#container1', 'article-left');
+    // gets markup from external .tmpl file
+    this.setTemplateFromFile('#container2', 'article-left');
   },
 
-  // Example methods below need template markup in the page already
+  getTemplate: function (template) {
+    var data = require('templates/' + template);
+    return data;
+  },
 
-  setTemplate_Example: function (elem){
+  setTemplate: function (elem, template){
     var container = document.querySelector(elem);
-    var data = {
-      header: 'New Header Added by CMS',
-      paras: [
-        {para: 'We used a var containing JSON.' },
-        {para: 'Lorem ipsumthing dolor sit about.' }
-      ]
-    };
+    var data = this.getTemplate(template);
     this.templater.render(container, data);
   },
 
-  setTemplateFromFile_Example: function(elem, tmplName){
-    var container = document.querySelector(elem);
-    this.applyJsonToTmpl(tmplName, container);
-  },
-
-  // the example methods do not need template markup in the page
-
-  setTemplateFromString_Example: function(elem, tmplName){
-    var html = this.getTmplFromString(tmplName);
-    var container = this.setContainer(elem, html);
-    this.applyJsonToTmpl(tmplName, container);
-  },
-
-  setTemplateFromTmpFile_Example: function(elem, tmplName){
-    var self = this;
-    this.getTmplFile(tmplName, function(html){
-      var container = self.setContainer(elem, html);
-      self.applyJsonToTmpl(tmplName, container);
+  getTemplateMarkup: function (template, callback){
+    this.templater.getTmplFile(template, function(html){
+      callback(template, html);
     }); 
   },
 
-  //https://www.html5rocks.com/en/tutorials/webcomponents/imports/
-  //http://www.hongkiat.com/blog/html-import/
-  setTemplateFromHtmlImports_Example: function(elem, tmplName){
-    var container = document.querySelector(elem);
-    var tmpl = this.getTmplFromHMTLImport(tmplName);
-    container.appendChild(tmpl);
-    this.applyJsonToTmpl(tmplName, container);
+  setTemplateFromFile: function (elem, template){
+    var self = this;
+    this.getTemplateMarkup(template, function(template, html){
+      self.setContainer(elem, html);
+      self.setTemplate(elem, template);
+    });
   },
 
-  // helpers
-
-  setContainer: function (elem, contents) {
+  setContainer: function (elem, html) {
     var container = document.querySelector(elem);
     var wrapper = document.createElement('div');
-    wrapper.innerHTML = contents;
+    wrapper.id = container.id;
+    container.id = '';
+    wrapper.innerHTML = html;
     container.appendChild(wrapper);
-    return container;
-  },
-
-  getTmplFromString: function (tmplName) {
-    var html = '';
-    switch(tmplName){
-      case 'article-left':
-        html = '<div class="' + tmplName + '-tmpl-div"><h2 class="header"></h2><div class="paras"><p class="para"></p></div></div>';
-        break;
-    }
-    return html;
-  },
-
-  getTmplFile: function (tmplName, callback) {
-    this.templater.getTmplFile(tmplName, function(html){
-      callback(html);
-    });
-  },
-
-  getTmplFromHMTLImport: function (tmplName) {
-    if (!this.hasHTMLImports()) {
-      console.log('html imports will NOT work');
-      // Use other libraries/require systems to load files.
-      return false;
-    }
-    var templateLink = document.querySelector('#' + tmplName + '-tmpl');
-    var tmpl = templateLink.import.querySelector('.' + tmplName + '-tmpl');
-    return tmpl;
-  },
-
-  applyJsonToTmpl: function (tmplName, container){
-    var self = this;
-    this.templater.getJsonFile(tmplName, function (txt){
-      var json = JSON.parse(txt);
-      self.templater.render(container, json);
-      console.log('rendering: ', container, json);
-    });
-  },
-
-  hasHTMLImports: function(){
-    return 'import' in document.createElement('link');
   },
 
 };
-
-module.exports = cms;
