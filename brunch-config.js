@@ -60,10 +60,10 @@ exports.config = {
       warnOnly: true,
       config: {rules: {'array-callback-return': 'warn'}}
     },
-    // plugin to move /src/cms/templates/* to /www/cms/templates/*
+    // plugin to move files to custom dirs
     assetsmanager: {
         copyTo: {
-            'cms/templates/' : [ 'src/cms/templates/*' ],
+            'cms/templates/' : [ 'src/cms/js/templates/*.tmpl' ],
         }
     },
   }
