@@ -1,4 +1,10 @@
-$border-color: #333;
+@import 'colors';
+@import 'fonts';
+
+@import 'hero';
+@import 'article-center';
+@import 'article-left';
+@import 'article-right';
 
 .page-body {
   padding:4px;
