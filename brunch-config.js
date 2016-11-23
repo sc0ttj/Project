@@ -60,12 +60,26 @@ exports.config = {
       warnOnly: true,
       config: {rules: {'array-callback-return': 'warn'}}
     },
-    // plugin to move files to custom dirs
     assetsmanager: {
         copyTo: {
-            'cms/templates/' : [ 'src/cms/js/templates/*.tmpl' ],
+          'cms/templates/' : [ 'src/cms/js/templates/*.tmpl' ],
         }
     },
-  }
+  },
+
+  overrides: {
+    // brunch build --env nocms
+    nocms: {
+      paths: {
+        'public': 'www',
+        'watched': ['src/app', 'vendor']
+      },
+      conventions: {
+        assets: [
+          /^src\/app\/assets[\\/]/
+        ],
+      },
+    },
+  },
 
 };
