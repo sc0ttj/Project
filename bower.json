@@ -1,9 +1,24 @@
 {
-  "name": "your-app",
+  "name": "project",
   "version": "0.0.1",
-  "main": "www/app.js",
-  "dependencies": {
-    "chibi" : "3.0.8"
-  },
-  "overrides": {}
+  "main": "www/js/app.js",
+  "dependencies": {},
+  "overrides": {},
+  "homepage": "https://github.com/sc0ttj/Project",
+  "authors": [
+    "scott"
+  ],
+  "description": "html5 cms",
+  "keywords": [
+    "cms"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
