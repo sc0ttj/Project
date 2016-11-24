@@ -1,19 +1,31 @@
+var $ = require('cash-dom');
+
 "use strict";
 
 module.exports = {
 
-  templater: require('modules/templater'),
+  templater: '',
 
   init: function() {
+    console.log('cms loaded');
     
     // cut the mustard here
-    $('body').addClass('with-js');
-    this.templater.init();
-    
+    $('body').addClass('with-cms');
+
+    // this.doExampleTemplating();
+  },
+
+  doExampleTemplating: function () {
+    this.setupTemplater();
     // needs markup in page
     this.setTemplate('#container1', 'article-left');
     // gets markup from external .tmpl file
     this.setTemplateFromFile('#container2', 'article-left');
+  },
+
+  setupTemplater: function (){
+    this.templater = require('modules/templater');
+    this.templater.init();
   },
 
   getTemplate: function (template) {

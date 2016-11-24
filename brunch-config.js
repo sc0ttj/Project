@@ -2,15 +2,17 @@ exports.config = {
   paths: {
     'public': 'www',
     /* files to combine and minify */
-    'watched': ['src/app', 'src/cms/', 'vendor']
+    'watched': ['src']
   },
 
   conventions: {
-    /* custom asset folders - src/app and src/cms */
     assets: [
-      /* src/app/assets and src/cms/assets */
       /^src\/(app|cms)\/assets[\\/]/
-    ]
+    ],
+    vendor: [
+      /^src\/(app|cms)\/vendor[\\/]/,
+      /^(bower_components|node_modules)[\\/]/
+    ],
   },
 
   modules: {
@@ -24,10 +26,13 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: {
-        'js/app.js': /^src\/app/,
-        'cms/js/cms.js': /^src\/cms/,
-        'js/vendor.js': /^(vendor|bower_components)/,
-        'cms/js/vendor.js': /^src\/cms\/js\/vendor/,
+        'js/app.js': /^src\/app\/js/,
+        'js/vendor.js': [ 
+          /^src\/app\/vendor/,
+          /^(bower_components|node_modules)/,
+        ],
+        'cms/js/cms.js': /^src\/cms\/js/,
+        'cms/js/vendor.js': /^src\/cms\/vendor/,
         'test/js/test.js': /^test(\/|\\)(?!vendor)/,
         'test/js/test-vendor.js': /^test(\/|\\)(?=vendor)/
       },
@@ -38,10 +43,13 @@ exports.config = {
 
     stylesheets: {
       joinTo: {
-        'css/app.css': /^src\/app/,
-        'cms/css/cms.css': /^src\/cms/,
-        'css/vendor.css': /^(vendor|bower_components)/,
-        'cms/css/vendor.css': /^src\/cms\/css\/vendor/,
+        'css/app.css': /^src\/app\/css/,
+        'css/vendor.css': [ 
+          /^src\/app\/vendor/,
+          /^bower_components/,
+        ],
+        'cms/css/cms.css': /^src\/cms\/css/,
+        'cms/css/vendor.css': /^src\/cms\/vendor/,
         'test/css/test.css': /^test/
       },
       order: {
@@ -60,11 +68,11 @@ exports.config = {
       warnOnly: true,
       config: {rules: {'array-callback-return': 'warn'}}
     },
-    assetsmanager: {
-        copyTo: {
-          'cms/templates/' : [ 'src/cms/js/templates/*.tmpl' ],
-        }
-    },
+    // assetsmanager: {
+    //     copyTo: {
+    //       'cms/templates/' : [ 'src/cms/js/templates/*.tmpl' ],
+    //     }
+    // },
   },
 
   overrides: {
@@ -72,14 +80,30 @@ exports.config = {
     nocms: {
       paths: {
         'public': 'www',
-        'watched': ['src/app', 'vendor']
+        'watched': ['src/app']
       },
       conventions: {
         assets: [
           /^src\/app\/assets[\\/]/
         ],
       },
-    },
+    files: {
+      javascripts: {
+        joinTo: {
+          'js/app.js': /^src\/app\/js/,
+          'js/vendor.js': [ 
+            /^bower_components/,
+            /^src\/app\/vendor/,
+          ],
+          'test/js/test.js': /^test(\/|\\)(?!vendor)/,
+          'test/js/test-vendor.js': /^test(\/|\\)(?=vendor)/
+        },
+        order: {
+          before: []
+        }
+      },
+    }
+  },
   },
 
 };
