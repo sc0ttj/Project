@@ -4,7 +4,6 @@ var $ = require('cash-dom');
 
 module.exports = {
   init: function(){
-    
     console.log('main app started');
 
     if (this.cutsTheMustard()){
@@ -12,9 +11,10 @@ module.exports = {
       // add mustard
       $('body').addClass('with-mustard');
 
+      // load cms with custom options
       var cms = require('cms');
-      cms.init();
-
+      var cmsConfig = {"name" : "custom CMS options"};
+      cms.init(cmsConfig);
     }
 
   },

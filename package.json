@@ -30,6 +30,7 @@
     "html-pages-brunch": "^2.4.0",
     "javascript-brunch": ">= 1.0 < 1.9",
     "json-brunch": "^1.5.4",
+    "mustache": "^2.3.0",
     "retina-brunch": "^1.7.2",
     "sass-brunch": "^1.9.2",
     "uglify-js-brunch": ">= 1.0 < 1.9"
