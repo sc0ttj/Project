@@ -8,9 +8,10 @@ var init = function(){
   var templates = fs.readdirSync('src/app/templates/');
 
   // to do: get from json file!
-  var data = { 
-    mytag: "Pre compile template worked!",
-  }
+  var data = {
+  "title": "Page Hero Title",
+  "subtitle" : "A description of the page"
+}
 
   templates.forEach(
     function(file) {
