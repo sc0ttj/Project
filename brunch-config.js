@@ -1,3 +1,5 @@
+var preCompiler = require('./brunch-scripts/preCompiler.js');
+
 exports.config = {
   paths: {
     'public': 'www',
@@ -13,6 +15,12 @@ exports.config = {
       /^src\/(app|cms)\/vendor[\\/]/,
       /^(bower_components|node_modules)[\\/]/
     ],
+  },
+
+  hooks: {
+    preCompile(preCompiler) {
+      preCompiler();
+    },
   },
 
   modules: {
