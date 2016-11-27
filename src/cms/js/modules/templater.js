@@ -1,4 +1,5 @@
 var $ = require('cash-dom');
+// console.log($)
 
 "use strict";
 

@@ -2,7 +2,9 @@
   "name": "project",
   "version": "0.0.1",
   "main": "www/js/app.js",
-  "dependencies": {},
+  "dependencies": {
+    "chibi": "^3.0.8"
+  },
   "overrides": {},
   "homepage": "https://github.com/sc0ttj/Project",
   "authors": [

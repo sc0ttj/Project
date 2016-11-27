@@ -1,5 +1,3 @@
-var $ = require('cash-dom');
-
 "use strict";
 
 module.exports = {

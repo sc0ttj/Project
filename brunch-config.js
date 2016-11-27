@@ -29,10 +29,13 @@ exports.config = {
         'js/app.js': /^src\/app\/js/,
         'js/vendor.js': [ 
           /^src\/app\/vendor/,
-          /^(bower_components|node_modules)/,
+          /^(bower_components)/,
         ],
         'cms/js/cms.js': /^src\/cms\/js/,
-        'cms/js/vendor.js': /^src\/cms\/vendor/,
+        'cms/js/vendor.js': [ 
+          /^src\/cms\/vendor/,
+          /^(node_modules)/,
+        ],
         'test/js/test.js': /^test(\/|\\)(?!vendor)/,
         'test/js/test-vendor.js': /^test(\/|\\)(?=vendor)/
       },
