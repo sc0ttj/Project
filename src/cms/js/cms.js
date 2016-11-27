@@ -33,7 +33,11 @@ module.exports = {
     // render templates to page
     t.processTemplates(templates, t.renderTemplate);
 
-    return true; // if we loaded up ok
+    //add CMS UI
+    var ui = require('modules/ui.js');
+    ui.init(this.config);
+
+    return true // if we loaded up ok
   },
 
   cutsTheMustard: function () {

@@ -8,7 +8,7 @@ module.exports = {
     
     if (this.pageHasNoSections()) this.createSections();
     
-    return true; // if we loaded ok
+    return true // if we loaded ok
   },
 
   getConfig: function (){
