@@ -1,6 +1,28 @@
-.hero-centre {
-	background: $hero-bg-color;
-	color: white;
-	padding: 12px;
-  margin-bottom:12px;
+.hero-center {
+  background-color: #cc0000;
+  border-bottom: 0 solid $border-color;
+  color: #fff;
+  padding: 3rem;
+  margin: 0;
+  p {
+    font-size: 2.4rem;
+  }
+}
+
+.hero-details {
+  background-color: #333;
+  padding:1rem;
+  color: white;
+  font-weight: bold;
+  margin-bottom:2.4rem;
+  div {
+    display: inline;
+    margin-right:2rem;
+  }
+  p {
+    color: #ff9900;
+    display: inline;
+    margin-left:0.5rem;
+  }
+
 }

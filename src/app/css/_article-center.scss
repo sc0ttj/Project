@@ -1,9 +1,11 @@
 .article-center {
 	color: black;
-  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
   @media screen and (min-width:550px){
     margin: 0 auto;
-    width: 70%;
+    width: 65%;
   }
 }
 

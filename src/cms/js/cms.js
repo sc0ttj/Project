@@ -1,10 +1,15 @@
-var $ = require('cash-dom');
-
 "use strict";
 
 module.exports = {
 
-  config: { "name": "default opts" },
+  config: {
+    'name'            : 'default CMS options',
+    'templates'       : ['hero-center.tmpl', 'article-center.tmpl', 'article-full-width.tmpl', 'article-left.tmpl', 'article-right.tmpl'],
+    'templatesDir'    : 'templates/',
+    'sectionContainer': '<div class="section"></div>', 
+    'sectionSelector' : 'body .section',
+    'mustardClass'    : 'html5-cms',
+  },
 
   getConfig: function (){
     return this.config;
@@ -15,17 +20,33 @@ module.exports = {
   },
 
   init: function(config){
+    this.setConfig(config);
 
-    this.setConfig(config); 
-    console.log('cms_config:', this.config.name);    
+    if (this.cutsTheMustard()) this.addMustard();
 
-    // cut the mustard here
-    $('body').addClass('with-cms');
+    // load our templater
+    var t = require('modules/templater.js');
+    t.init(this.config);
+    
+    //get list of templates
+    var templates = t.getTemplates();
+    // render templates to page
+    t.processTemplates(templates, t.renderTemplate);
 
-    t = require('modules/templater');
-    var config = {'name': 'custom_templater_options'};
-    t.init(config);
+    return true; // if we loaded up ok
+  },
 
+  cutsTheMustard: function () {
+    var cutsTheMustard = (
+      'querySelector' in document
+      && 'localStorage' in window
+      && 'addEventListener' in window);
+    return cutsTheMustard;
+  },
+
+  addMustard: function (){
+    var mustardClass = this.config.mustardClass;
+    document.getElementsByTagName('body')[0].classList.add(mustardClass);
   },
 
 };

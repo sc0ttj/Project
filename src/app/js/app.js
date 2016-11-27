@@ -3,21 +3,30 @@ var $ = require('cash-dom');
 "use strict";
 
 module.exports = {
-  init: function(){
-    console.log('main app started');
 
+  init: function(){
     if (this.cutsTheMustard()){
-      console.log('getting full experience');
       // add mustard
-      $('body').addClass('with-mustard');
+      $('body').addClass('html5');
+
 
       // load cms with custom options
       var cms = require('cms');
-      var cmsConfig = {"name" : "custom CMS options"};
+      var cmsConfig = {
+        'name'            : 'custom options',
+        'templates'       : ['hero-center.tmpl', 'article-center.tmpl', 'article-full-width.tmpl', 'article-right.tmpl', 'article-left.tmpl' ],
+        'templatesDir'    : './templates/',
+        'sectionSelector' : 'body .section',
+        'sectionContainer': '<div class="section"></div>', 
+        'mustardClass'    : 'mustard-cms',
+      };
       cms.init(cmsConfig);
+
+
     }
 
   },
+
   cutsTheMustard: function () {
     var cutsTheMustard = (
       'querySelector' in document
@@ -25,4 +34,5 @@ module.exports = {
       && 'addEventListener' in window);
     return cutsTheMustard;
   }
+
 }

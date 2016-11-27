@@ -1,4 +1,4 @@
-$section-padding: 1rem;
+$section-padding: 0;
 $section-margin: 1rem;
 
 .section {
@@ -7,12 +7,3 @@ $section-margin: 1rem;
   margin: 0;
   width: 100%;
 }
-
-.section--hero {
-  background-color: #cc0000;
-  border-bottom: 0px solid $border-color;
-  color: #fff;
-  padding: 2rem;
-  margin: 0;
-}
-

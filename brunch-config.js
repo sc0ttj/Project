@@ -68,6 +68,9 @@ exports.config = {
       warnOnly: true,
       config: {rules: {'array-callback-return': 'warn'}}
     },
+    htmlPages: {
+      compileAssets: true,
+    }
     // assetsmanager: {
     //     copyTo: {
     //       'cms/templates/' : [ 'src/cms/js/templates/*.tmpl' ],
