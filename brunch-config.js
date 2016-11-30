@@ -85,33 +85,33 @@ exports.config = {
 
   overrides: {
     // brunch build --env nocms
-    nocms: {
-      paths: {
-        'public': 'www',
-        'watched': ['src/app']
-      },
-      conventions: {
-        assets: [
-          /^src\/app\/assets[\\/]/
-        ],
-      },
-    files: {
-      javascripts: {
-        joinTo: {
-          'js/app.js': /^src\/app\/js/,
-          'js/vendor.js': [ 
-            /^bower_components/,
-            /^src\/app\/vendor/,
-          ],
-          'test/js/test.js': /^test(\/|\\)(?!vendor)/,
-          'test/js/test-vendor.js': /^test(\/|\\)(?=vendor)/
-        },
-        order: {
-          before: []
-        }
-      },
-    }
-  },
+    // nocms: {
+    //   paths: {
+    //     'public': 'www',
+    //     'watched': ['src/app']
+    //   },
+    //   conventions: {
+    //     assets: [
+    //       /^src\/app\/assets[\\/]/
+    //     ],
+    //   },
+    //   files: {
+    //     javascripts: {
+    //       joinTo: {
+    //         'js/app.js': /^src\/app\/js/,
+    //         'js/vendor.js': [ 
+    //           /^bower_components/,
+    //           /^src\/app\/vendor/,
+    //         ],
+    //         'test/js/test.js': /^test(\/|\\)(?!vendor)/,
+    //         'test/js/test-vendor.js': /^test(\/|\\)(?=vendor)/
+    //       },
+    //       order: {
+    //         before: []
+    //       }
+    //     },
+    //   }
+    // },
   },
 
 };
