@@ -1,9 +1,29 @@
 .article-right {
   color: black;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  img {
+    height: auto;
+    margin-bottom:1.6rem;
+    width: 100%;
+  }
+  p, h2 {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
   @media screen and (min-width:550px){
     float: right;
-    width: 50%;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    p, h2 {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    img {
+      float: left;
+      margin-top:1rem;
+      margin-right: 1.6rem;
+      max-height: 400px;
+      max-width: 50%;
+      width:auto;
+    }
   }
 }
