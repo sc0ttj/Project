@@ -26,7 +26,8 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: {
-        'js/app.js': /^src\/app\/js/,
+        'js/app.js': /^src\/app\/js\/(?!enhancements)/,
+        'js/enhancements.js': /^src\/app\/js\/enhancements/,
         'js/vendor.js': [ 
           /^src\/app\/vendor/,
           /^(bower_components)/,
@@ -46,7 +47,8 @@ exports.config = {
 
     stylesheets: {
       joinTo: {
-        'css/app.css': /^src\/app\/css/,
+        'css/base.css': /^src\/app\/css\/(?!full)/,
+        'css/full.css': /^src\/app\/css\/full/,
         'css/vendor.css': [ 
           /^src\/app\/vendor/,
           /^bower_components/,

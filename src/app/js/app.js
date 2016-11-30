@@ -1,3 +1,6 @@
+var loadCSS = require('modules/loadcss').init;
+var loadJS = require('modules/loadjs');
+
 "use strict";
 
 module.exports = {
@@ -7,6 +10,9 @@ module.exports = {
       // add mustard
       $('body').addClass('html5');
 
+      //load 'nice-to-haves'
+      this.loadStylesheet('css/full.css');
+      this.loadModules(['test', 'test1']);
 
       // load cms with custom options
       var cms = require('cms');
@@ -16,7 +22,7 @@ module.exports = {
         'templatesDir'    : './templates/',
         'sectionSelector' : 'body .section',
         'sectionContainer': '<div class="section"></div>', 
-        'mustardClass'    : 'mustard-cms',
+        'mustardClass'    : 'with-cms',
       };
       cms.init(cmsConfig);
 
@@ -31,6 +37,18 @@ module.exports = {
       && 'localStorage' in window
       && 'addEventListener' in window);
     return cutsTheMustard;
-  }
+  },
+
+  loadStylesheet: function (file) {
+    loadCSS(file);
+  },
+
+  loadModules: function (modules) {
+    modules.forEach(function(val, i){
+      loadJS('js/enhancements.js', function(){
+        require('enhancements/' + val).init();
+      });
+    });
+  },
 
 }

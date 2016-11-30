@@ -1,3 +1,8 @@
+var t       = require('modules/templater.js');
+var ui      = require('modules/ui.js');
+var loadCSS = require('modules/loadcss').init;
+
+
 "use strict";
 
 module.exports = {
@@ -25,7 +30,6 @@ module.exports = {
     if (this.cutsTheMustard()) this.addMustard();
 
     // load our templater
-    var t = require('modules/templater.js');
     t.init(this.config);
     
     //get list of templates
@@ -34,8 +38,9 @@ module.exports = {
     t.processTemplates(templates, t.renderTemplate);
 
     //add CMS UI
-    var ui = require('modules/ui.js');
     ui.init(this.config);
+
+    this.loadStylesheets();
 
     return true // if we loaded up ok
   },
@@ -51,6 +56,13 @@ module.exports = {
   addMustard: function (){
     var mustardClass = this.config.mustardClass;
     document.getElementsByTagName('body')[0].classList.add(mustardClass);
+  },
+
+  loadStylesheets: function (){
+    var stylesheets = [ 'cms/css/vendor.css', 'cms/css/cms.css' ];
+    stylesheets.forEach(function(val){
+      loadCSS(val);
+    });
   },
 
 };
