@@ -1,6 +1,8 @@
+$body-txt-color: #444;
 $hero-bg-color: #cc0000;
 $border-color: #222;
+$stat-text-color: #cc0000;
 
 body {
-  color: #333; 
+  color: $body-txt-color; 
 }

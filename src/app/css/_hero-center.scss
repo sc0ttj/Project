@@ -1,9 +1,10 @@
 .hero-center {
-  background-color: #cc0000;
+  background-color: $hero-bg-color;
   border-bottom: 0 solid $border-color;
   color: #fff;
   padding: 3rem;
   margin: 0;
+  text-shadow: 1px 1px 3px #000;
   p {
     font-size: 2.4rem;
   }
