@@ -9,7 +9,7 @@ module.exports = {
 
   config: {
     'name'            : 'default CMS options',
-    'templates'       : ['hero-center.tmpl', 'article-center.tmpl', 'article-full-width.tmpl', 'article-left.tmpl', 'article-right.tmpl'],
+    'templates'       : ['hero-center.tmpl', 'article-center.tmpl', 'article-full-width.tmpl', 'article-right.tmpl', 'article-left.tmpl', 'image-center.tmpl' ],
     'templatesDir'    : 'templates/',
     'sectionContainer': '<div class="section"></div>', 
     'sectionSelector' : 'body .section',

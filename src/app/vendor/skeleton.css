@@ -28,7 +28,7 @@
 
 /* Grid
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-.container {
+.grid-container {
   position: relative;
   width: 100%;
   max-width: 960px;
@@ -43,14 +43,14 @@
 
 /* For devices larger than 400px */
 @media (min-width: 400px) {
-  .container {
+  .grid-container {
     width: 85%;
     padding: 0; }
 }
 
 /* For devices larger than 550px */
 @media (min-width: 550px) {
-  .container {
+  .grid-container {
     width: 80%; }
   .column,
   .columns {
@@ -354,7 +354,7 @@ p,
 ul,
 ol,
 form {
-  margin-bottom: 2.5rem; }
+  margin-bottom: 1.6rem; }
 
 
 /* Utilities
@@ -384,7 +384,7 @@ hr {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 /* Self Clearing Goodness */
-.container:after,
+.grid-container:after,
 .row:after,
 .u-cf {
   content: "";

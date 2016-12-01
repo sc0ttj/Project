@@ -7,6 +7,11 @@
 @import 'article-full-width';
 @import 'article-left';
 @import 'article-right';
+@import 'image-center';
+
+.article {
+  margin-top: 2.4rem;
+}
 
 .clear {
   float:none;

@@ -18,7 +18,7 @@ module.exports = {
       var cms = require('cms');
       var cmsConfig = {
         'name'            : 'custom options',
-        'templates'       : ['hero-center.tmpl', 'article-center.tmpl', 'article-full-width.tmpl', 'article-right.tmpl', 'article-left.tmpl' ],
+        'templates'       : ['hero-center.tmpl', 'article-center.tmpl', 'image-center.tmpl', 'article-full-width.tmpl', 'article-right.tmpl', 'article-left.tmpl' ],
         'templatesDir'    : './templates/',
         'sectionSelector' : 'body .section',
         'sectionContainer': '<div class="section"></div>', 
