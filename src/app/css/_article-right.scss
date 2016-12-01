@@ -1,24 +1,15 @@
-.article-right {
+.section .article-right {
   color: black;
   img {
     height: auto;
     width: 100%;
   }
-  p, h2 {
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
   @media screen and (min-width:550px){
     float: right;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    p, h2 {
-      margin-left: 0;
-      margin-right: 0;
-    }
     img {
       float: left;
       margin-right: 1.6rem;
+      margin-bottom: 1.6rem;
       max-height: 400px;
       max-width: 50%;
       width:auto;

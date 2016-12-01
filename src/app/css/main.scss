@@ -11,6 +11,24 @@
 
 .article {
   margin-top: 2.4rem;
+  margin-left:2%;
+  margin-right:2%;
+  @media screen and (min-width:600px){
+    margin-left:8%;
+    margin-right:8%;
+  }
+  @media screen and (min-width:800px){
+    margin-left:16.4%;
+    margin-right:16.4%;
+  }
+  @media screen and (min-width:1200px){
+    margin-left:20%;
+    margin-right:20%;
+  }
+  @media screen and (min-width:1600px){
+    margin-left:24%;
+    margin-right:24%;
+  }
 }
 
 .clear {
