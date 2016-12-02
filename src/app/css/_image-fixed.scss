@@ -1,0 +1,24 @@
+.fixed-image-container {
+  background: url(https://placehold.it/1600x900);
+  background-attachment:fixed;  
+  background-size:cover;
+  background-position:center;
+  width: 100%;
+}
+
+.fixed-image-text-container {
+  color: #fff;
+  height:100vh;
+  position: relative;
+  text-shadow: 1px 1px 3px #000;
+}
+
+.fixed-image-text {
+  font-weight: bold;
+  margin-top: -1rem;
+  position:absolute;
+  text-align:center;
+  top:50%;
+  width:100%;
+}
+

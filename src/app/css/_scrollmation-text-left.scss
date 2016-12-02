@@ -1,0 +1,16 @@
+.scrollmation-container { 
+  background: url('http://placehold.it/1280x760');
+  margin-top: 3rem;
+}
+
+.scrollmation-text {
+  background-color: $body-bg-color;
+  padding-right: 1rem;
+  word-wrap: break-word;
+  @media screen and (orientation:portrait) {
+    width:50%;
+  }
+  @media screen and (orientation:landscape) {
+    width:40%;
+  }
+}

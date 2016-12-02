@@ -18,7 +18,7 @@ module.exports = {
       var cms = require('cms');
       var cmsConfig = {
         'name'            : 'custom options',
-        'templates'       : ['hero-center.tmpl', 'article-center.tmpl', 'stat-text.tmpl', 'image-center.tmpl', 'article-full-width.tmpl', 'article-right.tmpl', 'article-left.tmpl' ],
+        'templates'       : ['hero-center.tmpl', 'article-full-width.tmpl', 'stat-text.tmpl', 'image-center.tmpl', 'article-right.tmpl', 'image-fixed.tmpl', 'article-left.tmpl', 'youtube-full-width.tmpl', 'article-full-width.tmpl', 'scrollmation-text-left.tmpl', 'article-full-width.tmpl'  ],
         'templatesDir'    : './templates/',
         'sectionSelector' : 'body .section',
         'sectionContainer': '<div class="section"></div>', 
@@ -44,8 +44,8 @@ module.exports = {
   },
 
   loadModules: function (modules) {
-    modules.forEach(function(val, i){
-      loadJS('js/enhancements.js', function(){
+    loadJS('js/enhancements.js', function(){
+      modules.forEach(function(val, i){
         require('enhancements/' + val).init();
       });
     });

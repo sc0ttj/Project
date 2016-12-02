@@ -49,7 +49,7 @@ module.exports = {
   processTemplates: function (templates, templateProcessor){
     var sections = $(this.config.sectionSelector);
     for (var i=0; i<templates.length; i++){
-      var url = this.config.templatesDir + '/' + templates[i];
+      var url = this.config.templatesDir + templates[i];
       this.getTemplateFromUrl(url, templateProcessor, sections[i]);
     }
   },
@@ -57,13 +57,22 @@ module.exports = {
   getTemplateFromUrl: function(templateUrl, templateProcessor, container){
     var opts = {url:templateUrl};
     function ajaxResponder(respCode, html, xmlhttp){
-      if (respCode === 200) templateProcessor(html, container);
+      if (respCode === 200) templateProcessor(html, container, templateUrl);
     }
     ajax.ajax(opts, ajaxResponder);
   },
 
-  renderTemplate: function(html, container){
-    $(container).html(html);
+  renderTemplate: function(templateHtml, container, templateUrl){
+    $(container).html(templateHtml);
+    var templateHasJs = (templateHtml.indexOf('<!-- js -->')> -1);
+
+    if (templateHasJs) {
+      var templateScript = templateUrl.substr(0, templateUrl.lastIndexOf(".")) + ".js";
+      var script  = document.createElement('script');
+      script.type = 'text/javascript'; 
+      script.src  = templateScript;
+      $('body').append(script);
+    }
   },
 
 }
