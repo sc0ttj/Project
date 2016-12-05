@@ -9,8 +9,6 @@ module.exports = {
 
   config: {
     'name'            : 'default CMS options',
-    'templates'       : ['hero-center.tmpl', 'article-full-width.tmpl', 'stat-text.tmpl', 'image-center.tmpl', 'article-right.tmpl', 'image-fixed.tmpl', 'article-left.tmpl', 'youtube-full-width.tmpl', 'article-full-width.tmpl', 'scrollmation-text-left.tmpl', 'article-full-width.tmpl'  ],
-    'templatesDir'    : 'templates/',
     'sectionContainer': '<div class="section"></div>', 
     'sectionSelector' : 'body .section',
     'mustardClass'    : 'html5-cms',
@@ -32,11 +30,6 @@ module.exports = {
     // load our templater
     t.init(this.config);
     
-    //get list of templates
-    var templates = t.getTemplates();
-    // render templates to page
-    t.processTemplates(templates, t.renderTemplate);
-
     //add CMS UI
     ui.init(this.config);
 

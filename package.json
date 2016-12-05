@@ -27,12 +27,13 @@
     "css-brunch": ">= 1.0 < 1.9",
     "eslint-brunch": "^3.12.0",
     "groundskeeper-brunch": "0.0.4",
+    "handlebars": "^4.0.6",
     "html-pages-brunch": "^2.4.0",
     "javascript-brunch": ">= 1.0 < 1.9",
     "json-brunch": "^1.5.4",
-    "mustache": "^2.3.0",
     "retina-brunch": "^1.7.2",
     "sass-brunch": "^1.9.2",
+    "static-handlebars-brunch": "github:sc0ttj/static-handlebars-brunch",
     "uglify-js-brunch": ">= 1.0 < 1.9"
   }
 }

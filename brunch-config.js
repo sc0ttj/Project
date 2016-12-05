@@ -1,3 +1,5 @@
+var pageData = require('./src/app/js/_config.js');
+
 exports.config = {
   paths: {
     'public': 'www',
@@ -75,6 +77,15 @@ exports.config = {
     },
     htmlPages: {
       compileAssets: true,
+    },
+    staticHandlebars: {
+      outputDirectory: 'src/app/assets',
+      templatesDirectory: 'src/app/templates',
+      partials: {
+        directory: 'src/app/templates',
+        prefix: '_'
+      },
+      data: pageData,
     }
     // assetsmanager: {
     //     copyTo: {

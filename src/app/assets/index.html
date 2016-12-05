@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <meta name="title" content="My Page Title!">
     <meta name="description" content="my app description">
     <meta name="author" content="scott">
     <title>Default Page</title>
@@ -17,18 +18,286 @@
 </head>
 
 <body>
-    <!-- scripts -->
-    <script src="js/vendor.js"></script>    
-    <script src="js/app.js"></script>
-    <!-- scripts for CMS -->
-    <script src="cms/js/vendor.js"></script>
-    <script src="cms/js/cms.js"></script>
-    <!-- run app and cms -->
-    <script id="app" type="text/javascript">
-        var app = require('app');
-        app.init();
-        // console.log($)
-    </script>
+
+<div class="section">
+  <div class="hero-center">
+    <h1>Example Hero Title</h1>
+    <p>The subtitle goes in here.</p>
+  </div>
+  <div class="hero-details">
+    <div>Author: <p>Bob Smith</p></div>
+    <div>Date: <p>12/34/67</p></div>
+  </div>
+
+</div>
+
+<div class="section">
+  <div class="article article-full-width">
+    <h2> Full Width Article</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pharetra erat sit amet orci auctor finibus. Sed at aliquet enim, vel tincidunt mauris. Quisque vestibulum id justo at ullamcorper. Nam sit amet lectus dui. Sed est erat, rhoncus sit amet dui in, pretium varius mauris.</p>
+
+    <p>Donec varius malesuada orci, ut condimentum nunc fermentum non. Phasellus lacinia pulvinar lorem, non elementum risus lobortis sed. Aenean nulla libero, posuere id ultricies et, molestie non odio. Nulla convallis orci ac sapien tempor suscipit commodo at turpis. Sed ornare tellus id feugiat euismod.</p>
+
+    <p>Aenean a porta purus, in lobortis ligula. Maecenas dapibus elementum enim, vel porttitor mi efficitur vitae. Aliquam porta felis quam, in malesuada lectus aliquet eu. Cras id semper urna, vitae sagittis lacus. Pellentesque non consequat quam. Nulla tortor purus, efficitur et ligula in, viverra augue.</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="image-center">
+    <picture>
+      <source media="(min-width: 960px)" srcset="http://placehold.it/1024x600"> 
+      <source media="(min-width: 550px)" srcset="http://placehold.it/800x500"> 
+      <img class="image-center-img" src="http://placehold.it/550x300" alt="Image description">
+    </picture>
+    <figcaption class="image-center-caption">Full-width image here</figcaption>
+  </div>
+</div>
+
+<div class="section">
+  <div class="article stat-text">
+    <p>Lorem ipsum dolor sit amet, <span class="stat-text-highlight">consectetur</span> adipiscing elit. Mauris pharetra erat sit amet orci auctor finibus. Sed at <span class="stat-text-highlight">aliquet enim</span>, vel tincidunt mauris.</p>
+
+    <p>Donec varius malesuada orci, ut <span class="stat-text-highlight">non elementum</span> condimentum nunc fermentum non. Phasellus lacinia pulvinar lorem, non elementum risus lobortis sed.</p>
+
+  </div>
+  <!-- js -->
+</div>
+
+<div class="section">
+  <div class="article article-left">
+    <img src="http://placehold.it/550x550" alt="" />
+    <h2>Left Floated Article</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pharetra erat sit amet orci auctor finibus. Sed at aliquet enim, vel tincidunt mauris. Quisque vestibulum id justo at ullamcorper. Nam sit amet lectus dui. Sed est erat, rhoncus sit amet dui in, pretium varius mauris.</p>
+
+    <p>Donec varius malesuada orci, ut condimentum nunc fermentum non. Phasellus lacinia pulvinar lorem, non elementum risus lobortis sed. Aenean nulla libero, posuere id ultricies et, molestie non odio. Nulla convallis orci ac sapien tempor suscipit commodo at turpis. Sed ornare tellus id feugiat euismod.</p>
+
+    <p>Aenean a porta purus, in lobortis ligula. Maecenas dapibus elementum enim, vel porttitor mi efficitur vitae. Aliquam porta felis quam, in malesuada lectus aliquet eu. Cras id semper urna, vitae sagittis lacus. Pellentesque non consequat quam. Nulla tortor purus, efficitur et ligula in, viverra augue.</p>
+  </div>
+</div>
+
+<div class="section">
+  <!-- https://codepen.io/dropside/full/bxhke/ -->
+  <div class="fixed-image-container">
+      <div class="fixed-image-text-container">
+        <h2 class="fixed-image-text">
+          Fixed image text is in here
+        </h2>
+    </div>
+  </div>
+  <!-- js -->
+</div>
+
+<div class="section">
+  <!-- https://codepen.io/dropside/full/bxhke/ -->
+  <div class="fixed-image-container">
+      <div class="fixed-image-text-container">
+        <h2 class="fixed-image-text">
+          Fixed image text is in here
+        </h2>
+    </div>
+  </div>
+  <!-- js -->
+</div>
+
+<div class="section">
+  <div class="article article-right">
+    <img src="http://placehold.it/550x550" alt="" />
+    <h2>Right Floated Article</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pharetra erat sit amet orci auctor finibus. Sed at aliquet enim, vel tincidunt mauris. Quisque vestibulum id justo at ullamcorper. Nam sit amet lectus dui. Sed est erat, rhoncus sit amet dui in, pretium varius mauris.</p>
+
+    <p>Donec varius malesuada orci, ut condimentum nunc fermentum non. Phasellus lacinia pulvinar lorem, non elementum risus lobortis sed. Aenean nulla libero, posuere id ultricies et, molestie non odio. Nulla convallis orci ac sapien tempor suscipit commodo at turpis. Sed ornare tellus id feugiat euismod.</p>
+
+    <p>Aenean a porta purus, in lobortis ligula. Maecenas dapibus elementum enim, vel porttitor mi efficitur vitae. Aliquam porta felis quam, in malesuada lectus aliquet eu. Cras id semper urna, vitae sagittis lacus. Pellentesque non consequat quam. Nulla tortor purus, efficitur et ligula in, viverra augue.</p>
+  </div>
+
+</div>
+
+<div class="section">
+  <div class="video-full-width-container">
+  <iframe 
+    class="video-full-width"
+    frameborder="0"
+    allowfullscreen
+    src="//www.youtube.com/embed/r6sgojf-LzM?start=11&autoplay=0&controls=0&autohide=1&showinfo=1&modestbranding=1&cc_load_policy=1&iv_load_policy=3&loop=1"
+  ></iframe>
+  </div>
+</div>
+
+<div class="section">
+  <div class="article article-full-width">
+    <h2> Full Width Article</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pharetra erat sit amet orci auctor finibus. Sed at aliquet enim, vel tincidunt mauris. Quisque vestibulum id justo at ullamcorper. Nam sit amet lectus dui. Sed est erat, rhoncus sit amet dui in, pretium varius mauris.</p>
+
+    <p>Donec varius malesuada orci, ut condimentum nunc fermentum non. Phasellus lacinia pulvinar lorem, non elementum risus lobortis sed. Aenean nulla libero, posuere id ultricies et, molestie non odio. Nulla convallis orci ac sapien tempor suscipit commodo at turpis. Sed ornare tellus id feugiat euismod.</p>
+
+    <p>Aenean a porta purus, in lobortis ligula. Maecenas dapibus elementum enim, vel porttitor mi efficitur vitae. Aliquam porta felis quam, in malesuada lectus aliquet eu. Cras id semper urna, vitae sagittis lacus. Pellentesque non consequat quam. Nulla tortor purus, efficitur et ligula in, viverra augue.</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="article scrollmation-container">
+    <div class="scrollmation-start"></div>
+    <div class="scrollmation-text">
+      <h2>Scrollmation Text Left</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pharetra erat sit amet orci auctor finibus. Sed at aliquet enim, vel tincidunt mauris. Quisque vestibulum id justo at ullamcorper. Nam sit amet lectus dui. Sed est erat, rhoncus sit amet dui in, pretium varius mauris.</p>
+
+      <p>Donec varius malesuada orci, ut condimentum nunc fermentum non. Phasellus lacinia pulvinar lorem, non elementum risus lobortis sed. Aenean nulla libero, posuere id ultricies et, molestie non odio. Nulla convallis orci ac sapien tempor suscipit commodo at turpis. Sed ornare tellus id feugiat euismod.</p>
+
+      <p>Aenean a porta purus, in lobortis ligula. Maecenas dapibus elementum enim, vel porttitor mi efficitur vitae. Aliquam porta felis quam, in malesuada lectus aliquet eu. Cras id semper urna, vitae sagittis lacus. Pellentesque non consequat quam. Nulla tortor purus, efficitur et ligula in, viverra augue.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pharetra erat sit amet orci auctor finibus. Sed at aliquet enim, vel tincidunt mauris. Quisque vestibulum id justo at ullamcorper. Nam sit amet lectus dui. Sed est erat, rhoncus sit amet dui in, pretium varius mauris.</p>
+
+      <p>Donec varius malesuada orci, ut condimentum nunc fermentum non. Phasellus lacinia pulvinar lorem, non elementum risus lobortis sed. Aenean nulla libero, posuere id ultricies et, molestie non odio. Nulla convallis orci ac sapien tempor suscipit commodo at turpis. Sed ornare tellus id feugiat euismod.</p>
+
+      <p>Aenean a porta purus, in lobortis ligula. Maecenas dapibus elementum enim, vel porttitor mi efficitur vitae. Aliquam porta felis quam, in malesuada lectus aliquet eu. Cras id semper urna, vitae sagittis lacus. Pellentesque non consequat quam. Nulla tortor purus, efficitur et ligula in, viverra augue.</p>
+
+      <p>Aenean a porta purus, in lobortis ligula. Maecenas dapibus elementum enim, vel porttitor mi efficitur vitae. Aliquam porta felis quam, in malesuada lectus aliquet eu. Cras id semper urna, vitae sagittis lacus. Pellentesque non consequat quam. Nulla tortor purus, efficitur et ligula in, viverra augue.</p>
+
+      <p>Donec varius malesuada orci, ut condimentum nunc fermentum non. Phasellus lacinia pulvinar lorem, non elementum risus lobortis sed. Aenean nulla libero, posuere id ultricies et, molestie non odio. Nulla convallis orci ac sapien tempor suscipit commodo at turpis. Sed ornare tellus id feugiat euismod.</p>
+
+      <p>Aenean a porta purus, in lobortis ligula. Maecenas dapibus elementum enim, vel porttitor mi efficitur vitae. Aliquam porta felis quam, in malesuada lectus aliquet eu. Cras id semper urna, vitae sagittis lacus. Pellentesque non consequat quam. Nulla tortor purus, efficitur et ligula in, viverra augue.</p>
+
+      <p>Aenean a porta purus, in lobortis ligula. Maecenas dapibus elementum enim, vel porttitor mi efficitur vitae. Aliquam porta felis quam, in malesuada lectus aliquet eu. Cras id semper urna, vitae sagittis lacus. Pellentesque non consequat quam. Nulla tortor purus, efficitur et ligula in, viverra augue.</p>
+    </div>
+    <div class="scrollmation-end"></div>
+  </div>
+  <!-- js -->
+</div>
+
+<div class="section">
+  <div class="article stat-text">
+    <p>Lorem ipsum dolor sit amet, <span class="stat-text-highlight">consectetur</span> adipiscing elit. Mauris pharetra erat sit amet orci auctor finibus. Sed at <span class="stat-text-highlight">aliquet enim</span>, vel tincidunt mauris.</p>
+
+    <p>Donec varius malesuada orci, ut <span class="stat-text-highlight">non elementum</span> condimentum nunc fermentum non. Phasellus lacinia pulvinar lorem, non elementum risus lobortis sed.</p>
+
+  </div>
+  <!-- js -->
+</div>
+
+<div class="section">
+  <div class="article article-full-width">
+    <h2> Full Width Article</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pharetra erat sit amet orci auctor finibus. Sed at aliquet enim, vel tincidunt mauris. Quisque vestibulum id justo at ullamcorper. Nam sit amet lectus dui. Sed est erat, rhoncus sit amet dui in, pretium varius mauris.</p>
+
+    <p>Donec varius malesuada orci, ut condimentum nunc fermentum non. Phasellus lacinia pulvinar lorem, non elementum risus lobortis sed. Aenean nulla libero, posuere id ultricies et, molestie non odio. Nulla convallis orci ac sapien tempor suscipit commodo at turpis. Sed ornare tellus id feugiat euismod.</p>
+
+    <p>Aenean a porta purus, in lobortis ligula. Maecenas dapibus elementum enim, vel porttitor mi efficitur vitae. Aliquam porta felis quam, in malesuada lectus aliquet eu. Cras id semper urna, vitae sagittis lacus. Pellentesque non consequat quam. Nulla tortor purus, efficitur et ligula in, viverra augue.</p>
+  </div>
+</div>
+
+<p></p>
+
+<!-- scripts -->
+<script src="js/vendor.js"></script>    
+<script src="js/app.js"></script>
+<script id="app" type="text/javascript">
+  var app = require('app');
+  app.init();
+  // console.log($)
+</script>
+
+<script id="image-fixed-js" type="text/javascript">
+  // console.log(app.cutsTheMustard());
+
+  var fixedImages = $('.fixed-image-text');
+
+  fixedImages.addClass('transition transparent');
+  
+  var watchers = $('.fixed-image-text').each(function addWatchers(el){
+    var $el = $(el);
+    var watcher = scrollMonitor.create(el);
+
+    watcher.fullyEnterViewport(function(){
+      $el.removeClass('transparent');
+    });
+
+    watcher.exitViewport(function(){
+      $el.addClass('transparent');
+    });
+
+  });
+
+</script>
+<script id="stat-text-js" type="text/javascript">
+  // console.log(app.cutsTheMustard());
+
+  var statTexts = $('.stat-text');
+
+  statTexts.addClass('transition transparent');
+  
+  var watchers = $('.stat-text').each(function addWatchers(el){
+    var $el = $(el);
+    var watcher = scrollMonitor.create(el);
+
+    watcher.fullyEnterViewport(function(){
+      $el.removeClass('transparent');
+    });
+
+    watcher.exitViewport(function(){
+      $el.addClass('transparent');
+    });
+
+  });
+
+</script>
+<script id="scrollmation-text-left-js" type="text/javascript">
+  // console.log(app.cutsTheMustard());
+
+  var scrollmationStartTags = $('.scrollmation-start');
+  var scrollmationTextTags = $('.scrollmation-text');
+  var scrollmationEndTags = $('.scrollmation-end');
+
+  var startWatchers = scrollmationStartTags.each(function addWatchers(el){
+    var $el = $(el);
+    var watcher = scrollMonitor.create(el);
+    var $container = $(el.parentNode);
+
+    watcher.enterViewport(function() {
+      $container.css('background-position', 'top');
+      $container.css('background-attachment', 'scroll');
+    });
+
+  });
+
+  var textWatchers = scrollmationTextTags.each(function addWatchers(el){
+    var $el = $(el);
+    var watcher = scrollMonitor.create(el);
+    var $container = $(el.parentNode);
+
+    watcher.fullyEnterViewport(function(){
+      $container.css('background-attachment', 'fixed');
+    });
+
+  });
+
+  var endWatchers = scrollmationEndTags.each(function addWatchers(el){
+    var $el = $(el);
+    var watcher = scrollMonitor.create(el);
+    var $container = $(el.parentNode);
+
+    watcher.enterViewport(function(){
+      console.log('end is in shot', $container)
+      $container.css('background-position', 'top');
+      $container.css('background-attachment', 'scroll');
+    });
+
+  });
+
+</script>
+
+  <!-- scripts for CMS -->
+  <script src="cms/js/vendor.js"></script>
+  <script src="cms/js/cms.js"></script>
+  <script type="text/javascript">
+    // load cms with custom options
+    var cms = require('cms');
+    var cmsConfig = {
+      'name'            : 'custom options',
+      'sectionSelector' : 'body .section',
+      'sectionContainer': '<div class="section"></div>', 
+      'mustardClass'    : 'with-cms',
+    };
+    cms.init(cmsConfig);
+  </script>
 </body>
 
 </html>

@@ -1,0 +1,44 @@
+<script id="scrollmation-text-left-js" type="text/javascript">
+  // console.log(app.cutsTheMustard());
+
+  var scrollmationStartTags = $('.scrollmation-start');
+  var scrollmationTextTags = $('.scrollmation-text');
+  var scrollmationEndTags = $('.scrollmation-end');
+
+  var startWatchers = scrollmationStartTags.each(function addWatchers(el){
+    var $el = $(el);
+    var watcher = scrollMonitor.create(el);
+    var $container = $(el.parentNode);
+
+    watcher.enterViewport(function() {
+      $container.css('background-position', 'top');
+      $container.css('background-attachment', 'scroll');
+    });
+
+  });
+
+  var textWatchers = scrollmationTextTags.each(function addWatchers(el){
+    var $el = $(el);
+    var watcher = scrollMonitor.create(el);
+    var $container = $(el.parentNode);
+
+    watcher.fullyEnterViewport(function(){
+      $container.css('background-attachment', 'fixed');
+    });
+
+  });
+
+  var endWatchers = scrollmationEndTags.each(function addWatchers(el){
+    var $el = $(el);
+    var watcher = scrollMonitor.create(el);
+    var $container = $(el.parentNode);
+
+    watcher.enterViewport(function(){
+      console.log('end is in shot', $container)
+      $container.css('background-position', 'top');
+      $container.css('background-attachment', 'scroll');
+    });
+
+  });
+
+</script>

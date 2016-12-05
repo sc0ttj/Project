@@ -1,0 +1,14 @@
+  <!-- scripts for CMS -->
+  <script src="cms/js/vendor.js"></script>
+  <script src="cms/js/cms.js"></script>
+  <script type="text/javascript">
+    // load cms with custom options
+    var cms = require('cms');
+    var cmsConfig = {
+      'name'            : 'custom options',
+      'sectionSelector' : 'body .section',
+      'sectionContainer': '<div class="section"></div>', 
+      'mustardClass'    : 'with-cms',
+    };
+    cms.init(cmsConfig);
+  </script>
