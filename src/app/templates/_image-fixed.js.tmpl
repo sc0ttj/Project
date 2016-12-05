@@ -1,0 +1,22 @@
+<script id="image-fixed-js" type="text/javascript">
+  // console.log(app.cutsTheMustard());
+
+  var fixedImages = $('.fixed-image-text');
+
+  fixedImages.addClass('transition transparent');
+  
+  var watchers = $('.fixed-image-text').each(function addWatchers(el){
+    var $el = $(el);
+    var watcher = scrollMonitor.create(el);
+
+    watcher.fullyEnterViewport(function(){
+      $el.removeClass('transparent');
+    });
+
+    watcher.exitViewport(function(){
+      $el.addClass('transparent');
+    });
+
+  });
+
+</script>
