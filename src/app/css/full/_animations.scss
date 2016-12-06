@@ -1,24 +1,25 @@
-.transition {
--webkit-transition: all 1s ease;
-  -moz-transition: all 1s ease;
-  -ms-transition: all 1s ease;
-  -o-transition: all 1s ease;
-  transition: all 1s ease;
- -webkit-transition-delay: 0.1s;
-    transition-delay: 0.1s;
-}
+.html5 {
+  .transition {
+  -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
+   -webkit-transition-delay: 0.1s;
+      transition-delay: 0.1s;
+  }
 
-.scrollmation-fix {
--webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -ms-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
+  .scrollmation-fix {
+  -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+  }
 
-.transparent {
-  -webkit-opacity: 0;
-  -moz-opacity: 0;
-  opacity: 0;
+  .transparent {
+    -webkit-opacity: 0;
+    -moz-opacity: 0;
+    opacity: 0;
+  }
 }
-
