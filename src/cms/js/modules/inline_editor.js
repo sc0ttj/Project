@@ -18,34 +18,6 @@ module.exports = {
     this.startEventHandlers();
   },
 
-  startEventHandlers: function(){
-    var $nextEditableElem = $('.cms-editable')[0],
-        nextEditableItemExists;
-
-    function onEditableEnterHandler(e) {
-     if (e.keyCode === 13) {
-        e.preventDefault();
-        if (nextEditableItemExists) $nextEditableElem[0].focus();
-        return false;
-      }
-    }
-
-    function onEditableBlurHandler(e) {
-      var elemIsEmpty = (this.innerHTML === '');
-      if (elemIsEmpty) $(this).remove();
-    }
-
-    function onEditableFocusHandler(e) {
-      $nextEditableElem = $('.cms-editable').eq($('.cms-editable').index($(this))+1);
-      nextEditableItemExists = ($nextEditableElem[0] === "{}" || typeof $nextEditableElem[0] != 'undefined');
-    }
-
-    $('.cms-editable').on('focus', onEditableFocusHandler);
-    $('.cms-editable').on('blur', onEditableBlurHandler);
-    $('.cms-editable').on('keypress', onEditableEnterHandler);
-
-  },
-
   makeItemsEditable: function(items){
     var self = this;
     items.forEach(function makeItemEditable(el, i){
@@ -54,6 +26,36 @@ module.exports = {
       $(elems).addClass('cms-editable');
     });
 
+  },
+
+  startEventHandlers: function(){
+    var $nextEditableElem = $('.cms-editable')[0],
+        nextEditableItemExists;
+
+    $('.cms-editable').on('focus', this.onEditableFocusHandler);
+    $('.cms-editable').on('blur', this.onEditableBlurHandler);
+    $('.cms-editable').on('keypress', this.onEditableEnterHandler);
+
+  },
+
+  onEditableEnterHandler: function(e){
+   if (e.keyCode === 13) {
+      e.preventDefault();
+      if (nextEditableItemExists) $nextEditableElem[0].focus();
+      return false;
+    }
+  },
+
+  onEditableBlurHandler: function(e){
+    var elemIsEmpty = (this.innerHTML === ''),
+        elemIsPara  = (this.tagName == 'P'),
+        isInArticle = ($(this).parents().hasClass('article'));
+    if (elemIsPara && elemIsEmpty && isInArticle) $(this).remove();
+  },
+
+  onEditableFocusHandler: function(e){
+    $nextEditableElem = $('.cms-editable').eq($('.cms-editable').index($(this))+1);
+    nextEditableItemExists = ($nextEditableElem[0] === "{}" || typeof $nextEditableElem[0] != 'undefined');
   },
 
 }
