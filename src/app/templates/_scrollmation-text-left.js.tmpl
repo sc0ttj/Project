@@ -34,7 +34,6 @@
     var $container = $(el.parentNode);
 
     watcher.enterViewport(function(){
-      console.log('end is in shot', $container)
       $container.css('background-position', 'top');
       $container.css('background-attachment', 'scroll');
     });

@@ -275,7 +275,6 @@
     var $container = $(el.parentNode);
 
     watcher.enterViewport(function(){
-      console.log('end is in shot', $container)
       $container.css('background-position', 'top');
       $container.css('background-attachment', 'scroll');
     });
@@ -294,6 +293,7 @@
       'name'            : 'custom options',
       'sectionSelector' : 'body .section',
       'sectionContainer': '<div class="section"></div>', 
+      'editableItems'   : [ 'h1', 'h2', 'p', 'span' ],
       'mustardClass'    : 'with-cms',
     };
     cms.init(cmsConfig);

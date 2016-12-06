@@ -11,6 +11,7 @@ module.exports = {
     'name'            : 'default CMS options',
     'sectionContainer': '<div class="section"></div>', 
     'sectionSelector' : 'body .section',
+    'editableItems'   : [ 'h1', 'h2', 'p', 'span' ],
     'mustardClass'    : 'html5-cms',
   },
 
