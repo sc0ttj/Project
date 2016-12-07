@@ -74,7 +74,7 @@ module.exports = {
   },
 
   elemIsEmpty: function (el) {
-    var elemIsEmpty = (el.innerHTML === '' || el.innerHTML === '<br>' || el.innerHTML === '<div></div>');
+    var elemIsEmpty = (el.innerHTML === '' || el.innerHTML === '\n' || el.innerHTML === '<br>' || el.innerHTML === '<b></b>'  || el.innerHTML === '<i></i>' || el.innerHTML === '<div></div>');
     if (elemIsEmpty) return true;
     return false;
   },
