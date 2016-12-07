@@ -14,48 +14,109 @@ module.exports = {
 
   init: function(config){
     this.setConfig(config);
-    this.makeItemsEditable(config.editableItems);
-    this.startEventHandlers();
+    this.setEditableItems(config.editableItems);
+    $nextEditableElem = $('.cms-editable')[0],
+    this.setEventHandlers();
   },
 
-  makeItemsEditable: function(items){
+  getEditableItems: function () {
+    return $('.cms-editable');
+  },
+
+  setEditableItems: function(items){
+    // document.designMode = 'on'; //makes ALL items editable, very buggy
     var self = this;
     items.forEach(function makeItemEditable(el, i){
-      var elems = self.config.sectionSelector + ' ' + el;
-      $(elems).attr('contenteditable', true);
-      $(elems).addClass('cms-editable');
+      var $elems = $(self.config.sectionSelector + ' ' + el);
+      $elems.attr('contenteditable', true);
+      $elems.addClass('cms-editable');
     });
-
   },
 
-  startEventHandlers: function(){
-    var $nextEditableElem = $('.cms-editable')[0],
-        nextEditableItemExists;
-
-    $('.cms-editable').on('focus', this.onEditableFocusHandler);
-    $('.cms-editable').on('blur', this.onEditableBlurHandler);
-    $('.cms-editable').on('keypress', this.onEditableEnterHandler);
-
+  setEventHandlers: function(){
+    var nextEditableItemExists,
+        $nextEditableElem,
+        editables = this.getEditableItems();
+        self = this;
+    editables.on('focus', this.onEditableFocusHandler);
+    editables.on('blur', this.onEditableBlurHandler);
+    editables.on('keypress', this.onEditableEnterHandler);
   },
 
   onEditableEnterHandler: function(e){
+   var el = this;
    if (e.keyCode === 13) {
       e.preventDefault();
+      if(self.elemIsArticlePara(el)){
+        self.createNewParaAfterCurrentElem(el);
+        $nextEditableElem = self.getNextEditableItem(el);
+        self.setEventHandlers();
+      }
       if (nextEditableItemExists) $nextEditableElem[0].focus();
       return false;
     }
   },
 
   onEditableBlurHandler: function(e){
-    var elemIsEmpty = (this.innerHTML === ''),
-        elemIsPara  = (this.tagName == 'P'),
-        isInArticle = ($(this).parents().hasClass('article'));
-    if (elemIsPara && elemIsEmpty && isInArticle) $(this).remove();
+    var el = this,
+        elemIsEmpty = self.elemIsEmpty(el),
+        elemIsArticlePara = self.elemIsArticlePara(el);
+    if (elemIsEmpty && elemIsArticlePara) $(el).remove();
   },
 
   onEditableFocusHandler: function(e){
-    $nextEditableElem = $('.cms-editable').eq($('.cms-editable').index($(this))+1);
+    $nextEditableElem = self.getNextEditableItem(this);
     nextEditableItemExists = ($nextEditableElem[0] === "{}" || typeof $nextEditableElem[0] != 'undefined');
+  },
+
+  getNextEditableItem: function (el) {
+    return $('.cms-editable').eq($('.cms-editable').index($(el))+1);
+  },
+
+  elemIsEmpty: function (el) {
+    var elemIsEmpty = (el.innerHTML === '' || el.innerHTML === '<br>' || el.innerHTML === '<div></div>');
+    if (elemIsEmpty) return true;
+    return false;
+  },
+
+  elemIsArticlePara: function (el) {
+    var elemIsPara  = (el.tagName == 'P'),
+        isInArticle = ($(el).parents().hasClass('article'));
+    if (elemIsPara && isInArticle) return true;
+    return false;
+  },
+
+  createNewParaAfterCurrentElem: function(el){
+    //https://stackoverflow.com/questions/4896944/converting-range-or-documentfragment-to-string
+    var $el = $(el),
+        p = document.createElement('p'),
+        text = self.getTextAfterCaret();
+    $(p).attr('contenteditable', true);
+    $(p).addClass('cms-editable');
+    $(p).append(text);
+    $el.after(p);
+  },
+
+  //https://stackoverflow.com/questions/5740640/contenteditable-extract-text-from-caret-to-end-of-element?answertab=votes#tab-top
+  getTextBlockContainer: function(node) {
+    while (node) {
+      if (node.nodeType == 1) return node;
+      node = node.parentNode;
+    }
+  },
+
+  getTextAfterCaret: function() {
+    var sel = window.getSelection();
+    if (sel.rangeCount) {
+      var selRange = sel.getRangeAt(0);
+      var blockEl = self.getTextBlockContainer(selRange.endContainer);
+      if (blockEl) {
+        var range = selRange.cloneRange();
+        range.selectNodeContents(blockEl);
+        range.setStart(selRange.endContainer, selRange.endOffset);
+        return range.extractContents();
+      }
+    }
   },
 
 }
