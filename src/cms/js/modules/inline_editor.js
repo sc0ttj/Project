@@ -38,6 +38,11 @@ module.exports = {
         $nextEditableElem,
         editables = this.getEditableItems();
         self = this;
+    
+    editables.off('focus', this.onEditableFocusHandler);
+    editables.off('blur', this.onEditableBlurHandler);
+    editables.off('keypress', this.onEditableEnterHandler);
+    
     editables.on('focus', this.onEditableFocusHandler);
     editables.on('blur', this.onEditableBlurHandler);
     editables.on('keypress', this.onEditableEnterHandler);
@@ -74,7 +79,7 @@ module.exports = {
   },
 
   elemIsEmpty: function (el) {
-    var elemIsEmpty = (el.innerHTML === '' || el.innerHTML === '\n' || el.innerHTML === '<br>' || el.innerHTML === '<b></b>'  || el.innerHTML === '<i></i>' || el.innerHTML === '<div></div>');
+    var elemIsEmpty = (el.innerHTML === '' || el.innerHTML === '\n' || el.innerHTML === '<br>' || el.innerHTML === '<strong></strong>' || el.innerHTML === '<b></b>'  || el.innerHTML === '<i></i>' || el.innerHTML === '<em></em>' || el.innerHTML === '<div></div>');
     if (elemIsEmpty) return true;
     return false;
   },
@@ -94,6 +99,7 @@ module.exports = {
     $(p).attr('contenteditable', true);
     $(p).addClass('cms-editable');
     $(p).append(text);
+    document.execCommand('insertText', false, ' '); //fixes for undo/redo UX
     $el.after(p);
   },
 
