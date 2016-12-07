@@ -99,7 +99,7 @@ module.exports = {
     $(p).attr('contenteditable', true);
     $(p).addClass('cms-editable');
     $(p).append(text);
-    document.execCommand('insertText', false, ' '); //fixes for undo/redo UX
+    document.execCommand('insertText', false, ''); //fixes for undo/redo UX
     $el.after(p);
   },
 
