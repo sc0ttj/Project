@@ -14,13 +14,25 @@ module.exports = {
 
   init: function(config){
     this.setConfig(config);
+    this.editableClass = 'cms-editable';
+    this.editableSelector = '.'+this.editableClass;
+
+    this.setEditableRegions(config.editableRegionClass);
     this.setEditableItems(config.editableItems);
-    $nextEditableElem = $('.cms-editable')[0],
+    $nextEditableElem = $(this.editableSelector)[0],
     this.setEventHandlers();
   },
 
   getEditableItems: function () {
-    return $('.cms-editable');
+    return $(this.editableSelector);
+  },
+
+  setEditableRegions: function(selector){
+    var selector = selector.replace(/^\./, '');
+    var $elems = $(this.config.sectionSelector + ' .' + selector);
+    $elems.attr('contenteditable', true);
+    $elems.addClass(this.editableClass);
+    $elems.addClass('cms-editable-region');
   },
 
   setEditableItems: function(items){
@@ -29,7 +41,7 @@ module.exports = {
     items.forEach(function makeItemEditable(el, i){
       var $elems = $(self.config.sectionSelector + ' ' + el);
       $elems.attr('contenteditable', true);
-      $elems.addClass('cms-editable');
+      $elems.addClass(self.editableClass);
     });
   },
 
@@ -41,32 +53,34 @@ module.exports = {
     
     editables.off('focus', this.onEditableFocusHandler);
     editables.off('blur', this.onEditableBlurHandler);
-    editables.off('keypress', this.onEditableEnterHandler);
+    editables.off('keypress', this.onEditableKeyPressHandler);
     
     editables.on('focus', this.onEditableFocusHandler);
     editables.on('blur', this.onEditableBlurHandler);
-    editables.on('keypress', this.onEditableEnterHandler);
+    editables.on('keypress', this.onEditableKeyPressHandler);
   },
 
-  onEditableEnterHandler: function(e){
+  onEditableKeyPressHandler: function(e){
    var el = this;
+   
+   // firefox fix - dont allow total emptying of editable regions
+   if(self.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p></p>');
+
    if (e.keyCode === 13) {
-      e.preventDefault();
-      if(self.elemIsArticlePara(el)){
-        self.createNewParaAfterCurrentElem(el);
-        $nextEditableElem = self.getNextEditableItem(el);
-        self.setEventHandlers();
+      if(!self.elemIsContainer(el)){
+        e.preventDefault();
+        if (nextEditableItemExists) $nextEditableElem[0].focus();
       }
-      if (nextEditableItemExists) $nextEditableElem[0].focus();
       return false;
     }
   },
 
   onEditableBlurHandler: function(e){
     var el = this,
+        $el = $(el);
         elemIsEmpty = self.elemIsEmpty(el),
-        elemIsArticlePara = self.elemIsArticlePara(el);
-    if (elemIsEmpty && elemIsArticlePara) $(el).remove();
+        elemIsContainer = self.elemIsContainer(el);
+    if (elemIsEmpty && elemIsContainer) $el.remove();
   },
 
   onEditableFocusHandler: function(e){
@@ -75,7 +89,7 @@ module.exports = {
   },
 
   getNextEditableItem: function (el) {
-    return $('.cms-editable').eq($('.cms-editable').index($(el))+1);
+    return $(this.editableSelector).eq($(this.editableSelector).index($(el))+1);
   },
 
   elemIsEmpty: function (el) {
@@ -84,23 +98,11 @@ module.exports = {
     return false;
   },
 
-  elemIsArticlePara: function (el) {
-    var elemIsPara  = (el.tagName == 'P'),
-        isInArticle = ($(el).parents().hasClass('article'));
-    if (elemIsPara && isInArticle) return true;
+  elemIsContainer: function (el) {
+    var editableRegionClass = this.config.editableRegionClass.replace(/^\./, '');
+    var elemIsContainer  = ($(el).hasClass(editableRegionClass));
+    if (elemIsContainer) return true;
     return false;
-  },
-
-  createNewParaAfterCurrentElem: function(el){
-    //https://stackoverflow.com/questions/4896944/converting-range-or-documentfragment-to-string
-    var $el = $(el),
-        p = document.createElement('p'),
-        text = self.getTextAfterCaret();
-    $(p).attr('contenteditable', true);
-    $(p).addClass('cms-editable');
-    $(p).append(text);
-    document.execCommand('insertText', false, ''); //fixes for undo/redo UX
-    $el.after(p);
   },
 
   //https://stackoverflow.com/questions/5740640/contenteditable-extract-text-from-caret-to-end-of-element?answertab=votes#tab-top

@@ -26,8 +26,10 @@
   }
 }
 
-.cms-editable:hover {
-  background-color: rgba(255, 200, 0, 0.2);
+.cms-editable {
+  &:focus, &:hover {
+    background-color: rgba(255, 220, 0, 0.1);
+  }
 }
 
 //http://stackoverflow.com/questions/2310734/how-to-make-html-text-unselectable?answertab=votes#tab-top
