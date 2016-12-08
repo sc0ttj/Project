@@ -17,6 +17,8 @@ module.exports = {
     this.editableClass = 'cms-editable';
     this.editableSelector = '.'+this.editableClass;
 
+    this.isInFirefox = (typeof InstallTrigger !== 'undefined');
+
     this.setEditableRegions(config.editableRegionClass);
     this.setEditableItems(config.editableItems);
     $nextEditableElem = $(this.editableSelector)[0],
@@ -61,12 +63,12 @@ module.exports = {
   },
 
   onEditableKeyPressHandler: function(e){
-   var el = this;
-   
-   // firefox fix - dont allow total emptying of editable regions
-   if(self.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p></p>');
+    var el = this;
 
-   if (e.keyCode === 13) {
+    // crude firefox fix - dont allow total emptying of editable regions
+    if(self.isInFirefox && self.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p></p>');
+
+    if (e.keyCode === 13) {
       if(!self.elemIsContainer(el)){
         e.preventDefault();
         if (nextEditableItemExists) $nextEditableElem[0].focus();
