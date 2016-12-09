@@ -5,7 +5,6 @@ Project
 * The static page is in `src/app/`, and the CMS is in `src/cms`
 * The static page and its assets are built to `www/`
 * The CMS is built to `www/cms/`
-* The static page is blank by default, and you use the CMS to update the page.
 
 -------------
 
@@ -18,17 +17,19 @@ Fork this repo, download, and then:
         ./setup-host-ubuntu-env.sh
 
 
-2. Project setup: do this every time you login or boot up your PC
 
-  a. in a terminal, run the following commands:
+2. Project setup and config:
+
+  a. In a terminal, run the following commands:
 
         npm install
         bower update
-        vagrant up
+        vagrant up --provision
 
-  b. run the following command to build the app and cms
+  b. Run the following command to build the app and cms
 
         brunch build
+
 
 
 3. Do your dev work:
@@ -37,24 +38,38 @@ Fork this repo, download, and then:
 
         brunch watch
 
-  b. open the following address in your preferred browser:
+  b. Open the following address in your preferred browser:
 
         http://localhost:8080/
 
-  c. make a new git branch for your new feature/bugfix/changes:
+  c. Make a new git branch for your new feature/bugfix:
 
-        git checkout -b my_new_feature
+        git checkout -b my_new_branch
 
-  d. edit the code in `src/` and save, view in your browser
+  d. Edit the code in `src/` and save, then view in your browser
 
-  e. also run the tests:
+  e. If any .tmpl files are changed, restart `brunch watch` to recompile them
 
-       brunch build --env=test
 
-  f. if they pass and you're happy, save to github:
+
+4. Testing and saving:
+  
+  a. To view on other devices, you can run the following command:
+
+      vagrant share --name myapp
+
+  b. You (and anyone else!) can then visit the following URL on any device:
+
+        http://myapp.vagrantshare.com
+
+  c. Also run the unit tests:
+
+       brunch test
+
+  d. If they pass and you're happy, save to github:
 
        git add .
        git commit -m 'my message'
-       git push origin master
+       git push origin my_new_branch
 
 
