@@ -1,9 +1,13 @@
-  <!-- https://codepen.io/dropside/full/bxhke/ -->
-  <div class="fixed-image-container">
-      <div class="fixed-image-text-container">
-        <h2 class="fixed-image-text">
-          Fixed image text is in here
-        </h2>
-    </div>
+<div class="fixed-image-container">
+  <h2 class="fixed-image-text">Example Image Text And More</h2>
+  <div class="fixed-image-background">
+      <picture class="fixed-image-picture">
+        <!-- portrait: low res (1001w), then high res -->
+        <source media="(max-aspect-ratio: 1/1)" 
+          srcset="http://news.bbcimg.co.uk/news/special/2016/newsspec_14261/media/champs2-lr.jpg 1001w,
+          http://news.bbcimg.co.uk/news/special/2016/newsspec_14261/media/champs2-hr.jpg">
+        <!-- landscape -->
+        <img class="fixed-image-img" src="http://news.bbcimg.co.uk/news/special/2016/newsspec_14261/media/gettyimages-160046443-lr_8jfp1or.jpg">
+      </picture>
   </div>
-  <!-- js -->
+</div>

@@ -4,6 +4,7 @@ $section-margin: 1rem;
 .section {
   box-sizing: border-box;
   padding: $section-padding;
+  position: relative;
   margin: 0;
   width: 100%;
   float:none;
