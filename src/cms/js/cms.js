@@ -10,8 +10,8 @@ module.exports = {
   config: {
     'name'            : 'default CMS options',
     'sectionContainer': '<div class="section"></div>', 
-    'sectionSelector' : 'body .section',
-    'editableItems'   : [ 'h1', 'h2', 'p' ],
+    'editableItems'   : [ 'h1', 'h2', 'p', 'li' ],
+    'editableRegionClass' : 'editable-region',
     'mustardClass'    : 'html5-cms',
   },
 
