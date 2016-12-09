@@ -1,4 +1,5 @@
-var $ = require('cash-dom');
+var $       = require('cash-dom');
+var editor  = require('modules/inline_editor');
 
 "use strict";
 
@@ -8,24 +9,15 @@ module.exports = {
 
     this.addUI();
 
-    this.startEvents();
-    
-    return true // if we loaded ok
-  },
+    editor.init(config);
 
-  startEvents: function(){
-    function clickHandler(e){
-      console.log(e);
-    }
-    $('.cms-ui-btn').on('click', clickHandler);
+    return true // if we loaded ok
   },
 
   addUI: function(){
     var uiHtml = '<button class="cms-ui-btn cms-txt-unselectable clear">☰</button>';
     $('body').prepend(uiHtml);
   },
-
-//
 
   getConfig: function (){
     return this.config;
