@@ -74,12 +74,12 @@ Fork this repo, download, and then:
 
   - Also run the unit tests:
 
-       brunch test
+        brunch test
 
   - If they pass and you're happy, save to github:
 
-       git add .
-       git commit -m 'my message'
-       git push origin my_new_branch
+        git add .
+        git commit -m 'my message'
+        git push origin my_new_branch
 
 
