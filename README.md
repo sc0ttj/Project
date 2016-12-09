@@ -9,7 +9,7 @@ Project
 Fork this repo, download, and then:
 -------------
 
-1. Installation: you only need to do this once!
+> Installation: you only need to do this once!
 
   - open a terminal in this folder and run this command:
 
@@ -17,7 +17,7 @@ Fork this repo, download, and then:
 
 -------------
 
-2. Project setup and config:
+> Project setup and config:
 
   a. In a terminal, run the following commands:
 
@@ -31,7 +31,7 @@ Fork this repo, download, and then:
 
 -------------
 
-3. Do your dev work:
+> Do your dev work:
 
   a. in a terminal, run this command to auto build the app after each save:
 
@@ -51,7 +51,7 @@ Fork this repo, download, and then:
 
 -------------
 
-4. Testing and saving:
+> Testing and saving:
   
   a. To view on other devices, you can run the following command:
 
