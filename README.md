@@ -6,9 +6,8 @@ Project
 * The static page and its assets are built to `www/`
 * The CMS is built to `www/cms/`
 
--------------
-
 Fork this repo, download, and then:
+-------------
 
 1. Installation: you only need to do this once!
 
@@ -16,7 +15,7 @@ Fork this repo, download, and then:
 
         ./setup-host-ubuntu-env.sh
 
-
+-------------
 
 2. Project setup and config:
 
@@ -30,7 +29,7 @@ Fork this repo, download, and then:
 
         brunch build
 
-
+-------------
 
 3. Do your dev work:
 
@@ -50,7 +49,7 @@ Fork this repo, download, and then:
 
   e. If any .tmpl files are changed, restart `brunch watch` to recompile them
 
-
+-------------
 
 4. Testing and saving:
   
