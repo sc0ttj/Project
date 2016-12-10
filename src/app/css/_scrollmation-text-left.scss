@@ -1,11 +1,17 @@
 .scrollmation-container { 
-  background: url('http://placehold.it/1280x760');
+  margin-top: 2.4rem;
+}
+
+.scrollmation-container-background-image {
+  background: url('http://placehold.it/1280x760') no-repeat center center;
   background-position: top;
+  background-size: auto 100vh;
 }
 
 .scrollmation-text {
   background-color: $body-bg-color;
-  padding-right: 1rem;
+  padding-left:2%;
+  padding-right:2%;
   word-wrap: break-word;
   @media screen and (orientation:portrait) {
     width:50%;
@@ -13,4 +19,18 @@
   @media screen and (orientation:landscape) {
     width:40%;
   }
+}
+
+.scrollmation-mobilefix:before {
+  content: "";
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  background: url('http://placehold.it/1280x760') no-repeat center center;
+  background-position:top;
+  background-size: auto 100vh;
 }

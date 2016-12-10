@@ -12,7 +12,8 @@
 
     watcher.enterViewport(function() {
       $container.css('background-position', 'top');
-      $container.css('background-attachment', 'scroll');
+      $container.addClass('scrollmation-container-background-image');
+      $container.removeClass('scrollmation-mobilefix');
     });
 
   });
@@ -23,7 +24,8 @@
     var $container = $(el.parentNode);
 
     watcher.fullyEnterViewport(function(){
-      $container.css('background-attachment', 'fixed');
+      $container.removeClass('scrollmation-container-background-image');
+      $container.addClass('scrollmation-mobilefix');
     });
 
   });
@@ -34,8 +36,9 @@
     var $container = $(el.parentNode);
 
     watcher.enterViewport(function(){
-      $container.css('background-position', 'top');
-      $container.css('background-attachment', 'scroll');
+      $container.css('background-position', 'bottom');
+      $container.addClass('scrollmation-container-background-image');
+      $container.removeClass('scrollmation-mobilefix');
     });
 
   });
