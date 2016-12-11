@@ -16,7 +16,7 @@ module.exports = {
 
   addUI: function(){
     var uiHtml = '<button class="cms-ui-btn cms-txt-unselectable clear">☰</button>';
-    $('body').prepend(uiHtml);
+    $('body').append(uiHtml);
   },
 
   getConfig: function (){
