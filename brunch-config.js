@@ -1,4 +1,4 @@
-var pageData = require('./src/app/js/_config.js');
+var pageData = require('./src/app/js/_pageConfig.js');
 
 exports.config = {
   paths: {

@@ -1,0 +1,1 @@
+module.exports = { heroTitle : 'My Page Title!' };
