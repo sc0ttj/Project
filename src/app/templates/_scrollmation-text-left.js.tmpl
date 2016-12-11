@@ -4,16 +4,16 @@
   var scrollmationStartTags = $('.scrollmation-start');
   var scrollmationTextTags = $('.scrollmation-text');
   var scrollmationEndTags = $('.scrollmation-end');
+  var $container = $('.scrollmation-image-container');
 
   var startWatchers = scrollmationStartTags.each(function addWatchers(el){
     var $el = $(el);
     var watcher = scrollMonitor.create(el);
-    var $container = $(el.parentNode);
 
     watcher.enterViewport(function() {
-      $container.css('background-position', 'top');
-      $container.addClass('scrollmation-container-background-image');
-      $container.removeClass('scrollmation-mobilefix');
+      $container.removeClass('scrollmation-image-container-fixed');
+      $container.removeClass('scrollmation-image-container-bottom');
+      $container.addClass('scrollmation-image-container-top');
     });
 
   });
@@ -21,11 +21,11 @@
   var textWatchers = scrollmationTextTags.each(function addWatchers(el){
     var $el = $(el);
     var watcher = scrollMonitor.create(el);
-    var $container = $(el.parentNode);
 
     watcher.fullyEnterViewport(function(){
-      $container.removeClass('scrollmation-container-background-image');
-      $container.addClass('scrollmation-mobilefix');
+      $container.removeClass('scrollmation-image-container-top');
+      $container.removeClass('scrollmation-image-container-bottom');
+      $container.addClass('scrollmation-image-container-fixed');
     });
 
   });
@@ -33,12 +33,11 @@
   var endWatchers = scrollmationEndTags.each(function addWatchers(el){
     var $el = $(el);
     var watcher = scrollMonitor.create(el);
-    var $container = $(el.parentNode);
 
     watcher.enterViewport(function(){
-      $container.css('background-position', 'bottom');
-      $container.addClass('scrollmation-container-background-image');
-      $container.removeClass('scrollmation-mobilefix');
+      $container.removeClass('scrollmation-image-container-fixed');
+      $container.removeClass('scrollmation-image-container-top');
+      $container.addClass('scrollmation-image-container-bottom');
     });
 
   });

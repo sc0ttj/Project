@@ -1,5 +1,15 @@
-  <div class="scrollmation-container scrollmation-container-background-image">
+  <div class="scrollmation-container">
     <div class="scrollmation-start"></div>
+    <div class="scrollmation-image-container">
+      <picture>
+        <!-- portrait: low res (1001w), then high res -->
+        <source media="(max-aspect-ratio: 1/1)" 
+          srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Matterhorn_Riffelsee_2005-06-11.jpg/500px-Matterhorn_Riffelsee_2005-06-11.jpg 700w,
+          https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Matterhorn_Riffelsee_2005-06-11.jpg/800px-Matterhorn_Riffelsee_2005-06-11.jpg">
+        <!-- landscape -->
+        <img class="scrollmation-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Matterhorn_Riffelsee_2005-06-11.jpg/800px-Matterhorn_Riffelsee_2005-06-11.jpg" />
+      </picture>
+    </div>
     <div class="scrollmation-text">
       <h2>Scrollmation Text Left</h2>
       <div class="editable-region">
