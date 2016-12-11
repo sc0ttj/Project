@@ -3,7 +3,6 @@
 }
 
 .scrollmation-image-container {
-  position:absolute;
   height:100vh;
   left:0;
   width:100%;
@@ -12,11 +11,13 @@
 }
 
 .scrollmation-image-container-top {
-  top:0;
+   position:absolute;
+   top:0;
 }
 
 .scrollmation-image-container-bottom {
-  bottom:0;
+   position:absolute;
+   bottom:0;
 }
 
 .scrollmation-image-container-fixed {
@@ -31,8 +32,11 @@
 }
 
 .scrollmation-text {
-  background-color: $body-bg-color;
+}
+
+.scrollmation-text-js {
   padding-top: 2.4rem;
+  background-color: $body-bg-color;
   padding-left:2%;
   padding-right:2%;
   word-wrap: break-word;
