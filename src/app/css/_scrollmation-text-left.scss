@@ -1,5 +1,4 @@
 .scrollmation-container { 
-  margin-top: 2.4rem;
 }
 
 .scrollmation-image-container {
@@ -40,6 +39,7 @@
   padding-left:2%;
   padding-right:2%;
   word-wrap: break-word;
+  padding-bottom: 1.6rem;
   @media screen and (orientation:portrait) {
     margin-left:2%;
     width:45%;
