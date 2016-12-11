@@ -19,6 +19,8 @@ module.exports = {
 
     this.isInFirefox = (typeof InstallTrigger !== 'undefined');
 
+    document.body.setAttribute('spellcheck', false);
+
     this.setEditableRegions(config.editableRegionClass);
     this.setEditableItems(config.editableItems);
     $nextEditableElem = $(this.editableSelector)[0],
