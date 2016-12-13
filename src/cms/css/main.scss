@@ -46,11 +46,57 @@
   outline-width: 2px;
 }
 
-.cms-editable-region[contenteditable]:hover {
+.cms-no-outline, .cms-editable-region[contenteditable]:hover {
   outline-color: transparent;
   outline-style: dashed;
   outline-offset: 0;
   outline-width: 0;
+}
+
+::selection {
+  background: #fff2a8;
+}
+::-moz-selection {
+  background: #fff2a8;
+}
+
+.cms-editable {
+  p {
+    margin-bottom: 26px;
+  }
+}
+
+.append-media-btn {
+  background-color: #444;
+  color: white;
+  cursor: pointer;
+  border-radius: 14px;
+  display: block;
+  font-size: 11px;
+  line-height:14px;
+  padding: 2px;
+  margin: 0 auto;
+  margin-top:-2px;
+  margin-bottom:-16px;
+  text-align:center;
+  width: 90px;
+  outline-color: transparent !important;
+  outline-style: dashed !important;
+  outline-offset: 0 !important;
+  outline-width: 0 !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  opacity: 0;
+}
+
+p[contenteditable]:hover {
+  .append-media-btn {
+    opacity: 1;
+  }
 }
 
 //http://stackoverflow.com/questions/2310734/how-to-make-html-text-unselectable?answertab=votes#tab-top

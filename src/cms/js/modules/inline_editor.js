@@ -21,22 +21,23 @@ module.exports = {
 
     document.body.setAttribute('spellcheck', false);
 
-    this.setEditableRegions(config.editableRegionClass);
     this.setEditableItems(config.editableItems);
-    $nextEditableElem = $(this.editableSelector)[0],
+    this.setEditableRegions(config.editableRegionClass);
+    $nextEditableElem = $('contenteditable')[0],
     this.setEventHandlers();
   },
 
   getEditableItems: function () {
-    return $(this.editableSelector);
+    return $('[contenteditable]');
   },
 
   setEditableRegions: function(selector){
     var selector = selector.replace(/^\./, '');
     var $elems = $(this.config.sectionSelector + ' .' + selector);
     $elems.attr('contenteditable', true);
-    $elems.addClass(this.editableClass);
+    // $elems.addClass(this.editableClass);
     $elems.addClass('cms-editable-region');
+    $($elems).children('p[contenteditable]').append('<div contenteditable=false onclick="if (this.parentNode.nextElementSibling) { $(this.parentNode.nextElementSibling).htmlBefore(\'<img style=width:100%; src=http://placehold.it/500 />\'); } else { $(this).htmlAfter(\'<img style=width:100%; src=http://placehold.it/500 />\'); }" id="append-media-btn" class="append-media-btn" contenteditable=false>ADD MEDIA</div>');
   },
 
   setEditableItems: function(items){
@@ -70,13 +71,23 @@ module.exports = {
     // crude firefox fix - dont allow total emptying of editable regions
     if(self.isInFirefox && self.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p></p>');
 
-    if (e.keyCode === 13) {
+    if (e.which === 13) {
       if(!self.elemIsContainer(el)){
         e.preventDefault();
         if (nextEditableItemExists) $nextEditableElem[0].focus();
+      } else {
+        $(':focus')[0].blur();
       }
       return false;
     }
+  },
+
+  addMediaButtons: function (el) {
+    $(el).children('p[contenteditable').each(function(){
+      if ($(this).children('.append-media-btn').length < 1){
+        $(this).append('<div contenteditable=false onclick="if (this.parentNode.nextElementSibling) { $(this.parentNode.nextElementSibling).htmlBefore(\'<img style=width:100%; src=http://placehold.it/500 />\'); } else { $(this).htmlAfter(\'<img style=width:100%; src=http://placehold.it/500 />\'); }" id="append-media-btn" class="append-media-btn" contenteditable=false>ADD MEDIA</div>');
+      }
+    });
   },
 
   onEditableBlurHandler: function(e){
@@ -85,15 +96,17 @@ module.exports = {
         elemIsEmpty = self.elemIsEmpty(el),
         elemIsContainer = self.elemIsContainer(el);
     if (elemIsEmpty && elemIsContainer) $el.remove();
+    self.addMediaButtons(el);
   },
 
   onEditableFocusHandler: function(e){
     $nextEditableElem = self.getNextEditableItem(this);
     nextEditableItemExists = ($nextEditableElem[0] === "{}" || typeof $nextEditableElem[0] != 'undefined');
+    self.addMediaButtons(this);
   },
 
   getNextEditableItem: function (el) {
-    return $(this.editableSelector).eq($(this.editableSelector).index($(el))+1);
+    return $('[contenteditable]').eq($('[contenteditable]').index($(el))+1);
   },
 
   elemIsEmpty: function (el) {
@@ -103,8 +116,7 @@ module.exports = {
   },
 
   elemIsContainer: function (el) {
-    var editableRegionClass = this.config.editableRegionClass.replace(/^\./, '');
-    var elemIsContainer  = ($(el).hasClass(editableRegionClass));
+    var elemIsContainer  = ($(el).children('[contenteditable]').length > 0);
     if (elemIsContainer) return true;
     return false;
   },
