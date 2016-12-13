@@ -76,7 +76,7 @@ module.exports = {
         e.preventDefault();
         if (nextEditableItemExists) $nextEditableElem[0].focus();
       } else {
-        $(':focus')[0].blur();
+        if (!self.isInFirefox) $(':focus')[0].blur();
       }
       return false;
     }
