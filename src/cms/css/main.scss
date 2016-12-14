@@ -35,16 +35,16 @@
 [contenteditable]:focus, [contenteditable]:hover {
   outline-color: transparent;
   outline-style: dashed;
-  outline-offset: 5px;
+  outline-offset: 4px;
   outline-width: 2px;
 }
 
-[contenteditable]:hover, [contenteditable]:focus {
-  outline-color: rgba(150,25,25,0.75);
-  outline-style: dashed;
-  outline-offset: 5px;
-  outline-width: 2px;
-}
+// [contenteditable]:hover, [contenteditable]:focus {
+//   outline-color: rgba(150,25,25,0.75);
+//   outline-style: dashed;
+//   outline-offset: 4px;
+//   outline-width: 2px;
+// }
 
 .cms-no-outline, .cms-editable-region[contenteditable]:hover {
   outline-color: transparent;
@@ -60,26 +60,24 @@
   background: #fff2a8;
 }
 
-.cms-editable {
-  p {
-    margin-bottom: 26px;
-  }
+p.cms-editable {
+  margin-bottom: 24px;
 }
 
 .append-media-btn {
-  background-color: #444;
-  color: white;
+  &:hover, &:focus {
+    background-color: #ddd;
+  }
+  color: #000;
   cursor: pointer;
-  border-radius: 14px;
-  display: block;
-  font-size: 11px;
-  line-height:14px;
-  padding: 2px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height:18px;
+  padding: 4px;
   margin: 0 auto;
-  margin-top:-2px;
-  margin-bottom:-16px;
+  margin-bottom:-20px;
   text-align:center;
-  width: 90px;
+  width: 80px;
   outline-color: transparent !important;
   outline-style: dashed !important;
   outline-offset: 0 !important;
@@ -91,6 +89,9 @@
   -ms-user-select: none;
   user-select: none;
   opacity: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 p[contenteditable]:hover {
