@@ -21,6 +21,8 @@ module.exports = {
 
     document.body.setAttribute('spellcheck', false);
 
+    this.addMediaBtn = '<div id="append-media-btn" class="append-media-btn" contenteditable="false" onclick="if (this.parentNode.nextElementSibling) { $(this.parentNode.nextElementSibling).htmlBefore(\'<img style=width:100%; src=http://placehold.it/500 />\'); } else { $(this).htmlAfter(\'<img style=width:100%; src=http://placehold.it/500 />\'); }">ADD MEDIA</div>'
+
     this.setEditableItems(config.editableItems);
     this.setEditableRegions(config.editableRegionClass);
     $nextEditableElem = $('contenteditable')[0],
@@ -37,7 +39,7 @@ module.exports = {
     $elems.attr('contenteditable', true);
     // $elems.addClass(this.editableClass);
     $elems.addClass('cms-editable-region');
-    $($elems).children('p[contenteditable]').append('<div contenteditable=false onclick="if (this.parentNode.nextElementSibling) { $(this.parentNode.nextElementSibling).htmlBefore(\'<img style=width:100%; src=http://placehold.it/500 />\'); } else { $(this).htmlAfter(\'<img style=width:100%; src=http://placehold.it/500 />\'); }" id="append-media-btn" class="append-media-btn" contenteditable=false>ADD MEDIA</div>');
+    $($elems).children('p[contenteditable]').append(this.addMediaBtn);
   },
 
   setEditableItems: function(items){
@@ -84,8 +86,9 @@ module.exports = {
 
   addMediaButtons: function (el) {
     $(el).children('p[contenteditable').each(function(){
-      if ($(this).children('.append-media-btn').length < 1){
-        $(this).append('<div contenteditable=false onclick="if (this.parentNode.nextElementSibling) { $(this.parentNode.nextElementSibling).htmlBefore(\'<img style=width:100%; src=http://placehold.it/500 />\'); } else { $(this).htmlAfter(\'<img style=width:100%; src=http://placehold.it/500 />\'); }" id="append-media-btn" class="append-media-btn" contenteditable=false>ADD MEDIA</div>');
+      var $this = $(this);
+      if ($this.children('.append-media-btn').length < 1){
+        $this.append(self.addMediaBtn);
       }
     });
   },
@@ -97,12 +100,15 @@ module.exports = {
         elemIsContainer = self.elemIsContainer(el);
     if (elemIsEmpty && elemIsContainer) $el.remove();
     self.addMediaButtons(el);
+    self.removeLeftOverMediaBtns(el);
   },
 
   onEditableFocusHandler: function(e){
-    $nextEditableElem = self.getNextEditableItem(this);
+    var el = this;
+    $nextEditableElem = self.getNextEditableItem(el);
     nextEditableItemExists = ($nextEditableElem[0] === "{}" || typeof $nextEditableElem[0] != 'undefined');
-    self.addMediaButtons(this);
+    self.addMediaButtons(el);
+    self.removeLeftOverMediaBtns(el);
   },
 
   getNextEditableItem: function (el) {
@@ -119,6 +125,15 @@ module.exports = {
     var elemIsContainer  = ($(el).children('[contenteditable]').length > 0);
     if (elemIsContainer) return true;
     return false;
+  },
+
+  removeLeftOverMediaBtns: function (el){
+    $(el).children('p').each(function(){
+      var thisOnlyContainsMediaBtn = (this.innerHTML.indexOf('<div id="append-media-btn"') === 0);
+      if (thisOnlyContainsMediaBtn){
+        $(this).remove();
+      }
+    });
   },
 
   //https://stackoverflow.com/questions/5740640/contenteditable-extract-text-from-caret-to-end-of-element?answertab=votes#tab-top
