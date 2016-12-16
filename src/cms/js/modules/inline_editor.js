@@ -21,12 +21,23 @@ module.exports = {
 
     document.body.setAttribute('spellcheck', false);
 
-    this.addMediaBtn = '<div id="append-media-btn" class="append-media-btn" contenteditable="false" onclick="if (this.parentNode.nextElementSibling) { $(this.parentNode.nextElementSibling).htmlBefore(\'<img style=width:100%; src=http://placehold.it/500 />\'); } else { $(this).htmlAfter(\'<img style=width:100%; src=http://placehold.it/500 />\'); }">ADD MEDIA</div>'
+    this.createAddMediaBtn();
 
     this.setEditableItems(config.editableItems);
     this.setEditableRegions(config.editableRegionClass);
     $nextEditableElem = $('contenteditable')[0],
     this.setEventHandlers();
+  },
+
+  createAddMediaBtn: function (){
+    this.addMediaBtn = '<div id="append-media-btn" class="append-media-btn" contenteditable="false" onclick="addMediaClickHandler(this);">ADD MEDIA</div>'
+    addMediaClickHandler = function (el){
+      if (el.parentNode.nextElementSibling) { 
+        $(el.parentNode.nextElementSibling).prepend('<img style=width:100%; src=http://placehold.it/500 />');
+      } else { 
+        $(el).append('<img style=width:100%; src=http://placehold.it/500 />'); 
+      }
+    }
   },
 
   getEditableItems: function () {
