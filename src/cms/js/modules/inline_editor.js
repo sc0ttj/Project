@@ -18,26 +18,26 @@ module.exports = {
     this.editableSelector = '.'+this.editableClass;
 
     this.isInFirefox = (typeof InstallTrigger !== 'undefined');
-
     document.body.setAttribute('spellcheck', false);
 
-    this.createAddMediaBtn();
-
+    this.createMediaBtn();
     this.setEditableItems(config.editableItems);
     this.setEditableRegions(config.editableRegionClass);
     $nextEditableElem = $('contenteditable')[0],
     this.setEventHandlers();
   },
 
-  createAddMediaBtn: function (){
-    this.addMediaBtn = '<div id="append-media-btn" class="append-media-btn" contenteditable="false" onclick="addMediaClickHandler(this);">ADD MEDIA</div>'
-    addMediaClickHandler = function (el){
-      var imgHtml = '<img style=width:100%; src=http://placehold.it/500 />',
+  createMediaBtn: function (){
+    this.mediaBtn = '<div id="cms-media-btn" class="cms-media-btn" contenteditable="false" onclick="mediaBtnClickHandler(this);">ADD MEDIA</div>'
+    mediaBtnClickHandler = function (el){
+      var imgHtml = '<img class=cms-inline-media style=width:100%; src=http://placehold.it/500 />',
           $el     = $(el),
           $target = $el;
 
-      if ($el.hasClass('append-media-btn')) $target = $el.parent();
-      $target.append(imgHtml)
+      if ($el.hasClass('cms-media-btn')) $target = $el.parent();
+      var SthisBtn = $target.children('.cms-media-btn');
+      $target.append(imgHtml);
+      $target.children('.cms-media-btn').remove();
     }
   },
 
@@ -51,7 +51,7 @@ module.exports = {
     $elems.attr('contenteditable', true);
     // $elems.addClass(this.editableClass);
     $elems.addClass('cms-editable-region');
-    $($elems).children('p[contenteditable]').append(this.addMediaBtn);
+    $($elems).children('p[contenteditable]').append(this.mediaBtn);
   },
 
   setEditableItems: function(items){
@@ -98,10 +98,10 @@ module.exports = {
 
   addMediaButtons: function (el) {
     $(el).children('p[contenteditable').each(function(){
-      var $this = $(this);
-      if ($this.children('.append-media-btn').length < 1){
-        $this.append(self.addMediaBtn);
-      }
+      var $this = $(this)
+          $thisHasNoMediaBtn = ($this.children('.cms-media-btn').length < 1);
+          
+      if ($thisHasNoMediaBtn) $this.append(self.mediaBtn);
     });
   },
 
@@ -141,7 +141,7 @@ module.exports = {
 
   removeLeftOverMediaBtns: function (el){
     $(el).children('p').each(function(){
-      var thisOnlyContainsMediaBtn = (this.innerHTML.indexOf('<div id="append-media-btn"') === 0);
+      var thisOnlyContainsMediaBtn = (this.innerHTML.indexOf('<div id="cms-media-btn"') === 0);
       if (thisOnlyContainsMediaBtn){
         $(this).remove();
       }

@@ -64,7 +64,7 @@ p.cms-editable {
   margin-bottom: 24px;
 }
 
-.append-media-btn {
+.cms-media-btn {
   -webkit-transition: all 0.25s ease;
   -moz-transition: all 0.25s ease;
   -ms-transition: all 0.25s ease;
@@ -101,10 +101,14 @@ p.cms-editable {
 }
 
 p[contenteditable]:hover {
-  .append-media-btn {
+  .cms-media-btn {
     opacity: 1;
     visibility: visible;
   }
+}
+
+.cms-inline-media {
+  margin-top: 1.6rem;
 }
 
 //http://stackoverflow.com/questions/2310734/how-to-make-html-text-unselectable?answertab=votes#tab-top
