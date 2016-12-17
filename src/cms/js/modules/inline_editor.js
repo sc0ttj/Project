@@ -32,11 +32,12 @@ module.exports = {
   createAddMediaBtn: function (){
     this.addMediaBtn = '<div id="append-media-btn" class="append-media-btn" contenteditable="false" onclick="addMediaClickHandler(this);">ADD MEDIA</div>'
     addMediaClickHandler = function (el){
-      if (el.parentNode.nextElementSibling) { 
-        $(el.parentNode.nextElementSibling).prepend('<img style=width:100%; src=http://placehold.it/500 />');
-      } else { 
-        $(el).append('<img style=width:100%; src=http://placehold.it/500 />'); 
-      }
+      var imgHtml = '<img style=width:100%; src=http://placehold.it/500 />',
+          $el     = $(el),
+          $target = $el;
+
+      if ($el.hasClass('append-media-btn')) $target = $el.parent();
+      $target.append(imgHtml)
     }
   },
 
