@@ -100,9 +100,9 @@ module.exports = {
   addMediaButtons: function (el) {
     $(this.inlineMediaContainers).each(function(){
       var $this = $(this),
-          $thisHasNoMediaBtn = ($this.children('.cms-media-btn').length < 1);
+          thisHasNoMediaBtn = ($this.children('.cms-media-btn').length < 1);
           
-      if ($thisHasNoMediaBtn) $this.append(self.mediaBtn);
+      if (thisHasNoMediaBtn) $this.append(self.mediaBtn);
     });
   },
 
