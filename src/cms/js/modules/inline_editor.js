@@ -16,6 +16,7 @@ module.exports = {
     this.setConfig(config);
     this.editableClass = 'cms-editable';
     this.editableSelector = '.'+this.editableClass;
+    this.inlineMediaContainers = config.inlineMediaContainers;
 
     this.isInFirefox = (typeof InstallTrigger !== 'undefined');
     document.body.setAttribute('spellcheck', false);
@@ -51,7 +52,7 @@ module.exports = {
     $elems.attr('contenteditable', true);
     // $elems.addClass(this.editableClass);
     $elems.addClass('cms-editable-region');
-    $($elems).children('p[contenteditable]').append(this.mediaBtn);
+    $(this.inlineMediaContainers).append(this.mediaBtn);
   },
 
   setEditableItems: function(items){
@@ -97,8 +98,8 @@ module.exports = {
   },
 
   addMediaButtons: function (el) {
-    $(el).children('p[contenteditable').each(function(){
-      var $this = $(this)
+    $(this.inlineMediaContainers).each(function(){
+      var $this = $(this),
           $thisHasNoMediaBtn = ($this.children('.cms-media-btn').length < 1);
           
       if ($thisHasNoMediaBtn) $this.append(self.mediaBtn);
@@ -107,7 +108,7 @@ module.exports = {
 
   onEditableBlurHandler: function(e){
     var el = this,
-        $el = $(el);
+        $el = $(el),
         elemIsEmpty = self.elemIsEmpty(el),
         elemIsContainer = self.elemIsContainer(el);
     if (elemIsEmpty && elemIsContainer) $el.remove();

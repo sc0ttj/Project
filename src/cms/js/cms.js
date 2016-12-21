@@ -13,6 +13,7 @@ module.exports = {
     'sectionContainer': '<div class="section"></div>', 
     'editableItems'   : [ 'h1', 'h2', 'p', 'li' ],
     'editableRegionClass' : 'editable-region',
+    'inlineMediaContainers' : '.scrollmation-container p[contenteditable],.article:not(.article-right):not(.article-left) p[contenteditable]',
     'mustardClass'    : 'html5-cms',
   },
 
