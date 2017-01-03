@@ -16,27 +16,43 @@ module.exports = {
     this.setConfig(config);
     this.editableClass = 'cms-editable';
     this.editableSelector = '.'+this.editableClass;
+    this.inlineMediaContainers = config.inlineMediaContainers;
 
     this.isInFirefox = (typeof InstallTrigger !== 'undefined');
-
     document.body.setAttribute('spellcheck', false);
 
-    this.setEditableRegions(config.editableRegionClass);
+    this.createMediaBtn();
     this.setEditableItems(config.editableItems);
-    $nextEditableElem = $(this.editableSelector)[0],
+    this.setEditableRegions(config.editableRegionClass);
+    $nextEditableElem = $('contenteditable')[0],
     this.setEventHandlers();
   },
 
+  createMediaBtn: function (){
+    this.mediaBtn = '<div id="cms-media-btn" class="cms-media-btn" contenteditable="false" onclick="mediaBtnClickHandler(this);">ADD MEDIA</div>'
+    mediaBtnClickHandler = function (el){
+      var imgHtml = '<img class=cms-inline-media style=width:100%; src=http://placehold.it/500 />',
+          $el     = $(el),
+          $target = $el;
+
+      if ($el.hasClass('cms-media-btn')) $target = $el.parent();
+      var SthisBtn = $target.children('.cms-media-btn');
+      $target.append(imgHtml);
+      $target.children('.cms-media-btn').remove();
+    }
+  },
+
   getEditableItems: function () {
-    return $(this.editableSelector);
+    return $('[contenteditable]');
   },
 
   setEditableRegions: function(selector){
     var selector = selector.replace(/^\./, '');
     var $elems = $(this.config.sectionSelector + ' .' + selector);
     $elems.attr('contenteditable', true);
-    $elems.addClass(this.editableClass);
+    // $elems.addClass(this.editableClass);
     $elems.addClass('cms-editable-region');
+    $(this.inlineMediaContainers).append(this.mediaBtn);
   },
 
   setEditableItems: function(items){
@@ -45,6 +61,7 @@ module.exports = {
     items.forEach(function makeItemEditable(el, i){
       var $elems = $(self.config.sectionSelector + ' ' + el);
       $elems.attr('contenteditable', true);
+      // $elems.attr('data-placeholder', 'Enter text here...');
       $elems.addClass(self.editableClass);
     });
   },
@@ -70,43 +87,81 @@ module.exports = {
     // crude firefox fix - dont allow total emptying of editable regions
     if(self.isInFirefox && self.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p></p>');
 
-    if (e.keyCode === 13) {
+    if (e.which === 13) {
       if(!self.elemIsContainer(el)){
         e.preventDefault();
         if (nextEditableItemExists) $nextEditableElem[0].focus();
+      } else {
+        if (!self.isInFirefox) $(':focus')[0].blur();
       }
       return false;
     }
   },
 
+  addMediaButtons: function (el) {
+    $(this.inlineMediaContainers).each(function(){
+      var $this = $(this),
+          thisHasNoMediaBtn = ($this.children('.cms-media-btn').length < 1);
+          
+      if (thisHasNoMediaBtn) $this.append(self.mediaBtn);
+    });
+  },
+
   onEditableBlurHandler: function(e){
     var el = this,
-        $el = $(el);
+        $el = $(el),
         elemIsEmpty = self.elemIsEmpty(el),
         elemIsContainer = self.elemIsContainer(el);
     if (elemIsEmpty && elemIsContainer) $el.remove();
+    self.addMediaButtons(el);
+    self.removeLeftOverMediaBtns(el);
   },
 
   onEditableFocusHandler: function(e){
-    $nextEditableElem = self.getNextEditableItem(this);
+    var el = this;
+    $nextEditableElem = self.getNextEditableItem(el);
     nextEditableItemExists = ($nextEditableElem[0] === "{}" || typeof $nextEditableElem[0] != 'undefined');
+    self.addMediaButtons(el);
+    self.removeLeftOverMediaBtns(el);
   },
 
   getNextEditableItem: function (el) {
-    return $(this.editableSelector).eq($(this.editableSelector).index($(el))+1);
+    return $('[contenteditable]').eq($('[contenteditable]').index($(el))+1);
   },
 
   elemIsEmpty: function (el) {
-    var elemIsEmpty = (el.innerHTML === '' || el.innerHTML === '\n' || el.innerHTML === '<br>' || el.innerHTML === '<strong></strong>' || el.innerHTML === '<b></b>'  || el.innerHTML === '<i></i>' || el.innerHTML === '<em></em>' || el.innerHTML === '<div></div>');
-    if (elemIsEmpty) return true;
+    var elemIsEmpty = (el.innerHTML === '' 
+      || el.innerHTML.indexOf('<br>') === 0
+      || el.innerHTML === '\n' 
+      || el.innerHTML === '""' 
+      || el.innerHTML === '<br>' 
+      || el.innerHTML === '<strong></strong>' 
+      || el.innerHTML === '<b></b>'  
+      || el.innerHTML === '<i></i>' 
+      || el.innerHTML === '<em></em>' 
+      || el.innerHTML === '<div></div>');
+
+    if (elemIsEmpty) {
+      el.innerHTML = '';
+      return true;
+    }
     return false;
   },
 
   elemIsContainer: function (el) {
-    var editableRegionClass = this.config.editableRegionClass.replace(/^\./, '');
-    var elemIsContainer  = ($(el).hasClass(editableRegionClass));
+    var elemIsContainer  = ($(el).children('[contenteditable]').length > 0);
     if (elemIsContainer) return true;
     return false;
+  },
+
+  removeLeftOverMediaBtns: function (el){
+    $(el).children('p').each(function(){
+      if (self.onlyContainsMediaBtn(this)) $(this).remove();
+    });
+  },
+
+  onlyContainsMediaBtn: function (el) {
+    return (el.innerHTML.indexOf('<div id="cms-media-btn"') === 0);
   },
 
   //https://stackoverflow.com/questions/5740640/contenteditable-extract-text-from-caret-to-end-of-element?answertab=votes#tab-top

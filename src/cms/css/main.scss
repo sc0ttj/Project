@@ -1,5 +1,6 @@
 @import 'colours';
 @import 'fonts';
+@import 'inline-editor';
 
 .cms-section {
 	border: 2px solid $border-color;
@@ -17,40 +18,13 @@
   width: 70px;
   padding: 0;
   margin:0;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   z-index: 100;
   &:focus {
     color: orange;
   }
-}
-
-// .cms-editable {
-//   &:focus, &:hover {
-//     background-color: rgba(255, 220, 0, 0.2);
-//   }
-// }
-
-[contenteditable]:focus, [contenteditable]:hover {
-  outline-color: transparent;
-  outline-style: dashed;
-  outline-offset: 5px;
-  outline-width: 2px;
-}
-
-[contenteditable]:hover, [contenteditable]:focus {
-  outline-color: rgba(150,25,25,0.75);
-  outline-style: dashed;
-  outline-offset: 5px;
-  outline-width: 2px;
-}
-
-.cms-editable-region[contenteditable]:hover {
-  outline-color: transparent;
-  outline-style: dashed;
-  outline-offset: 0;
-  outline-width: 0;
 }
 
 //http://stackoverflow.com/questions/2310734/how-to-make-html-text-unselectable?answertab=votes#tab-top
