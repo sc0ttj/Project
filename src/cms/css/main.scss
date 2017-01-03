@@ -1,5 +1,6 @@
 @import 'colours';
 @import 'fonts';
+@import 'inline-editor';
 
 .cms-section {
 	border: 2px solid $border-color;
@@ -24,104 +25,6 @@
   &:focus {
     color: orange;
   }
-}
-
-// .cms-editable {
-//   &:focus, &:hover {
-//     background-color: rgba(255, 220, 0, 0.2);
-//   }
-// }
-
-[contenteditable=true]:focus, [contenteditable=true]:hover {
-  outline-color: transparent;
-  outline-style: dashed;
-  outline-offset: 4px;
-  outline-width: 2px;
-}
-
-// [contenteditable]:hover, [contenteditable]:focus {
-//   outline-color: rgba(150,25,25,0.75);
-//   outline-style: dashed;
-//   outline-offset: 4px;
-//   outline-width: 2px;
-// }
-
-.cms-no-outline, .cms-editable-region[contenteditable=true]:hover {
-  outline-color: transparent;
-  outline-style: dashed;
-  outline-offset: 0;
-  outline-width: 0;
-}
-
-::selection {
-  background: #fff2a8;
-}
-::-moz-selection {
-  background: #fff2a8;
-}
-
-p.cms-editable {
-  margin-bottom: 24px;
-}
-
-.cms-media-btn {
-  -webkit-transition: all 0.25s ease;
-  -moz-transition: all 0.25s ease;
-  -ms-transition: all 0.25s ease;
-  -o-transition: all 0.25s ease;
-  transition: all 0.25s ease;
-  &:hover, &:focus {
-    background-color: #ddd;
-  }
-  color: #000;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: bold;
-  line-height:18px;
-  padding: 4px;
-  margin: 0 auto;
-  margin-bottom:-26px;
-  opacity: 0;
-  outline-color: transparent;
-  outline-style: dashed;
-  outline-offset: 0;
-  outline-width: 0;
-  overflow: hidden;
-  text-align:center;
-  text-overflow: ellipsis;
-  visibility: hidden;
-  width: 80px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  white-space: nowrap;
-}
-
-p[contenteditable=true]:hover {
-  .cms-media-btn {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
-//https://codepen.io/flesler/pen/AEIFc - contenteditable placeholder support
-// [contenteditable=true]:empty:before {
-//   content: attr(data-placeholder);
-//   color:#aaa;
-//   // display: block; /* For Firefox */
-// }
-
-// .cms-editable-region:empty:before {
-//   content: attr(data-placeholder);
-//   color:#aaa;
-//   // display: block; /* For Firefox */
-// }
-
-.cms-inline-media {
-  margin-top: 1.6rem;
 }
 
 //http://stackoverflow.com/questions/2310734/how-to-make-html-text-unselectable?answertab=votes#tab-top
