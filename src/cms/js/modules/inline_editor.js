@@ -61,6 +61,7 @@ module.exports = {
     items.forEach(function makeItemEditable(el, i){
       var $elems = $(self.config.sectionSelector + ' ' + el);
       $elems.attr('contenteditable', true);
+      // $elems.attr('data-placeholder', 'Enter text here...');
       $elems.addClass(self.editableClass);
     });
   },
@@ -129,8 +130,21 @@ module.exports = {
   },
 
   elemIsEmpty: function (el) {
-    var elemIsEmpty = (el.innerHTML === '' || el.innerHTML === '\n' || el.innerHTML === '<br>' || el.innerHTML === '<strong></strong>' || el.innerHTML === '<b></b>'  || el.innerHTML === '<i></i>' || el.innerHTML === '<em></em>' || el.innerHTML === '<div></div>');
-    if (elemIsEmpty) return true;
+    var elemIsEmpty = (el.innerHTML === '' 
+      || el.innerHTML.indexOf('<br>') === 0
+      || el.innerHTML === '\n' 
+      || el.innerHTML === '""' 
+      || el.innerHTML === '<br>' 
+      || el.innerHTML === '<strong></strong>' 
+      || el.innerHTML === '<b></b>'  
+      || el.innerHTML === '<i></i>' 
+      || el.innerHTML === '<em></em>' 
+      || el.innerHTML === '<div></div>');
+
+    if (elemIsEmpty) {
+      el.innerHTML = '';
+      return true;
+    }
     return false;
   },
 
@@ -142,11 +156,12 @@ module.exports = {
 
   removeLeftOverMediaBtns: function (el){
     $(el).children('p').each(function(){
-      var thisOnlyContainsMediaBtn = (this.innerHTML.indexOf('<div id="cms-media-btn"') === 0);
-      if (thisOnlyContainsMediaBtn){
-        $(this).remove();
-      }
+      if (self.onlyContainsMediaBtn(this)) $(this).remove();
     });
+  },
+
+  onlyContainsMediaBtn: function (el) {
+    return (el.innerHTML.indexOf('<div id="cms-media-btn"') === 0);
   },
 
   //https://stackoverflow.com/questions/5740640/contenteditable-extract-text-from-caret-to-end-of-element?answertab=votes#tab-top

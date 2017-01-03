@@ -32,7 +32,7 @@
 //   }
 // }
 
-[contenteditable]:focus, [contenteditable]:hover {
+[contenteditable=true]:focus, [contenteditable=true]:hover {
   outline-color: transparent;
   outline-style: dashed;
   outline-offset: 4px;
@@ -46,7 +46,7 @@
 //   outline-width: 2px;
 // }
 
-.cms-no-outline, .cms-editable-region[contenteditable]:hover {
+.cms-no-outline, .cms-editable-region[contenteditable=true]:hover {
   outline-color: transparent;
   outline-style: dashed;
   outline-offset: 0;
@@ -100,12 +100,25 @@ p.cms-editable {
   white-space: nowrap;
 }
 
-p[contenteditable]:hover {
+p[contenteditable=true]:hover {
   .cms-media-btn {
     opacity: 1;
     visibility: visible;
   }
 }
+
+//https://codepen.io/flesler/pen/AEIFc - contenteditable placeholder support
+// [contenteditable=true]:empty:before {
+//   content: attr(data-placeholder);
+//   color:#aaa;
+//   // display: block; /* For Firefox */
+// }
+
+// .cms-editable-region:empty:before {
+//   content: attr(data-placeholder);
+//   color:#aaa;
+//   // display: block; /* For Firefox */
+// }
 
 .cms-inline-media {
   margin-top: 1.6rem;
