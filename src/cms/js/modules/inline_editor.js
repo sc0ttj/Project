@@ -31,7 +31,7 @@ module.exports = {
   createMediaBtn: function (){
     this.mediaBtn = '<div id="cms-media-btn" class="cms-media-btn" contenteditable="false" onclick="mediaBtnClickHandler(this);">ADD MEDIA</div>'
     mediaBtnClickHandler = function (el){
-      var imgHtml = '<img class=cms-inline-media style=width:100%; src=http://placehold.it/500 />',
+      var imgHtml = '<img class=cms-inline-media style=width:100%; src=images/placeholders/550x550.png />',
           $el     = $(el),
           $target = $el;
 

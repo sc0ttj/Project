@@ -4,33 +4,31 @@
       <picture>
         <!-- portrait: low res (1001w), then high res -->
         <source media="(max-aspect-ratio: 1/1)" 
-          srcset="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Matterhorn_Riffelsee_2005-06-11.jpg/500px-Matterhorn_Riffelsee_2005-06-11.jpg 700w,
-          https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Matterhorn_Riffelsee_2005-06-11.jpg/800px-Matterhorn_Riffelsee_2005-06-11.jpg">
+          srcset="images/placeholders/660x960.png 480w, 
+          images/placeholders/900x1600.png">
         <!-- landscape -->
-        <img class="scrollmation-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Matterhorn_Riffelsee_2005-06-11.jpg/800px-Matterhorn_Riffelsee_2005-06-11.jpg" />
+        <source srcset="images/placeholders/800x600.png 768w,
+          images/placeholders/1024x768.png 1200w,
+          images/placeholders/1600x900.png">
+        <img class="scrollmation-image" src="images/placeholders/800x600.png">
       </picture>
     </div>
     <div class="article scrollmation-text">
-      <h2>Scrollmation Text Left</h2>
+      <h2>{{articleHeading}}</h2>
       <div class="editable-region">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pharetra erat sit amet orci auctor finibus. Sed at aliquet enim, vel tincidunt mauris. Quisque vestibulum id justo at ullamcorper. Nam sit amet lectus dui. Sed est erat, rhoncus sit amet dui in, pretium varius mauris.</p>
-
-        <p>Donec varius malesuada orci, ut condimentum nunc fermentum non. Phasellus lacinia pulvinar lorem, non elementum risus lobortis sed. Aenean nulla libero, posuere id ultricies et, molestie non odio. Nulla convallis orci ac sapien tempor suscipit commodo at turpis. Sed ornare tellus id feugiat euismod.</p>
-
-        <p>Aenean a porta purus, in lobortis ligula. Maecenas dapibus elementum enim, vel porttitor mi efficitur vitae. Aliquam porta felis quam, in malesuada lectus aliquet eu. Cras id semper urna, vitae sagittis lacus. Pellentesque non consequat quam. Nulla tortor purus, efficitur et ligula in, viverra augue.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pharetra erat sit amet orci auctor finibus. Sed at aliquet enim, vel tincidunt mauris. Quisque vestibulum id justo at ullamcorper. Nam sit amet lectus dui. Sed est erat, rhoncus sit amet dui in, pretium varius mauris.</p>
-
-        <p>Donec varius malesuada orci, ut condimentum nunc fermentum non. Phasellus lacinia pulvinar lorem, non elementum risus lobortis sed. Aenean nulla libero, posuere id ultricies et, molestie non odio. Nulla convallis orci ac sapien tempor suscipit commodo at turpis. Sed ornare tellus id feugiat euismod.</p>
-
-        <p>Aenean a porta purus, in lobortis ligula. Maecenas dapibus elementum enim, vel porttitor mi efficitur vitae. Aliquam porta felis quam, in malesuada lectus aliquet eu. Cras id semper urna, vitae sagittis lacus. Pellentesque non consequat quam. Nulla tortor purus, efficitur et ligula in, viverra augue.</p>
-
-        <p>Aenean a porta purus, in lobortis ligula. Maecenas dapibus elementum enim, vel porttitor mi efficitur vitae. Aliquam porta felis quam, in malesuada lectus aliquet eu. Cras id semper urna, vitae sagittis lacus. Pellentesque non consequat quam. Nulla tortor purus, efficitur et ligula in, viverra augue.</p>
-
-        <p>Donec varius malesuada orci, ut condimentum nunc fermentum non. Phasellus lacinia pulvinar lorem, non elementum risus lobortis sed. Aenean nulla libero, posuere id ultricies et, molestie non odio. Nulla convallis orci ac sapien tempor suscipit commodo at turpis. Sed ornare tellus id feugiat euismod.</p>
-
-        <p>Aenean a porta purus, in lobortis ligula. Maecenas dapibus elementum enim, vel porttitor mi efficitur vitae. Aliquam porta felis quam, in malesuada lectus aliquet eu. Cras id semper urna, vitae sagittis lacus. Pellentesque non consequat quam. Nulla tortor purus, efficitur et ligula in, viverra augue.</p>
-
-        <p>Aenean a porta purus, in lobortis ligula. Maecenas dapibus elementum enim, vel porttitor mi efficitur vitae. Aliquam porta felis quam, in malesuada lectus aliquet eu. Cras id semper urna, vitae sagittis lacus. Pellentesque non consequat quam. Nulla tortor purus, efficitur et ligula in, viverra augue.</p>
+        <p>{{para}}</p>
+        <p>{{para}}</p>
+        <p>{{para}}</p>
+        <p>{{para}}</p>
+        <p>{{para}}</p>
+        <p>{{para}}</p>
+        <p>{{para}}</p>
+        <p>{{para}}</p>
+        <p>{{para}}</p>
+        <p>{{para}}</p>
+        <p>{{para}}</p>
+        <p>{{para}}</p>
+        <p>{{para}}</p>
       </div>
     </div>
     <div class="scrollmation-end"></div>
