@@ -73,6 +73,9 @@ sudo apt-get upgrade -qq
 echo "Installing PHP..."
 sudo apt-get install -y php5 php5-curl php5-gd -qq
 
+echo "Installing ImageMagick..."
+sudo apt-get install -y imagemagick php5-imagick -qq
+
 echo "Installing Apache2..."
 sudo apt-get install -y apache2 -qq
 
