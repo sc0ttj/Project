@@ -61,12 +61,27 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
+
+  #help from https://www.dev-metal.com/super-simple-vagrant-lamp-stack-bootstrap-installable-one-command/
   config.vm.provision "shell", inline: <<-SHELL
      echo "Updating packages..."
-     apt-get update -qq
-     echo
-     echo "Installing apache2"
-     apt-get install -y apache2 -qq
+     sudo apt-get update -qq
+
+     echo "Installing PHP..."
+     sudo apt-get install -y php5 -qq
+
+     echo "Installing Apache2..."
+     sudo apt-get install -y apache2 -qq
+
+     echo "Installing mySQL"
+     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password 12345"
+     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password 12345"
+     sudo apt-get install -y mysql-server php5-mysql -qq
+
+     echo "Restarting services"
+     sudo a2enmod rewrite
+     service apache2 restart
+
      echo "Cleaning up packages"
      sudo apt-get clean -qq
   SHELL
