@@ -68,7 +68,7 @@ module.exports = {
 
   addMediaChooser: function (){
     var mediaChooser = '<div class="cms-media-chooser">\n\
-    <center><h2>Image Manager</h2>\n\
+    <center><h3>Image Manager</h3>\n\
     <p>Edit the source images for this responsive image</p>\n\
     </center>\n\
     <div class="cms-media-chooser-container"></div>\n\
