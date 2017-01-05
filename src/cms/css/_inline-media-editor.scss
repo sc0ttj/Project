@@ -1,6 +1,6 @@
 .cms-editable-img:hover {
-  outline: 2px solid #a11;
-  opacity: 0.75;
+  outline: 1px solid #999;
+  opacity: 0.99; //required to get down to scrollmation background
 }
 
 .cms-media-chooser {

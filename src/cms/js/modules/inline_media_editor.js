@@ -23,32 +23,38 @@ module.exports = {
   },
 
   addImageEditors: function () {
-    var $imgs = $('picture:not(.cms-editable-img)').addClass('cms-editable-img');
-    $imgs.on('click', this.onImageClickHandler);
+    var $imgs = $(this.config.responsiveImageSelector).not('.cms-editable-img');
+    if ($imgs.length > 0) {
+      $imgs.addClass('cms-editable-img');
+      $imgs.on('click', this.onImageClickHandler);
+    }
   },
 
   onImageClickHandler: function (e) {
     var el = this,
         $el = $(this),
         img = '';
-        $images = $el.children('source, img');
+        images = $el.children('source, img');
 
-    var sourceImages = self.getImageSourceFiles($images);
-    self.showMediaChooser(sourceImages);
+    var sourceImages = self.getImageSourceFiles(images);
+    if (sourceImages !== '') self.showMediaChooser(sourceImages);
   },
 
-  getImageSourceFiles: function ($images) {
+  getImageSourceFiles: function (images) {
     var sourceImages = [];
 
-    for (var i=0; i < $images.length; i++){
-      var $img = $($images[i]),
+    if (images.length < 1) return '';
+
+    for (var i=0; i < images.length; i++){
+      var $img = $(images[i]),
+          tag = images[i].tagName,
           src = '';
 
-      if ($images[i].tagName === 'SOURCE'){
+      if (tag === 'SOURCE'){
         src = $img.attr('srcset');
         media = $img.attr('media');
         sourceImages[i] = '<img src="' + src + '"></img>';
-      } else if ($images[i].tagName === 'IMG'){
+      } else if (tag === 'IMG'){
         src = $img.attr('src');
         sourceImages[i] = '<img src="' + src + '"></img>';
       }
@@ -68,7 +74,7 @@ module.exports = {
 
   addMediaChooser: function (){
     var mediaChooser = '<div class="cms-media-chooser">\n\
-    <center><h3>Image Manager</h3>\n\
+    <center><h3>Media Manager</h3>\n\
     <p>Edit the source images for this responsive image</p>\n\
     </center>\n\
     <div class="cms-media-chooser-container"></div>\n\

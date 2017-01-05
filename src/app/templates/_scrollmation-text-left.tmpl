@@ -2,14 +2,15 @@
     <div class="scrollmation-start"></div>
     <div class="scrollmation-image-container">
       <picture>
-        <!-- portrait: low res (1001w), then high res -->
-        <source media="(max-aspect-ratio: 1/1)" 
-          srcset="images/placeholders/660x960.png 480w, 
-          images/placeholders/900x1600.png">
+        <!-- portrait: low res (480px) -->
+        <source media="(max-aspect-ratio: 1/1) and (max-width: 480px)" srcset="images/placeholders/414x736.png">
+        <!-- then portrait high res -->
+        <source media="(max-aspect-ratio: 1/1)" srcset="images/placeholders/818x1472.png">
+          
         <!-- landscape -->
-        <source srcset="images/placeholders/800x600.png 768w,
-          images/placeholders/1024x768.png 1200w,
-          images/placeholders/1600x900.png">
+        <source media="(min-width: 1600px)" srcset="images/placeholders/1600x900.png"> 
+        <source media="(min-width: 1024px)" srcset="images/placeholders/1024x768.png">
+        <!-- fallback -->
         <img class="scrollmation-image" src="images/placeholders/800x600.png">
       </picture>
     </div>
