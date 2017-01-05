@@ -82,8 +82,9 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again p
 sudo apt-get install -y mysql-server php5-mysql -qq
 
 echo "Installing NodeJS..."
-sudo apt-get install -y nodejs npm -qq
+sudo apt-get install -y nodejs -qq
 [ ! -x /usr/bin/node ] && sudo ln -s /usr/bin/nodejs /usr/bin/node
+sudo apt-get install -y npm -qq
 
 echo "Restarting services"
 sudo service mysql restart
