@@ -1,4 +1,5 @@
 var $ = require('cash-dom');
+var mediaEditor  = require('modules/inline_media_editor');
 // console.log($)
 
 "use strict";
@@ -22,6 +23,8 @@ module.exports = {
     document.body.setAttribute('spellcheck', false);
 
     this.createMediaBtn();
+    mediaEditor.init(config);
+
     this.setEditableItems(config.editableItems);
     this.setEditableRegions(config.editableRegionClass);
     $nextEditableElem = $('contenteditable')[0],
@@ -31,7 +34,7 @@ module.exports = {
   createMediaBtn: function (){
     this.mediaBtn = '<div id="cms-media-btn" class="cms-media-btn" contenteditable="false" onclick="mediaBtnClickHandler(this);">ADD MEDIA</div>'
     mediaBtnClickHandler = function (el){
-      var imgHtml = '<img class=cms-inline-media style=width:100%; src=images/placeholders/550x550.png />',
+      var imgHtml = '<picture><img class=cms-inline-media style=width:100%; src=images/placeholders/550x550.png /></picture>',
           $el     = $(el),
           $target = $el;
 
@@ -104,6 +107,7 @@ module.exports = {
           thisHasNoMediaBtn = ($this.children('.cms-media-btn').length < 1);
           
       if (thisHasNoMediaBtn) $this.append(self.mediaBtn);
+      mediaEditor.addImageEditors();
     });
   },
 
@@ -115,6 +119,7 @@ module.exports = {
     if (elemIsEmpty && elemIsContainer) $el.remove();
     self.addMediaButtons(el);
     self.removeLeftOverMediaBtns(el);
+    mediaEditor.addImageEditors();
   },
 
   onEditableFocusHandler: function(e){
@@ -123,6 +128,7 @@ module.exports = {
     nextEditableItemExists = ($nextEditableElem[0] === "{}" || typeof $nextEditableElem[0] != 'undefined');
     self.addMediaButtons(el);
     self.removeLeftOverMediaBtns(el);
+    mediaEditor.addImageEditors();
   },
 
   getNextEditableItem: function (el) {
