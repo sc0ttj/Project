@@ -64,25 +64,38 @@ Vagrant.configure("2") do |config|
 
   #help from https://www.dev-metal.com/super-simple-vagrant-lamp-stack-bootstrap-installable-one-command/
   config.vm.provision "shell", inline: <<-SHELL
-     echo "Updating packages..."
-     sudo apt-get update -qq
+echo "Updating packages..."
+sudo apt-get update -qq
 
-     echo "Installing PHP..."
-     sudo apt-get install -y php5 -qq
+echo "Upgrading packages..."
+sudo apt-get upgrade -qq
 
-     echo "Installing Apache2..."
-     sudo apt-get install -y apache2 -qq
+echo "Installing PHP..."
+sudo apt-get install -y php5 php5-curl php5-gd -qq
 
-     echo "Installing mySQL"
-     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password 12345"
-     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password 12345"
-     sudo apt-get install -y mysql-server php5-mysql -qq
+echo "Installing ImageMagick..."
+sudo apt-get install -y imagemagick php5-imagick -qq
 
-     echo "Restarting services"
-     sudo a2enmod rewrite
-     service apache2 restart
+echo "Installing Apache2..."
+sudo apt-get install -y apache2 -qq
 
-     echo "Cleaning up packages"
-     sudo apt-get clean -qq
-  SHELL
+echo "Installing mySQL"
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password 12345"
+sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password 12345"
+sudo apt-get install -y mysql-server php5-mysql -qq
+
+echo "Installing NodeJS..."
+sudo apt-get install -y nodejs -qq
+[ ! -x /usr/bin/node ] && sudo ln -s /usr/bin/nodejs /usr/bin/node
+sudo apt-get install -y npm -qq
+
+echo "Restarting services"
+sudo service mysql restart
+sudo a2enmod rewrite
+sudo service apache2 restart
+
+echo "Cleaning up packages"
+sudo apt-get -y autoremove
+sudo apt-get clean -qq
+SHELL
 end
