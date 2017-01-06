@@ -20,16 +20,15 @@
 }
 
 .cms-media-chooser-btn {
-  border: none;
-  font-size:4rem;
   font-weight:bold;
-  position: absolute;
-  bottom: 1%;
 }
 
 .cms-media-chooser-close-btn {
+  position: absolute;
+  background-color: #fff;
+  bottom: 1%;
   color: #444;
-  right:0;
+  right:2%;
   &:hover, &:focus {
     color: #222;
     text-shadow: 3px 2px 4px #999;

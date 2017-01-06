@@ -36,7 +36,7 @@ module.exports = {
     <p>Edit the source images for this responsive image</p>\n\
     </center>\n\
     <div class="cms-media-chooser-container"></div>\n\
-    <button class="cms-media-chooser-btn cms-media-chooser-close-btn">⮩</button>\n\
+    <button class="cms-media-chooser-btn cms-media-chooser-close-btn">Back</button>\n\
     </div>';
     $('body').append(mediaChooser);
 
