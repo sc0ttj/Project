@@ -36,7 +36,7 @@ module.exports = {
     <p>Edit the source images for this responsive image</p>\n\
     </center>\n\
     <div class="cms-media-chooser-container"></div>\n\
-    <button class="cms-media-chooser-btn cms-media-chooser-close-btn">✘</button>\n\
+    <button class="cms-media-chooser-btn cms-media-chooser-close-btn">⮩</button>\n\
     </div>';
     $('body').append(mediaChooser);
 
@@ -48,7 +48,7 @@ module.exports = {
   },
 
   mediaChooserCloseBtnClickHandler: function (e) {
-    $('.file-upload-btn').off('change', this.inputFileChangeHandler);
+    $('.cms-media-chooser-upload-btn').off('change', this.inputFileChangeHandler);
     $('body').css('overflow', 'auto');
     $(mediaChooserContainer).html('');
     $mediaChooser.css('display', 'none');
@@ -111,8 +111,8 @@ module.exports = {
       // update srcset in image on page with uploaded img url
     }
     var uploadMediaBtn = '\
-      <label for="file-upload-' + i + '" class="custom-file-upload">Choose a file...</label>\n\
-      <input  id="file-upload-' + i + '" class="file-upload-btn" type="file" onchange="inputFileChangeHandler(this)" />';
+      <label for="file-upload-' + i + '" class="cms-media-chooser-upload-label">Upload image..</label>\n\
+      <input  id="file-upload-' + i + '" class="cms-media-chooser-upload-btn" type="file" onchange="inputFileChangeHandler(this)" />';
     
     return uploadMediaBtn;
   },

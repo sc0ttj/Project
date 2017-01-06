@@ -22,23 +22,33 @@
 .cms-media-chooser-btn {
   border: none;
   font-size:4rem;
-  font-weight:800;
+  font-weight:bold;
   position: absolute;
   bottom: 1%;
 }
 
 .cms-media-chooser-close-btn {
-  color: red;
+  color: #444;
   right:0;
+  &:hover, &:focus {
+    color: #222;
+    text-shadow: 3px 2px 4px #999;
+  }
 }
 
-.cms-media-chooser-save-btn {
-  color: green;
-  right:60px;
+//https://jsfiddle.net/4cwpLvae/
+input[type="file"] {
+    display: none;
+}
+.cms-media-chooser-upload-label {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-bottom:32px;
 }
 
 .cms-media-chooser-upload-btn {
-  margin-bottom:24px;
 }
 
 .cms-media-chooser-container {
@@ -67,16 +77,4 @@
   //   content: ':';
   //   font-weight: bolder;
   // }
-}
-
-//https://jsfiddle.net/4cwpLvae/
-input[type="file"] {
-    display: none;
-}
-.custom-file-upload {
-  border: 1px solid #ccc;
-  display: inline-block;
-  padding: 6px 12px;
-  cursor: pointer;
-  margin-bottom:32px;
 }
