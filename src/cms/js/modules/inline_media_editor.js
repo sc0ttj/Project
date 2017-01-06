@@ -53,10 +53,10 @@ module.exports = {
       if (tag === 'SOURCE'){
         src = $img.attr('srcset');
         media = $img.attr('media');
-        sourceImages[i] = '<img src="' + src + '"></img>';
+        sourceImages[i] = '<img id="image-' + i + '" src="' + src + '" />';
       } else if (tag === 'IMG'){
         src = $img.attr('src');
-        sourceImages[i] = '<img src="' + src + '"></img>';
+        sourceImages[i] = '<img id="image-' + i + '" src="' + src + '" />';
       }
     }
     return sourceImages;
@@ -65,11 +65,31 @@ module.exports = {
   showMediaChooser: function (sourceImages) {
     $('body').css('overflow', 'hidden');
     $mediaChooser.css('display', 'block');
-    sourceImages.forEach(function (html){
-      $(mediaChooserContainer).append(html);
-      var uploadMediaBtn = '<button class="cms-media-chooser-upload-btn">Upload new image</button>';
+
+    sourceImages.forEach(function (imgHtml, i){
+      var uploadMediaBtn = self.createUploadMediaBtn(i);
+      inputFileChangeHandler = function(el) {
+        var preview = $(el).prev().prev()[0],
+            file    = el.files[0];
+            reader  = new FileReader();
+        reader.addEventListener('load', function () {
+          $(preview).attr('src', reader.result);
+        }, false);
+        if (file) reader.readAsDataURL(file);
+
+        // upload file to 'www/images/'
+
+        // update srcset in image on page with uploaded img url
+
+      }
+      $(mediaChooserContainer).append(imgHtml);
       $(mediaChooserContainer).append(uploadMediaBtn);
     });
+  },
+
+  createUploadMediaBtn: function (i) {
+    return '<label for="file-upload-' + i + '" class="custom-file-upload">Choose a file...</label>\n\
+            <input  id="file-upload-' + i + '" type="file" onchange="inputFileChangeHandler(this)" />';
   },
 
   addMediaChooser: function (){
