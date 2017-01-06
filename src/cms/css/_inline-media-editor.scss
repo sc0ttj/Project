@@ -61,6 +61,14 @@
   max-height: 70vh;
 }
 
+.cms-media-chooser-image-title {
+  font-weight: bolder;
+  // &:not(:empty):after {
+  //   content: ':';
+  //   font-weight: bolder;
+  // }
+}
+
 //https://jsfiddle.net/4cwpLvae/
 input[type="file"] {
     display: none;
@@ -70,5 +78,5 @@ input[type="file"] {
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
-  margin-bottom:24px;
+  margin-bottom:32px;
 }
