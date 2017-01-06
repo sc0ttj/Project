@@ -37,7 +37,6 @@ module.exports = {
     </center>\n\
     <div class="cms-media-chooser-container"></div>\n\
     <button class="cms-media-chooser-btn cms-media-chooser-close-btn">✘</button>\n\
-    <button class="cms-media-chooser-btn cms-media-chooser-save-btn">✔</button>\n\
     </div>';
     $('body').append(mediaChooser);
 
@@ -49,9 +48,10 @@ module.exports = {
   },
 
   mediaChooserCloseBtnClickHandler: function (e) {
+    $('.file-upload-btn').off('change', this.inputFileChangeHandler);
     $('body').css('overflow', 'auto');
-    $mediaChooser.css('display', 'none');
     $(mediaChooserContainer).html('');
+    $mediaChooser.css('display', 'none');
   },
 
   onImageClickHandler: function (e) {
@@ -112,7 +112,7 @@ module.exports = {
     }
     var uploadMediaBtn = '\
       <label for="file-upload-' + i + '" class="custom-file-upload">Choose a file...</label>\n\
-      <input  id="file-upload-' + i + '" type="file" onchange="inputFileChangeHandler(this)" />';
+      <input  id="file-upload-' + i + '" class="file-upload-btn" type="file" onchange="inputFileChangeHandler(this)" />';
     
     return uploadMediaBtn;
   },
