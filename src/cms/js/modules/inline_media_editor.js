@@ -101,10 +101,10 @@ module.exports = {
   },
 
   addUploadMediaBtnEvents: function (i) {
+    var $uploadBtn = $('#file-upload-'+i);
     // create event handler for each upload media button
-    $('#file-upload-'+i).on('change', function uploadBtnChangeHandler(e){
+    $uploadBtn.on('change', function uploadBtnChangeHandler(e){
       var file     = this.files[0],
-          $thisBtn = $(this),
           image    = $('#image-'+i),
           $uploadLabel = $(this).prev('label'),
           $uploadLabels = $('.cms-media-chooser-upload-label');
@@ -114,10 +114,9 @@ module.exports = {
       // update preview in media manager with base64 data
       self.updatePreviewImage(file, image);
       // upload image
-      $thisBtn.prop('disabled', true);
+      $uploadBtn.prop('disabled', true);
       self.uploadImage(e, file, $uploadLabel, $uploadLabels);
-      $thisBtn.prop('disabled', false);
-
+      $uploadBtn.prop('disabled', false);
     });
   },
 
