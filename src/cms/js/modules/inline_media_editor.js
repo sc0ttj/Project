@@ -54,7 +54,16 @@ module.exports = {
         previewImages = [],
         previewImages = self.createImgsFromImgSrcElems(imgSrcElems);
     
+    self.setCurrentImage(img);
     if (previewImages.length > 0) self.showMediaChooser(previewImages);
+  },
+
+  setCurrentImage: function (img){
+    self._currentImage = img;
+    var imgIsNotAnImage = (self._currentImage.tagName != 'IMG' && self._currentImage.tagName != 'PICTURE');
+    if (imgIsNotAnImage){
+      self._currentImage = $(img).find('picture, img');
+    }
   },
 
   getImgSourceElems: function (img) {
@@ -74,7 +83,7 @@ module.exports = {
 
       if (tag === 'IMG')    src = $img.attr('src');
       if (tag === 'SOURCE') src = $img.attr('srcset');
-      images[i] = '<img id="preview-image-' + i + '" ' + dataAttr + ' src="' + src + '" />';
+      images[i] = '<img id="preview-image-' + i + '" ' + dataAttr + ' data-index="'+i+'" src="' + src + '" />';
     }
     return images;
   },
@@ -95,18 +104,24 @@ module.exports = {
       $(mediaChooserContainer).append(uploadMediaBtn);
 
       // setup file input and image preview
-      var $fileBtn = $('#file-upload-'+i),
-          $previewImg   = $('#preview-image-'+i);
-      self.fileBtnClickHandler($fileBtn, $previewImg);
+      var $fileBtn = $('#file-upload-'+i);
+      self.fileBtnClickHandler($fileBtn);
     });
   },
 
-  fileBtnClickHandler: function (fileBtn, $previewImg) {
+  fileBtnClickHandler: function (fileBtn) {
     //force upload on choosing a file
     fileBtn.on('change', function uploadBtnChangeHandler(e){
       var file = this.files[0],
           filename = this.files[0].name,
           imgUrl = '/images/'+filename;
+
+      var $previewImg = $(this).parent().prev('img'),
+          $previewImgId = $previewImg.attr('id'),
+          imageSrcIndex = $('#'+$previewImgId).data('index');
+
+      self._currentImgUrl = imgUrl;
+      self._currentImgSrcElem = imageSrcIndex;
 
       if (!file) return false;
       // get current upload button labels, and others
@@ -164,10 +179,11 @@ module.exports = {
     xhr.onload = function() {
       if (xhr.status === 200) {
         // upload finished!
-        // add img to src or srcset in main page
-        //
-        //
-        // nowreset btn
+
+        // update the image on the page with the new uploaded src images
+        self.updateImgOnPage();
+
+        // now reset btn
         setTimeout(function() {
           btn.html('Upload image');
           btn.removeClass('cms-media-chooser-upload-label-uploading');
@@ -178,6 +194,20 @@ module.exports = {
         btn.addClass('cms-media-chooser-upload-label-uploading-error');
       }
     }
+  },
+
+  updateImgOnPage: function(){
+        // add img to src or srcset in main page
+        var imgToUpdate = $(self._currentImage),
+            $imgToUpdate = $(imgToUpdate),
+            srcImgToUpdate = $imgToUpdate.children('img, source').eq(self._currentImgSrcElem)[0],
+            srcAttr = 'srcset';
+
+        if (!srcImgToUpdate) srcImgToUpdate = $imgToUpdate.children('source').eq(self._currentImgSrcElem);
+        if (!srcImgToUpdate) srcImgToUpdate = $imgToUpdate.children('img');
+
+        if (srcImgToUpdate.tagName === 'IMG') srcAttr = 'src';
+        $(srcImgToUpdate).attr(srcAttr, self._currentImgUrl);
   },
 
   createMediaChooser: function () {
