@@ -92,75 +92,92 @@ module.exports = {
           uploadMediaBtn = self.createUploadMediaBtn(i),
           imageHeaderTxt = '<p class="cms-media-chooser-image-title">' + imgDimensions + '</p>';
       
+      //build image list
       if (imgDimensions) $(mediaChooserContainer).append(imageHeaderTxt);
       $(mediaChooserContainer).append(imgHtml);
       $(mediaChooserContainer).append(uploadMediaBtn);
-      
-      // create event handler for each upload media button
-      $('#file-upload-'+i).on('change', function uploadBtnChangeHandler(e){
-        var file    = this.files[0];
-            reader   = new FileReader(),
-            formData = new FormData(this),
-            $this    = $(this),
-            $uploadLabel = $(this).prev('label'),
-            $uploadLabels = $('.cms-media-chooser-upload-label');
-
-        if (!file) return false;
-
-        // update preview in media manager with base64 data
-        reader.addEventListener('load', function () {
-          $('#image-'+i).attr('src', reader.result)
-        }, false);
-        if (file) reader.readAsDataURL(file);
-
-        //prevent redirect and do ajax upload
-        e.preventDefault();
-        formData.append('image', file, file.name);
-
-        var xhr = new XMLHttpRequest()
-        xhr.open('POST', 'upload.php', true);
-
-        xhr.upload.onloadstart = function (e) {
-          $this.prop('disabled', true);
-          $uploadLabel.html('Uploading 0%');
-          $uploadLabel.addClass('cms-media-chooser-upload-label-uploading');
-          $uploadLabels.css('pointer-events', 'none');
-        }
-
-        xhr.upload.onprogress = function (e) {
-          if (e.lengthComputable) {
-            var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
-            $uploadLabel.html('Uploading '+ratio);
-          }
-        }
-
-        xhr.onload = function() {
-          if (xhr.status === 200) {
-            // upload finished!
-            setTimeout(function() {
-              //reset btn
-              $this.prop('disabled', false);
-              $uploadLabel.html('Upload image...');
-              $uploadLabel.removeClass('cms-media-chooser-upload-label-uploading');
-              $uploadLabels.css('pointer-events', 'all');
-            }, 3000);
-          } else {
-            $uploadLabel.html('Upload error...');
-            $uploadLabel.addClass('cms-media-chooser-upload-label-uploading-error');
-          }
-        };
-
-        // Send the Data.
-        xhr.send(formData);
-
-      });
+      self.addUploadMediaBtnEvents(i);
     });
+  },
+
+  addUploadMediaBtnEvents: function (i) {
+    // create event handler for each upload media button
+    $('#file-upload-'+i).on('change', function uploadBtnChangeHandler(e){
+      var file     = this.files[0],
+          $thisBtn = $(this),
+          image    = $('#image-'+i),
+          $uploadLabel = $(this).prev('label'),
+          $uploadLabels = $('.cms-media-chooser-upload-label');
+
+      if (!file) return false;
+
+      // update preview in media manager with base64 data
+      self.updatePreviewImage(file, image);
+      // upload image
+      $thisBtn.prop('disabled', true);
+      self.uploadImage(e, file, $uploadLabel, $uploadLabels);
+      $thisBtn.prop('disabled', false);
+
+    });
+  },
+
+  updatePreviewImage: function (file, image){
+    var reader = new FileReader();
+
+    reader.addEventListener('load', function () {
+      image.attr('src', reader.result)
+    }, false);
+    if (file) reader.readAsDataURL(file);
+  },
+
+  uploadImage: function (e, file, $uploadLabel, $uploadLabels){
+    var formData = new FormData(this);
+
+    formData.append('image', file, file.name);
+
+    //prevent redirect and do ajax upload
+    e.preventDefault();
+
+    var xhr = new XMLHttpRequest()
+    xhr.open('POST', 'upload.php', true);
+
+    xhr.upload.onloadstart = function (e) {
+      $uploadLabel.addClass('cms-media-chooser-upload-label-uploading');
+      $uploadLabels.css('pointer-events', 'none');
+    }
+
+    xhr.upload.onprogress = function (e) {
+      if (e.lengthComputable) {
+        var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
+        $uploadLabel.html('Uploading '+ratio);
+      }
+    }
+
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        // upload finished!
+
+        // add img to src or srcset in main page
+
+        //reset btn
+        setTimeout(function() {
+          $uploadLabel.html('Upload image');
+          $uploadLabel.removeClass('cms-media-chooser-upload-label-uploading');
+          $uploadLabels.css('pointer-events', 'all');
+        }, 3000);
+      } else {
+        $uploadLabel.html('Upload error');
+        $uploadLabel.addClass('cms-media-chooser-upload-label-uploading-error');
+      }
+    },
+    // send
+    xhr.send(formData);
   },
 
   createUploadMediaBtn: function (i) {
     var uploadMediaBtn = '\
       <form action="upload.php" method="post" class="cms-upload-form" enctype="multipart/form-data">\n\
-        <label for="file-upload-'+i+'" class="cms-media-chooser-upload-label">Upload image...</label>\n\
+        <label for="file-upload-'+i+'" class="cms-media-chooser-upload-label">Upload image</label>\n\
         <input name="image" type="file" id="file-upload-'+i+'" class="cms-media-chooser-upload-btn"  />\n\
       </form>';
     
