@@ -179,16 +179,13 @@ module.exports = {
     xhr.onload = function() {
       if (xhr.status === 200) {
         // upload finished!
-
         // update the image on the page with the new uploaded src images
         self.updateImgOnPage();
-
         // now reset btn
-        setTimeout(function() {
-          btn.html('Upload image');
-          btn.removeClass('cms-media-chooser-upload-label-uploading');
-          btns.css('pointer-events', 'all');
-        }, 3000);
+        btn.html('Upload image');
+        btn.removeClass('cms-media-chooser-upload-label-uploading');
+        btns.css('pointer-events', 'all');
+
       } else {
         btn.html('Upload error');
         btn.addClass('cms-media-chooser-upload-label-uploading-error');
