@@ -96,27 +96,26 @@ module.exports = {
       if (imgDimensions) $(mediaChooserContainer).append(imageHeaderTxt);
       $(mediaChooserContainer).append(imgHtml);
       $(mediaChooserContainer).append(uploadMediaBtn);
-      self.addUploadMediaBtnEvents(i);
+
+      var $uploadBtn = $('#file-upload-'+i),
+          $image    = $('#image-'+i);
+      self.addUploadMediaBtnEvents($uploadBtn, $image);
     });
   },
 
-  addUploadMediaBtnEvents: function (i) {
-    var $uploadBtn = $('#file-upload-'+i);
-    // create event handler for each upload media button
-    $uploadBtn.on('change', function uploadBtnChangeHandler(e){
+  addUploadMediaBtnEvents: function (fileBtn, image) {
+    fileBtn.on('change', function uploadBtnChangeHandler(e){
       var file     = this.files[0],
-          image    = $('#image-'+i),
-          $uploadLabel = $(this).prev('label'),
-          $uploadLabels = $('.cms-media-chooser-upload-label');
+          $uploadBtn = $(this).prev('label'),
+          $uploadBtns = $('.cms-media-chooser-upload-label');
 
       if (!file) return false;
-
       // update preview in media manager with base64 data
       self.updatePreviewImage(file, image);
       // upload image
-      $uploadBtn.prop('disabled', true);
-      self.uploadImage(e, file, $uploadLabel, $uploadLabels);
-      $uploadBtn.prop('disabled', false);
+      fileBtn.prop('disabled', true);
+      self.uploadImage(e, file, $uploadBtn, $uploadBtns);
+      fileBtn.prop('disabled', false);
     });
   },
 
@@ -129,52 +128,49 @@ module.exports = {
     if (file) reader.readAsDataURL(file);
   },
 
-  uploadImage: function (e, file, $uploadLabel, $uploadLabels){
+  uploadImage: function (e, file, $uploadBtn, $uploadBtns){
     var formData = new FormData(this);
 
     formData.append('image', file, file.name);
     //prevent redirect and do ajax upload
     e.preventDefault();
-
     var xhr = new XMLHttpRequest()
     xhr.open('POST', 'upload.php', true);
-
-    self.updateLabel($uploadLabel, $uploadLabels);
-    self.updateLabelOnProgress(xhr, $uploadLabel);
-    self.updateLabelOnFinish(xhr, $uploadLabel, $uploadLabels);
-
+    self.updateBtns($uploadBtn, $uploadBtns);
+    self.updateBtnOnProgress(xhr, $uploadBtn);
+    self.updateBtnsOnFinish(xhr, $uploadBtn, $uploadBtns);
     // send
     xhr.send(formData);
   },
 
-  updateLabel: function(elem, elems){
-      elem.addClass('cms-media-chooser-upload-label-uploading');
-      elems.css('pointer-events', 'none');
+  updateBtns: function(btn, btns){
+      btn.addClass('cms-media-chooser-upload-label-uploading');
+      btns.css('pointer-events', 'none');
   },
 
-  updateLabelOnProgress: function(xhr, elem){
+  updateBtnOnProgress: function(xhr, btn){
     xhr.upload.onprogress = function (e) {
       if (e.lengthComputable) {
         var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
-        elem.html('Uploading '+ratio);
+        btn.html('Uploading '+ratio);
       }
     }
   },
 
-  updateLabelOnFinish: function(xhr, elem, elems){
+  updateBtnsOnFinish: function(xhr, btn, btns){
     xhr.onload = function() {
       if (xhr.status === 200) {
         // upload finished!
         // add img to src or srcset in main page
         //reset btn
         setTimeout(function() {
-          elem.html('Upload image');
-          elem.removeClass('cms-media-chooser-upload-label-uploading');
-          elems.css('pointer-events', 'all');
+          btn.html('Upload image');
+          btn.removeClass('cms-media-chooser-upload-label-uploading');
+          btns.css('pointer-events', 'all');
         }, 3000);
       } else {
-        elem.html('Upload error');
-        elem.addClass('cms-media-chooser-upload-label-uploading-error');
+        btn.html('Upload error');
+        btn.addClass('cms-media-chooser-upload-label-uploading-error');
       }
     }
   },
