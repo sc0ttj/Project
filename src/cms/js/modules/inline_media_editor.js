@@ -59,8 +59,8 @@ module.exports = {
     if (sourceImages.length > 0) self.showMediaChooser(sourceImages);
   },
 
-  getImgSourceElems: function (el) {
-    return el.children('source, img');
+  getImgSourceElems: function ($el) {
+    return $el.children('source, img');
   },
 
   createImgsFromImgSrcs: function (imgSrcs) {
@@ -76,7 +76,7 @@ module.exports = {
 
       if (tag === 'IMG')    src = $img.attr('src');
       if (tag === 'SOURCE') src = $img.attr('srcset');
-      images[i] = '<img id="image-' + i + '"' + dataAttr + ' src="' + src + '" />';
+      images[i] = '<img id="preview-image-' + i + '"' + dataAttr + ' src="' + src + '" />';
     }
     return images;
   },
@@ -98,21 +98,24 @@ module.exports = {
 
       // setup file input and image preview
       var $fileBtn = $('#file-upload-'+i),
-          $image   = $('#image-'+i);
-      self.fileBtnClickHandler($fileBtn, $image);
+          $previewImg   = $('#preview-image-'+i);
+      self.fileBtnClickHandler($fileBtn, $previewImg);
     });
   },
 
-  fileBtnClickHandler: function (fileBtn, image) {
+  fileBtnClickHandler: function (fileBtn, $previewImg) {
     //force upload on choosing a file
     fileBtn.on('change', function uploadBtnChangeHandler(e){
-      var file = this.files[0];
+      var file = this.files[0],
+          filename = this.files[0].name,
+          imgUrl = '/images/'+filename;
+
       if (!file) return false;
       // get current upload button labels, and others
       self.$uploadBtn  = $(this).prev('label');
       self.$uploadBtns = $('.cms-media-chooser-upload-label');
       // update preview in media manager with base64 data
-      self.updatePreviewImage(file, image);
+      self.updatePreviewImage($previewImg, file);
       // upload image
       fileBtn.prop('disabled', true);
       self.uploadImage(e, file);
@@ -120,10 +123,10 @@ module.exports = {
     });
   },
 
-  updatePreviewImage: function (file, image){
+  updatePreviewImage: function ($previewImg, file){
     var reader = new FileReader();
     reader.addEventListener('load', function () {
-      image.attr('src', reader.result)
+      $previewImg.attr('src', reader.result)
     }, false);
     if (file) reader.readAsDataURL(file);
   },
