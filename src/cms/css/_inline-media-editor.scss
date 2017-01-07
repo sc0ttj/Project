@@ -47,6 +47,14 @@ input[type="file"] {
   margin-bottom:32px;
 }
 
+.cms-media-chooser-upload-label-uploading {
+  border-color: green;
+}
+
+.cms-media-chooser-upload-label-uploading-error {
+  border-color: red;
+}
+
 .cms-media-chooser-upload-btn {
 }
 
