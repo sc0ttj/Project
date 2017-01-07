@@ -1,5 +1,5 @@
 var $ = require('cash-dom');
-var self, $mediaChooser, mediaChooserContainer;
+var self, $mediaChooser, $mediaChooserContainer;
 
 // ⚙
 
@@ -35,7 +35,7 @@ module.exports = {
     $('body').append(mediaChooser);
 
     $mediaChooser = $('div.cms-media-chooser');
-    mediaChooserContainer = $mediaChooser.children('.cms-media-chooser-container');
+    $mediaChooserContainer = $mediaChooser.children('.cms-media-chooser-container');
     
     var $mediaChooserCloseBtn = $('.cms-media-chooser-close-btn');
     $mediaChooserCloseBtn.on('click', this.mediaChooserCloseBtnClickHandler);
@@ -44,7 +44,7 @@ module.exports = {
   mediaChooserCloseBtnClickHandler: function (e) {
     $('.cms-media-chooser-upload-btn').off('change', this.inputFileChangeHandler);
     $('body').css('overflow', 'auto');
-    $(mediaChooserContainer).html('');
+    $mediaChooserContainer.html('');
     $mediaChooser.css('display', 'none');
   },
 
@@ -99,9 +99,9 @@ module.exports = {
           imageHeaderTxt = '<p class="cms-media-chooser-image-title">' + imgDimensions + '</p>';
       
       //build image list
-      if (imgDimensions) $(mediaChooserContainer).append(imageHeaderTxt);
-      $(mediaChooserContainer).append(imgHtml);
-      $(mediaChooserContainer).append(uploadMediaBtn);
+      if (imgDimensions) $mediaChooserContainer.append(imageHeaderTxt);
+      $mediaChooserContainer.append(imgHtml);
+      $mediaChooserContainer.append(uploadMediaBtn);
 
       // setup file input and image preview
       var $fileBtn = $('#file-upload-'+i);
