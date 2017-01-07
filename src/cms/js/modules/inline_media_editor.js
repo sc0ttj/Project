@@ -49,44 +49,42 @@ module.exports = {
   },
 
   onImageClickHandler: function (e) {
-    var el = this,
-        $el = $(el),
-        imgSrcs = self.getImgSourceElems($el),
-        sourceImages = [],
-        sourceImages = self.createImgsFromImgSrcs(imgSrcs);
+    var img = this,
+        imgSrcElems = self.getImgSourceElems(img),
+        previewImages = [],
+        previewImages = self.createImgsFromImgSrcElems(imgSrcElems);
     
-    self.currentImage = this;
-    if (sourceImages.length > 0) self.showMediaChooser(sourceImages);
+    if (previewImages.length > 0) self.showMediaChooser(previewImages);
   },
 
-  getImgSourceElems: function ($el) {
-    return $el.children('source, img');
+  getImgSourceElems: function (img) {
+    return $(img).children('source, img');
   },
 
-  createImgsFromImgSrcs: function (imgSrcs) {
-    if (imgSrcs.length < 1) return '';
+  createImgsFromImgSrcElems: function (imgSrcElems) {
+    if (imgSrcElems.length < 1) return '';
     var images = [];
     // create html for each src image
-    for (var i=0; i < imgSrcs.length; i++){
-      var $img     = $(imgSrcs[i]),
-          tag      = imgSrcs[i].tagName,
+    for (var i=0; i < imgSrcElems.length; i++){
+      var $img     = $(imgSrcElems[i]),
+          tag      = imgSrcElems[i].tagName,
           data     = $img.data('name') || '',
           dataAttr = (data) ? dataAttr = 'data-name="'+data+'"' : dataAttr = '',
           src      = '';
 
       if (tag === 'IMG')    src = $img.attr('src');
       if (tag === 'SOURCE') src = $img.attr('srcset');
-      images[i] = '<img id="preview-image-' + i + '"' + dataAttr + ' src="' + src + '" />';
+      images[i] = '<img id="preview-image-' + i + '" ' + dataAttr + ' src="' + src + '" />';
     }
     return images;
   },
 
-  showMediaChooser: function (sourceImages) {
+  showMediaChooser: function (previewImages) {
     $('body').css('overflow', 'hidden');
     $mediaChooser.css('display', 'block');
 
-    // for each image src file
-    sourceImages.forEach(function (imgHtml, i){
+    // for each preview image src file
+    previewImages.forEach(function (imgHtml, i){
       var imgDimensions  = $(imgHtml).data('name'),
           uploadMediaBtn = self.createUploadMediaBtn(i),
           imageHeaderTxt = '<p class="cms-media-chooser-image-title">' + imgDimensions + '</p>';
