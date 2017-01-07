@@ -31,13 +31,7 @@ module.exports = {
   },
 
   addMediaChooser: function (){
-    var mediaChooser = '<div class="cms-media-chooser">\n\
-    <center><h3>Media Manager</h3>\n\
-    <p>Edit the source images for this responsive image</p>\n\
-    </center>\n\
-    <div class="cms-media-chooser-container"></div>\n\
-    <button class="cms-media-chooser-btn cms-media-chooser-close-btn">Back</button>\n\
-    </div>';
+    var mediaChooser = self.createMediaChooser();
     $('body').append(mediaChooser);
 
     $mediaChooser = $('div.cms-media-chooser');
@@ -67,7 +61,7 @@ module.exports = {
   getImageSourceFiles: function (images) {
     if (images.length < 1) return '';
     var sourceImages = [];
-
+    // create html for each src image
     for (var i=0; i < images.length; i++){
       var $img     = $(images[i]),
           tag      = images[i].tagName,
@@ -97,50 +91,53 @@ module.exports = {
       $(mediaChooserContainer).append(imgHtml);
       $(mediaChooserContainer).append(uploadMediaBtn);
 
-      var $uploadBtn = $('#file-upload-'+i),
-          $image    = $('#image-'+i);
-      self.addUploadMediaBtnEvents($uploadBtn, $image);
+      // setup file input and image preview
+      var $fileBtn = $('#file-upload-'+i),
+          $image   = $('#image-'+i);
+      self.fileBtnClickHandler($fileBtn, $image);
     });
   },
 
-  addUploadMediaBtnEvents: function (fileBtn, image) {
+  fileBtnClickHandler: function (fileBtn, image) {
+    //force upload on choosing a file
     fileBtn.on('change', function uploadBtnChangeHandler(e){
-      var file     = this.files[0],
-          $uploadBtn = $(this).prev('label'),
-          $uploadBtns = $('.cms-media-chooser-upload-label');
-
+      var file = this.files[0];
       if (!file) return false;
+      // get current upload button labels, and others
+      self.$uploadBtn  = $(this).prev('label');
+      self.$uploadBtns = $('.cms-media-chooser-upload-label');
       // update preview in media manager with base64 data
       self.updatePreviewImage(file, image);
       // upload image
       fileBtn.prop('disabled', true);
-      self.uploadImage(e, file, $uploadBtn, $uploadBtns);
+      self.uploadImage(e, file);
       fileBtn.prop('disabled', false);
     });
   },
 
   updatePreviewImage: function (file, image){
     var reader = new FileReader();
-
     reader.addEventListener('load', function () {
       image.attr('src', reader.result)
     }, false);
     if (file) reader.readAsDataURL(file);
   },
 
-  uploadImage: function (e, file, $uploadBtn, $uploadBtns){
+  uploadImage: function (e, file){
     var formData = new FormData(this);
-
     formData.append('image', file, file.name);
     //prevent redirect and do ajax upload
     e.preventDefault();
     var xhr = new XMLHttpRequest()
     xhr.open('POST', 'upload.php', true);
-    self.updateBtns($uploadBtn, $uploadBtns);
-    self.updateBtnOnProgress(xhr, $uploadBtn);
-    self.updateBtnsOnFinish(xhr, $uploadBtn, $uploadBtns);
-    // send
+    self.updateButtonsDuringUpload(xhr, self.$uploadBtn, self.$uploadBtns);
     xhr.send(formData);
+  },
+
+  updateButtonsDuringUpload: function (xhr, btn, btns) {
+    self.updateBtns(btn, btns);
+    self.updateBtnOnProgress(xhr, btn);
+    self.updateBtnsOnFinish(xhr, btn, btns);
   },
 
   updateBtns: function(btn, btns){
@@ -162,7 +159,9 @@ module.exports = {
       if (xhr.status === 200) {
         // upload finished!
         // add img to src or srcset in main page
-        //reset btn
+        //
+        //
+        // nowreset btn
         setTimeout(function() {
           btn.html('Upload image');
           btn.removeClass('cms-media-chooser-upload-label-uploading');
@@ -173,6 +172,17 @@ module.exports = {
         btn.addClass('cms-media-chooser-upload-label-uploading-error');
       }
     }
+  },
+
+  createMediaChooser: function () {
+    var mediaChooser = '<div class="cms-media-chooser">\n\
+    <center><h3>Media Manager</h3>\n\
+    <p>Edit the source images for this responsive image</p>\n\
+    </center>\n\
+    <div class="cms-media-chooser-container"></div>\n\
+    <button class="cms-media-chooser-btn cms-media-chooser-close-btn">Back</button>\n\
+    </div>';
+    return mediaChooser;
   },
 
   createUploadMediaBtn: function (i) {
