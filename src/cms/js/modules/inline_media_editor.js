@@ -134,44 +134,50 @@ module.exports = {
     var formData = new FormData(this);
 
     formData.append('image', file, file.name);
-
     //prevent redirect and do ajax upload
     e.preventDefault();
 
     var xhr = new XMLHttpRequest()
     xhr.open('POST', 'upload.php', true);
 
-    xhr.upload.onloadstart = function (e) {
-      $uploadLabel.addClass('cms-media-chooser-upload-label-uploading');
-      $uploadLabels.css('pointer-events', 'none');
-    }
+    self.updateLabel($uploadLabel, $uploadLabels);
+    self.updateLabelOnProgress(xhr, $uploadLabel);
+    self.updateLabelOnFinish(xhr, $uploadLabel, $uploadLabels);
 
+    // send
+    xhr.send(formData);
+  },
+
+  updateLabel: function(elem, elems){
+      elem.addClass('cms-media-chooser-upload-label-uploading');
+      elems.css('pointer-events', 'none');
+  },
+
+  updateLabelOnProgress: function(xhr, elem){
     xhr.upload.onprogress = function (e) {
       if (e.lengthComputable) {
         var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
-        $uploadLabel.html('Uploading '+ratio);
+        elem.html('Uploading '+ratio);
       }
     }
+  },
 
+  updateLabelOnFinish: function(xhr, elem, elems){
     xhr.onload = function() {
       if (xhr.status === 200) {
         // upload finished!
-
         // add img to src or srcset in main page
-
         //reset btn
         setTimeout(function() {
-          $uploadLabel.html('Upload image');
-          $uploadLabel.removeClass('cms-media-chooser-upload-label-uploading');
-          $uploadLabels.css('pointer-events', 'all');
+          elem.html('Upload image');
+          elem.removeClass('cms-media-chooser-upload-label-uploading');
+          elems.css('pointer-events', 'all');
         }, 3000);
       } else {
-        $uploadLabel.html('Upload error');
-        $uploadLabel.addClass('cms-media-chooser-upload-label-uploading-error');
+        elem.html('Upload error');
+        elem.addClass('cms-media-chooser-upload-label-uploading-error');
       }
-    },
-    // send
-    xhr.send(formData);
+    }
   },
 
   createUploadMediaBtn: function (i) {
