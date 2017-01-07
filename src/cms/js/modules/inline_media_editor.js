@@ -50,30 +50,35 @@ module.exports = {
 
   onImageClickHandler: function (e) {
     var el = this,
-        $el = $(this),
-        img = '';
-        images = $el.children('source, img');
-
-    var sourceImages = self.getImageSourceFiles(images);
-    if (sourceImages !== '') self.showMediaChooser(sourceImages);
+        $el = $(el),
+        imgSrcs = self.getImgSourceElems($el),
+        sourceImages = [],
+        sourceImages = self.createImgsFromImgSrcs(imgSrcs);
+    
+    self.currentImage = this;
+    if (sourceImages.length > 0) self.showMediaChooser(sourceImages);
   },
 
-  getImageSourceFiles: function (images) {
-    if (images.length < 1) return '';
-    var sourceImages = [];
+  getImgSourceElems: function (el) {
+    return el.children('source, img');
+  },
+
+  createImgsFromImgSrcs: function (imgSrcs) {
+    if (imgSrcs.length < 1) return '';
+    var images = [];
     // create html for each src image
-    for (var i=0; i < images.length; i++){
-      var $img     = $(images[i]),
-          tag      = images[i].tagName,
+    for (var i=0; i < imgSrcs.length; i++){
+      var $img     = $(imgSrcs[i]),
+          tag      = imgSrcs[i].tagName,
           data     = $img.data('name') || '',
           dataAttr = (data) ? dataAttr = 'data-name="'+data+'"' : dataAttr = '',
           src      = '';
 
       if (tag === 'IMG')    src = $img.attr('src');
       if (tag === 'SOURCE') src = $img.attr('srcset');
-      sourceImages[i] = '<img id="image-' + i + '"' + dataAttr + ' src="' + src + '" />';
+      images[i] = '<img id="image-' + i + '"' + dataAttr + ' src="' + src + '" />';
     }
-    return sourceImages;
+    return images;
   },
 
   showMediaChooser: function (sourceImages) {
@@ -188,7 +193,7 @@ module.exports = {
   createUploadMediaBtn: function (i) {
     var uploadMediaBtn = '\
       <form action="upload.php" method="post" class="cms-upload-form" enctype="multipart/form-data">\n\
-        <label for="file-upload-'+i+'" class="cms-media-chooser-upload-label">Upload image</label>\n\
+        <label for="file-upload-'+i+'" id="file-upload-label-'+i+'" class="cms-media-chooser-upload-label">Upload image</label>\n\
         <input name="image" type="file" id="file-upload-'+i+'" class="cms-media-chooser-upload-btn"  />\n\
       </form>';
     
