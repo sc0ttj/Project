@@ -59,11 +59,11 @@ module.exports = {
         previewImages = [],
         previewImages = self.createImgsFromImgSrcElems(imgSrcElems);
     
-    self.set_CurrentImage(img);
+    self.setCurrentImage(img);
     if (previewImages.length > 0) self.showMediaChooser(previewImages);
   },
 
-  set_CurrentImage: function (img){
+  setCurrentImage: function (img){
     _currentImage = img;
     var imgIsNotAnImage = (_currentImage.tagName != 'IMG' && _currentImage.tagName != 'PICTURE');
     if (imgIsNotAnImage){
