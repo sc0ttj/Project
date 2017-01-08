@@ -9,6 +9,10 @@ module.exports = {
     return xhr;
   },
 
+  send: function (formData) {
+    self._xhr.send(formData);
+  },
+
   onProgress: function(callback){
     self._xhr.upload.onprogress = function (e) {
       if (e.lengthComputable) {
@@ -25,10 +29,6 @@ module.exports = {
         errorCallback();
       }
     }
-  },
-
-  send: function (formData) {
-    self._xhr.send(formData);
   },
 
 }
