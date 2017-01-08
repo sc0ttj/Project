@@ -145,14 +145,16 @@ module.exports = {
   },
 
   uploadImage: function (e, file){
-    var formData = new FormData(this);
+    var formData = new FormData(this),
+        btn = self._$currentBtn,
+        btns = self._$currentBtns;
+
     formData.append('image', file, file.name);
     //prevent redirect and do ajax upload
     e.preventDefault();
     var xhr = self.xhrCreate('POST', 'upload.php');
-    self.updateUploadBtns(self._$currentBtn, self._$currentBtns);
-    self.updateUploadBtnOnProgress(xhr, self._$currentBtn);
-    self.updateUploadBtnsOnFinish(xhr, self._$currentBtn, self._$currentBtns);
+    self.updateUploadBtns(btn, btns);
+    self.setImageUploadEventHandlers(xhr);
     xhr.send(formData);
   },
 
@@ -161,28 +163,27 @@ module.exports = {
       btns.css('pointer-events', 'none');
   },
 
-  updateUploadBtnOnProgress: function(xhr, btn){
-    var onProgressCallback = function (e) {
+  setImageUploadEventHandlers: function (xhr) {
+    var btn = self._$currentBtn,
+        btns = self._$currentBtns;
+    
+    var onProgressHandler = function (e) {
       var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
       btn.html('Uploading '+ratio);
     }
-    self.xhrOnProgress(xhr, onProgressCallback);
-  },
-
-  updateUploadBtnsOnFinish: function(xhr, btn, btns){
-    var onSuccessCallback = function (){
-      // upload finished! .. update the image on the page with the new uploaded src images
+    var onSuccessHandler = function (){
       self.updateImgOnPage();
-      // now reset btn
       btn.html('Upload image');
       btn.removeClass('cms-media-chooser-upload-label-uploading');
       btns.css('pointer-events', 'all');
     }
-    var onErrorCallback = function (){
+    var onErrorHandler = function (){
       btn.html('Upload error');
       btn.addClass('cms-media-chooser-upload-label-uploading-error');
     }
-    self.xhrOnFinish(xhr, onSuccessCallback, onErrorCallback);
+
+    self.xhrOnProgress(xhr, onProgressHandler);
+    self.xhrOnFinish(xhr, onSuccessHandler, onErrorHandler);
   },
 
   updateImgOnPage: function(){
