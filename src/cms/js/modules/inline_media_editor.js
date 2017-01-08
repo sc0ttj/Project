@@ -1,4 +1,5 @@
 var $ = require('cash-dom');
+var ajax  = require('modules/ajaxer');
 var self, $mediaChooser, $mediaChooserContainer;
 
 // ⚙
@@ -152,10 +153,10 @@ module.exports = {
     formData.append('image', file, file.name);
     //prevent redirect and do ajax upload
     e.preventDefault();
-    var xhr = self.xhrCreate('POST', 'upload.php');
+    ajax.create('POST', 'upload.php');
     self.updateUploadBtns(btn, btns);
-    self.setImageUploadEventHandlers(xhr);
-    xhr.send(formData);
+    self.setImageUploadEventHandlers();
+    ajax.send(formData);
   },
 
   updateUploadBtns: function(btn, btns){
@@ -163,7 +164,7 @@ module.exports = {
       btns.css('pointer-events', 'none');
   },
 
-  setImageUploadEventHandlers: function (xhr) {
+  setImageUploadEventHandlers: function () {
     var btn = self._$currentBtn,
         btns = self._$currentBtns;
     
@@ -182,8 +183,8 @@ module.exports = {
       btn.addClass('cms-media-chooser-upload-label-uploading-error');
     }
 
-    self.xhrOnProgress(xhr, onProgressHandler);
-    self.xhrOnFinish(xhr, onSuccessHandler, onErrorHandler);
+    ajax.onProgress(onProgressHandler);
+    ajax.onFinish(onSuccessHandler, onErrorHandler);
   },
 
   updateImgOnPage: function(){
@@ -198,30 +199,6 @@ module.exports = {
 
     if (srcImgToUpdate.tagName === 'IMG') srcAttr = 'src';
     $(srcImgToUpdate).attr(srcAttr, self._currentImgUrl);
-  },
-
-  xhrCreate: function(method, url) {
-    var xhr = new XMLHttpRequest()
-    xhr.open(method, url, true);
-    return xhr;
-  },
-
-  xhrOnProgress: function(xhr, callback){
-    xhr.upload.onprogress = function (e) {
-      if (e.lengthComputable) {
-        callback(e);
-      }
-    }
-  },
-
-  xhrOnFinish: function(xhr, successCallback, errorCallback){
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        successCallback();
-      } else {
-        errorCallback();
-      }
-    }
   },
 
   createMediaChooser: function () {
