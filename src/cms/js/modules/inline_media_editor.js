@@ -194,17 +194,17 @@ module.exports = {
   },
 
   updateImgOnPage: function(){
-        // add img to src or srcset in main page
-        var imgToUpdate = $(self._currentImage),
-            $imgToUpdate = $(imgToUpdate),
-            srcImgToUpdate = $imgToUpdate.children('img, source').eq(self._currentImgSrcElem)[0],
-            srcAttr = 'srcset';
+    // add img to src or srcset in main page
+    var imgToUpdate = $(self._currentImage),
+        $imgToUpdate = $(imgToUpdate),
+        srcImgToUpdate = $imgToUpdate.children('img, source').eq(self._currentImgSrcElem)[0],
+        srcAttr = 'srcset';
 
-        if (!srcImgToUpdate) srcImgToUpdate = $imgToUpdate.children('source').eq(self._currentImgSrcElem);
-        if (!srcImgToUpdate) srcImgToUpdate = $imgToUpdate.children('img');
+    if (!srcImgToUpdate) srcImgToUpdate = $imgToUpdate.children('source').eq(self._currentImgSrcElem);
+    if (!srcImgToUpdate) srcImgToUpdate = $imgToUpdate.children('img');
 
-        if (srcImgToUpdate.tagName === 'IMG') srcAttr = 'src';
-        $(srcImgToUpdate).attr(srcAttr, self._currentImgUrl);
+    if (srcImgToUpdate.tagName === 'IMG') srcAttr = 'src';
+    $(srcImgToUpdate).attr(srcAttr, self._currentImgUrl);
   },
 
   createMediaChooser: function () {
