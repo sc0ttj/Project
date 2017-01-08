@@ -143,6 +143,11 @@ module.exports = {
     });
   },
 
+  updateUploadBtns: function(btn, btns){
+      btn.addClass('cms-media-chooser-upload-label-uploading');
+      btns.css('pointer-events', 'none');
+  },
+
   updatePreviewImage: function ($previewImg, file){
     var reader = new FileReader();
     reader.addEventListener('load', function () {
@@ -159,11 +164,6 @@ module.exports = {
     ajax.create('POST', 'upload.php');
     self.setImageUploadEventHandlers();
     ajax.send(formData);
-  },
-
-  updateUploadBtns: function(btn, btns){
-      btn.addClass('cms-media-chooser-upload-label-uploading');
-      btns.css('pointer-events', 'none');
   },
 
   setImageUploadEventHandlers: function () {
