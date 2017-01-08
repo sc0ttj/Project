@@ -124,7 +124,7 @@ module.exports = {
       self._currentImgSrcElem = imageSrcIndex;
 
       if (!file) return false;
-      // get current upload button labels, and all btns
+      // set current upload button labels, and all btns
       self._$currentBtn  = $(this).prev('label');
       self._$currentBtns = $('.cms-media-chooser-upload-label');
       // update preview in media manager with base64 data
@@ -149,48 +149,40 @@ module.exports = {
     formData.append('image', file, file.name);
     //prevent redirect and do ajax upload
     e.preventDefault();
-    var xhr = new XMLHttpRequest()
-    xhr.open('POST', 'upload.php', true);
-    self.updateButtonsDuringUpload(xhr, self._$currentBtn, self._$currentBtns);
+    var xhr = self.xhrCreate('POST', 'upload.php');
+    self.updateUploadBtns(self._$currentBtn, self._$currentBtns);
+    self.updateUploadBtnOnProgress(xhr, self._$currentBtn);
+    self.updateUploadBtnsOnFinish(xhr, self._$currentBtn, self._$currentBtns);
     xhr.send(formData);
   },
 
-  updateButtonsDuringUpload: function (xhr, btn, btns) {
-    self.updateBtns(btn, btns);
-    self.updateBtnOnProgress(xhr, btn);
-    self.updateBtnsOnFinish(xhr, btn, btns);
-  },
-
-  updateBtns: function(btn, btns){
+  updateUploadBtns: function(btn, btns){
       btn.addClass('cms-media-chooser-upload-label-uploading');
       btns.css('pointer-events', 'none');
   },
 
-  updateBtnOnProgress: function(xhr, btn){
-    xhr.upload.onprogress = function (e) {
-      if (e.lengthComputable) {
-        var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
-        btn.html('Uploading '+ratio);
-      }
+  updateUploadBtnOnProgress: function(xhr, btn){
+    var onProgressCallback = function (e) {
+      var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
+      btn.html('Uploading '+ratio);
     }
+    self.xhrOnProgress(xhr, onProgressCallback);
   },
 
-  updateBtnsOnFinish: function(xhr, btn, btns){
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        // upload finished!
-        // update the image on the page with the new uploaded src images
-        self.updateImgOnPage();
-        // now reset btn
-        btn.html('Upload image');
-        btn.removeClass('cms-media-chooser-upload-label-uploading');
-        btns.css('pointer-events', 'all');
-
-      } else {
-        btn.html('Upload error');
-        btn.addClass('cms-media-chooser-upload-label-uploading-error');
-      }
+  updateUploadBtnsOnFinish: function(xhr, btn, btns){
+    var onSuccessCallback = function (){
+      // upload finished! .. update the image on the page with the new uploaded src images
+      self.updateImgOnPage();
+      // now reset btn
+      btn.html('Upload image');
+      btn.removeClass('cms-media-chooser-upload-label-uploading');
+      btns.css('pointer-events', 'all');
     }
+    var onErrorCallback = function (){
+      btn.html('Upload error');
+      btn.addClass('cms-media-chooser-upload-label-uploading-error');
+    }
+    self.xhrOnFinish(xhr, onSuccessCallback, onErrorCallback);
   },
 
   updateImgOnPage: function(){
@@ -205,6 +197,30 @@ module.exports = {
 
     if (srcImgToUpdate.tagName === 'IMG') srcAttr = 'src';
     $(srcImgToUpdate).attr(srcAttr, self._currentImgUrl);
+  },
+
+  xhrCreate: function(method, url) {
+    var xhr = new XMLHttpRequest()
+    xhr.open(method, url, true);
+    return xhr;
+  },
+
+  xhrOnProgress: function(xhr, callback){
+    xhr.upload.onprogress = function (e) {
+      if (e.lengthComputable) {
+        callback(e);
+      }
+    }
+  },
+
+  xhrOnFinish: function(xhr, successCallback, errorCallback){
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        successCallback();
+      } else {
+        errorCallback();
+      }
+    }
   },
 
   createMediaChooser: function () {
