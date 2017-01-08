@@ -117,25 +117,26 @@ module.exports = {
   fileBtnClickHandler: function (fileBtn) {
     //force upload on choosing a file
     fileBtn.on('change', function uploadBtnChangeHandler(e){
-      var file = this.files[0],
-          filename = this.files[0].name,
-          imgUrl = '/images/'+filename;
+      var file = this.files[0];
 
       if (!file) return false;
 
-      var $previewImg = $(this).parent().prev('img'),
+      var filename = this.files[0].name,
+          imgUrl = '/images/'+filename,
+          $previewImg = $(this).parent().prev('img'),
           $previewImgId = $previewImg.attr('id'),
           imageSrcIndex = $('#'+$previewImgId).data('index');
 
+      // set current image info
       _currentImgUrl = imgUrl;
       _currentImgSrcElem = imageSrcIndex;
-
-      // set current upload button labels, and all btns
+      // set current upload button info
       _$currentBtn  = $(this).prev('label');
       _$currentBtns = $('.cms-media-chooser-upload-label');
+
       self.updateUploadBtns(_$currentBtn, _$currentBtns);
-      // update preview in media manager with base64 data
       self.updatePreviewImage($previewImg, file);
+
       // upload image
       fileBtn.prop('disabled', true);
       self.uploadImage(e, file);
