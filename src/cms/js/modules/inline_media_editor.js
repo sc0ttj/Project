@@ -117,6 +117,8 @@ module.exports = {
           filename = this.files[0].name,
           imgUrl = '/images/'+filename;
 
+      if (!file) return false;
+
       var $previewImg = $(this).parent().prev('img'),
           $previewImgId = $previewImg.attr('id'),
           imageSrcIndex = $('#'+$previewImgId).data('index');
@@ -124,7 +126,6 @@ module.exports = {
       self._currentImgUrl = imgUrl;
       self._currentImgSrcElem = imageSrcIndex;
 
-      if (!file) return false;
       // set current upload button labels, and all btns
       self._$currentBtn  = $(this).prev('label');
       self._$currentBtns = $('.cms-media-chooser-upload-label');
