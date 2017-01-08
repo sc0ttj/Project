@@ -1,8 +1,13 @@
-var $ = require('cash-dom');
-var ajax  = require('modules/ajaxer');
-var self, $mediaChooser, $mediaChooserContainer;
-
-// ⚙
+var $ = require('cash-dom'),
+    ajax = require('modules/ajaxer'),
+    self,
+    _$mediaChooser, 
+    _$mediaChooserContainer, 
+    _currentImage, 
+    _currentImgUrl, 
+    _currentImgSrcElem, 
+    _$currentBtn, 
+    _$currentBtns;
 
 "use strict";
 
@@ -18,7 +23,6 @@ module.exports = {
   init: function(config){
     this.setConfig(config);
     self = this;
-
     this.addImageEditors();
     this.addMediaChooser();
   },
@@ -32,21 +36,21 @@ module.exports = {
   },
 
   addMediaChooser: function (){
-    var mediaChooser = self.createMediaChooser();
-    $('body').append(mediaChooser);
+    var mediaChooserHtml = self.createMediaChooser();
+    $('body').append(mediaChooserHtml);
 
-    $mediaChooser = $('div.cms-media-chooser');
-    $mediaChooserContainer = $mediaChooser.children('.cms-media-chooser-container');
+    _$mediaChooser = $('div.cms-media-chooser');
+    _$mediaChooserContainer = _$mediaChooser.children('.cms-media-chooser-container');
     
-    var $mediaChooserCloseBtn = $('.cms-media-chooser-close-btn');
-    $mediaChooserCloseBtn.on('click', this.mediaChooserCloseBtnClickHandler);
+    var $closeBtn = $('.cms-media-chooser-close-btn');
+    $closeBtn.on('click', this.mediaChooserCloseBtnClickHandler);
   },
 
   mediaChooserCloseBtnClickHandler: function (e) {
     $('.cms-media-chooser-upload-btn').off('change', this.inputFileChangeHandler);
     $('body').css('overflow', 'auto');
-    $mediaChooserContainer.html('');
-    $mediaChooser.css('display', 'none');
+    _$mediaChooserContainer.html('');
+    _$mediaChooser.css('display', 'none');
   },
 
   onImageClickHandler: function (e) {
@@ -55,15 +59,15 @@ module.exports = {
         previewImages = [],
         previewImages = self.createImgsFromImgSrcElems(imgSrcElems);
     
-    self.setCurrentImage(img);
+    self.set_CurrentImage(img);
     if (previewImages.length > 0) self.showMediaChooser(previewImages);
   },
 
-  setCurrentImage: function (img){
-    self._currentImage = img;
-    var imgIsNotAnImage = (self._currentImage.tagName != 'IMG' && self._currentImage.tagName != 'PICTURE');
+  set_CurrentImage: function (img){
+    _currentImage = img;
+    var imgIsNotAnImage = (_currentImage.tagName != 'IMG' && _currentImage.tagName != 'PICTURE');
     if (imgIsNotAnImage){
-      self._currentImage = $(img).find('picture, img');
+      _currentImage = $(img).find('picture, img');
     }
   },
 
@@ -91,7 +95,7 @@ module.exports = {
 
   showMediaChooser: function (previewImages) {
     $('body').css('overflow', 'hidden');
-    $mediaChooser.css('display', 'block');
+    _$mediaChooser.css('display', 'block');
 
     // for each preview image src file
     previewImages.forEach(function (imgHtml, i){
@@ -100,9 +104,9 @@ module.exports = {
           imageHeaderTxt = '<p class="cms-media-chooser-image-title">' + imgDimensions + '</p>';
       
       //build image list
-      if (imgDimensions) $mediaChooserContainer.append(imageHeaderTxt);
-      $mediaChooserContainer.append(imgHtml);
-      $mediaChooserContainer.append(uploadMediaBtn);
+      if (imgDimensions) _$mediaChooserContainer.append(imageHeaderTxt);
+      _$mediaChooserContainer.append(imgHtml);
+      _$mediaChooserContainer.append(uploadMediaBtn);
 
       // setup file input and image preview
       var $fileBtn = $('#file-upload-'+i);
@@ -123,13 +127,13 @@ module.exports = {
           $previewImgId = $previewImg.attr('id'),
           imageSrcIndex = $('#'+$previewImgId).data('index');
 
-      self._currentImgUrl = imgUrl;
-      self._currentImgSrcElem = imageSrcIndex;
+      _currentImgUrl = imgUrl;
+      _currentImgSrcElem = imageSrcIndex;
 
       // set current upload button labels, and all btns
-      self._$currentBtn  = $(this).prev('label');
-      self._$currentBtns = $('.cms-media-chooser-upload-label');
-      self.updateUploadBtns(self._$currentBtn, self._$currentBtns);
+      _$currentBtn  = $(this).prev('label');
+      _$currentBtns = $('.cms-media-chooser-upload-label');
+      self.updateUploadBtns(_$currentBtn, _$currentBtns);
       // update preview in media manager with base64 data
       self.updatePreviewImage($previewImg, file);
       // upload image
@@ -163,8 +167,8 @@ module.exports = {
   },
 
   setImageUploadEventHandlers: function () {
-    var btn = self._$currentBtn,
-        btns = self._$currentBtns;
+    var btn = _$currentBtn,
+        btns = _$currentBtns;
     
     var onProgressHandler = function (e) {
       var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
@@ -187,16 +191,16 @@ module.exports = {
 
   updateImgOnPage: function(){
     // add img to src or srcset in main page
-    var imgToUpdate = $(self._currentImage),
+    var imgToUpdate = $(_currentImage),
         $imgToUpdate = $(imgToUpdate),
-        srcImgToUpdate = $imgToUpdate.children('img, source').eq(self._currentImgSrcElem)[0],
+        srcImgToUpdate = $imgToUpdate.children('img, source').eq(_currentImgSrcElem)[0],
         srcAttr = 'srcset';
 
-    if (!srcImgToUpdate) srcImgToUpdate = $imgToUpdate.children('source').eq(self._currentImgSrcElem);
+    if (!srcImgToUpdate) srcImgToUpdate = $imgToUpdate.children('source').eq(_currentImgSrcElem);
     if (!srcImgToUpdate) srcImgToUpdate = $imgToUpdate.children('img');
 
     if (srcImgToUpdate.tagName === 'IMG') srcAttr = 'src';
-    $(srcImgToUpdate).attr(srcAttr, self._currentImgUrl);
+    $(srcImgToUpdate).attr(srcAttr, _currentImgUrl);
   },
 
   createMediaChooser: function () {
