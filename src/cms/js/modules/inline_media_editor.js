@@ -99,12 +99,12 @@ module.exports = {
 
     // for each preview image src file
     previewImages.forEach(function (imgHtml, i){
-      var imgDimensions  = $(imgHtml).data('name'),
+      var imgHeaderTxt  = $(imgHtml).data('name'),
           uploadMediaBtn = self.createUploadMediaBtn(i),
-          imageHeaderTxt = '<p class="cms-media-chooser-image-title">' + imgDimensions + '</p>';
+          imageHeaderHtml = '<p class="cms-media-chooser-image-title">' + imgHeaderTxt + '</p>';
       
       //build image list
-      if (imgDimensions) _$mediaChooserContainer.append(imageHeaderTxt);
+      if (imgHeaderTxt) _$mediaChooserContainer.append(imageHeaderHtml);
       _$mediaChooserContainer.append(imgHtml);
       _$mediaChooserContainer.append(uploadMediaBtn);
 
