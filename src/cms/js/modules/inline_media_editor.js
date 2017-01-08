@@ -128,6 +128,7 @@ module.exports = {
       // set current upload button labels, and all btns
       self._$currentBtn  = $(this).prev('label');
       self._$currentBtns = $('.cms-media-chooser-upload-label');
+      self.updateUploadBtns(self._$currentBtn, self._$currentBtns);
       // update preview in media manager with base64 data
       self.updatePreviewImage($previewImg, file);
       // upload image
@@ -146,15 +147,11 @@ module.exports = {
   },
 
   uploadImage: function (e, file){
-    var formData = new FormData(this),
-        btn = self._$currentBtn,
-        btns = self._$currentBtns;
-
+    var formData = new FormData(this);
     formData.append('image', file, file.name);
     //prevent redirect and do ajax upload
     e.preventDefault();
     ajax.create('POST', 'upload.php');
-    self.updateUploadBtns(btn, btns);
     self.setImageUploadEventHandlers();
     ajax.send(formData);
   },
