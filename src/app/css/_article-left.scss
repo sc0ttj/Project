@@ -1,11 +1,12 @@
 .section .article-left {
-  img {
+  .article-left-img {
     height: auto;
     width: 100%;
+    margin-bottom: 1.6rem;
   }
   @media screen and (min-width:550px){
     float: left;
-    img {
+    .article-left-img {
       float: right;
       margin-left:1.6rem;
       margin-bottom: 1.6rem;

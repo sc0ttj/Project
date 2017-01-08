@@ -1,16 +1,15 @@
   <div class="scrollmation-container">
     <div class="scrollmation-start"></div>
     <div class="scrollmation-image-container">
-      <picture>
-        <!-- portrait: low res (1001w), then high res -->
-        <source media="(max-aspect-ratio: 1/1)" 
-          srcset="images/placeholders/660x960.png 480w, 
-          images/placeholders/900x1600.png">
+      <picture class="scrollmation-image">
+        <!-- portrait: high-res, then low res (480px) -->
+        <source data-name="High resolution Portrait (818x1472)"  media="(max-aspect-ratio: 1/1) and (min-width: 481px)" srcset="images/placeholders/818x1472.png">
+        <source data-name="Low resolution Portrait (414x736)"    media="(max-aspect-ratio: 1/1) and (max-width: 480px)" srcset="images/placeholders/414x736.png">
         <!-- landscape -->
-        <source srcset="images/placeholders/800x600.png 768w,
-          images/placeholders/1024x768.png 1200w,
-          images/placeholders/1600x900.png">
-        <img class="scrollmation-image" src="images/placeholders/800x600.png">
+        <source data-name="High resolution Landscape (1600x900)" media="(min-width: 1600px)" srcset="images/placeholders/1600x900.png"> 
+        <source data-name="Low resolution Landscape (1024x768)"  media="(min-width: 1024px)" srcset="images/placeholders/1024x768.png"> 
+        <!-- fallback -->
+        <img    data-name="Default" class="scrollmation-image" src="images/placeholders/800x600.png">
       </picture>
     </div>
     <div class="article scrollmation-text">

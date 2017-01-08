@@ -14,6 +14,7 @@ module.exports = {
     'editableItems'   : [ 'h1', 'h2', 'p', 'li' ],
     'editableRegionClass' : 'editable-region',
     'inlineMediaContainers' : '.scrollmation-container p[contenteditable],.article:not(.article-right):not(.article-left) p[contenteditable]',
+    'responsiveImageSelector':    'picture, .scrollmation-container',
     'mustardClass'    : 'html5-cms',
   },
 

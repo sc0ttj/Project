@@ -2,15 +2,14 @@
   <h2 class="fixed-image-text">{{fixedImageText}}</h2>
   <div class="fixed-image-background">
       <picture class="fixed-image-picture">
-        <!-- portrait: low res (1001w), then high res -->
-        <source media="(max-aspect-ratio: 1/1)" 
-          srcset="images/placeholders/414x736.png 480w, 
-          images/placeholders/900x1600.png">
+        <!-- portrait: high-res, then low res (480px) -->
+        <source data-name="High resolution Portrait (818x1472)"  media="(max-aspect-ratio: 1/1) and (min-width: 481px)" srcset="images/placeholders/818x1472.png">
+        <source data-name="Low resolution Portrait (414x736)"    media="(max-aspect-ratio: 1/1) and (max-width: 480px)" srcset="images/placeholders/414x736.png">
         <!-- landscape -->
-        <source srcset="images/placeholders/800x600.png 768w,
-          images/placeholders/1024x768.png 1200w,
-          images/placeholders/1600x900.png">
-        <img class="fixed-image-img" src="images/placeholders/800x600.png">
+        <source data-name="High resolution Landscape (1600x900)" media="(min-width: 1600px)" srcset="images/placeholders/1600x900.png"> 
+        <source data-name="Low resolution Landscape (1024x768)"  media="(min-width: 1024px)" srcset="images/placeholders/1024x768.png"> 
+        <!-- fallback -->
+        <img    data-name="Default (800x600)" class="fixed-image-img" src="images/placeholders/800x600.png">
       </picture>
   </div>
 </div>
