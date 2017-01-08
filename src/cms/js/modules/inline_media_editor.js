@@ -124,9 +124,9 @@ module.exports = {
       self._currentImgSrcElem = imageSrcIndex;
 
       if (!file) return false;
-      // get current upload button labels, and others
-      self.$uploadBtn  = $(this).prev('label');
-      self.$uploadBtns = $('.cms-media-chooser-upload-label');
+      // get current upload button labels, and all btns
+      self._$currentBtn  = $(this).prev('label');
+      self._$currentBtns = $('.cms-media-chooser-upload-label');
       // update preview in media manager with base64 data
       self.updatePreviewImage($previewImg, file);
       // upload image
@@ -151,7 +151,7 @@ module.exports = {
     e.preventDefault();
     var xhr = new XMLHttpRequest()
     xhr.open('POST', 'upload.php', true);
-    self.updateButtonsDuringUpload(xhr, self.$uploadBtn, self.$uploadBtns);
+    self.updateButtonsDuringUpload(xhr, self._$currentBtn, self._$currentBtns);
     xhr.send(formData);
   },
 
