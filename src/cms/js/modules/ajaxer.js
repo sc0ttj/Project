@@ -1,21 +1,24 @@
-var xhr;
+var xhr = [],
+    i = i || 0;
 
 "use strict";
 
 module.exports = {
 
   create: function(method, url) {
-    xhr = new XMLHttpRequest()
-    xhr.open(method, url, true);
-    return xhr;
+    i++;
+    xhr[i] = new XMLHttpRequest();
+    xhr[i].open(method, url, true);
+    console.log(i, xhr);
+    return xhr[i];
   },
 
   send: function (formData) {
-    xhr.send(formData);
+    xhr[i].send(formData);
   },
 
   onProgress: function(callback){
-    xhr.upload.onprogress = function (e) {
+    xhr[i].upload.onprogress = function (e) {
       if (e.lengthComputable) {
         callback(e);
       }
@@ -23,9 +26,10 @@ module.exports = {
   },
 
   onFinish: function(successCallback, errorCallback){
-    xhr.onload = function() {
-      if (xhr.status === 200) {
+    xhr[i].onload = function() {
+      if (xhr[i].status === 200) {
         successCallback();
+        xhr[i] = '';
       } else {
         errorCallback();
       }
