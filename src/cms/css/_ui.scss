@@ -1,0 +1,103 @@
+.cms-menu-btn {
+  background: transparent;
+  border: 0;
+  color: #222;
+  cursor: pointer;
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  height:70px;
+  width: 70px;
+  padding: 0;
+  margin:0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 101;
+}
+
+
+.cms-menu-btn-on {
+  color: orange !important;
+}
+
+
+.cms-menu-bg {
+  background-color: #222;
+  position: fixed;
+  top:0;
+  right:0;
+  opacity: 0.5;
+  height:100vh;
+  width:100vw;
+  z-index:99;
+}
+
+.cms-menu {
+  background-color: #333;
+  box-shadow: 4px 0px 10px 6px #444;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: normal;
+  pointer-events: all;
+  position:fixed;
+  opacity: 1;
+  overflow-x: hidden;
+  top:0;
+  right:0;
+  width:66%;
+  height:100vh;
+  max-width:400px;
+  z-index:100;
+}
+
+.cms-menu-header {
+  border-top: 1px solid #555;
+  list-style-type: none;
+  padding: 24px 0 2px 24px;
+}
+
+.cms-menu-item {
+  border-top: 1px solid #555;
+  list-style-type: none;
+  padding: 12px 0 2px 24px;
+  text-transform: capitalize;
+  width: 100%;
+  p {
+    display: inline-block;
+  }
+  &:hover {
+    font-weight: bold;
+  }
+}
+
+.cms-menu-item-icon {
+  color: #999;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 4rem;
+  position: absolute;
+  right: 32px;
+  line-height: 2.6rem;
+  &:hover {
+    color: #ccc;
+  }
+}
+
+.cms-menu-item-btn {
+  font-weight: bold;
+  text-decoration: uppercase;
+  &:focus {}
+  &:hover {}
+}
+
+.cms-menu-item-btn-icon {}
+
+.cms-menu-item-btn-busy {}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  width:0;
+}
+
