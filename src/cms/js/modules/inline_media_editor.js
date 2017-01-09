@@ -221,7 +221,7 @@ module.exports = {
 
   createUploadMediaBtn: function (i) {
     var uploadMediaBtn = '\
-      <form action="upload.php" method="post" class="cms-upload-form" enctype="multipart/form-data">\n\
+      <form id="cms-upload-form-'+i+'" action="upload.php" method="post" class="cms-upload-form cms-upload-form-'+i+'" enctype="multipart/form-data">\n\
         <div class="cms-loader cms-loader-hidden"></div>\n\
         <label for="file-upload-'+i+'" id="file-upload-label-'+i+'" class="cms-media-chooser-upload-label">Upload image</label>\n\
         <input name="image" type="file" id="file-upload-'+i+'" class="cms-media-chooser-upload-btn"  />\n\
