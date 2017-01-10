@@ -48,6 +48,7 @@ module.exports = {
 
   mediaChooserCloseBtnClickHandler: function (e) {
     $('.cms-media-chooser-upload-btn').off('change', this.inputFileChangeHandler);
+    $('.cms-menu-btn').removeClass('cms-menu-btn-on');
     $('body').css('overflow', 'auto');
     _$mediaChooserContainer.html('');
     _$mediaChooser.css('display', 'none');
@@ -111,6 +112,8 @@ module.exports = {
       // setup file input and image preview
       var $fileBtn = $('#file-upload-'+i);
       self.fileBtnClickHandler($fileBtn);
+
+      $('.cms-menu-btn').addClass('cms-menu-btn-on');
     });
   },
 
@@ -210,11 +213,13 @@ module.exports = {
 
   createMediaChooser: function () {
     var mediaChooser = '<div class="cms-media-chooser">\n\
-    <center><h3>Media Manager</h3>\n\
-    <p>Edit the source images for this responsive image</p>\n\
-    </center>\n\
-    <div class="cms-media-chooser-container"></div>\n\
-    <button class="cms-media-chooser-btn cms-media-chooser-close-btn">Back</button>\n\
+      <div class="cms-media-chooser-header">\n\
+        <button class="cms-media-chooser-btn cms-media-chooser-close-btn">Back</button>\n\
+        <center><h3>Media Manager</h3>\n\
+        </center>\n\
+      </div>\n\
+      <div class="cms-media-chooser-container"></div>\n\
+      \n\
     </div>';
     return mediaChooser;
   },

@@ -4,6 +4,10 @@
 }
 
 .cms-media-chooser {
+  .cms-media-chooser-header {
+    min-height:4rem;
+    max-height:12rem;
+  }
   h3 {
     padding:12px 0 0 0;
   }
@@ -30,14 +34,15 @@
 }
 
 .cms-media-chooser-close-btn {
+  border: 1px solid transparent;
   position: absolute;
-  background-color: #444;
-  bottom: 1%;
+  top: 10px;
   color: #fff;
-  right:2%;
+  left:0;
+  padding-left:16px;
   &:hover, &:focus {
-    color: #222;
-    text-shadow: 3px 2px 4px #999;
+    border: 1px solid transparent;
+    color: #fff;
   }
 }
 
@@ -73,11 +78,11 @@ input[type="file"] {
 .cms-media-chooser-container {
   background-color: #fff;
   border: 1px solid #999;
+  border-top:0;
   box-sizing: border-box;
   color: #222;
   overflow: scroll;
-  min-height: 90vh;
-  max-height: 90vh;
+  height: 100vh;
   text-align: center;
   width: 100%;
   margin: 0 auto;

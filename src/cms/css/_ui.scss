@@ -6,9 +6,10 @@
   font-size: 3rem;
   font-weight: bold;
   text-align: center;
-  height:70px;
-  width: 70px;
+  // width: 70px;
   padding: 0;
+  padding-top:10px;
+  padding-right:16px;
   margin:0;
   position: fixed;
   top: 0;
@@ -18,7 +19,7 @@
 
 
 .cms-menu-btn-on {
-  color: #dd6600 !important;
+  color: white !important;
 }
 
 .cms-menu-bg {
@@ -36,8 +37,8 @@
   background-color: #333;
   // box-shadow: 4px 0px 10px 6px #444;
   color: #fff;
-  font-size: 1.4rem;
-  font-weight: normal;
+  font-size: 1.6rem;
+  font-weight: bold;
   pointer-events: all;
   position:fixed;
   opacity: 1;
