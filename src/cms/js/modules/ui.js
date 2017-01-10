@@ -25,24 +25,35 @@ module.exports = {
     ui.$menu      = $('.cms-menu');
     ui.$menuBg    = $('.cms-menu-bg');
     ui.$menuBtn   = $('.cms-menu-btn');
-    ui.$menuItems = $('.cms-menu-item');
+    ui.$menuItems = $('.cms-menu-item'),
+    ui.$menuItemUp = $('.cms-menu-item-icon-up');
+    ui.$menuItemDown = $('.cms-menu-item-icon-down');
 
     ui.$menuBg.on('click', ui.menuBgClickHandler);
     ui.$menuBtn.on('click', ui.menuBtnClickHandler);
-    ui.$menuItems.on('click', ui.menuItemClickHandler);
-  },
+
+    ui.$menuItemUp.on('click', ui.menuItemUpClickHandler);
+    ui.$menuItemDown.on('click', ui.menuItemDownClickHandler);
+  }, 
 
   getMenuHtml: function () {
-    var itemList = [],
-        $sections = ui.getSections(),
-        menu = '<div class="cms-menu-bg transition-fast hidden"></div><ul class="cms-menu transition-fast cms-unselectable hidden">';
+    var $sections = ui.getSections(),
+        menu = '\
+        <div class="cms-menu-bg transition-fast hidden"></div>\
+        <ul class="cms-menu transition-fast hidden">';
 
-    menu += '<li class="cms-menu-header">&nbsp;</li>';
-
+    menu += '<li class="cms-menu-header"></li>';
     $sections.each(function addMenuItem(elem, i){
-      menu += '<li data-id="'+(i+1)+'" class="cms-menu-item">section '+(i+1)+' <span class="cms-menu-item-icon">↕</span></li>';
+      var sectionName = $sections.children()[i].getAttribute('data-name') || 'section'+(i+1);
+      menu += '\
+      <li \
+        id="menu-item-'+(i+1)+'" \
+        class="cms-menu-item">\
+        '+sectionName+'\
+        <span class="cms-menu-item-icon cms-menu-item-icon-up cms-unselectable">↑</span>\
+        <span class="cms-menu-item-icon cms-menu-item-icon-down cms-unselectable ">↓</span>\
+      </li>';
     });
-
     menu += '</ul>';
     
     return menu;
@@ -60,10 +71,30 @@ module.exports = {
     ui.toggleMenu();
   },
 
-  menuItemClickHandler: function (e) {
-    var sectionId = $(this).data('id'),
-        sectionOnPage = $('.section'+sectionId);
-    console.log(sectionId, sectionOnPage);
+  menuItemUpClickHandler: function (e) {
+    var $this = $(this.parentNode),
+        $prev = $($this).prev(),
+        newId = $this.attr('id')+1;
+
+    if ($this.attr('id') !== 'menu-item-1'){
+      $this.attr('id', newId);
+      $this.after($prev);
+      ui.reNumberMenuItems();  
+    }
+  },
+
+  menuItemDownClickHandler: function (e) {
+    var $this = $(this.parentNode),
+        $next = $($this).next();
+
+    $next.after($this);
+    ui.reNumberMenuItems();
+  },
+
+  reNumberMenuItems: function (){
+    $('.cms-menu-item').each(function(elem, i){
+      $(elem).attr('id', 'menu-item-'+(i+1));
+    });
   },
 
   toggleMenu: function(){

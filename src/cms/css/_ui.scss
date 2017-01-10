@@ -18,9 +18,8 @@
 
 
 .cms-menu-btn-on {
-  color: orange !important;
+  color: #dd6600 !important;
 }
-
 
 .cms-menu-bg {
   background-color: #222;
@@ -35,18 +34,19 @@
 
 .cms-menu {
   background-color: #333;
-  box-shadow: 4px 0px 10px 6px #444;
+  // box-shadow: 4px 0px 10px 6px #444;
   color: #fff;
-  font-size: 2rem;
+  font-size: 1.4rem;
   font-weight: normal;
   pointer-events: all;
   position:fixed;
   opacity: 1;
-  overflow-x: hidden;
+  overflow: auto;
   top:0;
-  right:0;
-  width:66%;
+  right:-1px;
+  width:70%;
   height:100vh;
+  max-height:100vh;
   max-width:400px;
   z-index:100;
 }
@@ -54,37 +54,42 @@
 .cms-menu-header {
   border-top: 1px solid #555;
   list-style-type: none;
-  padding: 24px 0 2px 24px;
+  height:6rem;
 }
 
 .cms-menu-item {
-  border-top: 1px solid #555;
+  border-top: 1px solid #444;
   list-style-type: none;
-  padding: 12px 0 2px 24px;
   text-transform: capitalize;
-  width: 100%;
+  margin: 0;
+  padding: 18px;
   p {
     display: inline-block;
   }
-  &:hover {
-    font-weight: bold;
-  }
+  &:hover {}
 }
 
 .cms-menu-item-icon {
-  color: #999;
+  color: #888;
   cursor: pointer;
   display: inline-block;
   font-size: 4rem;
+  font-weight: 800;
   position: absolute;
-  right: 32px;
-  line-height: 2.6rem;
+  line-height: 1.6rem;
   &:hover {
     color: #ccc;
   }
 }
 
-.cms-menu-item-btn {
+.cms-menu-item-icon-up {
+  right: 72px;
+}
+.cms-menu-item-icon-down {
+  right: 24px;
+}
+
+  .cms-menu-item-btn {
   font-weight: bold;
   text-decoration: uppercase;
   &:focus {}
@@ -101,3 +106,12 @@
   width:0;
 }
 
+.dragged {
+  background-color:#444;
+}
+
+.dragenter {
+  background-color:#dd6600;
+  padding-top:16px;
+  padding-bottom:16px;
+}
