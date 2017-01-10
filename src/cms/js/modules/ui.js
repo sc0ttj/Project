@@ -22,11 +22,11 @@ module.exports = {
     $('body').append(menu);
     $('body').append(menuBtn);
 
-    ui.$menu      = $('.cms-menu');
-    ui.$menuBg    = $('.cms-menu-bg');
-    ui.$menuBtn   = $('.cms-menu-btn');
-    ui.$menuItems = $('.cms-menu-item'),
-    ui.$menuItemUp = $('.cms-menu-item-icon-up');
+    ui.$menu         = $('.cms-menu');
+    ui.$menuBg       = $('.cms-menu-bg');
+    ui.$menuBtn      = $('.cms-menu-btn');
+    ui.$menuItems    = $('.cms-menu-item'),
+    ui.$menuItemUp   = $('.cms-menu-item-icon-up');
     ui.$menuItemDown = $('.cms-menu-item-icon-down');
 
     ui.$menuBg.on('click', ui.menuBgClickHandler);
@@ -50,8 +50,8 @@ module.exports = {
         id="menu-item-'+(i+1)+'" \
         class="cms-menu-item">\
         '+sectionName+'\
-        <span class="cms-menu-item-icon cms-menu-item-icon-up cms-unselectable">↑</span>\
-        <span class="cms-menu-item-icon cms-menu-item-icon-down cms-unselectable ">↓</span>\
+        <span class="cms-menu-item-icon cms-menu-item-icon-up   cms-unselectable">↑</span>\
+        <span class="cms-menu-item-icon cms-menu-item-icon-down cms-unselectable">↓</span>\
       </li>';
     });
     menu += '</ul>';
@@ -73,11 +73,9 @@ module.exports = {
 
   menuItemUpClickHandler: function (e) {
     var $this = $(this.parentNode),
-        $prev = $($this).prev(),
-        newId = $this.attr('id')+1;
+        $prev = $($this).prev();
 
     if ($this.attr('id') !== 'menu-item-1'){
-      $this.attr('id', newId);
       $this.after($prev);
       ui.reNumberMenuItems();  
     }
