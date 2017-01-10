@@ -13,8 +13,13 @@
 .hero-picture {}
 
 .hero-image {
-  height: auto;
-  min-width:100%;
+    height: auto;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    bottom: 0;
+    position: absolute;
+    left: 0;
 }
 
 .hero-text-container {
