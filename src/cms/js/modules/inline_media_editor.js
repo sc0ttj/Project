@@ -145,8 +145,10 @@ module.exports = {
   },
 
   updateUploadBtns: function(btn, btns){
-      btn.addClass('cms-media-chooser-upload-label-uploading');
-      btns.css('pointer-events', 'none');
+    btn.removeClass('cms-media-chooser-upload-label-error');
+    btn.addClass('cms-media-chooser-upload-label-uploading');
+    $(btn).parent().children('.cms-loader').removeClass('cms-loader-hidden');
+    btns.css('pointer-events', 'none');
   },
 
   updatePreviewImage: function ($previewImg, file){
@@ -179,11 +181,13 @@ module.exports = {
       self.updateImgOnPage();
       btn.html('Upload image');
       btn.removeClass('cms-media-chooser-upload-label-uploading');
+      $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
       btns.css('pointer-events', 'all');
     }
     var onErrorHandler = function (){
       btn.html('Upload error');
-      btn.addClass('cms-media-chooser-upload-label-uploading-error');
+      btn.addClass('cms-media-chooser-upload-label-error');
+      $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
     }
 
     ajax.onProgress(onProgressHandler);
@@ -217,7 +221,8 @@ module.exports = {
 
   createUploadMediaBtn: function (i) {
     var uploadMediaBtn = '\
-      <form action="upload.php" method="post" class="cms-upload-form" enctype="multipart/form-data">\n\
+      <form id="cms-upload-form-'+i+'" action="upload.php" method="post" class="cms-upload-form cms-upload-form-'+i+'" enctype="multipart/form-data">\n\
+        <div class="cms-loader cms-loader-hidden"></div>\n\
         <label for="file-upload-'+i+'" id="file-upload-label-'+i+'" class="cms-media-chooser-upload-label">Upload image</label>\n\
         <input name="image" type="file" id="file-upload-'+i+'" class="cms-media-chooser-upload-btn"  />\n\
       </form>';
