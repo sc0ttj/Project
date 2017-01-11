@@ -18,9 +18,6 @@ module.exports = {
     editor = this;
 
     editor.setConfig(config);
-    editor.editableClass = 'cms-editable';
-    editor.editableSelector = '.'+editor.editableClass;
-    editor.inlineMediaContainers = config.inlineMediaContainers;
 
     editor.isInFirefox = (typeof InstallTrigger !== 'undefined');
     document.body.setAttribute('spellcheck', false);
@@ -28,8 +25,8 @@ module.exports = {
     editor.createMediaBtn();
     mediaEditor.init(config);
 
-    editor.setEditableItems(config.editableItems);
-    editor.setEditableRegions(config.editableRegionClass);
+    editor.setEditableItems(editor.config.editableItems);
+    editor.setEditableRegions(editor.config.editableRegionClass);
     editor.$nextEditableElem = $('contenteditable')[0],
     editor.setEventHandlers();
   },
@@ -56,9 +53,8 @@ module.exports = {
         $elems = $(editor.config.sectionSelector + ' .' + selector);
     
     $elems.attr('contenteditable', true);
-    // $elems.addClass(editor.editableClass);
-    $elems.addClass('cms-editable-region');
-    $(editor.inlineMediaContainers).append(editor.mediaBtn);
+    $elems.addClass(editor.config.editableRegionClass);
+    $(editor.config.inlineMediaRegionSelector).append(editor.mediaBtn);
   },
 
   setEditableItems: function(items){
@@ -68,7 +64,7 @@ module.exports = {
       var $elems = $(editor.config.sectionSelector + ' ' + el);
       $elems.attr('contenteditable', true);
       // $elems.attr('data-placeholder', 'Enter text here...');
-      $elems.addClass(editor.editableClass);
+      $elems.addClass(editor.config.editableClass);
     });
   },
 
@@ -102,7 +98,7 @@ module.exports = {
   },
 
   addMediaButtons: function (el) {
-    $(editor.inlineMediaContainers).each(function(){
+    $(editor.config.inlineMediaRegionSelector).each(function(){
       var $el = $(this),
           thisHasNoMediaBtn = ($el.children('.cms-media-btn').length < 1);
           
@@ -116,7 +112,7 @@ module.exports = {
         $el = $(el),
         elemIsEmpty = editor.elemIsEmpty(el),
         elemIsContainer = editor.elemIsContainer(el);
-        
+
     if (elemIsEmpty && elemIsContainer) $el.remove();
     editor.addMediaButtons(el);
     editor.removeLeftOverMediaBtns(el);
