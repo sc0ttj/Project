@@ -27,7 +27,7 @@ module.exports = {
 
     editor.setEditableItems(editor.config.editableItems);
     editor.setEditableRegions(editor.config.editableRegionClass);
-    editor.$nextEditableElem = $('contenteditable')[0],
+    editor.nextEditableElem = $('contenteditable')[0],
     editor.setEventHandlers();
   },
 
@@ -59,7 +59,6 @@ module.exports = {
 
   setEditableItems: function(items){
     // document.designMode = 'on'; //makes ALL items editable, very buggy
-    var self = this;
     items.forEach(function makeItemEditable(el, i){
       var $elems = $(editor.config.sectionSelector + ' ' + el);
       $elems.attr('contenteditable', true);
@@ -89,7 +88,7 @@ module.exports = {
     if (e.which === 13) {
       if(!editor.elemIsContainer(el)){
         e.preventDefault();
-        if (editor.nextEditableItemExists) editor.$nextEditableElem[0].focus();
+        if (editor.nextEditableItemExists) editor.nextEditableElem.focus();
       } else {
         if (!editor.isInFirefox) $(':focus')[0].blur();
       }
@@ -119,15 +118,15 @@ module.exports = {
 
   onEditableFocusHandler: function(e){
     var el = this;
-    editor.$nextEditableElem = editor.getNextEditableItem(el);
-    editor.nextEditableItemExists = (editor.$nextEditableElem[0] === "{}" || typeof editor.$nextEditableElem[0] != 'undefined');
+    editor.nextEditableElem = editor.getNextEditableItem(el);
+    editor.nextEditableItemExists = (editor.nextEditableElem === "{}" || typeof editor.nextEditableElem != 'undefined');
     editor.addMediaButtons(el);
     editor.removeLeftOverMediaBtns(el);
     mediaEditor.addResponsiveImageClickHandlers();
   },
 
   getNextEditableItem: function (el) {
-    return $('[contenteditable]').eq($('[contenteditable]').index($(el))+1);
+    return $('[contenteditable]').eq($('[contenteditable]').index($(el))+1)[0];
   },
 
   elemIsEmpty: function (el) {
@@ -198,12 +197,12 @@ module.exports = {
   },
 
   reIndexSections: function () {
-    $('div.section').each(function(el, i){
+    $(editor.config.sectionSelector).each(function(el, i){
       var currentSection = '.section'+(i+1);
       $(currentSection).removeClass('section'+(i+1));
     });
 
-    $('div.section').each(function(el, i){
+    $(editor.config.sectionSelector).each(function(el, i){
       var $el = $(this);
       $el.addClass('section'+(i+1));
       $el.attr('id', 'section'+(i+1));
