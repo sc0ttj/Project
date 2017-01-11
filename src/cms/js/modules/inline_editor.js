@@ -192,4 +192,27 @@ module.exports = {
     }
   },
 
+  moveSectionUp: function (index) {
+    var $section = $('.section'+index);
+    $section.prev().before($section);
+  },
+
+  moveSectionDown: function (index) {
+    var $section = $('.section'+index);
+    $section.next().after($section);
+  },
+
+  reIndexSections: function () {
+    $('div.section').each(function(el, i){
+      var currentSection = '.section'+(i+1);
+      $(currentSection).removeClass('section'+(i+1));
+    });
+
+    $('div.section').each(function(el, i){
+      var $this = $(this);
+      $this.addClass('section'+(i+1));
+      $this.attr('id', 'section'+(i+1));
+    });
+  },
+
 }

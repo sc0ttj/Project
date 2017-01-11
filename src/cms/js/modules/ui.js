@@ -73,23 +73,29 @@ module.exports = {
 
   menuItemUpClickHandler: function (e) {
     var $this = $(this.parentNode),
-        $prev = $($this).prev();
+        $prev = $($this).prev(),
+        index = $this.attr('id').replace('menu-item-', '');
 
     if ($this.attr('id') !== 'menu-item-1'){
       $this.after($prev);
-      ui.reNumberMenuItems();  
+      ui.reIndexMenuItems();  
+      editor.moveSectionUp(index);
+      editor.reIndexSections();
     }
   },
 
   menuItemDownClickHandler: function (e) {
     var $this = $(this.parentNode),
-        $next = $($this).next();
+        $next = $($this).next(),
+        index = $this.attr('id').replace('menu-item-', '');
 
     $next.after($this);
-    ui.reNumberMenuItems();
+    ui.reIndexMenuItems();
+    editor.moveSectionDown(index);
+    editor.reIndexSections();
   },
 
-  reNumberMenuItems: function (){
+  reIndexMenuItems: function (){
     $('.cms-menu-item').each(function(elem, i){
       $(elem).attr('id', 'menu-item-'+(i+1));
     });
