@@ -116,6 +116,7 @@ module.exports = {
         $el = $(el),
         elemIsEmpty = editor.elemIsEmpty(el),
         elemIsContainer = editor.elemIsContainer(el);
+        
     if (elemIsEmpty && elemIsContainer) $el.remove();
     editor.addMediaButtons(el);
     editor.removeLeftOverMediaBtns(el);

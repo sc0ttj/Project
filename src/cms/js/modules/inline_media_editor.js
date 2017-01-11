@@ -1,74 +1,66 @@
 var $ = require('cash-dom'),
     ajax = require('modules/ajaxer'),
-    self,
-    _$mediaChooser, 
-    _$mediaChooserContainer, 
-    _currentImage, 
-    _currentImgUrl, 
-    _currentImgSrcElem, 
-    _$currentBtn, 
-    _$currentBtns;
+    mediaEditor;
 
 "use strict";
 
 module.exports = {
   getConfig: function (){
-    return this.config;
+    return mediaEditor.config;
   },
 
   setConfig: function (config){
-    this.config = config || this.config;
+    mediaEditor.config = config || mediaEditor.config;
   },
 
   init: function(config){
-    this.setConfig(config);
-    self = this;
-    this.addImageEditors();
-    this.addMediaChooser();
+    mediaEditor = this;
+    mediaEditor.setConfig(config);
+    mediaEditor.addImageEditors();
+    mediaEditor.addMediaChooser();
   },
 
   addImageEditors: function () {
-    var $imgs = $(this.config.responsiveImageSelector).not('.cms-editable-img');
+    var $imgs = $(mediaEditor.config.responsiveImageSelector).not('.cms-editable-img');
     if ($imgs.length > 0) {
       $imgs.addClass('cms-editable-img');
-      $imgs.on('click', this.onImageClickHandler);
+      $imgs.on('click', mediaEditor.onImageClickHandler);
     }
   },
 
   addMediaChooser: function (){
-    var mediaChooserHtml = self.createMediaChooser();
+    var mediaChooserHtml = mediaEditor.createMediaChooser();
     $('body').append(mediaChooserHtml);
 
-    _$mediaChooser = $('div.cms-media-chooser');
-    _$mediaChooserContainer = _$mediaChooser.children('.cms-media-chooser-container');
+    mediaEditor.$mediaChooser = $('div.cms-media-chooser');
+    mediaEditor.$mediaChooserContainer = mediaEditor.$mediaChooser.children('.cms-media-chooser-container');
     
     var $closeBtn = $('.cms-media-chooser-close-btn');
-    $closeBtn.on('click', this.mediaChooserCloseBtnClickHandler);
+    $closeBtn.on('click', mediaEditor.mediaChooserCloseBtnClickHandler);
   },
 
   mediaChooserCloseBtnClickHandler: function (e) {
-    $('.cms-media-chooser-upload-btn').off('change', this.inputFileChangeHandler);
     $('.cms-menu-btn').removeClass('cms-menu-btn-on');
     $('body').css('overflow', 'auto');
-    _$mediaChooserContainer.html('');
-    _$mediaChooser.css('display', 'none');
+    mediaEditor.$mediaChooserContainer.html('');
+    mediaEditor.$mediaChooser.css('display', 'none');
   },
 
   onImageClickHandler: function (e) {
     var img = this,
-        imgSrcElems = self.getImgSourceElems(img),
+        imgSrcElems = mediaEditor.getImgSourceElems(img),
         previewImages = [],
-        previewImages = self.createImgsFromImgSrcElems(imgSrcElems);
+        previewImages = mediaEditor.createImgsFromImgSrcElems(imgSrcElems);
     
-    self.setCurrentImage(img);
-    if (previewImages.length > 0) self.showMediaChooser(previewImages);
+    mediaEditor.setCurrentImage(img);
+    if (previewImages.length > 0) mediaEditor.showMediaChooser(previewImages);
   },
 
   setCurrentImage: function (img){
-    _currentImage = img;
-    var imgIsNotAnImage = (_currentImage.tagName != 'IMG' && _currentImage.tagName != 'PICTURE');
+    mediaEditor.currentImage = img;
+    var imgIsNotAnImage = (mediaEditor.currentImage.tagName != 'IMG' && mediaEditor.currentImage.tagName != 'PICTURE');
     if (imgIsNotAnImage){
-      _currentImage = $(img).find('picture, img');
+      mediaEditor.currentImage = $(img).find('picture, img');
     }
   },
 
@@ -96,22 +88,22 @@ module.exports = {
 
   showMediaChooser: function (previewImages) {
     $('body').css('overflow', 'hidden');
-    _$mediaChooser.css('display', 'block');
+    mediaEditor.$mediaChooser.css('display', 'block');
 
     // for each preview image src file
     previewImages.forEach(function (imgHtml, i){
       var imgHeaderTxt  = $(imgHtml).data('name'),
-          uploadMediaBtn = self.createUploadMediaBtn(i),
+          uploadMediaBtn = mediaEditor.createUploadMediaBtn(i),
           imageHeaderHtml = '<p class="cms-media-chooser-image-title">' + imgHeaderTxt + '</p>';
       
       //build image list
-      if (imgHeaderTxt) _$mediaChooserContainer.append(imageHeaderHtml);
-      _$mediaChooserContainer.append(imgHtml);
-      _$mediaChooserContainer.append(uploadMediaBtn);
+      if (imgHeaderTxt) mediaEditor.$mediaChooserContainer.append(imageHeaderHtml);
+      mediaEditor.$mediaChooserContainer.append(imgHtml);
+      mediaEditor.$mediaChooserContainer.append(uploadMediaBtn);
 
       // setup file input and image preview
       var $fileBtn = $('#file-upload-'+i);
-      self.fileBtnClickHandler($fileBtn);
+      mediaEditor.fileBtnClickHandler($fileBtn);
 
       $('.cms-menu-btn').addClass('cms-menu-btn-on');
     });
@@ -131,18 +123,18 @@ module.exports = {
           imageSrcIndex = $('#'+$previewImgId).data('index');
 
       // set current image info
-      _currentImgUrl = imgUrl;
-      _currentImgSrcElem = imageSrcIndex;
+      mediaEditor.currentImgUrl = imgUrl;
+      mediaEditor.currentImgSrcElem = imageSrcIndex;
       // set current upload button info
-      _$currentBtn  = $(this).prev('label');
-      _$currentBtns = $('.cms-media-chooser-upload-label');
+      mediaEditor.$currentBtn  = $(this).prev('label');
+      mediaEditor.$currentBtns = $('.cms-media-chooser-upload-label');
 
-      self.updateUploadBtns(_$currentBtn, _$currentBtns);
-      self.updatePreviewImage($previewImg, file);
+      mediaEditor.updateUploadBtns(mediaEditor.$currentBtn, mediaEditor.$currentBtns);
+      mediaEditor.updatePreviewImage($previewImg, file);
 
       // upload image
       fileBtn.prop('disabled', true);
-      self.uploadImage(e, file);
+      mediaEditor.uploadImage(e, file);
       fileBtn.prop('disabled', false);
     });
   },
@@ -168,20 +160,20 @@ module.exports = {
     //prevent redirect and do ajax upload
     e.preventDefault();
     ajax.create('POST', 'upload.php');
-    self.setImageUploadEventHandlers();
+    mediaEditor.setImageUploadEventHandlers();
     ajax.send(formData);
   },
 
   setImageUploadEventHandlers: function () {
-    var btn = _$currentBtn,
-        btns = _$currentBtns;
+    var btn  = mediaEditor.$currentBtn,
+        btns = mediaEditor.$currentBtns;
     
     var onProgressHandler = function (e) {
       var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
       btn.html('Uploading '+ratio);
     }
     var onSuccessHandler = function (){
-      self.updateImgOnPage();
+      mediaEditor.updateImgOnPage();
       btn.html('Upload image');
       btn.removeClass('cms-media-chooser-upload-label-uploading');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
@@ -199,16 +191,16 @@ module.exports = {
 
   updateImgOnPage: function(){
     // add img to src or srcset in main page
-    var imgToUpdate = $(_currentImage),
+    var imgToUpdate = $(mediaEditor.currentImage),
         $imgToUpdate = $(imgToUpdate),
-        srcImgToUpdate = $imgToUpdate.children('img, source').eq(_currentImgSrcElem)[0],
+        srcImgToUpdate = $imgToUpdate.children('img, source').eq(mediaEditor.currentImgSrcElem)[0],
         srcAttr = 'srcset';
 
-    if (!srcImgToUpdate) srcImgToUpdate = $imgToUpdate.children('source').eq(_currentImgSrcElem);
+    if (!srcImgToUpdate) srcImgToUpdate = $imgToUpdate.children('source').eq(mediaEditor.currentImgSrcElem);
     if (!srcImgToUpdate) srcImgToUpdate = $imgToUpdate.children('img');
 
     if (srcImgToUpdate.tagName === 'IMG') srcAttr = 'src';
-    $(srcImgToUpdate).attr(srcAttr, _currentImgUrl);
+    $(srcImgToUpdate).attr(srcAttr, mediaEditor.currentImgUrl);
   },
 
   createMediaChooser: function () {
