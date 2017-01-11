@@ -16,11 +16,11 @@ module.exports = {
   init: function(config){
     mediaEditor = this;
     mediaEditor.setConfig(config);
-    mediaEditor.addImageEditors();
+    mediaEditor.addResponsiveImageClickHandlers();
     mediaEditor.addMediaChooser();
   },
 
-  addImageEditors: function () {
+  addResponsiveImageClickHandlers: function () {
     var $imgs = $(mediaEditor.config.responsiveImageSelector).not('.cms-editable-img');
     if ($imgs.length > 0) {
       $imgs.addClass('cms-editable-img');

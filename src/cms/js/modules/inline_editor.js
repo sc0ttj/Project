@@ -103,7 +103,6 @@ module.exports = {
           thisHasNoMediaBtn = ($el.children('.cms-media-btn').length < 1);
           
       if (thisHasNoMediaBtn) $el.append(editor.mediaBtn);
-      mediaEditor.addImageEditors();
     });
   },
 
@@ -116,7 +115,6 @@ module.exports = {
     if (elemIsEmpty && elemIsContainer) $el.remove();
     editor.addMediaButtons(el);
     editor.removeLeftOverMediaBtns(el);
-    mediaEditor.addImageEditors();
   },
 
   onEditableFocusHandler: function(e){
@@ -125,7 +123,7 @@ module.exports = {
     editor.nextEditableItemExists = (editor.$nextEditableElem[0] === "{}" || typeof editor.$nextEditableElem[0] != 'undefined');
     editor.addMediaButtons(el);
     editor.removeLeftOverMediaBtns(el);
-    mediaEditor.addImageEditors();
+    mediaEditor.addResponsiveImageClickHandlers();
   },
 
   getNextEditableItem: function (el) {
