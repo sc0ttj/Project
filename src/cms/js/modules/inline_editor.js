@@ -1,45 +1,47 @@
 var $ = require('cash-dom');
 var mediaEditor  = require('modules/inline_media_editor');
+var editor;
 // console.log($)
 
 "use strict";
 
 module.exports = {
   getConfig: function (){
-    return this.config;
+    return editor.config;
   },
 
   setConfig: function (config){
-    this.config = config || this.config;
+    editor.config = config || editor.config;
   },
 
   init: function(config){
-    this.setConfig(config);
-    this.editableClass = 'cms-editable';
-    this.editableSelector = '.'+this.editableClass;
-    this.inlineMediaContainers = config.inlineMediaContainers;
+    editor = this;
 
-    this.isInFirefox = (typeof InstallTrigger !== 'undefined');
+    editor.setConfig(config);
+    editor.editableClass = 'cms-editable';
+    editor.editableSelector = '.'+editor.editableClass;
+    editor.inlineMediaContainers = config.inlineMediaContainers;
+
+    editor.isInFirefox = (typeof InstallTrigger !== 'undefined');
     document.body.setAttribute('spellcheck', false);
 
-    this.createMediaBtn();
+    editor.createMediaBtn();
     mediaEditor.init(config);
 
-    this.setEditableItems(config.editableItems);
-    this.setEditableRegions(config.editableRegionClass);
-    $nextEditableElem = $('contenteditable')[0],
-    this.setEventHandlers();
+    editor.setEditableItems(config.editableItems);
+    editor.setEditableRegions(config.editableRegionClass);
+    editor.$nextEditableElem = $('contenteditable')[0],
+    editor.setEventHandlers();
   },
 
   createMediaBtn: function (){
-    this.mediaBtn = '<div id="cms-media-btn" class="cms-media-btn" contenteditable="false" onclick="mediaBtnClickHandler(this);">ADD MEDIA</div>'
+    editor.mediaBtn = '<div id="cms-media-btn" class="cms-media-btn" contenteditable="false" onclick="mediaBtnClickHandler(this);">ADD MEDIA</div>'
     mediaBtnClickHandler = function (el){
       var imgHtml = '<picture><img class=cms-inline-media style=width:100%; src=images/placeholders/550x550.png /></picture>',
           $el     = $(el),
           $target = $el;
 
       if ($el.hasClass('cms-media-btn')) $target = $el.parent();
-      var SthisBtn = $target.children('.cms-media-btn');
       $target.append(imgHtml);
       $target.children('.cms-media-btn').remove();
     }
@@ -50,63 +52,61 @@ module.exports = {
   },
 
   setEditableRegions: function(selector){
-    var selector = selector.replace(/^\./, '');
-    var $elems = $(this.config.sectionSelector + ' .' + selector);
+    var selector = selector.replace(/^\./, ''),
+        $elems = $(editor.config.sectionSelector + ' .' + selector);
+    
     $elems.attr('contenteditable', true);
-    // $elems.addClass(this.editableClass);
+    // $elems.addClass(editor.editableClass);
     $elems.addClass('cms-editable-region');
-    $(this.inlineMediaContainers).append(this.mediaBtn);
+    $(editor.inlineMediaContainers).append(editor.mediaBtn);
   },
 
   setEditableItems: function(items){
     // document.designMode = 'on'; //makes ALL items editable, very buggy
     var self = this;
     items.forEach(function makeItemEditable(el, i){
-      var $elems = $(self.config.sectionSelector + ' ' + el);
+      var $elems = $(editor.config.sectionSelector + ' ' + el);
       $elems.attr('contenteditable', true);
       // $elems.attr('data-placeholder', 'Enter text here...');
-      $elems.addClass(self.editableClass);
+      $elems.addClass(editor.editableClass);
     });
   },
 
   setEventHandlers: function(){
-    var nextEditableItemExists,
-        $nextEditableElem,
-        editables = this.getEditableItems();
-        self = this;
+    var editables = editor.getEditableItems();
     
-    editables.off('focus', this.onEditableFocusHandler);
-    editables.off('blur', this.onEditableBlurHandler);
-    editables.off('keypress', this.onEditableKeyPressHandler);
+    editables.off('focus', editor.onEditableFocusHandler);
+    editables.off('blur', editor.onEditableBlurHandler);
+    editables.off('keypress', editor.onEditableKeyPressHandler);
     
-    editables.on('focus', this.onEditableFocusHandler);
-    editables.on('blur', this.onEditableBlurHandler);
-    editables.on('keypress', this.onEditableKeyPressHandler);
+    editables.on('focus', editor.onEditableFocusHandler);
+    editables.on('blur', editor.onEditableBlurHandler);
+    editables.on('keypress', editor.onEditableKeyPressHandler);
   },
 
   onEditableKeyPressHandler: function(e){
     var el = this;
 
     // crude firefox fix - dont allow total emptying of editable regions
-    if(self.isInFirefox && self.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p></p>');
+    if(editor.isInFirefox && editor.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p></p>');
 
     if (e.which === 13) {
-      if(!self.elemIsContainer(el)){
+      if(!editor.elemIsContainer(el)){
         e.preventDefault();
-        if (nextEditableItemExists) $nextEditableElem[0].focus();
+        if (editor.nextEditableItemExists) editor.$nextEditableElem[0].focus();
       } else {
-        if (!self.isInFirefox) $(':focus')[0].blur();
+        if (!editor.isInFirefox) $(':focus')[0].blur();
       }
       return false;
     }
   },
 
   addMediaButtons: function (el) {
-    $(this.inlineMediaContainers).each(function(){
-      var $this = $(this),
-          thisHasNoMediaBtn = ($this.children('.cms-media-btn').length < 1);
+    $(editor.inlineMediaContainers).each(function(){
+      var $el = $(this),
+          thisHasNoMediaBtn = ($el.children('.cms-media-btn').length < 1);
           
-      if (thisHasNoMediaBtn) $this.append(self.mediaBtn);
+      if (thisHasNoMediaBtn) $el.append(editor.mediaBtn);
       mediaEditor.addImageEditors();
     });
   },
@@ -114,20 +114,20 @@ module.exports = {
   onEditableBlurHandler: function(e){
     var el = this,
         $el = $(el),
-        elemIsEmpty = self.elemIsEmpty(el),
-        elemIsContainer = self.elemIsContainer(el);
+        elemIsEmpty = editor.elemIsEmpty(el),
+        elemIsContainer = editor.elemIsContainer(el);
     if (elemIsEmpty && elemIsContainer) $el.remove();
-    self.addMediaButtons(el);
-    self.removeLeftOverMediaBtns(el);
+    editor.addMediaButtons(el);
+    editor.removeLeftOverMediaBtns(el);
     mediaEditor.addImageEditors();
   },
 
   onEditableFocusHandler: function(e){
     var el = this;
-    $nextEditableElem = self.getNextEditableItem(el);
-    nextEditableItemExists = ($nextEditableElem[0] === "{}" || typeof $nextEditableElem[0] != 'undefined');
-    self.addMediaButtons(el);
-    self.removeLeftOverMediaBtns(el);
+    editor.$nextEditableElem = editor.getNextEditableItem(el);
+    editor.nextEditableItemExists = (editor.$nextEditableElem[0] === "{}" || typeof editor.$nextEditableElem[0] != 'undefined');
+    editor.addMediaButtons(el);
+    editor.removeLeftOverMediaBtns(el);
     mediaEditor.addImageEditors();
   },
 
@@ -162,7 +162,7 @@ module.exports = {
 
   removeLeftOverMediaBtns: function (el){
     $(el).children('p').each(function(){
-      if (self.onlyContainsMediaBtn(this)) $(this).remove();
+      if (editor.onlyContainsMediaBtn(el)) $(el).remove();
     });
   },
 
@@ -182,7 +182,7 @@ module.exports = {
     var sel = window.getSelection();
     if (sel.rangeCount) {
       var selRange = sel.getRangeAt(0);
-      var blockEl = self.getTextBlockContainer(selRange.endContainer);
+      var blockEl = editor.getTextBlockContainer(selRange.endContainer);
       if (blockEl) {
         var range = selRange.cloneRange();
         range.selectNodeContents(blockEl);
@@ -209,9 +209,9 @@ module.exports = {
     });
 
     $('div.section').each(function(el, i){
-      var $this = $(this);
-      $this.addClass('section'+(i+1));
-      $this.attr('id', 'section'+(i+1));
+      var $el = $(this);
+      $el.addClass('section'+(i+1));
+      $el.attr('id', 'section'+(i+1));
     });
   },
 

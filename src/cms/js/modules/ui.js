@@ -31,7 +31,6 @@ module.exports = {
 
     ui.$menuBg.on('click', ui.menuBgClickHandler);
     ui.$menuBtn.on('click', ui.menuBtnClickHandler);
-
     ui.$menuItemUp.on('click', ui.menuItemUpClickHandler);
     ui.$menuItemDown.on('click', ui.menuItemDownClickHandler);
   }, 

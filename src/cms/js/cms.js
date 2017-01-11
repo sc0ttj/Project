@@ -8,14 +8,15 @@ var loadCSS = require('modules/loadcss').init;
 module.exports = {
 
   config: {
-    'name'            : 'default CMS options',
-    'sectionSelector' : 'body .section',
-    'sectionContainer': '<div class="section"></div>', 
-    'editableItems'   : [ 'h1', 'h2', 'p', 'li' ],
-    'editableRegionClass' : 'editable-region',
-    'inlineMediaContainers' : '.scrollmation-container p[contenteditable],.article:not(.article-right):not(.article-left) p[contenteditable]',
+    'name'            :           'default CMS options',
+    'templates'       :           [ '_article-full-width.tmpl', '_article-left.tmpl', '_article-right.tmpl', '_cms-script.tmpl', '_hero-center.tmpl', '_image-center.tmpl', '_image-fixed.js.tmpl', '_image-fixed.tmpl index.tmpl', '_scrollmation-text-left.js.tmpl', '_scrollmation-text-left.tmpl', '_stat-text.js.tmpl', '_stat-text.tmpl', '_youtube-full-width.tmpl' ],
+    'sectionSelector' :           'body .section',
+    'sectionContainer':           '<div class="section"></div>', 
+    'editableItems'   :           [ 'h1', 'h2', 'p', 'li' ],
+    'editableRegionClass' :       'editable-region',
+    'inlineMediaContainers' :     '.scrollmation-container p[contenteditable],.article:not(.article-right):not(.article-left) p[contenteditable]',
     'responsiveImageSelector':    'picture, .scrollmation-container',
-    'mustardClass'    : 'html5-cms',
+    'mustardClass'    :           'html5-cms',
   },
 
   getConfig: function (){
