@@ -156,9 +156,10 @@ module.exports = {
   },
 
   removeLeftOverMediaBtns: function (el){
-    $(el).children('p').each(function(){
-      if (editor.onlyContainsMediaBtn(el)) $(el).remove();
+    $(el).children().each(function(elem){
+      if (editor.onlyContainsMediaBtn(elem)) $(elem).remove();
     });
+    if (editor.onlyContainsMediaBtn(el)) $(el).remove();
   },
 
   onlyContainsMediaBtn: function (el) {
