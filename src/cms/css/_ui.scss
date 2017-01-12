@@ -19,7 +19,11 @@
 
 
 .cms-menu-btn-on {
-  color: white !important;
+  color: #ffa !important;
+}
+
+.cms-menu-btn-white {
+  color: #fff !important;
 }
 
 .cms-menu-bg {
@@ -42,9 +46,10 @@
   pointer-events: all;
   position:fixed;
   opacity: 1;
-  overflow: auto;
+  overflow: overlay;
   top:0;
   right:-1px;
+  min-width:280px;
   width:70%;
   height:100vh;
   max-height:100vh;
@@ -53,44 +58,61 @@
 }
 
 .cms-menu-header {
-  border-top: 1px solid #555;
   list-style-type: none;
-  height:6rem;
+  margin: 0;
+  padding: 1.6rem;
 }
 
 .cms-menu-item {
   border-top: 1px solid #444;
+  color: #999;
+  cursor: default;
   list-style-type: none;
   text-transform: capitalize;
   margin: 0;
   padding: 18px;
+  .cms-menu-item-text {}
   p {
     display: inline-block;
   }
-  &:hover {}
+  &:focus, &:hover {
+    color: #eee;
+    .cms-menu-item-icon {
+      opacity: 1;
+    }
+  }
 }
 
 .cms-menu-item-icon {
-  color: #888;
+  color: #aaa;
   cursor: pointer;
   display: inline-block;
-  font-size: 4rem;
-  font-weight: 800;
+  font-size: 2rem;
+  font-weight: normal;
+  opacity: 0.4;
   position: absolute;
-  line-height: 1.6rem;
+  line-height: 2.6rem;
   &:hover {
-    color: #ccc;
+    color: #eee;
   }
 }
 
 .cms-menu-item-icon-up {
-  right: 72px;
-}
-.cms-menu-item-icon-down {
-  right: 24px;
+  color:#6c6;
+  right: 90px;
 }
 
-  .cms-menu-item-btn {
+.cms-menu-item-icon-down {
+  color:#6c6;
+  right: 50px;
+}
+
+.cms-menu-item-icon-delete {
+  color:#f66;
+  right: 15px;
+}
+
+.cms-menu-item-btn {
   font-weight: bold;
   text-decoration: uppercase;
   &:focus {}

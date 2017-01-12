@@ -32,7 +32,7 @@ module.exports = {
   },
 
   createMediaBtn: function (){
-    editor.mediaBtn = '<div id="cms-media-btn" class="cms-media-btn" contenteditable="false" onclick="mediaBtnClickHandler(this);">ADD MEDIA</div>'
+    editor.mediaBtn = '<div id="cms-media-btn" class="cms-media-btn cms-anim-fade-250ms cms-transparent" contenteditable="false" onclick="mediaBtnClickHandler(this);">ADD MEDIA</div>'
     mediaBtnClickHandler = function (el){
       var imgHtml = '<picture><img class=cms-inline-media style=width:100%; src=images/placeholders/550x550.png /></picture>',
           $el     = $(el),
@@ -136,6 +136,7 @@ module.exports = {
       || el.innerHTML === '""' 
       || el.innerHTML === '<br>' 
       || el.innerHTML === '<strong></strong>' 
+      || el.innerHTML === '<span></span>' 
       || el.innerHTML === '<b></b>'  
       || el.innerHTML === '<i></i>' 
       || el.innerHTML === '<em></em>' 
@@ -194,6 +195,11 @@ module.exports = {
   moveSectionDown: function (index) {
     var $section = $('.section'+index);
     $section.next().after($section);
+  },
+
+  removeSection: function (index) {
+    var $section = $('.section'+index);
+    $section.remove();
   },
 
   reIndexSections: function () {

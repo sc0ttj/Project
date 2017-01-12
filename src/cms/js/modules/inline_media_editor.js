@@ -40,7 +40,7 @@ module.exports = {
   },
 
   mediaChooserCloseBtnClickHandler: function (e) {
-    $('.cms-menu-btn').removeClass('cms-menu-btn-on');
+    $('.cms-menu-btn').removeClass('cms-menu-btn-white');
     $('body').css('overflow', 'auto');
     mediaEditor.$mediaChooserContainer.html('');
     mediaEditor.$mediaChooser.css('display', 'none');
@@ -105,7 +105,7 @@ module.exports = {
       var $fileBtn = $('#file-upload-'+i);
       mediaEditor.fileBtnClickHandler($fileBtn);
 
-      $('.cms-menu-btn').addClass('cms-menu-btn-on');
+      $('.cms-menu-btn').addClass('cms-menu-btn-white');
     });
   },
 
