@@ -11,7 +11,7 @@
     opacity: 0;
   }
 
-  .transition-slow {
+  .anim-fade-2s {
     -webkit-transition: opacity 2s ease;
     -moz-transition: opacity 2s ease;
     -ms-transition: opacity 2s ease;
@@ -21,7 +21,7 @@
     transition-delay: 0.1s;
   }
 
-  .transition-med {
+  .anim-fade-1s {
     -webkit-transition: opacity 1s ease;
     -moz-transition: opacity 1s ease;
     -ms-transition: opacity 1s ease;
@@ -31,7 +31,7 @@
     transition-delay: 0.1s;
   }
 
-  .transition-fast {
+  .anim-fade-250ms {
     -webkit-transition: opacity 0.25s ease;
     -moz-transition: opacity 0.25s ease;
     -ms-transition: opacity 0.25s ease;
