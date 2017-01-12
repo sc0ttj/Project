@@ -50,7 +50,7 @@ module.exports = {
       <li \
         id="menu-item-'+(i+1)+'" \
         class="cms-menu-item">\
-        <span class="cms-menu-item-text">'+sectionName+'</span>\
+        <span class="cms-menu-item-text"><a href="#section'+(i+1)+'">'+sectionName+'</a></span>\
         <span class="cms-menu-item-icon  cms-menu-item-icon-up      cms-anim-fade-250ms cms-unselectable">ᐃ</span>\
         <span class="cms-menu-item-icon  cms-menu-item-icon-down    cms-anim-fade-250ms cms-unselectable">ᐁ</span>\
         <span class="cms-menu-item-icon  cms-menu-item-icon-delete  cms-anim-fade-250ms cms-unselectable">ⅹ</span>\
@@ -110,6 +110,7 @@ module.exports = {
   reIndexMenuItems: function (){
     $('.cms-menu-item').each(function(elem, i){
       $(elem).attr('id', 'menu-item-'+(i+1));
+      $(elem).find('a').attr('href', '#section'+(i+1));
     });
   },
 
