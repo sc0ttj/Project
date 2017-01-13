@@ -79,6 +79,11 @@ p[contenteditable=true]:hover {
   }
 }
 
+*[contenteditable=true]:empty:before{
+  color: #999;
+  content: 'Placeholder text...';
+}
+
 //https://codepen.io/flesler/pen/AEIFc - contenteditable placeholder support
 // [contenteditable=true]:empty:before {
 //   content: attr(data-placeholder);
