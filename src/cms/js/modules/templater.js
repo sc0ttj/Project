@@ -28,6 +28,7 @@ module.exports = {
 
   numberTheSections: function(elem, i){
     $(elem).addClass('section' + (i+1));
+    $(elem).attr('id', 'section'+(i+1));
   },
 
 }

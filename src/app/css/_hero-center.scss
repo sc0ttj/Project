@@ -1,5 +1,5 @@
 .hero-center {
-  background-color: #333;
+  background-color: transparent;
   color: #fff;
   padding: 0;
   margin: 0;
@@ -7,14 +7,17 @@
   position: relative;
   overflow: hidden;
   text-align: center;
-  text-shadow: 1px 1px 3px #000;
 }
 
 .hero-picture {}
 
 .hero-image {
-  height: auto;
-  min-width:100%;
+    height: auto;
+    min-width: 100%;
+    min-height: 100vh;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 
 .hero-text-container {
@@ -23,6 +26,7 @@
   width:100%;
   .hero-text-titles-container {
     margin-bottom:4rem;
+    text-shadow: 1px 1px 3px #000;
     .hero-title {}
     .hero-subtitle {
       font-size: 2.4rem;
@@ -33,20 +37,22 @@
   }
   .hero-text-meta-container {
     background-color: #333;
-    padding:2px 1rem 2px 1rem;
-    color: #fff;
+    color:#dfdfdf;
+    font-size:1.6rem;
     font-weight: bold;
+    padding:10px;
     .hero-meta-field {
-      margin-right:1.6rem;
+      text-align:left;
     }
     .hero-meta {
+      color:#999;
       display: inline-block;
-      min-width: 60px;
+      margin-right:1rem;
+      text-align:right;
+      width:72px;
     }
     .hero-meta-value {
-      color: #bbb;
       display: inline;
-      margin-left:0.5rem;
     }
   }
 }

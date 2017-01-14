@@ -1,27 +1,17 @@
 .html5 {
 
-  .blurred {
+  .cms-blurred {
     -webkit-filter: blur(4px);
     filter: blur(4px);
   }
 
-  .transparent {
+  .cms-transparent {
     -webkit-opacity: 0;
     -moz-opacity: 0;
     opacity: 0;
   }
 
-  .anim-fade-2s {
-    -webkit-transition: opacity 2s ease;
-    -moz-transition: opacity 2s ease;
-    -ms-transition: opacity 2s ease;
-    -o-transition: opacity 2s ease;
-    transition: opacity 2s ease;
-    -webkit-transition-delay: 0.1s;
-    transition-delay: 0.1s;
-  }
-
-  .anim-fade-1s {
+  .cms-anim-fade-1s {
     -webkit-transition: opacity 1s ease;
     -moz-transition: opacity 1s ease;
     -ms-transition: opacity 1s ease;
@@ -31,12 +21,32 @@
     transition-delay: 0.1s;
   }
 
-  .anim-fade-250ms {
+  .cms-anim-fade-250ms {
     -webkit-transition: opacity 0.25s ease;
     -moz-transition: opacity 0.25s ease;
     -ms-transition: opacity 0.25s ease;
     -o-transition: opacity 0.25s ease;
     transition: opacity 0.25s ease;
+  }
+
+  .cms-anim-delay-100ms {
+    -webkit-transition-delay: 0.1s;
+    transition-delay: 0.1s;
+  }
+
+  .cms-anim-delay-250ms {
+    -webkit-transition-delay: 0.25s;
+    transition-delay: 0.25s;
+  }
+
+  .cms-anim-delay-500ms {
+    -webkit-transition-delay: 0.5s;
+    transition-delay: 0.5s;
+  }
+
+  .cms-anim-delay-1s {
+    -webkit-transition-delay: 1s;
+    transition-delay: 1s;
   }
 
 }

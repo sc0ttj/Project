@@ -41,29 +41,25 @@ p.cms-editable {
 }
 
 .cms-media-btn {
-  -webkit-transition: all 0.25s ease;
-  -moz-transition: all 0.25s ease;
-  -ms-transition: all 0.25s ease;
-  -o-transition: all 0.25s ease;
-  transition: all 0.25s ease;
   &:hover, &:focus {
     background-color: #ddd;
   }
-  color: #000;
+  color: #222;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: bold;
-  line-height:18px;
-  padding: 4px;
+  line-height: 20px;
+  padding: 0;
   margin: 0 auto;
-  margin-bottom:-26px;
+  margin-top: 4px;
+  margin-bottom: -24px;
   opacity: 0;
   outline-color: transparent;
   outline-style: dashed;
   outline-offset: 0;
   outline-width: 0;
   overflow: hidden;
-  text-align:center;
+  text-align: center;
   text-overflow: ellipsis;
   visibility: hidden;
   width: 80px;
@@ -81,6 +77,11 @@ p[contenteditable=true]:hover {
     opacity: 1;
     visibility: visible;
   }
+}
+
+*[contenteditable=true]:empty:before{
+  color: #999;
+  content: 'Placeholder text...';
 }
 
 //https://codepen.io/flesler/pen/AEIFc - contenteditable placeholder support

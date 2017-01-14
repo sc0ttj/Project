@@ -9,7 +9,7 @@ module.exports = {
     i++;
     xhr[i] = new XMLHttpRequest();
     xhr[i].open(method, url, true);
-    console.log(i, xhr);
+    // console.log(i, xhr);
     return xhr[i];
   },
 

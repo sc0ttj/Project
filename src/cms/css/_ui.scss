@@ -1,0 +1,147 @@
+.cms-menu-btn {
+  background: transparent;
+  border: 0;
+  color: #222;
+  cursor: pointer;
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  // width: 70px;
+  padding: 0;
+  padding-top:10px;
+  padding-right:16px;
+  margin:0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 101;
+}
+
+
+.cms-menu-btn-on {
+  color: #ffa !important;
+}
+
+.cms-menu-btn-white {
+  color: #fff !important;
+}
+
+.cms-menu-bg {
+  background-color: #222;
+  position: fixed;
+  top:0;
+  right:0;
+  opacity: 0.5;
+  height:100vh;
+  width:100vw;
+  z-index:99;
+}
+
+.cms-menu {
+  background-color: #333;
+  // box-shadow: 4px 0px 10px 6px #444;
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: bold;
+  pointer-events: all;
+  position:fixed;
+  opacity: 1;
+  overflow: overlay;
+  top:0;
+  right:-1px;
+  min-width:280px;
+  width:70%;
+  height:100vh;
+  max-height:100vh;
+  max-width:400px;
+  z-index:100;
+}
+
+.cms-menu-header {
+  list-style-type: none;
+  margin: 0;
+  padding: 1.6rem;
+}
+
+.cms-menu-item {
+  border-top: 1px solid #444;
+  color: #999;
+  cursor: default;
+  list-style-type: none;
+  text-transform: capitalize;
+  margin: 0;
+  padding: 18px;
+  .cms-menu-item-text {}
+  a, a:visited {
+    color: #999;
+    text-decoration:none;
+  }
+  a:hover, a:focus {
+    color: #eee;
+  }
+  p {
+    display: inline-block;
+  }
+  &:focus, &:hover {
+    color: #eee;
+    .cms-menu-item-icon {
+      opacity: 1;
+    }
+  }
+}
+
+.cms-menu-item-icon {
+  color: #aaa;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: normal;
+  opacity: 0.4;
+  position: absolute;
+  line-height: 2.6rem;
+  &:hover {
+    color: #eee;
+  }
+}
+
+.cms-menu-item-icon-up {
+  color:#6c6;
+  right: 90px;
+}
+
+.cms-menu-item-icon-down {
+  color:#6c6;
+  right: 50px;
+}
+
+.cms-menu-item-icon-delete {
+  color:#f66;
+  right: 15px;
+}
+
+.cms-menu-item-btn {
+  font-weight: bold;
+  text-decoration: uppercase;
+  &:focus {}
+  &:hover {}
+}
+
+.cms-menu-item-btn-icon {}
+
+.cms-menu-item-btn-busy {}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  width:0;
+}
+
+.dragged {
+  background-color:#444;
+}
+
+.dragenter {
+  background-color:#dd6600;
+  padding-top:16px;
+  padding-bottom:16px;
+}
