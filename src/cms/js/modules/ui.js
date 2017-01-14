@@ -35,6 +35,10 @@ module.exports = {
     ui.$menuItemUp.on('click', ui.menuItemUpClickHandler);
     ui.$menuItemDown.on('click', ui.menuItemDownClickHandler);
     ui.$menuItemDelete.on('click', ui.menuItemDeleteClickHandler);
+
+    ui.$menuBtnAddSection = $('.cms-menu-header-add-section');
+    ui.$menuBtnAddSection.on('click', ui.menuBtnAddSectionClickHandler);
+
   }, 
 
   getMenuHtml: function () {
@@ -43,7 +47,15 @@ module.exports = {
         <div class="cms-menu-bg cms-anim-fade-250ms hidden"></div>\
         <ul class="cms-menu cms-anim-fade-250ms hidden">';
 
-    menu += '<li class="cms-menu-header">Sections:</li>';
+    menu += '<li class="cms-menu-top"></li>';
+    menu += '\
+    <li id="menu-header-add-section" class="cms-menu-header cms-menu-header-add-section cms-unselectable">\
+      Add Section +\
+    </li>';
+    menu += '\
+    <li id="menu-header-add-section" class="cms-menu-header cms-menu-header-sections">\
+      <span class="cms-menu-item-text">Sections:</span>\
+    </li>';
     $sections.each(function addMenuItem(elem, i){
       var sectionName = $sections.children()[i].getAttribute('data-name') || 'section'+(i+1);
       menu += '\
@@ -105,6 +117,10 @@ module.exports = {
     ui.reIndexMenuItems();
     editor.removeSection(index);
     editor.reIndexSections();
+  },
+
+  menuBtnAddSectionClickHandler: function (e) {
+    console.log(this);
   },
 
   reIndexMenuItems: function (){
