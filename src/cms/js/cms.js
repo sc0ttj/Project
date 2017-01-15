@@ -44,6 +44,16 @@ module.exports = {
     return true // if we loaded up ok
   },
 
+  reload: function (){
+    cms.editor.setEditableItems(this.config.editableItems);
+    cms.editor.setEditableRegions(this.config.editableRegionClass);
+    cms.editor.setEventHandlers();
+    cms.mediaEditor.init(this.config);
+    app.fixedImage.init();
+    app.scrollmation.init();
+    app.statText.init();
+  },
+
   cutsTheMustard: function () {
     var cutsTheMustard = (
       'querySelector' in document

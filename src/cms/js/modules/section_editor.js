@@ -91,11 +91,7 @@ module.exports = {
       sectionEditor.hideUI();
 
       // setup the newly added section with the cms
-      cms.editor.setEditableItems(cms.config.editableItems);
-      cms.editor.setEditableRegions(cms.config.editableRegionClass);
-      cms.editor.setEventHandlers();
-      // setup image management as well
-      cms.mediaEditor.init(cms.config);
+      cms.reload();
     }
 
     var onErrorHandler = function (){
