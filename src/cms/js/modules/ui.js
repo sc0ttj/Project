@@ -1,5 +1,6 @@
 var $       = require('cash-dom');
 var editor  = require('modules/inline_editor');
+var sectionEditor = require('modules/section_editor');
 var ui;
 
 "use strict";
@@ -11,6 +12,7 @@ module.exports = {
     ui.setConfig(config);
     ui.addUI();
     editor.init(config);
+    sectionEditor.init(config);
 
     return true // if we loaded ok
   },
@@ -74,7 +76,8 @@ module.exports = {
   },
 
   getSections: function () {
-    return $(ui.config.sectionSelector);
+    var sections = $(ui.config.sectionSelector);
+    return sections;
   },
 
   menuBgClickHandler: function (e) {
@@ -120,7 +123,8 @@ module.exports = {
   },
 
   menuBtnAddSectionClickHandler: function (e) {
-    console.log(this);
+    sectionEditor.showUI();
+    ui.hideMenu();
   },
 
   reIndexMenuItems: function (){
@@ -140,6 +144,12 @@ module.exports = {
 
   showMenu: function(){
     var $sections = ui.getSections();
+    
+    ui.$menu.remove();
+    ui.$menuBg.remove();
+    ui.$menuBtn.remove();
+    ui.addUI();
+
     $('body').css('overflow', 'hidden');
     $sections.css('pointer-events', 'none');
     ui.$menu.removeClass('hidden');

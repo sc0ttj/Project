@@ -16,6 +16,7 @@ module.exports = {
 
   init: function(config){
     editor = this;
+    cms.editor = this;
 
     editor.setConfig(config);
 

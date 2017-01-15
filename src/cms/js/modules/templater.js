@@ -1,4 +1,5 @@
-var $ = require('cash-dom');
+var $  = require('cash-dom');
+var m  = require('mustache');
 // console.log($)
 
 "use strict";
@@ -31,4 +32,8 @@ module.exports = {
     $(elem).attr('id', 'section'+(i+1));
   },
 
+  renderTemplate: function(template, data){
+    m.parse(template); // caching
+    return m.render(template, data);
+  },
 }
