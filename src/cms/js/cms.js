@@ -1,5 +1,7 @@
+var $       = require('cash-dom');
 var t       = require('modules/templater.js');
 var ui      = require('modules/ui.js');
+var ajax    = require('modules/ajaxer.js');
 var loadCSS = require('modules/loadcss').init;
 
 
@@ -72,6 +74,60 @@ module.exports = {
     stylesheets.forEach(function(val){
       loadCSS(val);
     });
+  },
+
+  savePage: function(){
+    ui.hideMenu();
+    var html = cms.removeCmsFromPage();
+    cms.saveHtmlToFile(html);
+  },
+
+  removeCmsFromPage: function () {
+    var html = '',
+        $htmlWithoutCMS = $('html').clone();
+
+    cms.config.editableItems.forEach(function (el) {
+      $htmlWithoutCMS.find(el+':empty').remove();
+    });
+
+    $htmlWithoutCMS.find('.cms-menu, .cms-menu-bg, .cms-media-chooser, .cms-media-btn, .cms-menu-btn').remove();
+    $htmlWithoutCMS.find('*').removeClass('cms-editable');
+    $htmlWithoutCMS.find('*').removeClass('cms-editable-img');
+    $htmlWithoutCMS.find('*').removeClass('cms-editable-region');
+    $htmlWithoutCMS.find('*').removeClass('cms-inline-media');
+    $htmlWithoutCMS.find('*').removeClass(cms.config.mustardClass);
+    $htmlWithoutCMS.find('*').removeAttr('contenteditable');
+    $htmlWithoutCMS.find('*').removeAttr('spellcheck');
+
+    $htmlWithoutCMS.find('script[src^="cms"]').remove();
+    $htmlWithoutCMS.find('#cms-init').remove();
+    $htmlWithoutCMS.find('link[href^="cms"]').remove();
+    $htmlWithoutCMS.find('*[class=""]').removeAttr('class');
+
+    html = $htmlWithoutCMS.html();
+
+    return '<!DOCTYPE html>\n<html lang="en">\n' + html + '</html>';
+  },
+
+  saveHtmlToFile: function(html) {
+    var data = new FormData();
+    var filename = prompt('Please enter the filename', 'my-article-name.html');
+
+    if (filename){
+      data.append('html', html);
+      data.append('filename', filename);
+
+      ajax.create('POST', 'save.php');
+      var successHandler = function (responseText) {
+        // alert(responseText);
+      }
+      var errorHandler = function (responseText) {
+        // alert('file save error');
+      }
+      ajax.onFinish(successHandler, errorHandler);
+      ajax.send(data);
+    }
+
   },
 
 };

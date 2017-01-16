@@ -78,15 +78,6 @@
   padding: 18px;
 }
 
-.cms-menu-header-add-section {
-  background-color: #333;
-  color: #999;
-  cursor: pointer;
-  &:hover {
-    color: #fff;
-  }
-}
-
 .cms-menu-header-sections {
   background-color: #222;
   border-bottom: 0;
@@ -117,6 +108,15 @@
   }
 }
 
+.cms-menu-item-add-section {
+  background-color: #333;
+  color: #999;
+  cursor: pointer;
+  &:hover {
+    color: #fff;
+  }
+}
+
 .cms-menu-item-icon {
   color: #aaa;
   cursor: pointer;
@@ -128,6 +128,16 @@
   line-height: 2.6rem;
   &:hover {
     color: #eee;
+  }
+}
+
+.cms-menu-item-icon-save {
+  color:#ddd;
+  opacity: 0.6;
+  right: 15px;
+  &:hover {
+    color:#fff;
+    opacity: 1;
   }
 }
 

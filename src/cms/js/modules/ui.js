@@ -38,7 +38,10 @@ module.exports = {
     ui.$menuItemDown.on('click', ui.menuItemDownClickHandler);
     ui.$menuItemDelete.on('click', ui.menuItemDeleteClickHandler);
 
-    ui.$menuBtnAddSection = $('.cms-menu-header-add-section');
+    ui.$menuBtnSave = $('.cms-menu-item-save');
+    ui.$menuBtnSave.on('click', ui.menuBtnSaveClickHandler);
+
+    ui.$menuBtnAddSection = $('.cms-menu-item-add-section');
     ui.$menuBtnAddSection.on('click', ui.menuBtnAddSectionClickHandler);
 
   }, 
@@ -51,12 +54,16 @@ module.exports = {
 
     menu += '<li class="cms-menu-top"></li>';
     menu += '\
-    <li id="menu-header-add-section" class="cms-menu-header cms-menu-header-add-section cms-unselectable">\
-      Add Section +\
-    </li>';
-    menu += '\
-    <li id="menu-header-add-section" class="cms-menu-header cms-menu-header-sections">\
+    <li \
+      class="cms-menu-item cms-menu-item-save">\
+      <span class="cms-menu-item-text">Save</span>\
+      <span class="cms-menu-item-icon cms-menu-item-icon-save cms-anim-fade-250ms cms-unselectable">💾</span>\
+    </li>\
+    <li id="menu-header-sections" class="cms-menu-header cms-menu-header-sections">\
       <span class="cms-menu-item-text">Sections:</span>\
+    </li>\
+    <li id="menu-item-add-section" class="cms-menu-header cms-menu-item-add-section cms-unselectable">\
+      Add Section +\
     </li>';
     $sections.each(function addMenuItem(elem, i){
       var sectionName = $sections.children()[i].getAttribute('data-name') || 'section'+(i+1);
@@ -120,6 +127,10 @@ module.exports = {
     ui.reIndexMenuItems();
     editor.removeSection(index);
     editor.reIndexSections();
+  },
+
+  menuBtnSaveClickHandler: function (e) {
+    cms.savePage();
   },
 
   menuBtnAddSectionClickHandler: function (e) {
