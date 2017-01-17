@@ -1,13 +1,6 @@
 var $             = require('cash-dom');
 var loadCSS       = require('modules/loadcss').init;
 
-var ajax          = require('modules/ajaxer.js');
-var editor        = require('modules/inline_editor');
-var mediaEditor   = require('modules/inline_media_editor');
-var sectionEditor = require('modules/section_editor');
-var templater     = require('modules/templater.js');
-var ui            = require('modules/ui.js');
-
 "use strict";
 
 module.exports = {
@@ -37,12 +30,12 @@ module.exports = {
     this.setConfig(config);
     this.pageConfig    = app.pageConfig;
 
-    this.ajax          = ajax;
-    this.editor        = editor;
-    this.mediaEditor   = mediaEditor;
-    this.sectionEditor = sectionEditor;
-    this.templater     = templater;
-    this.ui            = ui;
+    this.ajax          = require('modules/ajaxer.js');
+    this.editor        = require('modules/inline_editor');
+    this.mediaEditor   = require('modules/inline_media_editor');
+    this.sectionEditor = require('modules/section_editor');
+    this.templater     = require('modules/templater.js');
+    this.ui            = require('modules/ui.js');
 
     this.editor.init();
     this.mediaEditor.init();
@@ -86,7 +79,7 @@ module.exports = {
   },
 
   savePage: function(){
-    ui.hideMenu();
+    this.ui.hideMenu();
     var html = cms.getPageHtml();
     cms.saveHtmlToFile(html);
   },
@@ -136,15 +129,15 @@ module.exports = {
       data.append('html', html);
       data.append('filename', filename);
 
-      ajax.create('POST', 'save.php');
+      this.ajax.create('POST', 'save.php');
       var successHandler = function (responseText) {
         // alert(responseText);
       }
       var errorHandler = function (responseText) {
         // alert('file save error');
       }
-      ajax.onFinish(successHandler, errorHandler);
-      ajax.send(data);
+      this.ajax.onFinish(successHandler, errorHandler);
+      this.ajax.send(data);
     }
 
   },
