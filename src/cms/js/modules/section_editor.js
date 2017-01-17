@@ -1,26 +1,12 @@
+var $ = require('cash-dom');
 var sectionEditor;
-var $    = require('cash-dom');
-var ajax = require('modules/ajaxer');
-var t    = require('modules/templater.js');
 
 "use strict";
 
 module.exports = {
-  getConfig: function (){
-    return sectionEditor.config;
-  },
-
-  setConfig: function (config){
-    sectionEditor.config = config || sectionEditor.config;
-  },
-
-  init: function(config){
+  init: function(){
     sectionEditor = this;
-    cms.sectionEditor = this;
-
-    sectionEditor.setConfig(config);
     sectionEditor.createUI();
-    t.init(config);
   },
 
   createUI: function(){
@@ -52,7 +38,7 @@ module.exports = {
 
   getSectionPreviewImgs: function (template) {
     var previewImgs = [];
-    sectionEditor.config.templates.forEach(function (template, i){
+    cms.config.templates.forEach(function (template, i){
       var previewImg = '<img class="cms-template-preview-image" id="'+template+'" src="/cms/images/previews/'+template+'.png" alt="'+template+'" />';
       previewImgs[i] = previewImg;
     });
@@ -70,11 +56,11 @@ module.exports = {
   },
 
   getTemplateFromFile: function (template) {
-    ajax.create('GET', 'templates/'+template);
+    cms.ajax.create('GET', 'templates/'+template);
 
     var onSuccessHandler = function (template){
       var loremData = cms.pageConfig,
-          sectionHtml = t.renderTemplate(template, loremData);
+          sectionHtml = cms.templater.renderTemplate(template, loremData);
       sectionEditor.addTemplateToPage(sectionHtml);
       sectionEditor.hideUI();
 
@@ -86,13 +72,13 @@ module.exports = {
       alert('error');
     }
 
-    ajax.onFinish(onSuccessHandler, onErrorHandler);
-    ajax.send(null);
+    cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
+    cms.ajax.send(null);
   },
   
   addTemplateToPage: function (html) {
-    $(sectionEditor.config.sectionSelector).last().after(sectionEditor.config.sectionContainer);
-    $(sectionEditor.config.sectionSelector).last().html(html);
+    $(cms.config.sectionSelector).last().after(cms.config.sectionContainer);
+    $(cms.config.sectionSelector).last().html(html);
     sectionEditor.reIndexSections();
   },
 
@@ -108,17 +94,21 @@ module.exports = {
   },
 
   reIndexSections: function () {
-    $(sectionEditor.config.sectionSelector).each(function(el, i){
+    var $sections  = $(cms.config.sectionSelector),
+        $menuItems = $('.cms-menu-section-item');
+
+    $sections.each(function(el, i){
       var currentSection = '.section'+(i+1);
       $(currentSection).removeClass('section'+(i+1));
     });
 
-    $(sectionEditor.config.sectionSelector).each(function(el, i){
+    $sections.each(function(el, i){
       var $el = $(this);
       $el.addClass('section'+(i+1));
       $el.attr('id', 'section'+(i+1));
     });
-    $('.cms-menu-item').each(function(elem, i){
+    
+    $menuItems.each(function(elem, i){
       $(elem).attr('id', 'menu-item-'+(i+1));
       $(elem).find('a').attr('href', '#section'+(i+1));
     });

@@ -1,9 +1,12 @@
-var $       = require('cash-dom');
-var t       = require('modules/templater.js');
-var ui      = require('modules/ui.js');
-var ajax    = require('modules/ajaxer.js');
-var loadCSS = require('modules/loadcss').init;
+var $             = require('cash-dom');
+var loadCSS       = require('modules/loadcss').init;
 
+var ajax          = require('modules/ajaxer.js');
+var editor        = require('modules/inline_editor');
+var mediaEditor   = require('modules/inline_media_editor');
+var sectionEditor = require('modules/section_editor');
+var templater     = require('modules/templater.js');
+var ui            = require('modules/ui.js');
 
 "use strict";
 
@@ -32,19 +35,23 @@ module.exports = {
 
   init: function(config){
     this.setConfig(config);
+    this.pageConfig    = app.pageConfig;
 
-    this.pageConfig = app.pageConfig;
+    this.ajax          = ajax;
+    this.editor        = editor;
+    this.mediaEditor   = mediaEditor;
+    this.sectionEditor = sectionEditor;
+    this.templater     = templater;
+    this.ui            = ui;
+
+    this.editor.init();
+    this.mediaEditor.init();
+    this.sectionEditor.init();
+    this.templater.init();
+    this.ui.init();
 
     if (this.cutsTheMustard()) this.addMustard();
-
-    // load our templater
-    t.init(this.config);
-    
-    //add CMS UI
-    ui.init(this.config);
-
     this.loadStylesheets();
-
     return true // if we loaded up ok
   },
 
@@ -52,7 +59,7 @@ module.exports = {
     cms.editor.setEditableItems(this.config.editableItems);
     cms.editor.setEditableRegions(this.config.editableRegionClass);
     cms.editor.setEventHandlers();
-    cms.mediaEditor.init(this.config);
+    cms.mediaEditor.init();
     app.fixedImage.init();
     app.scrollmation.init();
     app.statText.init();

@@ -1,41 +1,30 @@
 var $ = require('cash-dom');
-var mediaEditor  = require('modules/inline_media_editor');
 var editor;
-// console.log($)
 
 "use strict";
 
 module.exports = {
-  getConfig: function (){
-    return editor.config;
-  },
-
-  setConfig: function (config){
-    editor.config = config || editor.config;
-  },
-
-  init: function(config){
+  init: function(){
     editor = this;
-    cms.editor = this;
-
-    editor.setConfig(config);
-
-    editor.isInFirefox = (typeof InstallTrigger !== 'undefined');
     document.body.setAttribute('spellcheck', false);
-
+    editor.isInFirefox = (typeof InstallTrigger !== 'undefined');
     editor.createMediaBtn();
-    mediaEditor.init(config);
-
-    editor.setEditableItems(editor.config.editableItems);
-    editor.setEditableRegions(editor.config.editableRegionClass);
+    editor.setEditableItems(cms.config.editableItems);
+    editor.setEditableRegions(cms.config.editableRegionClass);
     editor.nextEditableElem = $('contenteditable')[0],
     editor.setEventHandlers();
   },
 
   createMediaBtn: function (){
-    editor.mediaBtn = '<div id="cms-media-btn" class="cms-media-btn cms-anim-fade-250ms cms-transparent" contenteditable="false" onclick="mediaBtnClickHandler(this);">ADD MEDIA</div>'
+    editor.mediaBtn = '\
+    <div id="cms-media-btn" \
+         class="cms-media-btn cms-anim-fade-250ms cms-transparent"\
+         contenteditable="false"\
+         onclick="mediaBtnClickHandler(this);">\
+      ADD MEDIA\
+    </div>'
     mediaBtnClickHandler = function (el){
-      var imgHtml = '<picture><img class=cms-inline-media style=width:100%; src=images/placeholders/550x550.png /></picture>',
+      var imgHtml = '<picture><img src=images/placeholders/550x550.png /></picture>',
           $el     = $(el),
           $target = $el;
 
@@ -51,20 +40,20 @@ module.exports = {
 
   setEditableRegions: function(selector){
     var selector = selector.replace(/^\./, ''),
-        $elems = $(editor.config.sectionSelector + ' .' + selector);
+        $elems = $(cms.config.sectionSelector + ' .' + selector);
     
     $elems.attr('contenteditable', true);
-    $elems.addClass(editor.config.editableRegionClass);
+    $elems.addClass(cms.config.editableRegionClass);
     editor.addMediaButtons();
   },
 
   setEditableItems: function(items){
     // document.designMode = 'on'; //makes ALL items editable, very buggy
     items.forEach(function makeItemEditable(el, i){
-      var $elems = $(editor.config.sectionSelector + ' ' + el);
+      var $elems = $(cms.config.sectionSelector + ' ' + el);
       $elems.attr('contenteditable', true);
       // $elems.attr('data-placeholder', 'Enter text here...');
-      $elems.addClass(editor.config.editableClass);
+      $elems.addClass(cms.config.editableClass);
     });
   },
 
@@ -98,7 +87,7 @@ module.exports = {
   },
 
   addMediaButtons: function () {
-    $(editor.config.inlineMediaRegionSelector).each(function(){
+    $(cms.config.inlineMediaRegionSelector).each(function(){
       var $el = $(this),
           thisHasNoMediaBtn = ($el.children('.cms-media-btn').length < 1);
           
@@ -123,7 +112,7 @@ module.exports = {
     editor.nextEditableItemExists = (editor.nextEditableElem === "{}" || typeof editor.nextEditableElem != 'undefined');
     editor.addMediaButtons();
     editor.removeLeftOverMediaBtns(el);
-    mediaEditor.addResponsiveImageClickHandlers();
+    cms.mediaEditor.addResponsiveImageClickHandlers();
   },
 
   getNextEditableItem: function (el) {
@@ -205,12 +194,14 @@ module.exports = {
   },
 
   reIndexSections: function () {
-    $(editor.config.sectionSelector).each(function(el, i){
+    var $sections = $(cms.config.sectionSelector);
+
+    $sections.each(function(el, i){
       var currentSection = '.section'+(i+1);
       $(currentSection).removeClass('section'+(i+1));
     });
 
-    $(editor.config.sectionSelector).each(function(el, i){
+    $sections.each(function(el, i){
       var $el = $(this);
       $el.addClass('section'+(i+1));
       $el.attr('id', 'section'+(i+1));

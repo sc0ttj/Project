@@ -1,28 +1,17 @@
-var $ = require('cash-dom'),
-    ajax = require('modules/ajaxer'),
-    mediaEditor;
+var $ = require('cash-dom');
+var mediaEditor;
 
 "use strict";
 
 module.exports = {
-  getConfig: function (){
-    return mediaEditor.config;
-  },
-
-  setConfig: function (config){
-    mediaEditor.config = config || mediaEditor.config;
-  },
-
-  init: function(config){
+  init: function(){
     mediaEditor = this;
-    cms.mediaEditor = this;
-    mediaEditor.setConfig(config);
     mediaEditor.addResponsiveImageClickHandlers();
     mediaEditor.addMediaChooser();
   },
 
   addResponsiveImageClickHandlers: function () {
-    var $imgs = $(mediaEditor.config.responsiveImageSelector).not('.cms-editable-img');
+    var $imgs = $(cms.config.responsiveImageSelector).not('.cms-editable-img');
     if ($imgs.length > 0) {
       $imgs.addClass('cms-editable-img');
       $imgs.on('click', mediaEditor.onImageClickHandler);
@@ -162,9 +151,9 @@ module.exports = {
     formData.append('image', file, file.name);
     //prevent redirect and do ajax upload
     e.preventDefault();
-    ajax.create('POST', 'upload.php');
+    cms.ajax.create('POST', 'upload.php');
     mediaEditor.setImageUploadEventHandlers();
-    ajax.send(formData);
+    cms.ajax.send(formData);
   },
 
   setImageUploadEventHandlers: function () {
@@ -188,8 +177,8 @@ module.exports = {
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
     }
 
-    ajax.onProgress(onProgressHandler);
-    ajax.onFinish(onSuccessHandler, onErrorHandler);
+    cms.ajax.onProgress(onProgressHandler);
+    cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
   },
 
   updateImgOnPage: function(){

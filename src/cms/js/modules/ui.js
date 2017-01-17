@@ -1,19 +1,12 @@
-var $       = require('cash-dom');
-var editor  = require('modules/inline_editor');
-var sectionEditor = require('modules/section_editor');
+var $ = require('cash-dom');
 var ui;
 
 "use strict";
 
 module.exports = {
-  init: function(config){
+  init: function(){
     ui = this;
-    
-    ui.setConfig(config);
     ui.addUI();
-    editor.init(config);
-    sectionEditor.init(config);
-
     return true // if we loaded ok
   },
 
@@ -83,7 +76,7 @@ module.exports = {
   },
 
   getSections: function () {
-    var sections = $(ui.config.sectionSelector);
+    var sections = $(cms.config.sectionSelector);
     return sections;
   },
 
@@ -103,8 +96,8 @@ module.exports = {
     if ($this.attr('id') !== 'menu-item-1'){
       $this.after($prev);
       ui.reIndexMenuItems();  
-      editor.moveSectionUp(index);
-      editor.reIndexSections();
+      cms.editor.moveSectionUp(index);
+      cms.editor.reIndexSections();
     }
   },
 
@@ -115,8 +108,8 @@ module.exports = {
 
     $next.after($this);
     ui.reIndexMenuItems();
-    editor.moveSectionDown(index);
-    editor.reIndexSections();
+    cms.editor.moveSectionDown(index);
+    cms.editor.reIndexSections();
   },
 
   menuItemDeleteClickHandler: function (e) {
@@ -125,8 +118,8 @@ module.exports = {
 
     $this.remove();
     ui.reIndexMenuItems();
-    editor.removeSection(index);
-    editor.reIndexSections();
+    cms.editor.removeSection(index);
+    cms.editor.reIndexSections();
   },
 
   menuBtnSaveClickHandler: function (e) {
@@ -134,7 +127,7 @@ module.exports = {
   },
 
   menuBtnAddSectionClickHandler: function (e) {
-    sectionEditor.showUI();
+    cms.sectionEditor.showUI();
     ui.hideMenu();
   },
 
@@ -175,13 +168,5 @@ module.exports = {
     ui.$menu.addClass('hidden');
     ui.$menuBg.addClass('hidden');
     ui.$menuBtn.removeClass('cms-menu-btn-on');
-  },
-
-  getConfig: function (){
-    return ui.config;
-  },
-
-  setConfig: function (config){
-    ui.config = config || ui.config;
   },
 }
