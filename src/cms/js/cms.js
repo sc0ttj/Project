@@ -33,6 +33,8 @@ module.exports = {
   init: function(config){
     this.setConfig(config);
 
+    this.pageConfig = app.pageConfig;
+
     if (this.cutsTheMustard()) this.addMustard();
 
     // load our templater

@@ -17,20 +17,17 @@ This config can use the following ways to match files/dirs etc.. Examples:
     path => path.includes('tmp') // contains `tmp` substring
   ]
 
-
 Defaults for Brunch config found in source: 
 https://github.com/brunch/brunch/blob/master/lib/utils/config-validate.js
-
 
 */
 
 
-// json data used to compile html from templates later
-var pageData = require('./src/app/js/_pageConfig.js');
-
 
 // config starts below
 
+// json data about default page to be built, used later to compile html from templates
+var pageConfig = require('./src/app/js/page_config.js');
 
 // brunch config
 exports.config = {
@@ -53,6 +50,7 @@ exports.config = {
       /^src\/(app|cms)\/vendor[\\/]/,
       /^(bower_components|node_modules)[\\/]/
     ],
+    /* by default, files starting with _ are ignored */
   },
 
   /* JS module setup, see http://brunch.io/docs/config#-modules- */
@@ -156,7 +154,7 @@ exports.config = {
         directory: 'src/app/templates',
         prefix: '_'
       },
-      data: pageData,
+      data: pageConfig,
     },
     /* manually copy files to /www/[here] after build */
     assetsmanager: {
