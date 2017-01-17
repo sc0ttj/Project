@@ -41,7 +41,7 @@ module.exports = {
 
   fixedImage: {
     init: function() {
-      var fixedImages = $('.fixed-image-text');
+      var fixedImages = $('.fixed-image-text:not(.transparent)');
       fixedImages.addClass('anim-fade-1s transparent');
       
       var watchers = $('.fixed-image-text').each(function addWatchers(el){
@@ -61,7 +61,7 @@ module.exports = {
   scrollmation: {
     init : function (){
       $('.scrollmation-text').removeClass('article');
-      $('.scrollmation-text').addClass('scrollmation-text-js');
+      $('.scrollmation-text:not(.scrollmation-text-js)').addClass('scrollmation-text-js');
 
       var scrollmationStartTags = $('.scrollmation-start'),
           scrollmationTextTags  = $('.scrollmation-text'),
@@ -110,7 +110,7 @@ module.exports = {
 
   statText: {
     init: function() {
-      var statTexts = $('.stat-text');
+      var statTexts = $('.stat-text:not(.transparent)');
       statTexts.addClass('anim-fade-1s transparent');
      
       var watchers = $('.stat-text').each(function addWatchers(el){

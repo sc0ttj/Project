@@ -78,11 +78,11 @@ module.exports = {
 
   savePage: function(){
     ui.hideMenu();
-    var html = cms.removeCmsFromPage();
+    var html = cms.getPageHtml();
     cms.saveHtmlToFile(html);
   },
 
-  removeCmsFromPage: function () {
+  getPageHtml: function () {
     var html = '',
         $htmlWithoutCMS = $('html').clone();
 
@@ -103,6 +103,16 @@ module.exports = {
     $htmlWithoutCMS.find('#cms-init').remove();
     $htmlWithoutCMS.find('link[href^="cms"]').remove();
     $htmlWithoutCMS.find('*[class=""]').removeAttr('class');
+
+    // reset templates so they work on pages with no js
+    // move this to app.reset()  ... or something
+    $htmlWithoutCMS.find('*').removeClass('anim-fade-1s');
+    $htmlWithoutCMS.find('*').removeClass('transparent');
+    $htmlWithoutCMS.find('*').removeClass('scrollmation-text-js');
+    $htmlWithoutCMS.find('*').removeClass('scrollmation-image-container-top');
+    $htmlWithoutCMS.find('*').removeClass('scrollmation-image-container-fixed');
+    $htmlWithoutCMS.find('*').removeClass('scrollmation-image-container-bottom');
+    $htmlWithoutCMS.find('.scrollmation-text').addClass('article');
 
     html = $htmlWithoutCMS.html();
 
