@@ -38,37 +38,55 @@
 }
 
 .cms-menu {
-  background-color: #333;
+  background-color: #222;
   // box-shadow: 4px 0px 10px 6px #444;
-  color: #fff;
+  color: #ddd;
+  cursor: default;
+  list-style-type: none;
   font-size: 1.6rem;
   font-weight: bold;
-  pointer-events: all;
-  position:fixed;
-  opacity: 1;
-  overflow: overlay;
-  top:0;
-  right:-1px;
-  min-width:280px;
-  width:70%;
   height:100vh;
   max-height:100vh;
   max-width:400px;
+  min-width:280px;
+  opacity: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  pointer-events: all;
+  position:fixed;
+  text-transform: capitalize;
+  top:0;
+  right: 0;
+  width:70%;
   z-index:100;
 }
 
-.cms-menu-header {
+.cms-menu-top {
+  border-bottom: 1px solid #444;
   list-style-type: none;
   margin: 0;
-  padding: 1.6rem;
+  height: 60px;
 }
 
-.cms-menu-item {
-  border-top: 1px solid #444;
-  color: #999;
+.cms-menu-header {
+  background-color: #222;
+  border-bottom: 1px solid #444;
   cursor: default;
   list-style-type: none;
   text-transform: capitalize;
+  margin: 0;
+  padding: 18px;
+}
+
+.cms-menu-header-sections {
+  background-color: #222;
+  border-bottom: 0;
+}
+
+.cms-menu-item {
+  background-color: #333;
+  border-bottom: 1px solid #444;
+  color: #999;
   margin: 0;
   padding: 18px;
   .cms-menu-item-text {}
@@ -90,6 +108,15 @@
   }
 }
 
+.cms-menu-item-add-section {
+  background-color: #333;
+  color: #999;
+  cursor: pointer;
+  &:hover {
+    color: #fff;
+  }
+}
+
 .cms-menu-item-icon {
   color: #aaa;
   cursor: pointer;
@@ -101,6 +128,16 @@
   line-height: 2.6rem;
   &:hover {
     color: #eee;
+  }
+}
+
+.cms-menu-item-icon-save {
+  color:#ddd;
+  opacity: 0.6;
+  right: 15px;
+  &:hover {
+    color:#fff;
+    opacity: 1;
   }
 }
 
@@ -144,4 +181,16 @@
   background-color:#dd6600;
   padding-top:16px;
   padding-bottom:16px;
+}
+
+
+
+.cms-media-chooser-container img.cms-template-preview-image {
+  border:1px #ccc solid;
+  margin-top: 30px;
+  margin-bottom: 60px;
+  min-width: 280px;
+  width: 60%;
+  height: auto;
+  max-height: 100%;
 }

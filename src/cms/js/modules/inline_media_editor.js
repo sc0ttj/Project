@@ -15,6 +15,7 @@ module.exports = {
 
   init: function(config){
     mediaEditor = this;
+    cms.mediaEditor = this;
     mediaEditor.setConfig(config);
     mediaEditor.addResponsiveImageClickHandlers();
     mediaEditor.addMediaChooser();
@@ -30,6 +31,8 @@ module.exports = {
 
   addMediaChooser: function (){
     var mediaChooserHtml = mediaEditor.createMediaChooser();
+    
+    $('div.cms-media-chooser').remove();
     $('body').append(mediaChooserHtml);
 
     mediaEditor.$mediaChooser = $('div.cms-media-chooser');

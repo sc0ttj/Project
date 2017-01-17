@@ -16,6 +16,7 @@ module.exports = {
 
   init: function(config){
     editor = this;
+    cms.editor = this;
 
     editor.setConfig(config);
 
@@ -54,7 +55,7 @@ module.exports = {
     
     $elems.attr('contenteditable', true);
     $elems.addClass(editor.config.editableRegionClass);
-    $(editor.config.inlineMediaRegionSelector).append(editor.mediaBtn);
+    editor.addMediaButtons();
   },
 
   setEditableItems: function(items){
@@ -96,7 +97,7 @@ module.exports = {
     }
   },
 
-  addMediaButtons: function (el) {
+  addMediaButtons: function () {
     $(editor.config.inlineMediaRegionSelector).each(function(){
       var $el = $(this),
           thisHasNoMediaBtn = ($el.children('.cms-media-btn').length < 1);
@@ -112,7 +113,7 @@ module.exports = {
         elemIsContainer = editor.elemIsContainer(el);
 
     if (elemIsEmpty && elemIsContainer) $el.remove();
-    editor.addMediaButtons(el);
+    editor.addMediaButtons();
     editor.removeLeftOverMediaBtns(el);
   },
 
@@ -120,7 +121,7 @@ module.exports = {
     var el = this;
     editor.nextEditableElem = editor.getNextEditableItem(el);
     editor.nextEditableItemExists = (editor.nextEditableElem === "{}" || typeof editor.nextEditableElem != 'undefined');
-    editor.addMediaButtons(el);
+    editor.addMediaButtons();
     editor.removeLeftOverMediaBtns(el);
     mediaEditor.addResponsiveImageClickHandlers();
   },

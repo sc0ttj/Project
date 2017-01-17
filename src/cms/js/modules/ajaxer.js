@@ -28,7 +28,7 @@ module.exports = {
   onFinish: function(successCallback, errorCallback){
     xhr[i].onload = function() {
       if (xhr[i].status === 200) {
-        successCallback();
+        successCallback(xhr[i].responseText);
         xhr[i] = '';
       } else {
         errorCallback();

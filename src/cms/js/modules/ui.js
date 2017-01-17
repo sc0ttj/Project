@@ -1,5 +1,6 @@
 var $       = require('cash-dom');
 var editor  = require('modules/inline_editor');
+var sectionEditor = require('modules/section_editor');
 var ui;
 
 "use strict";
@@ -11,6 +12,7 @@ module.exports = {
     ui.setConfig(config);
     ui.addUI();
     editor.init(config);
+    sectionEditor.init(config);
 
     return true // if we loaded ok
   },
@@ -35,6 +37,13 @@ module.exports = {
     ui.$menuItemUp.on('click', ui.menuItemUpClickHandler);
     ui.$menuItemDown.on('click', ui.menuItemDownClickHandler);
     ui.$menuItemDelete.on('click', ui.menuItemDeleteClickHandler);
+
+    ui.$menuBtnSave = $('.cms-menu-item-save');
+    ui.$menuBtnSave.on('click', ui.menuBtnSaveClickHandler);
+
+    ui.$menuBtnAddSection = $('.cms-menu-item-add-section');
+    ui.$menuBtnAddSection.on('click', ui.menuBtnAddSectionClickHandler);
+
   }, 
 
   getMenuHtml: function () {
@@ -43,13 +52,25 @@ module.exports = {
         <div class="cms-menu-bg cms-anim-fade-250ms hidden"></div>\
         <ul class="cms-menu cms-anim-fade-250ms hidden">';
 
-    menu += '<li class="cms-menu-header">Sections:</li>';
+    menu += '<li class="cms-menu-top"></li>';
+    menu += '\
+    <li \
+      class="cms-menu-item cms-menu-item-save">\
+      <span class="cms-menu-item-text">Save</span>\
+      <span class="cms-menu-item-icon cms-menu-item-icon-save cms-anim-fade-250ms cms-unselectable">💾</span>\
+    </li>\
+    <li id="menu-header-sections" class="cms-menu-header cms-menu-header-sections">\
+      <span class="cms-menu-item-text">Sections:</span>\
+    </li>\
+    <li id="menu-item-add-section" class="cms-menu-header cms-menu-item-add-section cms-unselectable">\
+      Add Section +\
+    </li>';
     $sections.each(function addMenuItem(elem, i){
       var sectionName = $sections.children()[i].getAttribute('data-name') || 'section'+(i+1);
       menu += '\
       <li \
         id="menu-item-'+(i+1)+'" \
-        class="cms-menu-item">\
+        class="cms-menu-item cms-menu-section-item">\
         <span class="cms-menu-item-text"><a href="#section'+(i+1)+'">'+sectionName+'</a></span>\
         <span class="cms-menu-item-icon  cms-menu-item-icon-up      cms-anim-fade-250ms cms-unselectable">ᐃ</span>\
         <span class="cms-menu-item-icon  cms-menu-item-icon-down    cms-anim-fade-250ms cms-unselectable">ᐁ</span>\
@@ -62,7 +83,8 @@ module.exports = {
   },
 
   getSections: function () {
-    return $(ui.config.sectionSelector);
+    var sections = $(ui.config.sectionSelector);
+    return sections;
   },
 
   menuBgClickHandler: function (e) {
@@ -107,8 +129,17 @@ module.exports = {
     editor.reIndexSections();
   },
 
+  menuBtnSaveClickHandler: function (e) {
+    cms.savePage();
+  },
+
+  menuBtnAddSectionClickHandler: function (e) {
+    sectionEditor.showUI();
+    ui.hideMenu();
+  },
+
   reIndexMenuItems: function (){
-    $('.cms-menu-item').each(function(elem, i){
+    $('.cms-menu-section-item').each(function(elem, i){
       $(elem).attr('id', 'menu-item-'+(i+1));
       $(elem).find('a').attr('href', '#section'+(i+1));
     });
@@ -124,6 +155,12 @@ module.exports = {
 
   showMenu: function(){
     var $sections = ui.getSections();
+    
+    ui.$menu.remove();
+    ui.$menuBg.remove();
+    ui.$menuBtn.remove();
+    ui.addUI();
+
     $('body').css('overflow', 'hidden');
     $sections.css('pointer-events', 'none');
     ui.$menu.removeClass('hidden');

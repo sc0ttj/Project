@@ -86,12 +86,13 @@ exports.config = {
         prefix: '_'
       },
       data: pageData,
-    }
-    // assetsmanager: {
-    //     copyTo: {
-    //       'cms/templates/' : [ 'src/cms/js/templates/*.tmpl' ],
-    //     }
-    // },
+    },
+    assetsmanager: {
+        copyTo: {
+          '/templates/' : [ 'src/app/templates/*.tmpl' ],
+          '/cms/images/previews/' : [ 'src/app/templates/previews/*.png' ],
+        }
+    },
   },
 
   overrides: {
