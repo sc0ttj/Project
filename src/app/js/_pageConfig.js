@@ -1,4 +1,6 @@
 module.exports = {
+  pageTitle: 'My Article Title',
+  pageDescription: 'A news article',
   authorName: 'Your Name Here',
   publishedDate: '1st January, 2017',
   heroTitle : 'My Title',
