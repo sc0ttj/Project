@@ -42,17 +42,131 @@
   color: #222;
   height:100vh;
   overflow: auto;
-  padding:8px;
+  padding:30px 10px 30px 10px;
+  text-align: center;
   width:100%;
-
+  p {
+    margin: 0;
+  }
   img {
     box-sizing: border-box;
     display:block;
     height:auto;
     margin: 0 auto;
+    max-height:600px;
+    max-width:90%;
     padding: 8px;
-    padding-bottom: 60px;
-    width:80%;
+    margin-bottom: 16px;
   }
 }
 
+// responsive images
+
+.cms-upload-form {
+  margin: 0;
+  padding: 0;
+}
+
+.cms-modal-image-title {
+  font-weight: bolder;
+}
+
+
+//https://jsfiddle.net/4cwpLvae/
+input[type="file"] {
+    display: none;
+}
+.cms-modal-upload-label {
+  border: 1px solid #ccc;
+  color: #222;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-bottom:32px;
+  pointer-events:all;
+}
+
+.cms-modal-upload-label-uploading {
+  border: 1px solid transparent;
+  pointer-events:none;
+}
+
+.cms-modal-upload-label-error {
+  border-color: red;
+  pointer-events:all;
+}
+
+//spinner - for ajax showing loading
+//https://projects.lukehaas.me/css-loaders/
+.cms-loader {
+  display: inline-block;
+  font-size: 1rem;
+  text-indent: -9999em;
+  width: 2rem;
+  height: 2rem;
+  margin-top:3px;
+  margin-bottom:-3px;
+  margin-right:-6px;
+  border-radius: 50%;
+  background: green;
+  background: -moz-linear-gradient(left, green 10%, rgba(255, 255, 255, 0) 42%);
+  background: -webkit-linear-gradient(left, green 10%, rgba(255, 255, 255, 0) 42%);
+  background: -o-linear-gradient(left, green 10%, rgba(255, 255, 255, 0) 42%);
+  background: -ms-linear-gradient(left, green 10%, rgba(255, 255, 255, 0) 42%);
+  background: linear-gradient(to right, green 10%, rgba(255, 255, 255, 0) 42%);
+  position: relative;
+  -webkit-animation: load3 1.4s infinite linear;
+  animation: load3 1.4s infinite linear;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  opacity: 1;
+}
+.cms-loader-hidden {
+  height: 0;
+  display: none;
+  opacity: 0;
+}
+.cms-loader:before {
+  width: 50%;
+  height: 50%;
+  background: green;
+  border-radius: 100% 0 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+}
+.cms-loader:after {
+  background: #fff;
+  width: 75%;
+  height: 75%;
+  border-radius: 50%;
+  content: '';
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+@-webkit-keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

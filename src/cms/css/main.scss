@@ -24,6 +24,10 @@ body {
   user-select: none;
 }
 
+.cms-noscroll {
+  overflow: hidden;
+}
+
 .cms-disabled {
   pointer-events: none;
 }

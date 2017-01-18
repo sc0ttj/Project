@@ -46,23 +46,23 @@ module.exports = {
     var modal = $('.cms-modal'),
         backBtn = $('.cms-modal-back-btn');
 
-    modal.removeClass('cms-transparent');
-    modal.removeClass('cms-disabled');
-    modal.removeClass('cms-hidden');
-    backBtn.on('click', self.hide);
-    $('body').css('overflow', 'none');
-    $('.cms-menu-btn').addClass('cms-menu-btn-white');
+    $('body').addClass('cms-noscroll');
+    modal.removeClass('cms-transparent cms-disabled cms-hidden');
+    backBtn.on('click', self.backBtnClickHandler);
+  },
+
+  backBtnClickHandler: function (e) {
+    self.hide();
   },
 
   hide: function () {
     var modal = $('.cms-modal'),
         backBtn = $('.cms-modal-back-btn');
 
-    modal.addClass('cms-transparent');
-    modal.addClass('cms-disabled');
-    modal.addClass('cms-hidden');
-    $('body').css('overflow', 'auto');
-    $('.cms-menu-btn').removeClass('cms-menu-btn-white');
+    $('body').removeClass('cms-noscroll');
+    modal.addClass('cms-transparent cms-disabled cms-hidden');
+    backBtn.off('click', self.hide);
+    self.remove();
   },
 
   remove: function () {

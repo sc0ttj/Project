@@ -7,7 +7,6 @@ module.exports = {
   init: function(){
     self = this;
     self.addResponsiveImageClickHandlers();
-    self.addMediaChooser();
   },
 
   addResponsiveImageClickHandlers: function () {
@@ -18,26 +17,6 @@ module.exports = {
     }
   },
 
-  addMediaChooser: function (){
-    var mediaChooserHtml = self.createMediaChooser();
-    
-    $('div.cms-media-chooser').remove();
-    $('body').append(mediaChooserHtml);
-
-    self.$mediaChooser = $('div.cms-media-chooser');
-    self.$mediaChooserContainer = self.$mediaChooser.children('.cms-media-chooser-container');
-    
-    var $closeBtn = $('.cms-media-chooser-close-btn');
-    $closeBtn.on('click', self.mediaChooserCloseBtnClickHandler);
-  },
-
-  mediaChooserCloseBtnClickHandler: function (e) {
-    $('.cms-menu-btn').removeClass('cms-menu-btn-white');
-    $('body').css('overflow', 'auto');
-    self.$mediaChooserContainer.html('');
-    self.$mediaChooser.css('display', 'none');
-  },
-
   onImageClickHandler: function (e) {
     var img = this,
         imgSrcElems = self.getImgSourceElems(img),
@@ -45,7 +24,7 @@ module.exports = {
         previewImages = self.createImgsFromImgSrcElems(imgSrcElems);
     
     self.setCurrentImage(img);
-    if (previewImages.length > 0) self.showMediaChooser(previewImages);
+    if (previewImages.length > 0) self.showUI(previewImages);
   },
 
   setCurrentImage: function (img){
@@ -57,7 +36,8 @@ module.exports = {
   },
 
   getImgSourceElems: function (img) {
-    return $(img).children('source, img');
+    var imgSourceElems = $(img).children('source, img');
+    return imgSourceElems;
   },
 
   createImgsFromImgSrcElems: function (imgSrcElems) {
@@ -78,26 +58,32 @@ module.exports = {
     return images;
   },
 
-  showMediaChooser: function (previewImages) {
-    $('body').css('overflow', 'hidden');
-    self.$mediaChooser.css('display', 'block');
-
+  showUI: function (previewImages) {
+    var modalContent = '';
     // for each preview image src file
     previewImages.forEach(function (imgHtml, i){
       var imgHeaderTxt  = $(imgHtml).data('name'),
           uploadMediaBtn = self.createUploadMediaBtn(i),
-          imageHeaderHtml = '<p class="cms-media-chooser-image-title">' + imgHeaderTxt + '</p>';
+          imageHeaderHtml = '<p class="cms-modal-image-title">' + imgHeaderTxt + '</p>';
       
       //build image list
-      if (imgHeaderTxt) self.$mediaChooserContainer.append(imageHeaderHtml);
-      self.$mediaChooserContainer.append(imgHtml);
-      self.$mediaChooserContainer.append(uploadMediaBtn);
+      if (imgHeaderTxt) modalContent += imageHeaderHtml;
+      modalContent += imgHtml;
+      modalContent += uploadMediaBtn;
+    });
 
-      // setup file input and image preview
-      var $fileBtn = $('#file-upload-'+i);
+    // load modal
+    cms.modal.create({
+      title: 'Image Manager',
+      contents: modalContent
+    });
+    cms.modal.show();
+
+    // add event handlers for input buttons
+    var $fileBtns = $('.cms-modal-upload-btn');
+    $fileBtns.each(function (fileBtn){
+      var $fileBtn = $(fileBtn);
       self.fileBtnClickHandler($fileBtn);
-
-      $('.cms-menu-btn').addClass('cms-menu-btn-white');
     });
   },
 
@@ -119,7 +105,7 @@ module.exports = {
       self.currentImgSrcElem = imageSrcIndex;
       // set current upload button info
       self.$currentBtn  = $(this).prev('label');
-      self.$currentBtns = $('.cms-media-chooser-upload-label');
+      self.$currentBtns = $('.cms-modal-upload-label');
 
       self.updateUploadBtns(self.$currentBtn, self.$currentBtns);
       self.updatePreviewImage($previewImg, file);
@@ -132,8 +118,8 @@ module.exports = {
   },
 
   updateUploadBtns: function(btn, btns){
-    btn.removeClass('cms-media-chooser-upload-label-error');
-    btn.addClass('cms-media-chooser-upload-label-uploading');
+    btn.removeClass('cms-modal-upload-label-error');
+    btn.addClass('cms-modal-upload-label-uploading');
     $(btn).parent().children('.cms-loader').removeClass('cms-loader-hidden');
     btns.css('pointer-events', 'none');
   },
@@ -167,13 +153,13 @@ module.exports = {
     var onSuccessHandler = function (){
       self.updateImgOnPage();
       btn.html('Upload image');
-      btn.removeClass('cms-media-chooser-upload-label-uploading');
+      btn.removeClass('cms-modal-upload-label-uploading');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
       btns.css('pointer-events', 'all');
     }
     var onErrorHandler = function (){
       btn.html('Upload error');
-      btn.addClass('cms-media-chooser-upload-label-error');
+      btn.addClass('cms-modal-upload-label-error');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
     }
 
@@ -195,25 +181,12 @@ module.exports = {
     $(srcImgToUpdate).attr(srcAttr, self.currentImgUrl);
   },
 
-  createMediaChooser: function () {
-    var mediaChooser = '<div class="cms-media-chooser">\n\
-      <div class="cms-media-chooser-header">\n\
-        <button class="cms-media-chooser-btn cms-media-chooser-close-btn">Back</button>\n\
-        <center><h3>Media Manager</h3>\n\
-        </center>\n\
-      </div>\n\
-      <div class="cms-media-chooser-container"></div>\n\
-      \n\
-    </div>';
-    return mediaChooser;
-  },
-
   createUploadMediaBtn: function (i) {
     var uploadMediaBtn = '\
       <form id="cms-upload-form-'+i+'" action="upload.php" method="post" class="cms-upload-form cms-upload-form-'+i+'" enctype="multipart/form-data">\n\
         <div class="cms-loader cms-loader-hidden"></div>\n\
-        <label for="file-upload-'+i+'" id="file-upload-label-'+i+'" class="cms-media-chooser-upload-label">Upload image</label>\n\
-        <input name="image" type="file" id="file-upload-'+i+'" class="cms-media-chooser-upload-btn"  />\n\
+        <label for="file-upload-'+i+'" id="file-upload-label-'+i+'" class="cms-modal-upload-label">Upload image</label>\n\
+        <input name="image" type="file" id="file-upload-'+i+'" class="cms-modal-upload-btn"  />\n\
       </form>';
     
     return uploadMediaBtn;
