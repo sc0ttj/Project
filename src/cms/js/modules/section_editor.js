@@ -44,9 +44,9 @@ module.exports = {
       var sectionHtml = cms.templater.renderTemplate(template, cms.pageConfig);
 
       self.addTemplateToPage(sectionHtml);
+      self.reIndexSections();
       cms.modal.hide();
       // setup the newly added section with the cms
-      cms.editor.reIndexSections();
       cms.ui.reIndexMenuItems();
       cms.reload();
     }
@@ -62,6 +62,33 @@ module.exports = {
   addTemplateToPage: function (html) {
     $(cms.config.sectionSelector).last().after(cms.config.sectionContainer);
     $(cms.config.sectionSelector).last().html(html);
+  },
+
+  moveSectionUp: function (index) {
+    var $section = $('.section'+index);
+    $section.prev().before($section);
+  },
+
+  moveSectionDown: function (index) {
+    var $section = $('.section'+index);
+    $section.next().after($section);
+  },
+
+  removeSection: function (index) {
+    var $section = $('.section'+index);
+    $section.remove();
+  },
+
+  reIndexSections: function () {
+    var $sections = $(cms.config.sectionSelector);
+
+    $sections.each(function(el, i){
+      var $el = $(this),
+          currentSection = '.section'+(i+1);
+      $(currentSection).removeClass('section'+(i+1));
+      $el.addClass('section'+(i+1));
+      $el.attr('id', 'section'+(i+1));
+    });
   },
 
 }

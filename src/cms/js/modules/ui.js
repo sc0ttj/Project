@@ -96,8 +96,8 @@ module.exports = {
     if ($this.attr('id') !== 'menu-item-1'){
       $this.after($prev);
       self.reIndexMenuItems();  
-      cms.editor.moveSectionUp(index);
-      cms.editor.reIndexSections();
+      cms.sectionEditor.moveSectionUp(index);
+      cms.sectionEditor.reIndexSections();
     }
   },
 
@@ -108,8 +108,8 @@ module.exports = {
 
     $next.after($this);
     self.reIndexMenuItems();
-    cms.editor.moveSectionDown(index);
-    cms.editor.reIndexSections();
+    cms.sectionEditor.moveSectionDown(index);
+    cms.sectionEditor.reIndexSections();
   },
 
   menuItemDeleteClickHandler: function (e) {
@@ -118,8 +118,8 @@ module.exports = {
 
     $this.remove();
     self.reIndexMenuItems();
-    cms.editor.removeSection(index);
-    cms.editor.reIndexSections();
+    cms.sectionEditor.removeSection(index);
+    cms.sectionEditor.reIndexSections();
   },
 
   menuBtnSaveClickHandler: function (e) {
