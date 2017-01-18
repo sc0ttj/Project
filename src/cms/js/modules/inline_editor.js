@@ -1,22 +1,22 @@
 var $ = require('cash-dom');
-var editor;
+var self;
 
 "use strict";
 
 module.exports = {
   init: function(){
-    editor = this;
+    self = this;
     document.body.setAttribute('spellcheck', false);
-    editor.isInFirefox = (typeof InstallTrigger !== 'undefined');
-    editor.createMediaBtn();
-    editor.setEditableItems(cms.config.editableItems);
-    editor.setEditableRegions(cms.config.editableRegionClass);
-    editor.nextEditableElem = $('contenteditable')[0],
-    editor.setEventHandlers();
+    self.isInFirefox = (typeof InstallTrigger !== 'undefined');
+    self.createMediaBtn();
+    self.setEditableItems(cms.config.editableItems);
+    self.setEditableRegions(cms.config.editableRegionClass);
+    self.nextEditableElem = $('contenteditable')[0],
+    self.setEventHandlers();
   },
 
   createMediaBtn: function (){
-    editor.mediaBtn = '\
+    self.mediaBtn = '\
     <div id="cms-media-btn" \
          class="cms-media-btn cms-anim-fade-250ms cms-transparent"\
          contenteditable="false"\
@@ -44,7 +44,7 @@ module.exports = {
     
     $elems.attr('contenteditable', true);
     $elems.addClass(cms.config.editableRegionClass);
-    editor.addMediaButtons();
+    self.addMediaButtons();
   },
 
   setEditableItems: function(items){
@@ -58,29 +58,29 @@ module.exports = {
   },
 
   setEventHandlers: function(){
-    var editables = editor.getEditableItems();
+    var editables = self.getEditableItems();
     
-    editables.off('focus', editor.onEditableFocusHandler);
-    editables.off('blur', editor.onEditableBlurHandler);
-    editables.off('keypress', editor.onEditableKeyPressHandler);
+    editables.off('focus', self.onEditableFocusHandler);
+    editables.off('blur', self.onEditableBlurHandler);
+    editables.off('keypress', self.onEditableKeyPressHandler);
     
-    editables.on('focus', editor.onEditableFocusHandler);
-    editables.on('blur', editor.onEditableBlurHandler);
-    editables.on('keypress', editor.onEditableKeyPressHandler);
+    editables.on('focus', self.onEditableFocusHandler);
+    editables.on('blur', self.onEditableBlurHandler);
+    editables.on('keypress', self.onEditableKeyPressHandler);
   },
 
   onEditableKeyPressHandler: function(e){
     var el = this;
 
     // crude firefox fix - dont allow total emptying of editable regions
-    if(editor.isInFirefox && editor.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p></p>');
+    if(self.isInFirefox && self.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p></p>');
 
     if (e.which === 13) {
-      if(!editor.elemIsContainer(el)){
+      if(!self.elemIsContainer(el)){
         e.preventDefault();
-        if (editor.nextEditableItemExists) editor.nextEditableElem.focus();
+        if (self.nextEditableItemExists) self.nextEditableElem.focus();
       } else {
-        if (!editor.isInFirefox) $(':focus')[0].blur();
+        if (!self.isInFirefox) $(':focus')[0].blur();
       }
       return false;
     }
@@ -91,27 +91,27 @@ module.exports = {
       var $el = $(this),
           thisHasNoMediaBtn = ($el.children('.cms-media-btn').length < 1);
           
-      if (thisHasNoMediaBtn) $el.append(editor.mediaBtn);
+      if (thisHasNoMediaBtn) $el.append(self.mediaBtn);
     });
   },
 
   onEditableBlurHandler: function(e){
     var el = this,
         $el = $(el),
-        elemIsEmpty = editor.elemIsEmpty(el),
-        elemIsContainer = editor.elemIsContainer(el);
+        elemIsEmpty = self.elemIsEmpty(el),
+        elemIsContainer = self.elemIsContainer(el);
 
     if (elemIsEmpty && elemIsContainer) $el.remove();
-    editor.addMediaButtons();
-    editor.removeLeftOverMediaBtns(el);
+    self.addMediaButtons();
+    self.removeLeftOverMediaBtns(el);
   },
 
   onEditableFocusHandler: function(e){
     var el = this;
-    editor.nextEditableElem = editor.getNextEditableItem(el);
-    editor.nextEditableItemExists = (editor.nextEditableElem === "{}" || typeof editor.nextEditableElem != 'undefined');
-    editor.addMediaButtons();
-    editor.removeLeftOverMediaBtns(el);
+    self.nextEditableElem = self.getNextEditableItem(el);
+    self.nextEditableItemExists = (self.nextEditableElem === "{}" || typeof self.nextEditableElem != 'undefined');
+    self.addMediaButtons();
+    self.removeLeftOverMediaBtns(el);
     cms.mediaEditor.addResponsiveImageClickHandlers();
   },
 
@@ -147,9 +147,9 @@ module.exports = {
 
   removeLeftOverMediaBtns: function (el){
     $(el).children().each(function(elem){
-      if (editor.onlyContainsMediaBtn(elem)) $(elem).remove();
+      if (self.onlyContainsMediaBtn(elem)) $(elem).remove();
     });
-    if (editor.onlyContainsMediaBtn(el)) $(el).remove();
+    if (self.onlyContainsMediaBtn(el)) $(el).remove();
   },
 
   onlyContainsMediaBtn: function (el) {
@@ -168,7 +168,7 @@ module.exports = {
     var sel = window.getSelection();
     if (sel.rangeCount) {
       var selRange = sel.getRangeAt(0);
-      var blockEl = editor.getTextBlockContainer(selRange.endContainer);
+      var blockEl = self.getTextBlockContainer(selRange.endContainer);
       if (blockEl) {
         var range = selRange.cloneRange();
         range.selectNodeContents(blockEl);

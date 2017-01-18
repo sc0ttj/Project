@@ -1,39 +1,38 @@
 var $ = require('cash-dom');
-var sectionEditor;
+var self;
 
 "use strict";
 
 module.exports = {
   init: function(){
-    sectionEditor = this;
-    sectionEditor.createUI();
+    self = this;
+    self.createUI();
   },
 
   createUI: function(){
-    var sectionChooserHtml = sectionEditor.createSectionChooser();
+    var sectionChooserHtml = self.createSectionChooser();
     $('body').append(sectionChooserHtml);
 
-    sectionEditor.$sectionChooser          = $('div.cms-media-chooser');
-    sectionEditor.$sectionChooserContainer = sectionEditor.$sectionChooser.children('.cms-media-chooser-container');
+    self.$sectionChooser          = $('div.cms-media-chooser');
+    self.$sectionChooserContainer = self.$sectionChooser.children('.cms-media-chooser-container');
 
     var $closeBtn = $('.cms-media-chooser-close-btn');
-    $closeBtn.on('click', sectionEditor.closeBtnClickHandler);
+    $closeBtn.on('click', self.closeBtnClickHandler);
   },
 
   closeBtnClickHandler: function (e) {
-    sectionEditor.hideUI();
+    self.hideUI();
   },
 
   showUI: function () {
     $('body').css('overflow', 'hidden');
     $('.cms-menu-btn').addClass('cms-menu-btn-white');
     $('div.cms-media-chooser').css('display', 'block');
-    sectionEditor.sectionPreviews = sectionEditor.getSectionPreviewImgs();
-    sectionEditor.addPreviewsToContainer(sectionEditor.sectionPreviews);
+    self.sectionPreviews = self.getSectionPreviewImgs();
+    self.addPreviewsToContainer(self.sectionPreviews);
     
-    sectionEditor.$previewImgs = $('.cms-media-chooser-container').children();
-    sectionEditor.$previewImgs.on('click', sectionEditor.sectionPreviewClickHandler);
-
+    self.$previewImgs = $('.cms-media-chooser-container').children();
+    self.$previewImgs.on('click', self.sectionPreviewClickHandler);
   },
 
   getSectionPreviewImgs: function (template) {
@@ -52,7 +51,7 @@ module.exports = {
   },
 
   sectionPreviewClickHandler: function (e) {
-    sectionEditor.getTemplateFromFile(this.id);
+    self.getTemplateFromFile(this.id);
   },
 
   getTemplateFromFile: function (template) {
@@ -61,8 +60,8 @@ module.exports = {
     var onSuccessHandler = function (template){
       var loremData = cms.pageConfig,
           sectionHtml = cms.templater.renderTemplate(template, loremData);
-      sectionEditor.addTemplateToPage(sectionHtml);
-      sectionEditor.hideUI();
+      self.addTemplateToPage(sectionHtml);
+      self.hideUI();
 
       // setup the newly added section with the cms
       cms.reload();
@@ -79,7 +78,7 @@ module.exports = {
   addTemplateToPage: function (html) {
     $(cms.config.sectionSelector).last().after(cms.config.sectionContainer);
     $(cms.config.sectionSelector).last().html(html);
-    sectionEditor.reIndexSections();
+    self.reIndexSections();
   },
 
   addSectionToChooser: function (sectionHTML) {
@@ -89,7 +88,7 @@ module.exports = {
   hideUI: function () {
     $('.cms-menu-btn').removeClass('cms-menu-btn-white');
     $('body').css('overflow', 'auto');
-    sectionEditor.$sectionChooserContainer.html('');
+    self.$sectionChooserContainer.html('');
     $('div.cms-media-chooser').css('display', 'none');
   },
 
