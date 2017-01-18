@@ -11,6 +11,7 @@ module.exports = {
     title:    'My Article Title',
     desc:     'A description of...',
     date:     '1st January, 2017',
+    author:   'Your Name Here',
     topic:    'News',
     keywords: 'news, article, news article,',
   },
