@@ -117,7 +117,8 @@ module.exports = {
   },
 
   getNextEditableItem: function (el) {
-    return $('[contenteditable]').eq($('[contenteditable]').index($(el))+1)[0];
+    var nextItem = $('[contenteditable]').eq($('[contenteditable]').index($(el))+1)[0];
+    return nextItem;
   },
 
   elemIsEmpty: function (el) {
@@ -154,7 +155,8 @@ module.exports = {
   },
 
   onlyContainsMediaBtn: function (el) {
-    return (el.innerHTML.indexOf('<div id="cms-media-btn"') === 0);
+    var onlyContainsBtn = (el.innerHTML.indexOf('<div id="cms-media-btn"') === 0);
+    return onlyContainsBtn;
   },
 
   //https://stackoverflow.com/questions/5740640/contenteditable-extract-text-from-caret-to-end-of-element?answertab=votes#tab-top
