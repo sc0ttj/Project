@@ -34,8 +34,14 @@ module.exports = {
     }
   },
 
-  getEditableItems: function () {
-    return $('[contenteditable]');
+  setEditableItems: function(items){
+    // document.designMode = 'on'; //makes ALL items editable, very buggy
+    items.forEach(function makeItemEditable(el, i){
+      var $elems = $(cms.config.sectionSelector + ' ' + el);
+      $elems.attr('contenteditable', true);
+      // $elems.attr('data-placeholder', 'Enter text here...');
+      $elems.addClass(cms.config.editableClass);
+    });
   },
 
   setEditableRegions: function(selector){
@@ -47,26 +53,21 @@ module.exports = {
     self.addMediaButtons();
   },
 
-  setEditableItems: function(items){
-    // document.designMode = 'on'; //makes ALL items editable, very buggy
-    items.forEach(function makeItemEditable(el, i){
-      var $elems = $(cms.config.sectionSelector + ' ' + el);
-      $elems.attr('contenteditable', true);
-      // $elems.attr('data-placeholder', 'Enter text here...');
-      $elems.addClass(cms.config.editableClass);
-    });
+  setEventHandlers: function(){
+    var $editables = self.getEditableItems();
+    
+    $editables.off('focus', self.onEditableFocusHandler);
+    $editables.off('blur', self.onEditableBlurHandler);
+    $editables.off('keypress', self.onEditableKeyPressHandler);
+    
+    $editables.on('focus', self.onEditableFocusHandler);
+    $editables.on('blur', self.onEditableBlurHandler);
+    $editables.on('keypress', self.onEditableKeyPressHandler);
   },
 
-  setEventHandlers: function(){
-    var editables = self.getEditableItems();
-    
-    editables.off('focus', self.onEditableFocusHandler);
-    editables.off('blur', self.onEditableBlurHandler);
-    editables.off('keypress', self.onEditableKeyPressHandler);
-    
-    editables.on('focus', self.onEditableFocusHandler);
-    editables.on('blur', self.onEditableBlurHandler);
-    editables.on('keypress', self.onEditableKeyPressHandler);
+  getEditableItems: function () {
+    var $items = $('[contenteditable]');
+    return $items;
   },
 
   onEditableKeyPressHandler: function(e){
