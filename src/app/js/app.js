@@ -1,18 +1,22 @@
-var loadCSS = require('modules/loadcss').init;
-var loadJS = require('modules/loadjs');
+var loadCSS    = require('modules/loadcss').init;
+var loadJS     = require('modules/loadjs');
+var pageConfig = require('page_config.js');
 
 "use strict";
 
 module.exports = {
 
   init: function(){
+    //set page defaults
+    this.pageConfig = pageConfig;
+    // add html5 extras
     if (this.cutsTheMustard()){
       // add mustard
       $('body').addClass('html5');
       //load 'nice-to-haves'
       this.loadStylesheet('css/full.css');
       this.loadModules(['test', 'test1']);
-
+      // init the various templates that use js
       this.fixedImage.init();
       this.scrollmation.init();
       this.statText.init();
@@ -38,6 +42,8 @@ module.exports = {
       });
     });
   },
+
+  //below: for each template that uses JS, we have an object with init() method..
 
   fixedImage: {
     init: function() {

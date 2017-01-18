@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <meta name="title" content="{{pageTitle}}">
-    <meta name="description" content="my app description">
-    <meta name="author" content="scott">
-    <title>Default Page</title>
+    <meta name="title" content="{{meta.title}}">
+    <meta name="description" content="{{meta.desc}}">
+    <meta name="author" content="{{meta.author}}">
+    <title>{{meta.title}}</title>
 
     <link href="css/vendor.css" rel="stylesheet" type="text/css">
     <link href="css/base.css" rel="stylesheet" type="text/css">
@@ -17,7 +17,7 @@
 
 </head>
 
-<body onload="window.scrollBy(0,1);">
+<body>
 
 <div class="section">
 {{>_hero-center}}
@@ -26,12 +26,10 @@
 <!-- scripts -->
 <script src="js/vendor.js"></script>    
 <script src="js/app.js"></script>
-<script id="app" type="text/javascript">
+<script id="app-init" type="text/javascript">
   var app = require('app');
   app.init();
 </script>
-
 {{>_cms-script}}
 </body>
-
 </html>

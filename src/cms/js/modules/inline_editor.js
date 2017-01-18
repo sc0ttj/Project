@@ -1,41 +1,30 @@
 var $ = require('cash-dom');
-var mediaEditor  = require('modules/inline_media_editor');
-var editor;
-// console.log($)
+var self;
 
 "use strict";
 
 module.exports = {
-  getConfig: function (){
-    return editor.config;
-  },
-
-  setConfig: function (config){
-    editor.config = config || editor.config;
-  },
-
-  init: function(config){
-    editor = this;
-    cms.editor = this;
-
-    editor.setConfig(config);
-
-    editor.isInFirefox = (typeof InstallTrigger !== 'undefined');
+  init: function(){
+    self = this;
     document.body.setAttribute('spellcheck', false);
-
-    editor.createMediaBtn();
-    mediaEditor.init(config);
-
-    editor.setEditableItems(editor.config.editableItems);
-    editor.setEditableRegions(editor.config.editableRegionClass);
-    editor.nextEditableElem = $('contenteditable')[0],
-    editor.setEventHandlers();
+    self.isInFirefox = (typeof InstallTrigger !== 'undefined');
+    self.createMediaBtn();
+    self.setEditableItems(cms.config.editableItems);
+    self.setEditableRegions(cms.config.editableRegionClass);
+    self.nextEditableElem = $('contenteditable')[0],
+    self.setEventHandlers();
   },
 
   createMediaBtn: function (){
-    editor.mediaBtn = '<div id="cms-media-btn" class="cms-media-btn cms-anim-fade-250ms cms-transparent" contenteditable="false" onclick="mediaBtnClickHandler(this);">ADD MEDIA</div>'
+    self.mediaBtn = '\
+    <div id="cms-media-btn" \
+         class="cms-media-btn cms-anim-fade-250ms cms-transparent"\
+         contenteditable="false"\
+         onclick="mediaBtnClickHandler(this);">\
+      ADD MEDIA\
+    </div>'
     mediaBtnClickHandler = function (el){
-      var imgHtml = '<picture><img class=cms-inline-media style=width:100%; src=images/placeholders/550x550.png /></picture>',
+      var imgHtml = '<picture><img src=images/placeholders/550x550.png /></picture>',
           $el     = $(el),
           $target = $el;
 
@@ -45,89 +34,91 @@ module.exports = {
     }
   },
 
-  getEditableItems: function () {
-    return $('[contenteditable]');
+  setEditableItems: function(items){
+    // document.designMode = 'on'; //makes ALL items editable, very buggy
+    items.forEach(function makeItemEditable(el, i){
+      var $elems = $(cms.config.sectionSelector + ' ' + el);
+      $elems.attr('contenteditable', true);
+      // $elems.attr('data-placeholder', 'Enter text here...');
+      $elems.addClass(cms.config.editableClass);
+    });
   },
 
   setEditableRegions: function(selector){
     var selector = selector.replace(/^\./, ''),
-        $elems = $(editor.config.sectionSelector + ' .' + selector);
+        $elems = $(cms.config.sectionSelector + ' .' + selector);
     
     $elems.attr('contenteditable', true);
-    $elems.addClass(editor.config.editableRegionClass);
-    editor.addMediaButtons();
-  },
-
-  setEditableItems: function(items){
-    // document.designMode = 'on'; //makes ALL items editable, very buggy
-    items.forEach(function makeItemEditable(el, i){
-      var $elems = $(editor.config.sectionSelector + ' ' + el);
-      $elems.attr('contenteditable', true);
-      // $elems.attr('data-placeholder', 'Enter text here...');
-      $elems.addClass(editor.config.editableClass);
-    });
+    $elems.addClass(cms.config.editableRegionClass);
+    self.addMediaButtons();
   },
 
   setEventHandlers: function(){
-    var editables = editor.getEditableItems();
+    var $editables = self.getEditableItems();
     
-    editables.off('focus', editor.onEditableFocusHandler);
-    editables.off('blur', editor.onEditableBlurHandler);
-    editables.off('keypress', editor.onEditableKeyPressHandler);
+    $editables.off('focus', self.onEditableFocusHandler);
+    $editables.off('blur', self.onEditableBlurHandler);
+    $editables.off('keypress', self.onEditableKeyPressHandler);
     
-    editables.on('focus', editor.onEditableFocusHandler);
-    editables.on('blur', editor.onEditableBlurHandler);
-    editables.on('keypress', editor.onEditableKeyPressHandler);
+    $editables.on('focus', self.onEditableFocusHandler);
+    $editables.on('blur', self.onEditableBlurHandler);
+    $editables.on('keypress', self.onEditableKeyPressHandler);
+  },
+
+  getEditableItems: function () {
+    var $items = $('[contenteditable]');
+    return $items;
   },
 
   onEditableKeyPressHandler: function(e){
     var el = this;
 
     // crude firefox fix - dont allow total emptying of editable regions
-    if(editor.isInFirefox && editor.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p></p>');
+    if(self.isInFirefox && self.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p></p>');
 
     if (e.which === 13) {
-      if(!editor.elemIsContainer(el)){
+      if(!self.elemIsContainer(el)){
         e.preventDefault();
-        if (editor.nextEditableItemExists) editor.nextEditableElem.focus();
+        if (self.nextEditableItemExists) self.nextEditableElem.focus();
       } else {
-        if (!editor.isInFirefox) $(':focus')[0].blur();
+        if (!self.isInFirefox) $(':focus')[0].blur();
       }
       return false;
     }
   },
 
   addMediaButtons: function () {
-    $(editor.config.inlineMediaRegionSelector).each(function(){
+    $(cms.config.inlineMediaRegionSelector).each(function(){
       var $el = $(this),
           thisHasNoMediaBtn = ($el.children('.cms-media-btn').length < 1);
           
-      if (thisHasNoMediaBtn) $el.append(editor.mediaBtn);
+      if (thisHasNoMediaBtn) $el.append(self.mediaBtn);
     });
   },
 
   onEditableBlurHandler: function(e){
     var el = this,
         $el = $(el),
-        elemIsEmpty = editor.elemIsEmpty(el),
-        elemIsContainer = editor.elemIsContainer(el);
+        elemIsEmpty = self.elemIsEmpty(el),
+        elemIsContainer = self.elemIsContainer(el);
 
     if (elemIsEmpty && elemIsContainer) $el.remove();
-    editor.addMediaButtons();
-    editor.removeLeftOverMediaBtns(el);
+    self.addMediaButtons();
+    self.removeLeftOverMediaBtns(el);
   },
 
   onEditableFocusHandler: function(e){
     var el = this;
-    editor.nextEditableElem = editor.getNextEditableItem(el);
-    editor.nextEditableItemExists = (editor.nextEditableElem === "{}" || typeof editor.nextEditableElem != 'undefined');
-    editor.addMediaButtons();
-    editor.removeLeftOverMediaBtns(el);
-    mediaEditor.addResponsiveImageClickHandlers();
+    self.nextEditableElem = self.getNextEditableItem(el);
+    self.nextEditableItemExists = (self.nextEditableElem === "{}" || typeof self.nextEditableElem != 'undefined');
+    self.addMediaButtons();
+    self.removeLeftOverMediaBtns(el);
+    cms.mediaEditor.addResponsiveImageClickHandlers();
   },
 
   getNextEditableItem: function (el) {
-    return $('[contenteditable]').eq($('[contenteditable]').index($(el))+1)[0];
+    var nextItem = $('[contenteditable]').eq($('[contenteditable]').index($(el))+1)[0];
+    return nextItem;
   },
 
   elemIsEmpty: function (el) {
@@ -158,13 +149,14 @@ module.exports = {
 
   removeLeftOverMediaBtns: function (el){
     $(el).children().each(function(elem){
-      if (editor.onlyContainsMediaBtn(elem)) $(elem).remove();
+      if (self.onlyContainsMediaBtn(elem)) $(elem).remove();
     });
-    if (editor.onlyContainsMediaBtn(el)) $(el).remove();
+    if (self.onlyContainsMediaBtn(el)) $(el).remove();
   },
 
   onlyContainsMediaBtn: function (el) {
-    return (el.innerHTML.indexOf('<div id="cms-media-btn"') === 0);
+    var onlyContainsBtn = (el.innerHTML.indexOf('<div id="cms-media-btn"') === 0);
+    return onlyContainsBtn;
   },
 
   //https://stackoverflow.com/questions/5740640/contenteditable-extract-text-from-caret-to-end-of-element?answertab=votes#tab-top
@@ -179,7 +171,7 @@ module.exports = {
     var sel = window.getSelection();
     if (sel.rangeCount) {
       var selRange = sel.getRangeAt(0);
-      var blockEl = editor.getTextBlockContainer(selRange.endContainer);
+      var blockEl = self.getTextBlockContainer(selRange.endContainer);
       if (blockEl) {
         var range = selRange.cloneRange();
         range.selectNodeContents(blockEl);
@@ -187,34 +179,6 @@ module.exports = {
         return range.extractContents();
       }
     }
-  },
-
-  moveSectionUp: function (index) {
-    var $section = $('.section'+index);
-    $section.prev().before($section);
-  },
-
-  moveSectionDown: function (index) {
-    var $section = $('.section'+index);
-    $section.next().after($section);
-  },
-
-  removeSection: function (index) {
-    var $section = $('.section'+index);
-    $section.remove();
-  },
-
-  reIndexSections: function () {
-    $(editor.config.sectionSelector).each(function(el, i){
-      var currentSection = '.section'+(i+1);
-      $(currentSection).removeClass('section'+(i+1));
-    });
-
-    $(editor.config.sectionSelector).each(function(el, i){
-      var $el = $(this);
-      $el.addClass('section'+(i+1));
-      $el.attr('id', 'section'+(i+1));
-    });
   },
 
 }

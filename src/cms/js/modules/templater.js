@@ -1,30 +1,18 @@
-var $  = require('cash-dom');
-var m  = require('mustache');
-// console.log($)
+var $ = require('cash-dom');
+var m = require('mustache');
 
 "use strict";
 
 module.exports = {
-  init: function(config){
-    this.setConfig(config);
-    
+  init: function(){
     var sections = this.getSections();
-
     sections.each(this.numberTheSections);
-
     return true // if we loaded ok
   },
 
-  getConfig: function (){
-    return this.config;
-  },
-
-  setConfig: function (config){
-    this.config = config || this.config;
-  },
-
   getSections: function(){
-    return $(this.config.sectionSelector);
+    var sections = $(cms.config.sectionSelector);
+    return sections;
   },
 
   numberTheSections: function(elem, i){

@@ -1,96 +1,53 @@
-var sectionEditor;
-var $    = require('cash-dom');
-var ajax = require('modules/ajaxer');
-var t    = require('modules/templater.js');
-
-//get this data from file instead!
-var loremData = {
-  authorName: 'Your Name Here',
-  publishedDate: '1st January, 2017',
-  heroTitle : 'My Title',
-  heroSubTitle : 'A subtitle for the page you\'re reading',
-  articleHeading: 'Article Heading',
-  para: 'Lorem ipsum thing dolor sit amet, consectetur adipiscing elit. Mauris pharetra erat sit amet orci auctor finibus. Sed at aliquet enim, vel tincidunt mauris.',
-  fullWidthImageCaption: 'Full-width image caption here',
-  fixedImageText: 'Text Over Image',
-  imagePlaceholder: 'images/placeholders/550x550.png'
-};
+var $ = require('cash-dom');
+var self;
 
 "use strict";
 
 module.exports = {
-  getConfig: function (){
-    return sectionEditor.config;
-  },
-
-  setConfig: function (config){
-    sectionEditor.config = config || sectionEditor.config;
-  },
-
-  init: function(config){
-    sectionEditor = this;
-    cms.sectionEditor = this;
-
-    sectionEditor.setConfig(config);
-    sectionEditor.createUI();
-    t.init(config);
-  },
-
-  createUI: function(){
-    var sectionChooserHtml = sectionEditor.createSectionChooser();
-    $('body').append(sectionChooserHtml);
-
-    sectionEditor.$sectionChooser          = $('div.cms-media-chooser');
-    sectionEditor.$sectionChooserContainer = sectionEditor.$sectionChooser.children('.cms-media-chooser-container');
-
-    var $closeBtn = $('.cms-media-chooser-close-btn');
-    $closeBtn.on('click', sectionEditor.closeBtnClickHandler);
-  },
-
-  closeBtnClickHandler: function (e) {
-    sectionEditor.hideUI();
+  init: function(){
+    self = this;
   },
 
   showUI: function () {
-    $('body').css('overflow', 'hidden');
-    $('.cms-menu-btn').addClass('cms-menu-btn-white');
-    $('div.cms-media-chooser').css('display', 'block');
-    sectionEditor.sectionPreviews = sectionEditor.getSectionPreviewImgs();
-    sectionEditor.addPreviewsToContainer(sectionEditor.sectionPreviews);
-    
-    sectionEditor.$previewImgs = $('.cms-media-chooser-container').children();
-    sectionEditor.$previewImgs.on('click', sectionEditor.sectionPreviewClickHandler);
+    // get hmtl to be used in modal window
+    self.sectionPreviews = self.getSectionPreviewImgs();
 
+    // load modal
+    cms.modal.create({
+      title: 'Section Manager',
+      contents: self.sectionPreviews
+    });
+    cms.modal.show();
+
+    // get modal contents and add event handlers
+    self.$previewImgs = $('.cms-modal-viewport').children();
+    self.$previewImgs.on('click', self.sectionPreviewClickHandler);
   },
 
-  getSectionPreviewImgs: function (template) {
-    var previewImgs = [];
-    sectionEditor.config.templates.forEach(function (template, i){
-      var previewImg = '<img class="cms-template-preview-image" id="'+template+'" src="/cms/images/previews/'+template+'.png" alt="'+template+'" />';
-      previewImgs[i] = previewImg;
+  getSectionPreviewImgs: function () {
+    var previewImgs = '';
+    cms.config.templates.forEach(function (section, i){
+      var previewImg = '<img id="'+section+'" src="/cms/images/previews/'+section+'.png" alt="'+section+'" />';
+      previewImgs += previewImg;
     });
     return previewImgs;
   },
 
-  addPreviewsToContainer: function (items) {
-    items.forEach(function addItem(item, i){
-      $('.cms-media-chooser-container').append(item);
-    });
-  },
-
   sectionPreviewClickHandler: function (e) {
-    sectionEditor.getTemplateFromFile(this.id);
+    self.getTemplateFromFile(this.id);
   },
 
   getTemplateFromFile: function (template) {
-    ajax.create('GET', 'templates/'+template);
+    cms.ajax.create('GET', 'templates/'+template);
 
     var onSuccessHandler = function (template){
-      var sectionHtml = t.renderTemplate(template, loremData);
-      sectionEditor.addTemplateToPage(sectionHtml);
-      sectionEditor.hideUI();
+      var sectionHtml = cms.templater.renderTemplate(template, cms.pageConfig);
 
+      self.addTemplateToPage(sectionHtml);
+      self.reIndexSections();
+      cms.modal.hide();
       // setup the newly added section with the cms
+      cms.ui.reIndexMenuItems();
       cms.reload();
     }
 
@@ -98,55 +55,40 @@ module.exports = {
       alert('error');
     }
 
-    ajax.onFinish(onSuccessHandler, onErrorHandler);
-    ajax.send(null);
+    cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
+    cms.ajax.send(null);
   },
   
   addTemplateToPage: function (html) {
-    $(sectionEditor.config.sectionSelector).last().after(sectionEditor.config.sectionContainer);
-    $(sectionEditor.config.sectionSelector).last().html(html);
-    sectionEditor.reIndexSections();
+    $(cms.config.sectionSelector).last().after(cms.config.sectionContainer);
+    $(cms.config.sectionSelector).last().html(html);
   },
 
-  addSectionToChooser: function (sectionHTML) {
-    $('.cms-media-chooser-container').html(sectionHTML);
+  moveSectionUp: function (index) {
+    var $section = $('.section'+index);
+    $section.prev().before($section);
   },
 
-  hideUI: function () {
-    $('.cms-menu-btn').removeClass('cms-menu-btn-white');
-    $('body').css('overflow', 'auto');
-    sectionEditor.$sectionChooserContainer.html('');
-    $('div.cms-media-chooser').css('display', 'none');
+  moveSectionDown: function (index) {
+    var $section = $('.section'+index);
+    $section.next().after($section);
+  },
+
+  removeSection: function (index) {
+    var $section = $('.section'+index);
+    $section.remove();
   },
 
   reIndexSections: function () {
-    $(sectionEditor.config.sectionSelector).each(function(el, i){
-      var currentSection = '.section'+(i+1);
-      $(currentSection).removeClass('section'+(i+1));
-    });
+    var $sections = $(cms.config.sectionSelector);
 
-    $(sectionEditor.config.sectionSelector).each(function(el, i){
-      var $el = $(this);
+    $sections.each(function(el, i){
+      var $el = $(this),
+          currentSection = '.section'+(i+1);
+      $(currentSection).removeClass('section'+(i+1));
       $el.addClass('section'+(i+1));
       $el.attr('id', 'section'+(i+1));
     });
-    $('.cms-menu-item').each(function(elem, i){
-      $(elem).attr('id', 'menu-item-'+(i+1));
-      $(elem).find('a').attr('href', '#section'+(i+1));
-    });
-  },
-
-  createSectionChooser: function () {
-    var templateChooser = '<div class="cms-media-chooser">\n\
-      <div class="cms-media-chooser-header">\n\
-        <button class="cms-media-chooser-btn cms-media-chooser-close-btn">Back</button>\n\
-        <center><h3>Section Manager</h3>\n\
-        </center>\n\
-      </div>\n\
-      <div class="cms-media-chooser-container" style="color:#333;padding-left:16px;padding-right:16px;"></div>\n\
-      \n\
-    </div>';
-    return templateChooser;
   },
 
 }

@@ -1,19 +1,12 @@
-var $       = require('cash-dom');
-var editor  = require('modules/inline_editor');
-var sectionEditor = require('modules/section_editor');
-var ui;
+var $ = require('cash-dom');
+var self;
 
 "use strict";
 
 module.exports = {
-  init: function(config){
-    ui = this;
-    
-    ui.setConfig(config);
-    ui.addUI();
-    editor.init(config);
-    sectionEditor.init(config);
-
+  init: function(){
+    self = this;
+    self.addUI();
     return true // if we loaded ok
   },
 
@@ -24,30 +17,30 @@ module.exports = {
     $('body').append(menu);
     $('body').append(menuBtn);
 
-    ui.$menu         = $('.cms-menu');
-    ui.$menuBg       = $('.cms-menu-bg');
-    ui.$menuBtn      = $('.cms-menu-btn');
-    ui.$menuItems    = $('.cms-menu-item'),
-    ui.$menuItemUp   = $('.cms-menu-item-icon-up');
-    ui.$menuItemDown = $('.cms-menu-item-icon-down');
-    ui.$menuItemDelete = $('.cms-menu-item-icon-delete');
+    self.$menu         = $('.cms-menu');
+    self.$menuBg       = $('.cms-menu-bg');
+    self.$menuBtn      = $('.cms-menu-btn');
+    self.$menuItems    = $('.cms-menu-item'),
+    self.$menuItemUp   = $('.cms-menu-item-icon-up');
+    self.$menuItemDown = $('.cms-menu-item-icon-down');
+    self.$menuItemDelete = $('.cms-menu-item-icon-delete');
 
-    ui.$menuBg.on('click', ui.menuBgClickHandler);
-    ui.$menuBtn.on('click', ui.menuBtnClickHandler);
-    ui.$menuItemUp.on('click', ui.menuItemUpClickHandler);
-    ui.$menuItemDown.on('click', ui.menuItemDownClickHandler);
-    ui.$menuItemDelete.on('click', ui.menuItemDeleteClickHandler);
+    self.$menuBg.on('click', self.menuBgClickHandler);
+    self.$menuBtn.on('click', self.menuBtnClickHandler);
+    self.$menuItemUp.on('click', self.menuItemUpClickHandler);
+    self.$menuItemDown.on('click', self.menuItemDownClickHandler);
+    self.$menuItemDelete.on('click', self.menuItemDeleteClickHandler);
 
-    ui.$menuBtnSave = $('.cms-menu-item-save');
-    ui.$menuBtnSave.on('click', ui.menuBtnSaveClickHandler);
+    self.$menuBtnSave = $('.cms-menu-item-save');
+    self.$menuBtnSave.on('click', self.menuBtnSaveClickHandler);
 
-    ui.$menuBtnAddSection = $('.cms-menu-item-add-section');
-    ui.$menuBtnAddSection.on('click', ui.menuBtnAddSectionClickHandler);
+    self.$menuBtnAddSection = $('.cms-menu-item-add-section');
+    self.$menuBtnAddSection.on('click', self.menuBtnAddSectionClickHandler);
 
   }, 
 
   getMenuHtml: function () {
-    var $sections = ui.getSections(),
+    var $sections = self.getSections(),
         menu = '\
         <div class="cms-menu-bg cms-anim-fade-250ms hidden"></div>\
         <ul class="cms-menu cms-anim-fade-250ms hidden">';
@@ -83,16 +76,16 @@ module.exports = {
   },
 
   getSections: function () {
-    var sections = $(ui.config.sectionSelector);
+    var sections = $(cms.config.sectionSelector);
     return sections;
   },
 
   menuBgClickHandler: function (e) {
-    ui.hideMenu();
+    self.hideMenu();
   },
 
   menuBtnClickHandler: function (e) {
-    ui.toggleMenu();
+    self.toggleMenu();
   },
 
   menuItemUpClickHandler: function (e) {
@@ -102,9 +95,9 @@ module.exports = {
 
     if ($this.attr('id') !== 'menu-item-1'){
       $this.after($prev);
-      ui.reIndexMenuItems();  
-      editor.moveSectionUp(index);
-      editor.reIndexSections();
+      self.reIndexMenuItems();  
+      cms.sectionEditor.moveSectionUp(index);
+      cms.sectionEditor.reIndexSections();
     }
   },
 
@@ -114,9 +107,9 @@ module.exports = {
         index = $this.attr('id').replace('menu-item-', '');
 
     $next.after($this);
-    ui.reIndexMenuItems();
-    editor.moveSectionDown(index);
-    editor.reIndexSections();
+    self.reIndexMenuItems();
+    cms.sectionEditor.moveSectionDown(index);
+    cms.sectionEditor.reIndexSections();
   },
 
   menuItemDeleteClickHandler: function (e) {
@@ -124,9 +117,9 @@ module.exports = {
         index = $this.attr('id').replace('menu-item-', '');
 
     $this.remove();
-    ui.reIndexMenuItems();
-    editor.removeSection(index);
-    editor.reIndexSections();
+    self.reIndexMenuItems();
+    cms.sectionEditor.removeSection(index);
+    cms.sectionEditor.reIndexSections();
   },
 
   menuBtnSaveClickHandler: function (e) {
@@ -134,54 +127,47 @@ module.exports = {
   },
 
   menuBtnAddSectionClickHandler: function (e) {
-    sectionEditor.showUI();
-    ui.hideMenu();
+    cms.sectionEditor.showUI();
+    self.hideMenu();
   },
 
   reIndexMenuItems: function (){
-    $('.cms-menu-section-item').each(function(elem, i){
-      $(elem).attr('id', 'menu-item-'+(i+1));
-      $(elem).find('a').attr('href', '#section'+(i+1));
+    $('.cms-menu-section-item').each(function(el, i){
+      var $el = $(el);
+      $el.attr('id', 'menu-item-'+(i+1));
+      $el.find('a').attr('href', '#section'+(i+1));
     });
   },
 
   toggleMenu: function(){
-    if (ui.$menu.hasClass('hidden')){
-      ui.showMenu();
+    if (self.$menu.hasClass('hidden')){
+      self.showMenu();
     } else {
-      ui.hideMenu();
+      self.hideMenu();
     }
   },
 
   showMenu: function(){
-    var $sections = ui.getSections();
+    var $sections = self.getSections();
     
-    ui.$menu.remove();
-    ui.$menuBg.remove();
-    ui.$menuBtn.remove();
-    ui.addUI();
+    self.$menu.remove();
+    self.$menuBg.remove();
+    self.$menuBtn.remove();
+    self.addUI();
 
     $('body').css('overflow', 'hidden');
     $sections.css('pointer-events', 'none');
-    ui.$menu.removeClass('hidden');
-    ui.$menuBg.removeClass('hidden');
-    ui.$menuBtn.addClass('cms-menu-btn-on');
+    self.$menu.removeClass('hidden');
+    self.$menuBg.removeClass('hidden');
+    self.$menuBtn.addClass('cms-menu-btn-on');
   },
 
   hideMenu: function(){
-    var $sections = ui.getSections();
+    var $sections = self.getSections();
     $('body').css('overflow', 'auto');
     $sections.css('pointer-events', 'all');
-    ui.$menu.addClass('hidden');
-    ui.$menuBg.addClass('hidden');
-    ui.$menuBtn.removeClass('cms-menu-btn-on');
-  },
-
-  getConfig: function (){
-    return ui.config;
-  },
-
-  setConfig: function (config){
-    ui.config = config || ui.config;
+    self.$menu.addClass('hidden');
+    self.$menuBg.addClass('hidden');
+    self.$menuBtn.removeClass('cms-menu-btn-on');
   },
 }

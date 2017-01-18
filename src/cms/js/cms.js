@@ -1,9 +1,5 @@
-var $       = require('cash-dom');
-var t       = require('modules/templater.js');
-var ui      = require('modules/ui.js');
-var ajax    = require('modules/ajaxer.js');
-var loadCSS = require('modules/loadcss').init;
-
+var $             = require('cash-dom');
+var loadCSS       = require('modules/loadcss').init;
 
 "use strict";
 
@@ -32,17 +28,25 @@ module.exports = {
 
   init: function(config){
     this.setConfig(config);
+    this.pageConfig    = app.pageConfig;
+
+    this.ajax          = require('modules/ajaxer.js');
+    this.modal         = require('modules/modal.js');
+    this.editor        = require('modules/inline_editor');
+    this.mediaEditor   = require('modules/inline_media_editor');
+    this.sectionEditor = require('modules/section_editor');
+    this.templater     = require('modules/templater.js');
+    this.ui            = require('modules/ui.js');
+
+    this.modal.init();
+    this.editor.init();
+    this.mediaEditor.init();
+    this.sectionEditor.init();
+    this.templater.init();
+    this.ui.init();
 
     if (this.cutsTheMustard()) this.addMustard();
-
-    // load our templater
-    t.init(this.config);
-    
-    //add CMS UI
-    ui.init(this.config);
-
     this.loadStylesheets();
-
     return true // if we loaded up ok
   },
 
@@ -50,7 +54,7 @@ module.exports = {
     cms.editor.setEditableItems(this.config.editableItems);
     cms.editor.setEditableRegions(this.config.editableRegionClass);
     cms.editor.setEventHandlers();
-    cms.mediaEditor.init(this.config);
+    cms.mediaEditor.init();
     app.fixedImage.init();
     app.scrollmation.init();
     app.statText.init();
@@ -77,46 +81,36 @@ module.exports = {
   },
 
   savePage: function(){
-    ui.hideMenu();
-    var html = cms.getPageHtml();
+    this.ui.hideMenu();
+    var html = cms.getPageHTMLWithoutCMS();
     cms.saveHtmlToFile(html);
   },
 
-  getPageHtml: function () {
-    var html = '',
-        $htmlWithoutCMS = $('html').clone();
+  getPageHTMLWithoutCMS: function () {
+    var cleanHTML = '',
+        $html = $('html').clone();
 
     cms.config.editableItems.forEach(function (el) {
-      $htmlWithoutCMS.find(el+':empty').remove();
+      $html.find(el+':empty').remove();
     });
+    // remove elems added by cms
+    $html.find('.cms-menu, .cms-menu-bg, .cms-modal, .cms-media-btn, .cms-menu-btn').remove();
+    // remove all classes and attributes
+    $html.find('*').removeClass('cms-editable cms-editable-img cms-editable-region cms-inline-media');
+    $html.find('*').removeClass(cms.config.mustardClass);
+    $html.find('*').removeAttr('contenteditable');
+    $html.find('*').removeAttr('spellcheck');
+    // remove cms scripts
+    $html.find('script[src^="cms"], #cms-init, link[href^="cms"]').remove();
+    $html.find('*[class=""]').removeAttr('class');
+    // reset app templates so they work on pages with no js
+    // move to a method in the main app
+    $html.find('*').removeClass('anim-fade-1s transparent scrollmation-text-js scrollmation-image-container-top scrollmation-image-container-fixed scrollmation-image-container-bottom');
+    $html.find('.scrollmation-text').addClass('article');
+    // get cleaned html
+    cleanHTML = $html.html();
 
-    $htmlWithoutCMS.find('.cms-menu, .cms-menu-bg, .cms-media-chooser, .cms-media-btn, .cms-menu-btn').remove();
-    $htmlWithoutCMS.find('*').removeClass('cms-editable');
-    $htmlWithoutCMS.find('*').removeClass('cms-editable-img');
-    $htmlWithoutCMS.find('*').removeClass('cms-editable-region');
-    $htmlWithoutCMS.find('*').removeClass('cms-inline-media');
-    $htmlWithoutCMS.find('*').removeClass(cms.config.mustardClass);
-    $htmlWithoutCMS.find('*').removeAttr('contenteditable');
-    $htmlWithoutCMS.find('*').removeAttr('spellcheck');
-
-    $htmlWithoutCMS.find('script[src^="cms"]').remove();
-    $htmlWithoutCMS.find('#cms-init').remove();
-    $htmlWithoutCMS.find('link[href^="cms"]').remove();
-    $htmlWithoutCMS.find('*[class=""]').removeAttr('class');
-
-    // reset templates so they work on pages with no js
-    // move this to app.reset()  ... or something
-    $htmlWithoutCMS.find('*').removeClass('anim-fade-1s');
-    $htmlWithoutCMS.find('*').removeClass('transparent');
-    $htmlWithoutCMS.find('*').removeClass('scrollmation-text-js');
-    $htmlWithoutCMS.find('*').removeClass('scrollmation-image-container-top');
-    $htmlWithoutCMS.find('*').removeClass('scrollmation-image-container-fixed');
-    $htmlWithoutCMS.find('*').removeClass('scrollmation-image-container-bottom');
-    $htmlWithoutCMS.find('.scrollmation-text').addClass('article');
-
-    html = $htmlWithoutCMS.html();
-
-    return '<!DOCTYPE html>\n<html lang="en">\n' + html + '</html>';
+    return '<!DOCTYPE html>\n<html lang="en">\n' + cleanHTML + '</html>';
   },
 
   saveHtmlToFile: function(html) {
@@ -127,15 +121,15 @@ module.exports = {
       data.append('html', html);
       data.append('filename', filename);
 
-      ajax.create('POST', 'save.php');
+      this.ajax.create('POST', 'save.php');
       var successHandler = function (responseText) {
         // alert(responseText);
       }
       var errorHandler = function (responseText) {
         // alert('file save error');
       }
-      ajax.onFinish(successHandler, errorHandler);
-      ajax.send(data);
+      this.ajax.onFinish(successHandler, errorHandler);
+      this.ajax.send(data);
     }
 
   },

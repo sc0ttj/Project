@@ -4,6 +4,7 @@
 @import 'ui';
 @import 'inline-editor';
 @import 'inline-media-editor';
+@import 'modal';
 
 body {
   position: relative;
@@ -21,4 +22,22 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.cms-noscroll {
+  overflow: hidden;
+}
+
+.cms-disabled {
+  pointer-events: none;
+}
+
+.cms-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cms-hidden {
+  opacity: 0;
+  visibility: hidden;
 }
