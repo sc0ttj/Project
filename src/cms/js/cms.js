@@ -31,12 +31,14 @@ module.exports = {
     this.pageConfig    = app.pageConfig;
 
     this.ajax          = require('modules/ajaxer.js');
+    this.modal         = require('modules/modal.js');
     this.editor        = require('modules/inline_editor');
     this.mediaEditor   = require('modules/inline_media_editor');
     this.sectionEditor = require('modules/section_editor');
     this.templater     = require('modules/templater.js');
     this.ui            = require('modules/ui.js');
 
+    this.modal.init();
     this.editor.init();
     this.mediaEditor.init();
     this.sectionEditor.init();
