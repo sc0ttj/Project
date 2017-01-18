@@ -80,45 +80,35 @@ module.exports = {
 
   savePage: function(){
     this.ui.hideMenu();
-    var html = cms.getPageHtml();
+    var html = cms.getPageHTMLWithoutCMS();
     cms.saveHtmlToFile(html);
   },
 
-  getPageHtml: function () {
-    var html = '',
-        $htmlWithoutCMS = $('html').clone();
+  getPageHTMLWithoutCMS: function () {
+    var cleanHTML = '',
+        $html = $('html').clone();
 
     cms.config.editableItems.forEach(function (el) {
-      $htmlWithoutCMS.find(el+':empty').remove();
+      $html.find(el+':empty').remove();
     });
+    // remove elems added by cms
+    $html.find('.cms-menu, .cms-menu-bg, .cms-media-chooser, .cms-media-btn, .cms-menu-btn').remove();
+    // remove all classes and attributes
+    $html.find('*').removeClass('cms-editable cms-editable-img cms-editable-region cms-inline-media');
+    $html.find('*').removeClass(cms.config.mustardClass);
+    $html.find('*').removeAttr('contenteditable');
+    $html.find('*').removeAttr('spellcheck');
+    // remove cms scripts
+    $html.find('script[src^="cms"], #cms-init, link[href^="cms"]').remove();
+    $html.find('*[class=""]').removeAttr('class');
+    // reset app templates so they work on pages with no js
+    // move to a method in the main app
+    $html.find('*').removeClass('anim-fade-1s transparent scrollmation-text-js scrollmation-image-container-top scrollmation-image-container-fixed scrollmation-image-container-bottom');
+    $html.find('.scrollmation-text').addClass('article');
+    // get cleaned html
+    cleanHTML = $html.html();
 
-    $htmlWithoutCMS.find('.cms-menu, .cms-menu-bg, .cms-media-chooser, .cms-media-btn, .cms-menu-btn').remove();
-    $htmlWithoutCMS.find('*').removeClass('cms-editable');
-    $htmlWithoutCMS.find('*').removeClass('cms-editable-img');
-    $htmlWithoutCMS.find('*').removeClass('cms-editable-region');
-    $htmlWithoutCMS.find('*').removeClass('cms-inline-media');
-    $htmlWithoutCMS.find('*').removeClass(cms.config.mustardClass);
-    $htmlWithoutCMS.find('*').removeAttr('contenteditable');
-    $htmlWithoutCMS.find('*').removeAttr('spellcheck');
-
-    $htmlWithoutCMS.find('script[src^="cms"]').remove();
-    $htmlWithoutCMS.find('#cms-init').remove();
-    $htmlWithoutCMS.find('link[href^="cms"]').remove();
-    $htmlWithoutCMS.find('*[class=""]').removeAttr('class');
-
-    // reset templates so they work on pages with no js
-    // move this to app.reset()  ... or something
-    $htmlWithoutCMS.find('*').removeClass('anim-fade-1s');
-    $htmlWithoutCMS.find('*').removeClass('transparent');
-    $htmlWithoutCMS.find('*').removeClass('scrollmation-text-js');
-    $htmlWithoutCMS.find('*').removeClass('scrollmation-image-container-top');
-    $htmlWithoutCMS.find('*').removeClass('scrollmation-image-container-fixed');
-    $htmlWithoutCMS.find('*').removeClass('scrollmation-image-container-bottom');
-    $htmlWithoutCMS.find('.scrollmation-text').addClass('article');
-
-    html = $htmlWithoutCMS.html();
-
-    return '<!DOCTYPE html>\n<html lang="en">\n' + html + '</html>';
+    return '<!DOCTYPE html>\n<html lang="en">\n' + cleanHTML + '</html>';
   },
 
   saveHtmlToFile: function(html) {
