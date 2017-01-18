@@ -64,6 +64,8 @@ module.exports = {
       self.hideUI();
 
       // setup the newly added section with the cms
+      cms.editor.reIndexSections();
+      cms.ui.reIndexMenuItems();
       cms.reload();
     }
 
@@ -78,7 +80,6 @@ module.exports = {
   addTemplateToPage: function (html) {
     $(cms.config.sectionSelector).last().after(cms.config.sectionContainer);
     $(cms.config.sectionSelector).last().html(html);
-    self.reIndexSections();
   },
 
   addSectionToChooser: function (sectionHTML) {
@@ -90,27 +91,6 @@ module.exports = {
     $('body').css('overflow', 'auto');
     self.$sectionChooserContainer.html('');
     $('div.cms-media-chooser').css('display', 'none');
-  },
-
-  reIndexSections: function () {
-    var $sections  = $(cms.config.sectionSelector),
-        $menuItems = $('.cms-menu-section-item');
-
-    $sections.each(function(el, i){
-      var currentSection = '.section'+(i+1);
-      $(currentSection).removeClass('section'+(i+1));
-    });
-
-    $sections.each(function(el, i){
-      var $el = $(this);
-      $el.addClass('section'+(i+1));
-      $el.attr('id', 'section'+(i+1));
-    });
-    
-    $menuItems.each(function(elem, i){
-      $(elem).attr('id', 'menu-item-'+(i+1));
-      $(elem).find('a').attr('href', '#section'+(i+1));
-    });
   },
 
   createSectionChooser: function () {

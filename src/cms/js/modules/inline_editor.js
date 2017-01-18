@@ -200,12 +200,9 @@ module.exports = {
     var $sections = $(cms.config.sectionSelector);
 
     $sections.each(function(el, i){
-      var currentSection = '.section'+(i+1);
+      var $el = $(this),
+          currentSection = '.section'+(i+1);
       $(currentSection).removeClass('section'+(i+1));
-    });
-
-    $sections.each(function(el, i){
-      var $el = $(this);
       $el.addClass('section'+(i+1));
       $el.attr('id', 'section'+(i+1));
     });

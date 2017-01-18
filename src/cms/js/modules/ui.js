@@ -132,9 +132,10 @@ module.exports = {
   },
 
   reIndexMenuItems: function (){
-    $('.cms-menu-section-item').each(function(elem, i){
-      $(elem).attr('id', 'menu-item-'+(i+1));
-      $(elem).find('a').attr('href', '#section'+(i+1));
+    $('.cms-menu-section-item').each(function(el, i){
+      var $el = $(el);
+      $el.attr('id', 'menu-item-'+(i+1));
+      $el.find('a').attr('href', '#section'+(i+1));
     });
   },
 
