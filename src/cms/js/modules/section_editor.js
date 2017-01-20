@@ -27,7 +27,7 @@ module.exports = {
   getSectionPreviewImgs: function () {
     var previewImgs = '';
     cms.config.templates.forEach(function (section, i){
-      var previewImg = '<img id="'+section+'" src="/cms/images/previews/'+section+'.png" alt="'+section+'" />';
+      var previewImg = '<img id="'+section+'" src="cms/images/previews/'+section+'.png" alt="'+section+'" />';
       previewImgs += previewImg;
     });
     return previewImgs;

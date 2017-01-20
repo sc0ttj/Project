@@ -31,7 +31,7 @@ module.exports = {
         successCallback(xhr[i].responseText);
         xhr[i] = '';
       } else {
-        errorCallback();
+        errorCallback(xhr[i].responseText);
       }
     }
   },

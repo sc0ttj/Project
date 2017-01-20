@@ -95,7 +95,7 @@ module.exports = {
       if (!file) return false;
 
       var filename = this.files[0].name,
-          imgUrl = '/images/'+filename,
+          imgUrl = 'images/'+filename,
           $previewImg = $(this).parent().prev('img'),
           $previewImgId = $previewImg.attr('id'),
           imageSrcIndex = $('#'+$previewImgId).data('index');
@@ -137,7 +137,7 @@ module.exports = {
     formData.append('image', file, file.name);
     //prevent redirect and do ajax upload
     e.preventDefault();
-    cms.ajax.create('POST', 'upload.php');
+    cms.ajax.create('POST', 'cms/api/upload.php');
     self.setImageUploadEventHandlers();
     cms.ajax.send(formData);
   },
@@ -150,7 +150,7 @@ module.exports = {
       var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
       btn.html('Uploading '+ratio);
     }
-    var onSuccessHandler = function (){
+    var onSuccessHandler = function (responseText){
       self.updateImgOnPage();
       btn.html('Upload image');
       btn.removeClass('cms-modal-upload-label-uploading');
@@ -183,7 +183,7 @@ module.exports = {
 
   createUploadMediaBtn: function (i) {
     var uploadMediaBtn = '\
-      <form id="cms-upload-form-'+i+'" action="upload.php" method="post" class="cms-upload-form cms-upload-form-'+i+'" enctype="multipart/form-data">\n\
+      <form id="cms-upload-form-'+i+'" action="/api/upload.php" method="post" class="cms-upload-form cms-upload-form-'+i+'" enctype="multipart/form-data">\n\
         <div class="cms-loader cms-loader-hidden"></div>\n\
         <label for="file-upload-'+i+'" id="file-upload-label-'+i+'" class="cms-modal-upload-label">Upload image</label>\n\
         <input name="image" type="file" id="file-upload-'+i+'" class="cms-modal-upload-btn"  />\n\

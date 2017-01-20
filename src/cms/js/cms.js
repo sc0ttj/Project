@@ -121,12 +121,12 @@ module.exports = {
       data.append('html', html);
       data.append('filename', filename);
 
-      this.ajax.create('POST', 'save.php');
+      this.ajax.create('POST', 'cms/api/save.php');
       var successHandler = function (responseText) {
-        // alert(responseText);
+        console.log(responseText);
       }
       var errorHandler = function (responseText) {
-        // alert('file save error');
+        console.log(responseText);
       }
       this.ajax.onFinish(successHandler, errorHandler);
       this.ajax.send(data);

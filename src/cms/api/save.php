@@ -1,7 +1,11 @@
 <?php
 
+ini_set('display_errors',1);
+error_reporting(E_ALL);
+
 $html = $_POST['html'];
-$filename = $_POST['filename'];
+
+$filename = $_SERVER['DOCUMENT_ROOT'] . '/' . basename($_SERVER['HTTP_REFERER']) . '/preview.html';
   
 $handle = fopen($filename,"w");
 

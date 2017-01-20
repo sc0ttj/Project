@@ -33,7 +33,7 @@ var pageConfig = require('./src/app/js/page_config.js');
 exports.config = {
   paths: {
     /* dir to build to */
-    'public': 'www',
+    'public': 'www/demo',
     /* files to combine and minify */
     'watched': ['src'],
     //ignored: () => false, // override defaults for no ignored files
@@ -160,9 +160,17 @@ exports.config = {
     assetsmanager: {
         copyTo: {
           '/templates/' : [ 'src/app/templates/*.tmpl' ],
+          '/cms/api/' : [ 'src/cms/api/*.php' ],
           '/cms/images/previews/' : [ 'src/app/templates/previews/*.png' ],
         }
     },
+    // after compile, run any shell commands (or `node my_node_cmd`)
+    afterBrunch: [
+      'chmod 777 www/demo',
+      'chmod 777 www/demo/images',
+      // move the example index page out of assets, to the web root
+      'mv www/demo/index.php www/index.php'
+    ],
   },
 
   /* run extra tasks on pre-compile and post-compile .. see http://brunch.io/docs/config#-hooks-*/

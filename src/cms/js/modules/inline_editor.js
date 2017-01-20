@@ -111,7 +111,6 @@ module.exports = {
     var el = this;
     self.nextEditableElem = self.getNextEditableItem(el);
     self.nextEditableItemExists = (self.nextEditableElem === "{}" || typeof self.nextEditableElem != 'undefined');
-    self.addMediaButtons();
     self.removeLeftOverMediaBtns(el);
     cms.mediaEditor.addResponsiveImageClickHandlers();
   },
