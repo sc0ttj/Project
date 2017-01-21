@@ -166,6 +166,8 @@ exports.config = {
     },
     // after compile, run any shell commands (or `node my_node_cmd`)
     afterBrunch: [
+      'mkdir -p www/downloads',
+      'chmod 777 www/downloads',
       'chmod 777 www/demo',
       'chmod 777 www/demo/images',
       // move the example index page out of assets, to the web root

@@ -70,6 +70,9 @@ sudo apt-get update -qq
 echo "Upgrading packages..."
 sudo apt-get upgrade -qq
 
+echo "Installing Zip archiver..."
+sudo apt-get install -y zip -qq
+
 echo "Installing PHP..."
 sudo apt-get install -y php5 php5-curl php5-gd -qq
 

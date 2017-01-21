@@ -80,10 +80,37 @@ module.exports = {
     });
   },
 
+  previewPage: function () {
+    this.ui.hideMenu();
+    var html = cms.getPageHTMLWithoutCMS();
+
+
+    cms.saveHtmlToFile(html, function thenPreviewInModal(){
+      content = '<iframe id="pagePreview"\
+        title="Page Preview"\
+        width="100%"\
+        height="100%"\
+        frameborder="0"\
+        marginheight="0"\
+        marginwidth="0"\
+        src="preview.html?c'+Math.random()+'">\
+      </iframe>';
+      // load modal
+      cms.modal.create({
+        title: 'Page Preview',
+        contents: content
+      });
+      cms.modal.show();      
+    });
+
+        
+
+  },
+
   savePage: function(){
     this.ui.hideMenu();
     var html = cms.getPageHTMLWithoutCMS();
-    cms.saveHtmlToFile(html);
+    cms.saveHtmlToFile(html, cms.saveToZip);
   },
 
   getPageHTMLWithoutCMS: function () {
@@ -113,25 +140,36 @@ module.exports = {
     return '<!DOCTYPE html>\n<html lang="en">\n' + cleanHTML + '</html>';
   },
 
-  saveHtmlToFile: function(html) {
+  saveHtmlToFile: function(html, callback) {
     var data = new FormData();
-    var filename = prompt('Please enter the filename', 'my-article-name.html');
+    data.append('html', html);
 
-    if (filename){
-      data.append('html', html);
-      data.append('filename', filename);
-
-      this.ajax.create('POST', 'cms/api/save.php');
-      var successHandler = function (responseText) {
-        console.log(responseText);
-      }
-      var errorHandler = function (responseText) {
-        console.log(responseText);
-      }
-      this.ajax.onFinish(successHandler, errorHandler);
-      this.ajax.send(data);
+    this.ajax.create('POST', 'cms/api/preview.php');
+    var successHandler = function (responseText) {
+      console.log(responseText);
+      callback();
     }
-
+    var errorHandler = function (responseText) {
+      console.log(responseText);
+    }
+    this.ajax.onFinish(successHandler, errorHandler);
+    this.ajax.send(data);
   },
+
+  saveToZip: function () {
+    var data = new FormData();
+    data.append('savetozip', 'true');
+
+    cms.ajax.create('POST', 'cms/api/save.php');
+    var successHandler = function (responseText) {
+      console.log(responseText);
+      window.location = responseText;
+    }
+    var errorHandler = function (responseText) {
+      console.log(responseText);
+    }
+    cms.ajax.onFinish(successHandler, errorHandler);
+    cms.ajax.send(data);
+  }
 
 };
