@@ -32,16 +32,16 @@ var pageConfig = require('./src/app/js/page_config.js');
 // brunch config
 exports.config = {
   paths: {
-    /* dir to build to */
+    /* the dir to build our src code to */
     'public': 'www/demo',
-    /* files to combine and minify */
+    /* the files to combine and minify */
     'watched': ['src'],
     //ignored: () => false, // override defaults for no ignored files
   },
 
   /* define dir locations of assets and vendor files */
   conventions: {
-    /* assets are always copied (unmodified) to output dir (www) */
+    /* assets are always copied (unmodified) to output dir (www/demo) */
     assets: [
       /^src\/(app|cms)\/assets[\\/]/
     ],
@@ -75,25 +75,25 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: {
-        /* combine js files to '/www/js/app.js' */
+        /* combine js files to 'js/app.js' */
         'js/app.js': /^src\/app\/js\/(?!enhancements)/,
-        /* combine js files to '/www/js/enhancements.js' */
+        /* combine js files to 'js/enhancements.js' */
         'js/enhancements.js': /^src\/app\/js\/enhancements/,
-        /* combine js files to '/www/js/vendor.js' */
+        /* combine js files to 'js/vendor.js' */
         'js/vendor.js': [ 
           /^src\/app\/vendor/,
           /^(bower_components)/,
         ],
-        /* combine js files to '/www/cms/js/cms.js' */
+        /* combine js files to 'cms/js/cms.js' */
         'cms/js/cms.js': /^src\/cms\/js/,
-        /* combine js files to '/www/cms/js/vendor.js' */
+        /* combine js files to 'cms/js/vendor.js' */
         'cms/js/vendor.js': [ 
           /^src\/cms\/vendor/,
           /^(node_modules)/,
         ],
-        /* combine js files to '/www/test/js/test.js' */
+        /* combine js files to 'test/js/test.js' */
         'test/js/test.js': /^test(\/|\\)(?!vendor)/,
-        /* combine js files to '/www/test/js/test-vendor.js' */
+        /* combine js files to 'test/js/test-vendor.js' */
         'test/js/test-vendor.js': /^test(\/|\\)(?=vendor)/
       },
       order: {
@@ -106,20 +106,20 @@ exports.config = {
 
     stylesheets: {
       joinTo: {
-        /* combine scss to /www/css/base.css */
+        /* combine scss to css/base.css */
         'css/base.css': /^src\/app\/css\/(?!full)/,
-        /* combine scss to /www/css/full.css */
+        /* combine scss to css/full.css */
         'css/full.css': /^src\/app\/css\/full/,
-        /* combine scss to /www/css/vendor.css */
+        /* combine scss to css/vendor.css */
         'css/vendor.css': [ 
           /^src\/app\/vendor/,
           /^bower_components/,
         ],
-        /* combine scss to /www/cms/css/cms.css */
+        /* combine scss to cms/css/cms.css */
         'cms/css/cms.css': /^src\/cms\/css/,
-        /* combine scss to /www/cms/css/vendor.css */
+        /* combine scss to cms/css/vendor.css */
         'cms/css/vendor.css': /^src\/cms\/vendor/,
-        /* combine scss to /www/cms/css/test.css */
+        /* combine scss to cms/css/test.css */
         'test/css/test.css': /^test/
       },
       order: {
@@ -156,7 +156,7 @@ exports.config = {
       },
       data: pageConfig,
     },
-    /* manually copy files to /www/[here] after build */
+    /* manually copy files after build */
     assetsmanager: {
         copyTo: {
           '/templates/' : [ 'src/app/templates/*.tmpl' ],
