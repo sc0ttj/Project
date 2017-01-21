@@ -84,15 +84,3 @@ p[contenteditable=true]:hover {
   content: 'Placeholder text...';
 }
 
-//https://codepen.io/flesler/pen/AEIFc - contenteditable placeholder support
-// [contenteditable=true]:empty:before {
-//   content: attr(data-placeholder);
-//   color:#aaa;
-//   // display: block; /* For Firefox */
-// }
-
-// .cms-editable-region:empty:before {
-//   content: attr(data-placeholder);
-//   color:#aaa;
-//   // display: block; /* For Firefox */
-// }

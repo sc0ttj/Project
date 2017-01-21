@@ -31,6 +31,9 @@ module.exports = {
     self.$menuItemDown.on('click', self.menuItemDownClickHandler);
     self.$menuItemDelete.on('click', self.menuItemDeleteClickHandler);
 
+    self.$menuBtnPreview = $('.cms-menu-item-preview');
+    self.$menuBtnPreview.on('click', self.menuBtnPreviewClickHandler);
+
     self.$menuBtnSave = $('.cms-menu-item-save');
     self.$menuBtnSave.on('click', self.menuBtnSaveClickHandler);
 
@@ -47,6 +50,11 @@ module.exports = {
 
     menu += '<li class="cms-menu-top"></li>';
     menu += '\
+    <li \
+      class="cms-menu-item cms-menu-item-preview">\
+      <span class="cms-menu-item-text">Preview</span>\
+      <span class="cms-menu-item-icon cms-menu-item-icon-preview cms-anim-fade-250ms cms-unselectable">👁</span>\
+    </li>\
     <li \
       class="cms-menu-item cms-menu-item-save">\
       <span class="cms-menu-item-text">Save</span>\
@@ -124,6 +132,10 @@ module.exports = {
 
   menuBtnSaveClickHandler: function (e) {
     cms.savePage();
+  },
+
+  menuBtnPreviewClickHandler: function (e) {
+    cms.previewPage();
   },
 
   menuBtnAddSectionClickHandler: function (e) {
