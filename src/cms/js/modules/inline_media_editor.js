@@ -151,13 +151,15 @@ module.exports = {
       btn.html('Uploading '+ratio);
     }
     var onSuccessHandler = function (responseText){
+      console.log(responseText);
       self.updateImgOnPage();
       btn.html('Upload image');
       btn.removeClass('cms-modal-upload-label-uploading');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
       btns.css('pointer-events', 'all');
     }
-    var onErrorHandler = function (){
+    var onErrorHandler = function (responseText){
+      console.log(responseText);
       btn.html('Upload error');
       btn.addClass('cms-modal-upload-label-error');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
