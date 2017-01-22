@@ -14,9 +14,14 @@ module.exports = {
     var menu     = this.getMenuHtml(),
         menuBtn  = '<button class="cms-menu-btn cms-unselectable clear">☰</button>';
 
-    $('body').append(menu);
+    $('body').append('<div class="cms-menu-container">' + menu + '</div>');
     $('body').append(menuBtn);
 
+    self.getUIComponents();
+    self.setUIEventHandlers();
+  },
+
+  getUIComponents: function () {
     self.$menu         = $('.cms-menu');
     self.$menuBg       = $('.cms-menu-bg');
     self.$menuBtn      = $('.cms-menu-btn');
@@ -24,48 +29,56 @@ module.exports = {
     self.$menuItemUp   = $('.cms-menu-item-icon-up');
     self.$menuItemDown = $('.cms-menu-item-icon-down');
     self.$menuItemDelete = $('.cms-menu-item-icon-delete');
+    self.$menuBtnSave = $('.cms-menu-item-save');
+    self.$menuBtnPreview = $('.cms-menu-item-preview');
+    self.$menuBtnAddSection = $('.cms-menu-item-add-section');
+  },
 
+  setUIEventHandlers: function () {
     self.$menuBg.on('click', self.menuBgClickHandler);
     self.$menuBtn.on('click', self.menuBtnClickHandler);
     self.$menuItemUp.on('click', self.menuItemUpClickHandler);
     self.$menuItemDown.on('click', self.menuItemDownClickHandler);
     self.$menuItemDelete.on('click', self.menuItemDeleteClickHandler);
-
-    self.$menuBtnPreview = $('.cms-menu-item-preview');
     self.$menuBtnPreview.on('click', self.menuBtnPreviewClickHandler);
-
-    self.$menuBtnSave = $('.cms-menu-item-save');
     self.$menuBtnSave.on('click', self.menuBtnSaveClickHandler);
-
-    self.$menuBtnAddSection = $('.cms-menu-item-add-section');
     self.$menuBtnAddSection.on('click', self.menuBtnAddSectionClickHandler);
+  },
 
-  }, 
+  setUIEventHandlersOff: function () {
+    self.$menuBg.off('click', self.menuBgClickHandler);
+    self.$menuBtn.off('click', self.menuBtnClickHandler);
+    self.$menuItemUp.off('click', self.menuItemUpClickHandler);
+    self.$menuItemDown.off('click', self.menuItemDownClickHandler);
+    self.$menuItemDelete.off('click', self.menuItemDeleteClickHandler);
+    self.$menuBtnPreview.off('click', self.menuBtnPreviewClickHandler);
+    self.$menuBtnSave.off('click', self.menuBtnSaveClickHandler);
+    self.$menuBtnAddSection.off('click', self.menuBtnAddSectionClickHandler);
+  },
 
   getMenuHtml: function () {
     var $sections = self.getSections(),
         menu = '\
         <div class="cms-menu-bg cms-anim-fade-250ms hidden"></div>\
-        <ul class="cms-menu cms-anim-fade-250ms hidden">';
+        <ul class="cms-menu cms-anim-fade-250ms hidden">\
+        <li class="cms-menu-top"></li>\
+        <li \
+          class="cms-menu-item cms-menu-item-preview">\
+          <span class="cms-menu-item-text">Preview</span>\
+          <span class="cms-menu-item-icon cms-menu-item-icon-preview cms-anim-fade-250ms cms-unselectable">👁</span>\
+        </li>\
+        <li \
+          class="cms-menu-item cms-menu-item-save">\
+          <span class="cms-menu-item-text">Save</span>\
+          <span class="cms-menu-item-icon cms-menu-item-icon-save cms-anim-fade-250ms cms-unselectable">💾</span>\
+        </li>\
+        <li id="menu-header-sections" class="cms-menu-header cms-menu-header-sections">\
+          <span class="cms-menu-item-text">Sections:</span>\
+        </li>\
+        <li id="menu-item-add-section" class="cms-menu-header cms-menu-item-add-section cms-unselectable">\
+          Add Section +\
+        </li>';
 
-    menu += '<li class="cms-menu-top"></li>';
-    menu += '\
-    <li \
-      class="cms-menu-item cms-menu-item-preview">\
-      <span class="cms-menu-item-text">Preview</span>\
-      <span class="cms-menu-item-icon cms-menu-item-icon-preview cms-anim-fade-250ms cms-unselectable">👁</span>\
-    </li>\
-    <li \
-      class="cms-menu-item cms-menu-item-save">\
-      <span class="cms-menu-item-text">Save</span>\
-      <span class="cms-menu-item-icon cms-menu-item-icon-save cms-anim-fade-250ms cms-unselectable">💾</span>\
-    </li>\
-    <li id="menu-header-sections" class="cms-menu-header cms-menu-header-sections">\
-      <span class="cms-menu-item-text">Sections:</span>\
-    </li>\
-    <li id="menu-item-add-section" class="cms-menu-header cms-menu-item-add-section cms-unselectable">\
-      Add Section +\
-    </li>';
     $sections.each(function addMenuItem(elem, i){
       var sectionName = $sections.children()[i].getAttribute('data-name') || 'section'+(i+1);
       menu += '\
@@ -140,7 +153,6 @@ module.exports = {
 
   menuBtnAddSectionClickHandler: function (e) {
     cms.sectionEditor.showUI();
-    self.hideMenu();
   },
 
   reIndexMenuItems: function (){
@@ -161,17 +173,22 @@ module.exports = {
 
   showMenu: function(){
     var $sections = self.getSections();
-    
-    self.$menu.remove();
-    self.$menuBg.remove();
-    self.$menuBtn.remove();
-    self.addUI();
-
+   
+    self.updateUI();
     $('body').css('overflow', 'hidden');
     $sections.css('pointer-events', 'none');
     self.$menu.removeClass('hidden');
     self.$menuBg.removeClass('hidden');
     self.$menuBtn.addClass('cms-menu-btn-on');
+  },
+
+  updateUI: function () {
+    var menu = this.getMenuHtml();
+    self.setUIEventHandlersOff();
+    $('.cms-menu-container').html(menu);
+    self.reIndexMenuItems();
+    self.getUIComponents();
+    self.setUIEventHandlers();
   },
 
   hideMenu: function(){

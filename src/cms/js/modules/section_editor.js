@@ -47,7 +47,7 @@ module.exports = {
       self.reIndexSections();
       cms.modal.hide();
       // setup the newly added section with the cms
-      cms.ui.reIndexMenuItems();
+      cms.ui.showMenu();
       cms.reload();
     }
 
