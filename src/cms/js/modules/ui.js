@@ -57,8 +57,7 @@ module.exports = {
   },
 
   getMenuHtml: function () {
-    var $sections = self.getSections(),
-        menu = '\
+    var menu = '\
         <div class="cms-menu-bg cms-anim-fade-250ms hidden"></div>\
         <ul class="cms-menu cms-anim-fade-250ms hidden">\
         <li class="cms-menu-top"></li>\
@@ -79,9 +78,19 @@ module.exports = {
           Add Section +\
         </li>';
 
-    $sections.each(function addMenuItem(elem, i){
+    menu += self.getSectionsAsMenuItems();
+    menu += '</ul>';
+    
+    return menu;
+  },
+
+  getSectionsAsMenuItems: function () {
+    var menuItems = '',
+    $sections = self.getSections();
+
+    $sections.each(function addSectionToMenu(elem, i){
       var sectionName = $sections.children()[i].getAttribute('data-name') || 'section'+(i+1);
-      menu += '\
+      menuItems += '\
       <li \
         id="menu-item-'+(i+1)+'" \
         class="cms-menu-item cms-menu-section-item">\
@@ -91,9 +100,8 @@ module.exports = {
         <span class="cms-menu-item-icon  cms-menu-item-icon-delete  cms-anim-fade-250ms cms-unselectable">ⅹ</span>\
       </li>';
     });
-    menu += '</ul>';
-    
-    return menu;
+
+    return menuItems;
   },
 
   getSections: function () {
