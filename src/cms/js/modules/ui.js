@@ -58,8 +58,8 @@ module.exports = {
 
   getMenuHtml: function () {
     var menu = '\
-        <div class="cms-menu-bg cms-anim-fade-250ms hidden"></div>\
-        <ul class="cms-menu cms-anim-fade-250ms hidden">\
+        <div class="cms-menu-bg cms-anim-fade-250ms cms-ui-hidden"></div>\
+        <ul class="cms-menu cms-anim-fade-250ms cms-ui-hidden">\
         <li class="cms-menu-top"></li>\
         <li \
           class="cms-menu-item cms-menu-item-preview">\
@@ -172,7 +172,7 @@ module.exports = {
   },
 
   toggleMenu: function(){
-    if (self.$menu.hasClass('hidden')){
+    if (self.$menu.hasClass('cms-ui-hidden')){
       self.showMenu();
     } else {
       self.hideMenu();
@@ -183,11 +183,11 @@ module.exports = {
     var $sections = self.getSections();
    
     self.updateUI();
-    $('body').css('overflow', 'hidden');
-    $sections.css('pointer-events', 'none');
-    self.$menu.removeClass('hidden');
-    self.$menuBg.removeClass('hidden');
+    self.$menu.removeClass('cms-ui-hidden');
+    self.$menuBg.removeClass('cms-ui-hidden');
     self.$menuBtn.addClass('cms-menu-btn-on');
+    $('body').css('overflow', 'cms-ui-hidden');
+    $sections.css('pointer-events', 'none');
   },
 
   updateUI: function () {
@@ -203,8 +203,8 @@ module.exports = {
     var $sections = self.getSections();
     $('body').css('overflow', 'auto');
     $sections.css('pointer-events', 'all');
-    self.$menu.addClass('hidden');
-    self.$menuBg.addClass('hidden');
+    self.$menu.addClass('cms-ui-hidden');
+    self.$menuBg.addClass('cms-ui-hidden');
     self.$menuBtn.removeClass('cms-menu-btn-on');
   },
 }
