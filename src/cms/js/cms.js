@@ -1,6 +1,7 @@
 var $             = require('cash-dom');
 var loadCSS       = require('modules/loadcss').init;
 var store         = require('store');
+var zenscroll     = require('zenscroll');
 
 "use strict";
 
@@ -31,6 +32,8 @@ module.exports = {
     this.setConfig(config);
     this.pageConfig    = app.pageConfig;
 
+    this.setupSmoothScrolling();
+
     this.restoreProgress();
     // this.autoSave();
 
@@ -52,6 +55,12 @@ module.exports = {
     if (this.cutsTheMustard()) this.addMustard();
     this.loadStylesheets();
     return true // if we loaded up ok
+  },
+
+  setupSmoothScrolling: function () {
+    var defaultDuration = 400; // ms
+    var edgeOffset = 0; // px
+    zenscroll.setup(defaultDuration, edgeOffset);
   },
 
   reload: function (){
