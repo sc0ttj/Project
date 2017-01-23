@@ -37,18 +37,18 @@ module.exports = {
     this.restoreProgress();
     // this.autoSave();
 
-    this.ajax          = require('modules/ajaxer.js');
-    this.modal         = require('modules/modal.js');
-    this.editor        = require('modules/inline_editor');
-    this.mediaEditor   = require('modules/inline_media_editor');
-    this.sectionEditor = require('modules/section_editor');
-    this.templater     = require('modules/templater.js');
-    this.ui            = require('modules/ui.js');
+    this.ajax           = require('modules/ajaxer');
+    this.modal          = require('modules/modal');
+    this.editor         = require('modules/page_editor');
+    this.imageManager   = require('modules/image_manager');
+    this.sectionManager = require('modules/section_manager');
+    this.templater      = require('modules/templater');
+    this.ui             = require('modules/ui');
 
     this.modal.init();
     this.editor.init();
-    this.mediaEditor.init();
-    this.sectionEditor.init();
+    this.imageManager.init();
+    this.sectionManager.init();
     this.templater.init();
     this.ui.init();
 
@@ -67,7 +67,7 @@ module.exports = {
     cms.editor.setEditableItems(this.config.editableItems);
     cms.editor.setEditableRegions(this.config.editableRegionClass);
     cms.editor.setEventHandlers();
-    cms.mediaEditor.init();
+    cms.imageManager.init();
     app.fixedImage.init();
     app.scrollmation.init();
     app.statText.init();

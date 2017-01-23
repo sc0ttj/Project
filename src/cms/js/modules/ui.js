@@ -125,8 +125,8 @@ module.exports = {
     if ($this.attr('id') !== 'menu-item-1'){
       $this.after($prev);
       self.reIndexMenuItems();  
-      cms.sectionEditor.moveSectionUp(index);
-      cms.sectionEditor.reIndexSections();
+      cms.sectionManager.moveSectionUp(index);
+      cms.sectionManager.reIndexSections();
     }
   },
 
@@ -137,8 +137,8 @@ module.exports = {
 
     $next.after($this);
     self.reIndexMenuItems();
-    cms.sectionEditor.moveSectionDown(index);
-    cms.sectionEditor.reIndexSections();
+    cms.sectionManager.moveSectionDown(index);
+    cms.sectionManager.reIndexSections();
   },
 
   menuItemDeleteClickHandler: function (e) {
@@ -147,8 +147,8 @@ module.exports = {
 
     $this.remove();
     self.reIndexMenuItems();
-    cms.sectionEditor.removeSection(index);
-    cms.sectionEditor.reIndexSections();
+    cms.sectionManager.removeSection(index);
+    cms.sectionManager.reIndexSections();
   },
 
   menuBtnSaveClickHandler: function (e) {
@@ -160,7 +160,7 @@ module.exports = {
   },
 
   menuBtnAddSectionClickHandler: function (e) {
-    cms.sectionEditor.showUI();
+    cms.sectionManager.showUI();
   },
 
   reIndexMenuItems: function (){

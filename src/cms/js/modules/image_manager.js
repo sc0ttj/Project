@@ -14,13 +14,13 @@ module.exports = {
     if ($imgs.length > 0) {
       $imgs.addClass('cms-editable-img');
       $imgs.off('click', self.onImageClickHandler);
-      $imgs.on('click', self.onImageClickHandler);
+      $imgs.on('click',  self.onImageClickHandler);
     }
   },
 
   onImageClickHandler: function (e) {
     var img = this,
-        imgSrcElems = self.getImgSourceElems(img),
+        imgSrcElems   = self.getImgSourceElems(img),
         previewImages = [],
         previewImages = self.createImgsFromImgSrcElems(imgSrcElems);
     
@@ -63,14 +63,14 @@ module.exports = {
     var modalContent = '';
     // for each preview image src file
     previewImages.forEach(function (imgHtml, i){
-      var imgHeaderTxt  = $(imgHtml).data('name'),
-          uploadMediaBtn = self.createUploadMediaBtn(i),
+      var imgHeaderTxt    = $(imgHtml).data('name'),
+          uploadBtn       = self.createUploadBtn(i),
           imageHeaderHtml = '<p class="cms-modal-image-title">' + imgHeaderTxt + '</p>';
       
       //build image list
       if (imgHeaderTxt) modalContent += imageHeaderHtml;
       modalContent += imgHtml;
-      modalContent += uploadMediaBtn;
+      modalContent += uploadBtn;
     });
 
     // load modal
@@ -95,9 +95,9 @@ module.exports = {
 
       if (!file) return false;
 
-      var filename = this.files[0].name,
-          imgUrl = 'images/'+filename,
-          $previewImg = $(this).parent().prev('img'),
+      var filename      = this.files[0].name,
+          imgUrl        = 'images/'+filename,
+          $previewImg   = $(this).parent().prev('img'),
           $previewImgId = $previewImg.attr('id'),
           imageSrcIndex = $('#'+$previewImgId).data('index');
 
@@ -184,15 +184,15 @@ module.exports = {
     $(srcImgToUpdate).attr(srcAttr, self.currentImgUrl);
   },
 
-  createUploadMediaBtn: function (i) {
-    var uploadMediaBtn = '\
+  createUploadBtn: function (i) {
+    var uploadBtn = '\
       <form id="cms-upload-form-'+i+'" action="/api/upload.php" method="post" class="cms-upload-form cms-upload-form-'+i+'" enctype="multipart/form-data">\n\
         <div class="cms-loader cms-loader-hidden"></div>\n\
         <label for="file-upload-'+i+'" id="file-upload-label-'+i+'" class="cms-modal-upload-label">Upload image</label>\n\
         <input name="image" type="file" id="file-upload-'+i+'" class="cms-modal-upload-btn"  />\n\
       </form>';
     
-    return uploadMediaBtn;
+    return uploadBtn;
   },
 
 }

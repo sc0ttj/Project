@@ -113,7 +113,7 @@ module.exports = {
     self.nextEditableElem = self.getNextEditableItem(el);
     self.nextEditableItemExists = (self.nextEditableElem === "{}" || typeof self.nextEditableElem != 'undefined');
     self.removeLeftOverMediaBtns(el);
-    cms.mediaEditor.addResponsiveImageClickHandlers();
+    cms.imageManager.addResponsiveImageClickHandlers();
   },
 
   getNextEditableItem: function (el) {
