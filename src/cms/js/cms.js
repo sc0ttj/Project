@@ -1,5 +1,6 @@
 var $             = require('cash-dom');
 var loadCSS       = require('modules/loadcss').init;
+var store         = require('store');
 
 "use strict";
 
@@ -29,6 +30,9 @@ module.exports = {
   init: function(config){
     this.setConfig(config);
     this.pageConfig    = app.pageConfig;
+
+    this.restoreProgress();
+    // this.autoSave();
 
     this.ajax          = require('modules/ajaxer.js');
     this.modal         = require('modules/modal.js');
@@ -84,7 +88,6 @@ module.exports = {
     this.ui.hideMenu();
     var html = cms.getPageHTMLWithoutCMS();
 
-
     cms.saveHtmlToFile(html, function thenPreviewInModal(){
       content = '<iframe id="pagePreview"\
         title="Page Preview"\
@@ -103,8 +106,6 @@ module.exports = {
       cms.modal.show();      
     });
 
-        
-
   },
 
   savePage: function(){
@@ -121,7 +122,7 @@ module.exports = {
       $html.find(el+':empty').remove();
     });
     // remove elems added by cms
-    $html.find('.cms-menu, .cms-menu-bg, .cms-modal, .cms-media-btn, .cms-menu-btn').remove();
+    $html.find('.cms-menu-container, .cms-menu, .cms-menu-bg, .cms-modal, .cms-media-btn, .cms-menu-btn').remove();
     // remove all classes and attributes
     $html.find('*').removeClass('cms-editable cms-editable-img cms-editable-region cms-inline-media');
     $html.find('*').removeClass(cms.config.mustardClass);
@@ -170,6 +171,27 @@ module.exports = {
     }
     cms.ajax.onFinish(successHandler, errorHandler);
     cms.ajax.send(data);
-  }
+  },
+
+  autoSave: function () {
+    setInterval(this.saveProgress, 30000);
+  },
+
+  saveProgress: function(){
+    var $html = $('body').clone(),
+        html  = '';
+
+    $html.find('.cms-menu-container, .cms-menu, .cms-modal, .cms-media-btn, .cms-menu-btn').remove();
+    $html.find('#cms-init, link[href^="cms"]').remove();
+    html = $html.html();
+    // save cleaned up html to localstorage
+    store.set('page', html);
+    console.log('Saved progress..');
+  },
+
+  restoreProgress: function(){
+    var html = store.get('page');
+    if (html) $('body').html(html);
+  },
 
 };

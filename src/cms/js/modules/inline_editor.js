@@ -105,6 +105,7 @@ module.exports = {
     if (elemIsEmpty && elemIsContainer) $el.remove();
     self.addMediaButtons();
     self.removeLeftOverMediaBtns(el);
+    cms.saveProgress();
   },
 
   onEditableFocusHandler: function(e){

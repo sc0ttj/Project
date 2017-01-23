@@ -46,6 +46,7 @@ module.exports = {
     var modal = $('.cms-modal'),
         backBtn = $('.cms-modal-back-btn');
 
+    cms.saveProgress();
     $('body').addClass('cms-noscroll');
     modal.removeClass('cms-transparent cms-disabled cms-hidden');
     backBtn.on('click', self.backBtnClickHandler);
@@ -63,6 +64,7 @@ module.exports = {
     modal.addClass('cms-transparent cms-disabled cms-hidden');
     backBtn.off('click', self.hide);
     self.remove();
+    cms.saveProgress();
   },
 
   remove: function () {

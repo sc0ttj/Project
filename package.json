@@ -35,6 +35,7 @@
     "retina-brunch": "^1.7.2",
     "sass-brunch": "^1.9.2",
     "static-handlebars-brunch": "github:sc0ttj/static-handlebars-brunch",
+    "store": "^1.3.20",
     "uglify-js-brunch": ">= 1.0 < 1.9"
   }
 }

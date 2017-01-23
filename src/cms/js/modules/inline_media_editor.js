@@ -10,9 +10,10 @@ module.exports = {
   },
 
   addResponsiveImageClickHandlers: function () {
-    var $imgs = $(cms.config.responsiveImageSelector).not('.cms-editable-img');
+    var $imgs = $(cms.config.responsiveImageSelector);
     if ($imgs.length > 0) {
       $imgs.addClass('cms-editable-img');
+      $imgs.off('click', self.onImageClickHandler);
       $imgs.on('click', self.onImageClickHandler);
     }
   },

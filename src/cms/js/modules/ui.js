@@ -181,7 +181,7 @@ module.exports = {
 
   showMenu: function(){
     var $sections = self.getSections();
-   
+    cms.saveProgress();
     self.updateUI();
     self.$menu.removeClass('cms-ui-hidden');
     self.$menuBg.removeClass('cms-ui-hidden');
@@ -206,5 +206,6 @@ module.exports = {
     self.$menu.addClass('cms-ui-hidden');
     self.$menuBg.addClass('cms-ui-hidden');
     self.$menuBtn.removeClass('cms-menu-btn-on');
+    cms.saveProgress();
   },
 }
