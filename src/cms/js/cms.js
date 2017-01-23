@@ -191,7 +191,10 @@ module.exports = {
 
   restoreProgress: function(){
     var html = store.get('page');
-    if (html) $('body').html(html);
+    if (html) {
+      $('body').html(html);
+      app.reload();
+    }
   },
 
 };

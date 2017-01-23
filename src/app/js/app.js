@@ -23,6 +23,12 @@ module.exports = {
     }
   },
 
+  reload: function () {
+    this.fixedImage.init();
+    this.scrollmation.init();
+    this.statText.init();
+  },
+
   cutsTheMustard: function () {
     var cutsTheMustard = (
       'querySelector' in document
