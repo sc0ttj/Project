@@ -186,7 +186,7 @@ module.exports = {
     self.$menu.removeClass('cms-ui-hidden');
     self.$menuBg.removeClass('cms-ui-hidden');
     self.$menuBtn.addClass('cms-menu-btn-on');
-    $('body').css('overflow', 'cms-ui-hidden');
+    $('body').addClass('cms-noscroll');
     $sections.css('pointer-events', 'none');
   },
 
@@ -201,7 +201,7 @@ module.exports = {
 
   hideMenu: function(){
     var $sections = self.getSections();
-    $('body').css('overflow', 'auto');
+    $('body').removeClass('cms-noscroll');
     $sections.css('pointer-events', 'all');
     self.$menu.addClass('cms-ui-hidden');
     self.$menuBg.addClass('cms-ui-hidden');
