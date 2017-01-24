@@ -30,10 +30,10 @@ module.exports = {
 
   init: function(config){
     this.setConfig(config);
-    this.pageConfig    = app.pageConfig;
+    this.pageConfig = app.pageConfig;
+    this.pageDir    = window.location.pathname.split('/').slice(0, -1).join('/');
 
     this.setupSmoothScrolling();
-
     this.restoreProgress();
     // this.autoSave();
 
@@ -194,12 +194,12 @@ module.exports = {
     $html.find('#cms-init, link[href^="cms"]').remove();
     html = $html.html();
     // save cleaned up html to localstorage
-    store.set('page', html);
+    store.set(this.pageDir, html);
     console.log('Saved progress..');
   },
 
   restoreProgress: function(){
-    var html = store.get('page');
+    var html = store.get(this.pageDir);
     if (html) {
       $('body').html(html);
       app.reload();
