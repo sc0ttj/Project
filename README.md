@@ -1,17 +1,31 @@
 #Project
 
-* This is two apps - a static page and a CMS addon for editing the page.
-* The static page is in `src/app/`, and the CMS is in `src/cms/`
-* The static page and its assets are built to `www/`
-* The CMS is built to `www/cms/`
+A scaffolding tool for building static news articles and webpages from templates.
 
-Fork this repo, download, and then:
+* The pages built by this tool include a CMS which lets you:
+  * add, move, delete sections, built from templates
+  * edit the page contents inline
+  * save the edited page and its assets (without cms) as a bundled zip
+
+--------------------------------------------------------
+
+### Project Structure
+
+* This is two apps - a static page and a CMS addon for editing the page
+* The static page is in `src/app/`, and the CMS is in `src/cms/`
+* The static page and its assets are built to `www/demo/`
+* The CMS is built to `www/demo/cms/`
+
+--------------------------------------------------------
 
 ### Installation: you only need to do this once!
 
   - open a terminal in this folder and run this command:
 
         ./setup-host-ubuntu-env.sh
+
+  - the above command will install Vagrant, Node, NPM, Bower, Sublime, etc
+  - if you already have them, you can skip this step
 
 --------------------------------------------------------
 
@@ -23,7 +37,7 @@ Fork this repo, download, and then:
         bower update
         vagrant up --provision
 
-  - Run the following command to build the app and cms
+  - Run the following command to build the source to `www/`
 
         brunch build
 
@@ -45,17 +59,17 @@ Fork this repo, download, and then:
 
   - Edit the code in `src/` and save, then view in your browser
 
-  - If any `.tmpl` files were changed, restart `brunch watch` to recompile them
+  - *If any `.tmpl` files were changed, restart `brunch watch` to recompile them!*
 
 --------------------------------------------------------
 
 ### Adding new dependencies:
 
   - Install static page deps with:   `bower install --save`
-    - these end up in `www/js/vendor.js`
+    - these end up in `www/demo/js/vendor.js`
 
   - Install CMS deps with:   `npm install --save`
-    - these end up in `www/cms/js/vendor.js`
+    - these end up in `www/demo/cms/js/vendor.js`
 
   - Install build tool deps with:   `npm install --save-dev`
     - use this for things like brunch plugins and addons, etc
@@ -82,4 +96,24 @@ Fork this repo, download, and then:
         git commit -m 'my message'
         git push origin my_new_branch
 
+--------------------------------------------------------
 
+### Example Use Cases
+
+  * Used as an online tool:
+      - build source to `www/` using `brunch build --production`
+      - upload contents of `www/` to `dev.example.com`
+      - visit `dev.example.com`
+      - enter desired article name and click 'continue' to create it
+      - then edit article as required using the inline CMS
+      - download zip of finished page using the CMS main menu
+      - upload the zip contents to `live.example.com/my-page-name/`
+
+  * As an in-house scaffolding tool:
+      - create a local branch of this repo, called 'my-page-name'
+      - customise source files as required (`src/app/templates/index.tmpl`, etc )
+      - build app to www/ using `brunch build`
+      - view page locally, test it, etc
+      - repeat above steps until page is ready
+      - download zip of finished page using the CMS main menu
+      - upload contents of zip to http://example.com/my-page-name/
