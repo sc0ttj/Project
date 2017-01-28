@@ -86,19 +86,15 @@
 .cms-menu-item {
   background-color: #333;
   border-bottom: 1px solid #444;
-  color: #999;
+  color: #aaa;
   margin: 0;
   padding: 18px;
-  .cms-menu-item-text {}
   a, a:visited {
-    color: #999;
+    color: #aaa;
     text-decoration:none;
   }
   a:hover, a:focus {
     color: #eee;
-  }
-  p {
-    display: inline-block;
   }
   &:focus, &:hover {
     color: #eee;
@@ -110,7 +106,7 @@
 
 .cms-menu-item-add-section {
   background-color: #333;
-  color: #999;
+  color: #aaa;
   cursor: pointer;
   &:hover {
     color: #fff;
@@ -151,6 +147,27 @@
   }
 }
 
+.cms-menu .cms-menu-section-item {
+  padding-bottom: 12px;
+  .cms-menu-item-text {
+    display: block;
+  }
+  .cms-menu-item-icon {
+    margin-top: -13px;
+  }
+  .cms-menu-section-item-desc {
+    color: #666;
+    display: inline-block;
+    font-size: 1.2rem;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: none;
+    white-space: nowrap;
+    width: 55%;
+  }
+}
+
 .cms-menu-item-icon-up {
   color:#6c6;
   right: 90px;
@@ -166,28 +183,7 @@
   right: 15px;
 }
 
-.cms-menu-item-btn {
-  font-weight: bold;
-  text-decoration: uppercase;
-  &:focus {}
-  &:hover {}
-}
-
-.cms-menu-item-btn-icon {}
-
-.cms-menu-item-btn-busy {}
-
 .cms-ui-hidden {
   opacity: 0;
   pointer-events: none;
-}
-
-.dragged {
-  background-color:#444;
-}
-
-.dragenter {
-  background-color:#dd6600;
-  padding-top:16px;
-  padding-bottom:16px;
 }

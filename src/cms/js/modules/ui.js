@@ -89,12 +89,21 @@ module.exports = {
     $sections = self.getSections();
 
     $sections.each(function addSectionToMenu(elem, i){
-      var sectionName = $sections.children()[i].getAttribute('data-name') || 'section'+(i+1);
+      var sectionName = $sections.children()[i].getAttribute('data-name') || 'section'+(i+1),
+          sectionDesc = $(elem).children().find('[contenteditable]:not(:empty)')[0];
+
+      if (sectionDesc) {
+        sectionDesc = sectionDesc.innerText.substring(0, 100);
+      } else {
+        sectionDesc = '...';
+      }
+
       menuItems += '\
       <li \
         id="menu-item-'+(i+1)+'" \
         class="cms-menu-item cms-menu-section-item">\
         <span class="cms-menu-item-text"><a href="#section'+(i+1)+'">'+sectionName+'</a></span>\
+        <p class="cms-menu-section-item-desc">'+sectionDesc+'</p>\
         <span class="cms-menu-item-icon  cms-menu-item-icon-up      cms-anim-fade-250ms cms-unselectable">ᐃ</span>\
         <span class="cms-menu-item-icon  cms-menu-item-icon-down    cms-anim-fade-250ms cms-unselectable">ᐁ</span>\
         <span class="cms-menu-item-icon  cms-menu-item-icon-delete  cms-anim-fade-250ms cms-unselectable">ⅹ</span>\
