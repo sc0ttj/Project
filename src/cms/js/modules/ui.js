@@ -32,6 +32,7 @@ module.exports = {
     self.$menuBtnSave = $('.cms-menu-item-save');
     self.$menuBtnPreview = $('.cms-menu-item-preview');
     self.$menuBtnAddSection = $('.cms-menu-item-add-section');
+    self.$menuBtnMeta = $('.cms-menu-item-meta');
   },
 
   setUIEventHandlers: function () {
@@ -43,6 +44,7 @@ module.exports = {
     self.$menuBtnPreview.on('click', self.menuBtnPreviewClickHandler);
     self.$menuBtnSave.on('click', self.menuBtnSaveClickHandler);
     self.$menuBtnAddSection.on('click', self.menuBtnAddSectionClickHandler);
+    self.$menuBtnMeta.on('click', self.menuBtnMetaClickHandler);
   },
 
   setUIEventHandlersOff: function () {
@@ -54,6 +56,7 @@ module.exports = {
     self.$menuBtnPreview.off('click', self.menuBtnPreviewClickHandler);
     self.$menuBtnSave.off('click', self.menuBtnSaveClickHandler);
     self.$menuBtnAddSection.off('click', self.menuBtnAddSectionClickHandler);
+    self.$menuBtnMeta.off('click', self.menuBtnMetaClickHandler);
   },
 
   getMenuHtml: function () {
@@ -61,6 +64,10 @@ module.exports = {
         <div class="cms-menu-bg cms-anim-fade-250ms cms-ui-hidden"></div>\
         <ul class="cms-menu cms-anim-fade-250ms cms-ui-hidden">\
         <li class="cms-menu-top"></li>\
+        <li \
+          class="cms-menu-item cms-menu-item-meta">\
+          <span class="cms-menu-item-text">Edit Meta Info</span>\
+        </li>\
         <li \
           class="cms-menu-item cms-menu-item-preview">\
           <span class="cms-menu-item-text">Preview</span>\
@@ -170,6 +177,10 @@ module.exports = {
 
   menuBtnAddSectionClickHandler: function (e) {
     cms.sectionManager.showUI();
+  },
+
+  menuBtnMetaClickHandler: function (e) {
+    cms.metaManager.showUI();
   },
 
   reIndexMenuItems: function (){

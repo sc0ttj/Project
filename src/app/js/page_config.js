@@ -1,17 +1,22 @@
 module.exports = {
   author: {
     name:     'Your Name Here',
-    email:    'name [at] email.com'
+    email:    'name [at] email.com',
+    twitter:  '@authorshandle',
+    url:      'http://mysite.com/author',
   },
   org: {
     name:     'Beeb',
-    homepage: 'http://mysite.com',
+    url:      'http://mysite.com/',
+    twitter:  '@orgshandle',
   },
   meta: {
     title:    'My Article Title',
     desc:     'A description of...',
-    date:     '1st January, 2017',
+    keywords: 'space separated list of key words',
+    date:     '2017-01-31',
     author:   'Your Name Here',
+    url:      'http://mysite.com/demo/',
     topic:    'News',
     keywords: 'news, article, news article,',
   },
@@ -20,6 +25,7 @@ module.exports = {
     subtitle: 'A sub-title for this page goes here.',
     name:     'Your Name Here',
     date:     '1st January, 2017',
+    image:    'placeholders/800x600.png',
   },
   article: {
     heading:  'Heading',

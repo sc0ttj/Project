@@ -1,0 +1,37 @@
+.cms-meta-form {
+  box-sizing: border-box;
+  margin: 8px;
+  text-align:left;
+  margin-bottom: 24px;
+}
+
+.cms-meta-form h3.cms-meta-group-header {
+  margin-top: 24px;
+}
+
+.cms-meta-form h3.cms-meta-group-header:first-child {
+ margin-top: 0; 
+}
+
+.cms-modal-viewport .cms-meta-form p.cms-meta-key {
+  color: #444;
+  font-size:1.9rem;
+  margin-top:12px;
+  margin-bottom:10px;
+  margin-left:20px;
+}
+
+.cms-modal-viewport .cms-meta-form input.cms-meta-value {
+  box-sizing: border-box;
+  color: #555;
+  font-size:1.4rem;
+  margin-left:20px;
+  width: 90%;
+}
+
+.cms-modal-viewport .cms-meta-form .cms-meta-submit-btn {
+  background-color: #333;
+  border: 0;
+  color: #eee;
+  margin-top: 14px;
+}
