@@ -7,7 +7,7 @@ module.exports = {
   },
   org: {
     name:     'Beeb',
-    url: 'http://mysite.com/',
+    url:      'http://mysite.com/',
     twitter:  '@orgshandle',
   },
   meta: {
