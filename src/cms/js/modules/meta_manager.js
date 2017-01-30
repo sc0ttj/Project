@@ -56,8 +56,8 @@ module.exports = {
 
   },
 
-  addEventHandlers: function (e) {
-    $('input.cms-meta-value').on('change', function updateMetaField(){
+  addEventHandlers: function () {
+    $('input.cms-meta-value').on('change', function updateMetaField(e){
       var attr      = $(this).data('type'),
           metaKey   = $(this).attr('name'),
           metaValue = $(this).val();
