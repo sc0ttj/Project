@@ -19,6 +19,15 @@
   <meta name="robots" content="noindex,nofollow">
     <!-- Apple -->
   <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Twitter -->
+  <meta name="twitter:card" content="{{meta.desc}}">
+  <meta name="twitter:site" content="{{org.twitter}}">
+  <meta name="twitter:title" content="{{meta.title}}">
+  <meta name="twitter:description" content="{{meta.desc}}">
+  <meta name="twitter:creator" content="{{author.twitter}}">
+  <meta name="twitter:image:src" content="{{meta.url}}images/{{hero.image}}">
+  <meta name="twitter:player" content="">
+  <meta name="twitter:domain" content="{{org.url}}">
     <!-- Facebook -->
   <meta property="og:type" content="article">
   <meta property="og:locale" content="en">
@@ -32,18 +41,9 @@
     <!-- Google Plus -->
   <meta itemprop="name" content="{{meta.title}}">
   <meta itemprop="description" content="{{meta.desc}}">
-  <meta itemprop="image" content="{{hero.image}}">
-    <!-- Twitter -->
-  <meta name="twitter:card" content="{{meta.desc}}">
-  <meta name="twitter:site" content="{{org.twitter}}">
-  <meta name="twitter:title" content="{{meta.title}}">
-  <meta name="twitter:description" content="{{meta.desc}}">
-  <meta name="twitter:creator" content="{{author.twitter}}">
-  <meta name="twitter:image:src" content="{{meta.url}}images/{{hero.image}}">
-  <meta name="twitter:player" content="">
-  <meta name="twitter:domain" content="{{org.url}}">
+  <meta itemprop="image" content="{{meta.url}}images/{{hero.image}}">
   <!-- Linked data -->
-  <script type="application/ld+json">
+  <script id="meta-ld" type="application/ld+json">
   {
     "@context": "http://schema.org/",
     "@type": "NewsArticle",
@@ -76,16 +76,15 @@
   <link href="css/vendor.css" rel="stylesheet" type="text/css">
   <link href="css/base.css" rel="stylesheet" type="text/css">
 
-    <link rel="icon" type="image/png" href="images/favicon/favicon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png?v=0.1">
-    <link rel="icon" type="image/png" href="images/favicon/favicon-32x32.png?v=0.1" sizes="32x32">
-    <link rel="icon" type="image/png" href="images/favicon/favicon-16x16.png?v=0.1" sizes="16x16">
-    <link rel="manifest" href="images/favicon/manifest.json?v=0.1">
-    <link rel="mask-icon" href="images/favicon/safari-pinned-tab.svg?v=0.1" color="#5bbad5">
-    <link rel="shortcut icon" href="images/favicon/favicon.ico?v=0.1">
-    <meta name="msapplication-config" content="images/favicon/browserconfig.xml?v=0.1">
-    <meta name="theme-color" content="#222222">
-
+  <link rel="icon" type="image/png" href="images/favicon/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png?v=0.1">
+  <link rel="icon" type="image/png" href="images/favicon/favicon-32x32.png?v=0.1" sizes="32x32">
+  <link rel="icon" type="image/png" href="images/favicon/favicon-16x16.png?v=0.1" sizes="16x16">
+  <link rel="manifest" href="images/favicon/manifest.json?v=0.1">
+  <link rel="mask-icon" href="images/favicon/safari-pinned-tab.svg?v=0.1" color="#5bbad5">
+  <link rel="shortcut icon" href="images/favicon/favicon.ico?v=0.1">
+  <meta name="msapplication-config" content="images/favicon/browserconfig.xml?v=0.1">
+  <meta name="theme-color" content="#222222">
 </head>
 
 <body>

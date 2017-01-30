@@ -42,6 +42,7 @@ module.exports = {
     this.editor         = require('modules/page_editor');
     this.imageManager   = require('modules/image_manager');
     this.sectionManager = require('modules/section_manager');
+    this.metaManager    = require('modules/meta_manager');
     this.templater      = require('modules/templater');
     this.ui             = require('modules/ui');
 
@@ -49,6 +50,7 @@ module.exports = {
     this.editor.init();
     this.imageManager.init();
     this.sectionManager.init();
+    this.metaManager.init();
     this.templater.init();
     this.ui.init();
 
@@ -188,22 +190,33 @@ module.exports = {
 
   saveProgress: function(){
     var $html = $('body').clone(),
+        $head = $('head').clone(),
         html  = '';
 
     $html.find('.cms-menu-container, .cms-menu, .cms-modal, .cms-media-btn, .cms-menu-btn').remove();
     $html.find('#cms-init, link[href^="cms"]').remove();
     html = $html.html();
+
     // save cleaned up html to localstorage
+    store.set(this.pageDir + '__head', $head.html());
     store.set(this.pageDir, html);
     console.log('Saved progress..');
   },
 
   restoreProgress: function(){
-    var html = store.get(this.pageDir);
+    var html = store.get(this.pageDir),
+        head = store.get(this.pageDir + '__head'),
+        restored = false;
+
     if (html) {
       $('body').html(html);
-      app.reload();
+      restored = true;
     }
+    if (head) {
+      $('head').html(head);
+      restored = true;
+    }
+    if (restored) app.reload();
   },
 
 };

@@ -7,7 +7,7 @@ module.exports = {
   },
   org: {
     name:     'Beeb',
-    url: 'http://pr0ject.vagrantshare.com/',
+    url: 'http://mysite.com/',
     twitter:  '@orgshandle',
   },
   meta: {
@@ -16,7 +16,7 @@ module.exports = {
     keywords: 'space separated list of key words',
     date:     '2017-01-31',
     author:   'Your Name Here',
-    url:      'http://pr0ject.vagrantshare.com/demo/',
+    url:      'http://mysite.com/demo/',
     topic:    'News',
     keywords: 'news, article, news article,',
   },
