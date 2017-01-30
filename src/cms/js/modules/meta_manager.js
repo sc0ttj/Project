@@ -69,6 +69,11 @@ module.exports = {
   updateMeta: function (attr, key, value) {
     var elemToUpdate = $('head').find('meta['+attr+'^="'+key+'"]');
 
+    if (key === 'title'){
+      //update <title> in <head>
+      $('head title').text(value);
+    }
+
     if (value) {
       $(elemToUpdate).attr('content', value);
     } else {

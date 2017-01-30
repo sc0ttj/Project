@@ -65,6 +65,10 @@ module.exports = {
         <ul class="cms-menu cms-anim-fade-250ms cms-ui-hidden">\
         <li class="cms-menu-top"></li>\
         <li \
+          class="cms-menu-item cms-menu-item-meta">\
+          <span class="cms-menu-item-text">Edit Meta Info</span>\
+        </li>\
+        <li \
           class="cms-menu-item cms-menu-item-preview">\
           <span class="cms-menu-item-text">Preview</span>\
           <span class="cms-menu-item-icon cms-menu-item-icon-preview cms-anim-fade-250ms cms-unselectable">👁</span>\
@@ -73,10 +77,6 @@ module.exports = {
           class="cms-menu-item cms-menu-item-save">\
           <span class="cms-menu-item-text">Save</span>\
           <span class="cms-menu-item-icon cms-menu-item-icon-save cms-anim-fade-250ms cms-unselectable">💾</span>\
-        </li>\
-        <li \
-          class="cms-menu-item cms-menu-item-meta">\
-          <span class="cms-menu-item-text">Edit Meta Info</span>\
         </li>\
         <li id="menu-header-sections" class="cms-menu-header cms-menu-header-sections">\
           <span class="cms-menu-item-text">Sections:</span>\
