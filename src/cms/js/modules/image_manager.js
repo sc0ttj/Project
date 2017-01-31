@@ -11,9 +11,9 @@ module.exports = {
 
   addResponsiveImageClickHandlers: function () {
     var $imgs = $(cms.config.responsiveImageSelector);
+    $imgs.off('click', self.onImageClickHandler);
     if ($imgs.length > 0) {
       $imgs.addClass('cms-editable-img');
-      $imgs.off('click', self.onImageClickHandler);
       $imgs.on('click',  self.onImageClickHandler);
     }
   },
@@ -23,16 +23,10 @@ module.exports = {
         imgSrcElems   = self.getImgSourceElems(img),
         previewImages = [],
         previewImages = self.createImgsFromImgSrcElems(imgSrcElems);
-    
-    self.setCurrentImage(img);
-    if (previewImages.length > 0) self.showUI(previewImages);
-  },
 
-  setCurrentImage: function (img){
-    self.currentImage = img;
-    var imgIsNotAnImage = (self.currentImage.tagName != 'IMG' && self.currentImage.tagName != 'PICTURE');
-    if (imgIsNotAnImage){
-      self.currentImage = $(img).find('picture, img');
+    if (previewImages.length > 0) {
+      self.currentImage = img;
+      self.showUI(previewImages);
     }
   },
 
