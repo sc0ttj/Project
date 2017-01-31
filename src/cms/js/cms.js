@@ -99,24 +99,69 @@ module.exports = {
     this.ui.hideMenu();
     var html = cms.getPageHTMLWithoutCMS();
 
-    cms.saveHtmlToFile(html, function thenPreviewInModal(){
-      content = '<iframe id="pagePreview"\
-        title="Page Preview"\
-        width="100%"\
-        height="100%"\
-        frameborder="0"\
-        marginheight="0"\
-        marginwidth="0"\
-        src="preview.html?c'+Math.random()+'">\
-      </iframe>';
-      // load modal
-      cms.modal.create({
-        title: 'Page Preview',
-        contents: content
-      });
-      cms.modal.show();      
-    });
+    cms.saveHtmlToFile(html, cms.showPreviewInModal);
+  },
 
+  showPreviewInModal: function () {
+    content = '<div class="cms-iframe-resizer">\
+      <button class="cms-iframe-resizer-btn" data-width="320px"  data-height="568px">  iPhone 5  </button>\
+      <button class="cms-iframe-resizer-btn" data-width="360px"  data-height="640px">  Galaxy S5 </button>\
+      <button class="cms-iframe-resizer-btn" data-width="414px"  data-height="736px">  iPhone 6  </button>\
+      <button class="cms-iframe-resizer-btn cms-iframe-resizer-btn-ipad" data-width="1024px" data-height="768px">  iPad      </button>\
+      <button class="cms-iframe-resizer-btn" data-width="100%" data-height="100%">     Full      </button>\
+      <br/>\
+      <button class="cms-iframe-resizer-btn cms-iframe-resizer-btn-orientation cms-hidden" data-orientation="switch" style="display:none;"> Switch Orientation ⟳ </button>\
+    </div>\
+    <iframe id="pagePreview"\
+      title="Page Preview"\
+      width="100%"\
+      height="100%"\
+      frameborder="0"\
+      marginheight="0"\
+      marginwidth="0"\
+      src="preview.html?c'+Math.random()+'">\
+    </iframe>';
+
+    // load modal
+    cms.modal.create({
+      title: 'Page Preview',
+      contents: content
+    });
+    cms.modal.show();
+
+    $('.cms-modal-viewport').addClass('cms-modal-viewport-previewer');
+    cms.iframeResizeBtnClickHandler();
+  },
+
+  iframeResizeBtnClickHandler: function () {
+    $('.cms-iframe-resizer-btn').on('click', function resizeIframe() {
+      var iframe = $('#pagePreview')[0],
+          newHeight,
+          newWidth,
+          orientation = $(this).data('orientation') || '';
+
+      if (orientation === 'switch'){
+        // reverse height and width
+        newWidth  = $('#pagePreview')[0].height;
+        newHeight = $('#pagePreview')[0].width;
+      } else {
+        // get height and width from buttons data-*  attrs
+        newWidth  = $(this).data('width');
+        newHeight = $(this).data('height');
+      }
+
+      //resize iframe
+      iframe.width  = newWidth;
+      iframe.height = newHeight;
+
+      if (iframe.width == '100%'){
+        $('.cms-iframe-resizer-btn-orientation').addClass('cms-hidden');
+        $('.cms-iframe-resizer-btn-orientation').css('display', 'none');
+      } else {
+        $('.cms-iframe-resizer-btn-orientation').removeClass('cms-hidden');
+        $('.cms-iframe-resizer-btn-orientation').css('display', 'inline-block');
+      }
+    });
   },
 
   savePage: function(){

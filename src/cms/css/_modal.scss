@@ -59,7 +59,59 @@
     margin-bottom: 16px;
   }
   iframe {
-    min-height:90vh;
+    background-color: white;
+    border: 2px solid #ccc;
+    padding: 0;
+    margin: 0;
+    -webkit-transition:width 200ms ease-in-out, height 200ms ease-in-out;
+    -moz-transition:width 200ms ease-in-out, height 200ms ease-in-out;
+    -o-transition:width 200ms ease-in-out, height 200ms ease-in-out;
+    transition:width 200ms ease-in-out, height 200ms ease-in-out;
+    -webkit-transition:width 200ms ease-in-out, width 200ms ease-in-out;
+    -moz-transition:width 200ms ease-in-out, width 200ms ease-in-out;
+    -o-transition:width 200ms ease-in-out, width 200ms ease-in-out;
+    transition:width 200ms ease-in-out, width 200ms ease-in-out;
+  }
+}
+
+.cms-modal-viewport-previewer {
+  background-color: #eee;
+  padding: 0;
+  padding-bottom: 60px;
+  min-height:100vh;
+}
+
+.cms-iframe-resizer {
+  box-sizing: border-box;
+  display:none;
+  padding:10px;
+  visibility: hidden;
+  width:100%;
+  @media (min-width: 768px) {
+    display: block;
+    visibility: visible;
+  }
+}
+
+.cms-iframe-resizer-btn {
+  background-color: #333;
+  border: 0;
+  color: #eee;
+  display: inline-block;
+  font-weight:normal;
+  margin-right: 8px;
+  &:focus, &:hover  {
+    color: #fff;
+    font-weight:bold;
+  }
+}
+
+.cms-iframe-resizer-btn-ipad {
+  display:none;
+  visibility: hidden;
+  @media (min-width: 1025px) {
+    display: inline-block;
+    visibility: visible;
   }
 }
 
