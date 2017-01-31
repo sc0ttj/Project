@@ -30,7 +30,11 @@
   min-width: 100%;
 }
 
-.scrollmation-text {
+div.scrollmation-text.scrollmation-text-js img {
+  display: block;
+  height: auto;
+  margin: 1.6rem auto 0;
+  max-width: 100%;
 }
 
 .scrollmation-text-js {
