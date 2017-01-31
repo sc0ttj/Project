@@ -1,12 +1,19 @@
 .cms-meta-form {
+  background-color: #eee;
   box-sizing: border-box;
-  margin: 8px;
+  margin: 8px auto;
   text-align:left;
   margin-bottom: 24px;
+  @media (min-width:800px){
+    max-width: 800px;
+    padding:20px;
+  }
 }
 
 .cms-meta-form h3.cms-meta-group-header {
   margin-top: 24px;
+  padding-top:20px;
+  padding-left:20px;
 }
 
 .cms-meta-form h3.cms-meta-group-header:first-child {
