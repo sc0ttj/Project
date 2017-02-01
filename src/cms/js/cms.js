@@ -9,7 +9,7 @@ module.exports = {
 
   config: {
     'name'            :           'default options',
-    'templates'       :           [ '_article-full-width.tmpl', '_article-left.tmpl', '_article-right.tmpl', '_hero-center.tmpl', '_image-center.tmpl', '_image-fixed.tmpl', '_scrollmation-text-left.tmpl', '_stat-text.tmpl', '_youtube-full-width.tmpl' ],
+    'templates'       :           [ '_article-full-width.tmpl', '_article-left.tmpl', '_article-right.tmpl', '_hero-center.tmpl', '_image-center.tmpl', '_image-fixed.tmpl', '_scrollmation-text-left.tmpl', '_stat-text.tmpl', '_youtube-full-width.tmpl', '_video.tmpl' ],
     'sectionSelector' :           'body .section',
     'sectionContainer':           '<div class="section"></div>', 
     'editableItems'   :           [ 'h1', 'h2', 'p', 'li' ],
@@ -40,6 +40,7 @@ module.exports = {
     this.ajax           = require('modules/ajaxer');
     this.modal          = require('modules/modal');
     this.editor         = require('modules/page_editor');
+    this.videoManager   = require('modules/video_manager');
     this.imageManager   = require('modules/image_manager');
     this.sectionManager = require('modules/section_manager');
     this.metaManager    = require('modules/meta_manager');
@@ -48,6 +49,7 @@ module.exports = {
 
     this.modal.init();
     this.editor.init();
+    this.videoManager.init();
     this.imageManager.init();
     this.sectionManager.init();
     this.metaManager.init();
@@ -69,6 +71,7 @@ module.exports = {
     cms.editor.setEditableItems(this.config.editableItems);
     cms.editor.setEditableRegions(this.config.editableRegionClass);
     cms.editor.setEventHandlers();
+    cms.videoManager.addVideoClickHandlers();
     cms.imageManager.init();
     app.fixedImage.init();
     app.scrollmation.init();
