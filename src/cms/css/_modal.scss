@@ -128,15 +128,21 @@
 
 // videos/general
 
-.cms-modal-title {
+.cms-modal-viewport p.cms-modal-title {
   font-weight: bolder;
-  text-align:left;
+  margin: 0 auto 10px;
+  min-width: 250px;
+  text-align: left;
+  width: 90%;
+  max-width: 600px;
 }
 
-.cms-modal-input {
-  margin-top: 14px;
+.cms-modal-viewport input.cms-modal-input {
+  margin: 0 auto 10px;
+  min-width: 250px;
   padding: 10px;
-  width:90%;
+  width: 90%;
+  max-width: 600px;
 }
 
 //https://jsfiddle.net/4cwpLvae/
