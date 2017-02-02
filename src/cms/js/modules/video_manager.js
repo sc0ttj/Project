@@ -10,7 +10,7 @@ module.exports = {
   },
 
   addVideoClickHandlers: function () {
-    var $videos = $('video');
+    var $videos = $(cms.config.videoSelector);
     $videos.off('click', self.videoClickHandler);
     if ($videos.length > 0) {
       $videos.addClass('cms-editable-video');
