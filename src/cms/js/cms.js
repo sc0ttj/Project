@@ -9,7 +9,7 @@ module.exports = {
 
   config: {
     'name'            :           'default options',
-    'templates'       :           [ '_article-full-width.tmpl', '_article-left.tmpl', '_article-right.tmpl', '_hero-center.tmpl', '_image-center.tmpl', '_image-fixed.tmpl', '_scrollmation-text-left.tmpl', '_stat-text.tmpl', '_youtube-full-width.tmpl', '_video.tmpl' ],
+    'templates'       :           [ '_article-full-width.tmpl', '_article-left.tmpl', '_article-right.tmpl', '_hero-center.tmpl', '_image-center.tmpl', '_image-fixed.tmpl', '_scrollmation-text-left.tmpl', '_stat-text.tmpl', '_youtube-full-width.tmpl', '_video.tmpl', '_video-full-width.tmpl' ],
     'sectionSelector' :           'body .section',
     'sectionContainer':           '<div class="section"></div>', 
     'editableItems'   :           [ 'h1', 'h2', 'p', 'li' ],
