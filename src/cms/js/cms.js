@@ -74,9 +74,7 @@ module.exports = {
     cms.editor.setEventHandlers();
     cms.videoManager.addVideoClickHandlers();
     cms.imageManager.init();
-    app.fixedImage.init();
-    app.scrollmation.init();
-    app.statText.init();
+    app.reload();
   },
 
   cutsTheMustard: function () {

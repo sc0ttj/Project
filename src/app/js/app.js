@@ -2,6 +2,16 @@ var loadCSS    = require('modules/loadcss').init;
 var loadJS     = require('modules/loadjs');
 var pageConfig = require('page_config.js');
 
+//http://stackoverflow.com/a/31133401
+// add a playing property to media stuff
+// we can use this to check if a video is playing or not
+Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
+    get: function(){
+        return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
+    }
+})
+
+
 "use strict";
 
 module.exports = {
@@ -20,6 +30,7 @@ module.exports = {
       this.fixedImage.init();
       this.scrollmation.init();
       this.statText.init();
+      this.video.init();
     }
   },
 
@@ -47,6 +58,13 @@ module.exports = {
         require('enhancements/' + val).init();
       });
     });
+  },
+
+  reload: function(){
+    this.fixedImage.init();
+    this.scrollmation.init();
+    this.statText.init();
+    this.video.init();
   },
 
   //below: for each template that uses JS, we have an object with init() method..
@@ -137,6 +155,50 @@ module.exports = {
         });
       });
     },
+  },
+
+  video: {
+    init: function(){
+      var $videos = $('video'),
+          $videoBtns = $('.video-overlay-button');
+
+      $videos.forEach(this.setupVideoEvents);
+      $videoBtns.forEach(this.setupVideoBtnEvents);
+    },
+
+    setupVideoEvents: function (videoElem, i) {
+      $(videoElem).on('mouseover',  function (){
+        $(this.nextElementSibling).removeClass('hidden');
+      });
+      $(videoElem).on('mouseout',  function (){
+        $(this.nextElementSibling).addClass('hidden');
+      });
+      $(videoElem).on('ended',  function (){
+        var overlayBtn = this.nextElementSibling.firstChild.nextSibling;
+        console.log('ended!!', overlayBtn);
+        overlayBtn.innerHTML = '▶';
+      });
+    },
+
+    setupVideoBtnEvents: function(btn, i){
+
+      var videoBtnClickHandler = function(){
+        var video = this.parentNode.previousElementSibling,
+            videoOverlay = this.parentNode;
+
+        $(videoOverlay).addClass('hidden');
+        if (video.playing) {
+          video.pause();
+          this.innerHTML = '▶';
+        } else {
+          video.play();
+          this.innerHTML = '⏸';
+        }
+      };
+
+      $(btn).on('click',  videoBtnClickHandler);
+    },
+
   },
 
 }
