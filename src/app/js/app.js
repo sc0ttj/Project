@@ -185,7 +185,6 @@ module.exports = {
     },
 
     setupVideoBtnEvents: function(btn, i){
-
       var videoBtnClickHandler = function(){
         var video = this.parentNode.previousElementSibling,
             videoOverlay = this.parentNode;
@@ -200,7 +199,6 @@ module.exports = {
           this.innerHTML = '⏸';
         }
       };
-
       $(btn).on('click',  videoBtnClickHandler);
     },
 
