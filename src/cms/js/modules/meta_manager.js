@@ -27,8 +27,12 @@ module.exports = {
       form += '<h3 class="cms-meta-group-header">'+title+'</h3>\n\r';
  
       $list.each(function (el) {
-        var metaKey     = el.attributes[0].nodeValue,
-            metaValue   = el.attributes[1].nodeValue;
+        var metaValue = el.attributes['content'].nodeValue,
+            metaKey   = $(el).attr('itemprop');
+        
+        if (!metaKey) metaKey = $(el).attr('property');
+        if (!metaKey) metaKey = $(el).attr('name');
+
         form += '\
         <label>\n\r\
           <p class="cms-meta-key">'+metaKey+'</p>\n\r\
