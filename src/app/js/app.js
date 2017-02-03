@@ -167,15 +167,17 @@ module.exports = {
     },
 
     setupVideoEvents: function (videoElem, i) {
+      var videoOverlay = videoElem.nextElementSibling;
+
       $(videoElem).on('mouseover',  function (){
-        $(this.nextElementSibling).removeClass('hidden');
+        $(videoOverlay).removeClass('hidden');
       });
       $(videoElem).on('mouseout',  function (){
-        $(this.nextElementSibling).addClass('hidden');
+        if (videoElem.playing) $(videoOverlay).addClass('hidden');
       });
       $(videoElem).on('ended',  function (){
-        var overlayBtn = this.nextElementSibling.firstChild.nextSibling;
-        console.log('ended!!', overlayBtn);
+        var overlayBtn = videoOverlay.firstChild.nextSibling;
+        $(overlayBtn).removeClass('hidden');
         overlayBtn.innerHTML = '▶';
       });
     },
@@ -186,12 +188,13 @@ module.exports = {
         var video = this.parentNode.previousElementSibling,
             videoOverlay = this.parentNode;
 
-        $(videoOverlay).addClass('hidden');
         if (video.playing) {
           video.pause();
+          $(videoOverlay).removeClass('hidden');
           this.innerHTML = '▶';
         } else {
           video.play();
+          $(videoOverlay).addClass('hidden');
           this.innerHTML = '⏸';
         }
       };
