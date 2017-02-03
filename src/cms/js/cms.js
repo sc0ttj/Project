@@ -137,19 +137,22 @@ module.exports = {
 
   iframeResizeBtnClickHandler: function () {
     $('.cms-iframe-resizer-btn').on('click', function resizeIframe() {
-      var iframe = $('#pagePreview')[0],
+      var $this  = $(this),
+          iframe = $('#pagePreview')[0],
           newHeight,
           newWidth,
-          orientation = $(this).data('orientation') || '';
+          orientation = $(this).data('orientation') || '',
+          iframeResizeBtn = $('.cms-iframe-resizer-btn-orientation');
+
 
       if (orientation === 'switch'){
         // reverse height and width
-        newWidth  = $('#pagePreview')[0].height;
-        newHeight = $('#pagePreview')[0].width;
+        newWidth  = iframe.height;
+        newHeight = iframe.width;
       } else {
         // get height and width from buttons data-*  attrs
-        newWidth  = $(this).data('width');
-        newHeight = $(this).data('height');
+        newWidth  = $this.data('width');
+        newHeight = $this.data('height');
       }
 
       //resize iframe
@@ -157,11 +160,11 @@ module.exports = {
       iframe.height = newHeight;
 
       if (iframe.width == '100%'){
-        $('.cms-iframe-resizer-btn-orientation').addClass('cms-hidden');
-        $('.cms-iframe-resizer-btn-orientation').css('display', 'none');
+        iframeResizeBtn.addClass('cms-hidden');
+        iframeResizeBtn.css('display', 'none');
       } else {
-        $('.cms-iframe-resizer-btn-orientation').removeClass('cms-hidden');
-        $('.cms-iframe-resizer-btn-orientation').css('display', 'inline-block');
+        iframeResizeBtn.removeClass('cms-hidden');
+        iframeResizeBtn.css('display', 'inline-block');
       }
     });
   },
