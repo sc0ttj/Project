@@ -40,6 +40,7 @@ module.exports = {
     this.fixedImage.init();
     this.scrollmation.init();
     this.statText.init();
+    this.video.init();
   },
 
   cutsTheMustard: function () {
@@ -60,13 +61,6 @@ module.exports = {
         require('enhancements/' + val).init();
       });
     });
-  },
-
-  reload: function(){
-    this.fixedImage.init();
-    this.scrollmation.init();
-    this.statText.init();
-    this.video.init();
   },
 
   //below: for each template that uses JS, we have an object with init() method..
