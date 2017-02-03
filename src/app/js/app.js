@@ -2,6 +2,16 @@ var loadCSS    = require('modules/loadcss').init;
 var loadJS     = require('modules/loadjs');
 var pageConfig = require('page_config.js');
 
+//http://stackoverflow.com/a/31133401
+// add a playing property to media stuff
+// we can use this to check if a video is playing or not
+Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
+    get: function(){
+        return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
+    }
+})
+
+
 "use strict";
 
 module.exports = {
@@ -9,6 +19,8 @@ module.exports = {
   init: function(){
     //set page defaults
     this.pageConfig = pageConfig;
+    // we know js is enabled now, mark it
+    $('body').addClass('js');
     // add html5 extras
     if (this.cutsTheMustard()){
       // add mustard
@@ -20,6 +32,7 @@ module.exports = {
       this.fixedImage.init();
       this.scrollmation.init();
       this.statText.init();
+      this.video.init();
     }
   },
 
@@ -27,6 +40,7 @@ module.exports = {
     this.fixedImage.init();
     this.scrollmation.init();
     this.statText.init();
+    this.video.init();
   },
 
   cutsTheMustard: function () {
@@ -137,6 +151,51 @@ module.exports = {
         });
       });
     },
+  },
+
+  video: {
+    init: function(){
+      var $videos = $('video'),
+          $videoBtns = $('.video-overlay-button');
+
+      $videos.forEach(this.setupVideoEvents);
+      $videoBtns.forEach(this.setupVideoBtnEvents);
+    },
+
+    setupVideoEvents: function (videoElem, i) {
+      var videoOverlay = videoElem.nextElementSibling,
+          overlayBtn   = videoOverlay.firstChild.nextSibling;
+
+      $(videoElem).on('mouseover',  function (){
+        $(videoOverlay).removeClass('hidden');
+      });
+      $(videoElem).on('mouseout',  function (){
+        if (videoElem.playing) $(videoOverlay).addClass('hidden');
+      });
+      $(videoElem).on('ended',  function (){
+        $(videoOverlay).removeClass('hidden');
+        overlayBtn.innerHTML = '▶';
+      });
+    },
+
+    setupVideoBtnEvents: function(btn, i){
+      var videoBtnClickHandler = function(){
+        var video = this.parentNode.previousElementSibling,
+            videoOverlay = this.parentNode;
+
+        if (video.playing) {
+          video.pause();
+          $(videoOverlay).removeClass('hidden');
+          this.innerHTML = '▶';
+        } else {
+          video.play();
+          $(videoOverlay).addClass('hidden');
+          this.innerHTML = '⏸';
+        }
+      };
+      $(btn).on('click',  videoBtnClickHandler);
+    },
+
   },
 
 }

@@ -9,7 +9,7 @@ module.exports = {
 
   config: {
     'name'            :           'default options',
-    'templates'       :           [ '_article-full-width.tmpl', '_article-left.tmpl', '_article-right.tmpl', '_hero-center.tmpl', '_image-center.tmpl', '_image-fixed.tmpl', '_scrollmation-text-left.tmpl', '_stat-text.tmpl', '_youtube-full-width.tmpl' ],
+    'templates'       :           [ '_article-full-width.tmpl', '_article-left.tmpl', '_article-right.tmpl', '_hero-center.tmpl', '_image-center.tmpl', '_image-fixed.tmpl', '_scrollmation-text-left.tmpl', '_stat-text.tmpl', '_youtube-full-width.tmpl', '_video.tmpl', '_video-full-width.tmpl' ],
     'sectionSelector' :           'body .section',
     'sectionContainer':           '<div class="section"></div>', 
     'editableItems'   :           [ 'h1', 'h2', 'p', 'li' ],
@@ -17,6 +17,7 @@ module.exports = {
     'editableRegionClass' :       'cms-editable-region',
     'inlineMediaRegionSelector':  '.scrollmation-container p[contenteditable],.article:not(.article-right):not(.article-left) p[contenteditable]',
     'responsiveImageSelector':    'picture, .scrollmation-container, .inline-image',
+    'videoSelector'   :           'video',
     'mustardClass'    :           'html5-cms',
   },
 
@@ -40,6 +41,7 @@ module.exports = {
     this.ajax           = require('modules/ajaxer');
     this.modal          = require('modules/modal');
     this.editor         = require('modules/page_editor');
+    this.videoManager   = require('modules/video_manager');
     this.imageManager   = require('modules/image_manager');
     this.sectionManager = require('modules/section_manager');
     this.metaManager    = require('modules/meta_manager');
@@ -48,6 +50,7 @@ module.exports = {
 
     this.modal.init();
     this.editor.init();
+    this.videoManager.init();
     this.imageManager.init();
     this.sectionManager.init();
     this.metaManager.init();
@@ -69,10 +72,9 @@ module.exports = {
     cms.editor.setEditableItems(this.config.editableItems);
     cms.editor.setEditableRegions(this.config.editableRegionClass);
     cms.editor.setEventHandlers();
+    cms.videoManager.addVideoClickHandlers();
     cms.imageManager.init();
-    app.fixedImage.init();
-    app.scrollmation.init();
-    app.statText.init();
+    app.reload();
   },
 
   cutsTheMustard: function () {
@@ -192,8 +194,11 @@ module.exports = {
     $html.find('*[class=""]').removeAttr('class');
     // reset app templates so they work on pages with no js
     // move to a method in the main app
+    $html.find('body').removeClass('js');
     $html.find('*').removeClass('anim-fade-1s transparent scrollmation-text-js scrollmation-image-container-top scrollmation-image-container-fixed scrollmation-image-container-bottom');
     $html.find('.scrollmation-text').addClass('article');
+    $html.find('.video-overlay').removeClass('hidden');
+    $html.find('.video-overlay-button').html('▶');
     // get cleaned html
     cleanHTML = $html.html();
 
@@ -243,7 +248,12 @@ module.exports = {
 
     $html.find('.cms-menu-container, .cms-menu, .cms-modal, .cms-media-btn, .cms-menu-btn').remove();
     $html.find('#cms-init, link[href^="cms"]').remove();
+    //reset page to defaults
+    $html.find('body').removeClass('js');
+    $html.find('.video-overlay').removeClass('hidden');
+    $html.find('.video-overlay-button').html('▶');
     $html.find('*').removeClass('scrollmation-image-container-fixed');
+    //get cleaned up html
     html = $html.html();
 
     // save cleaned up html to localstorage

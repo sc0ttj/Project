@@ -1,0 +1,29 @@
+.video-full-width-container {
+  width: 100%;
+}
+
+.video-full-width {
+  width: 100%;
+  height: auto;
+}
+
+.video-full-width-container .video-overlay { display:none; }
+
+.js .video-full-width-container .video-overlay {
+  background-color: #222;
+  color: #eee;
+  display:block;
+  font-size: 50px;
+  opacity: 1;
+  position: absolute;
+  bottom: 7px;
+  height: 85px;
+  width: 85px;
+  text-align: center;
+  &:hover {
+    background-color: #911;
+    color: #fff;
+    opacity: 1 !important;
+    cursor: pointer;
+  }
+}
