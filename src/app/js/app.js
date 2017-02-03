@@ -167,7 +167,8 @@ module.exports = {
     },
 
     setupVideoEvents: function (videoElem, i) {
-      var videoOverlay = videoElem.nextElementSibling;
+      var videoOverlay = videoElem.nextElementSibling,
+          overlayBtn   = videoOverlay.firstChild.nextSibling;
 
       $(videoElem).on('mouseover',  function (){
         $(videoOverlay).removeClass('hidden');
@@ -176,8 +177,7 @@ module.exports = {
         if (videoElem.playing) $(videoOverlay).addClass('hidden');
       });
       $(videoElem).on('ended',  function (){
-        var overlayBtn = videoOverlay.firstChild.nextSibling;
-        $(overlayBtn).removeClass('hidden');
+        $(videoOverlay).removeClass('hidden');
         overlayBtn.innerHTML = '▶';
       });
     },
