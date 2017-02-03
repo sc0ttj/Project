@@ -7,9 +7,12 @@
   height: auto;
 }
 
-.video-full-width-container .video-overlay {
+.video-full-width-container .video-overlay { display:none; }
+
+.js .video-full-width-container .video-overlay {
   background-color: #222;
   color: #eee;
+  display:block;
   font-size: 50px;
   opacity: 1;
   position: absolute;

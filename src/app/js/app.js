@@ -19,6 +19,8 @@ module.exports = {
   init: function(){
     //set page defaults
     this.pageConfig = pageConfig;
+    // we know js is enabled now, mark it
+    $('body').addClass('js');
     // add html5 extras
     if (this.cutsTheMustard()){
       // add mustard
