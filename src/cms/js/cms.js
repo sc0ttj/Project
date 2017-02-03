@@ -244,6 +244,7 @@ module.exports = {
     $html.find('.cms-menu-container, .cms-menu, .cms-modal, .cms-media-btn, .cms-menu-btn').remove();
     $html.find('#cms-init, link[href^="cms"]').remove();
     $html.find('.video-overlay-button').html('▶');
+    $html.find('*').removeClass('scrollmation-image-container-fixed');
     html = $html.html();
 
     // save cleaned up html to localstorage
