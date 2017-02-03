@@ -61,8 +61,8 @@ module.exports = {
 
   getMenuHtml: function () {
     var menu = '\
-        <div class="cms-menu-bg cms-anim-fade-250ms cms-ui-hidden"></div>\
-        <ul class="cms-menu cms-anim-fade-250ms cms-ui-hidden">\
+        <div class="cms-menu-bg cms-ui-hidden"></div>\
+        <ul class="cms-menu cms-ui-hidden">\
         <li class="cms-menu-top"></li>\
         <li \
           class="cms-menu-item cms-menu-item-meta">\
@@ -203,6 +203,7 @@ module.exports = {
     var $sections = self.getSections();
     cms.saveProgress();
     self.updateUI();
+    $('.cms-menu, .cms-menu-bg').addClass('cms-anim-fade-250ms ');
     self.$menu.removeClass('cms-ui-hidden');
     self.$menuBg.removeClass('cms-ui-hidden');
     self.$menuBtn.addClass('cms-menu-btn-on');
