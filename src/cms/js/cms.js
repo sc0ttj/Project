@@ -193,8 +193,8 @@ module.exports = {
     // move to a method in the main app
     $html.find('*').removeClass('anim-fade-1s transparent scrollmation-text-js scrollmation-image-container-top scrollmation-image-container-fixed scrollmation-image-container-bottom');
     $html.find('.scrollmation-text').addClass('article');
+    $html.find('.video-overlay').removeClass('hidden');
     $html.find('.video-overlay-button').html('▶');
-    $html.find('.video-overlay-button').removeClass('hidden');
     // get cleaned html
     cleanHTML = $html.html();
 
@@ -244,8 +244,8 @@ module.exports = {
 
     $html.find('.cms-menu-container, .cms-menu, .cms-modal, .cms-media-btn, .cms-menu-btn').remove();
     $html.find('#cms-init, link[href^="cms"]').remove();
+    $html.find('.video-overlay').removeClass('hidden');
     $html.find('.video-overlay-button').html('▶');
-    $html.find('.video-overlay-button').removeClass('hidden');
     $html.find('*').removeClass('scrollmation-image-container-fixed');
     html = $html.html();
 
