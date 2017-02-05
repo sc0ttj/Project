@@ -186,7 +186,8 @@ module.exports = {
 
         //replace editable values with the values from the vocab file
         if (vocab.hasOwnProperty(sectionName)){
-          valFromVocabFile = vocab[sectionName][i][key];  // !!! deletions in page break ui building herre!!!
+          // set to value from vocab file, or default back to value from preview page
+          valFromVocabFile = vocab[sectionName][i][key] || pageVocab[sectionName][i][key];
         } 
 
         // create the form section
