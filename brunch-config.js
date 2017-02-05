@@ -171,6 +171,7 @@ exports.config = {
       'chmod 777 www/demo',
       'chmod 777 www/demo/images',
       'chmod 777 www/demo/videos',
+      'chmod 777 www/demo/vocabs',
       // move the example index page out of assets, to the web root
       'cp www/demo/index.php www/index.php'
     ],

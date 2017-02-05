@@ -34,8 +34,8 @@ module.exports = {
     this.pageConfig = app.pageConfig;
     this.pageDir    = window.location.pathname.split('/').slice(0, -1).join('/');
 
-    this.setupSmoothScrolling();
     this.restoreProgress();
+    this.setupSmoothScrolling();
     // this.autoSave();
 
     this.ajax           = require('modules/ajaxer');
@@ -46,6 +46,7 @@ module.exports = {
     this.sectionManager = require('modules/section_manager');
     this.metaManager    = require('modules/meta_manager');
     this.templater      = require('modules/templater');
+    this.vocabEditor    = require('modules/vocab_editor');
     this.ui             = require('modules/ui');
 
     this.modal.init();
@@ -55,6 +56,7 @@ module.exports = {
     this.sectionManager.init();
     this.metaManager.init();
     this.templater.init();
+    this.vocabEditor.init();
     this.ui.init();
 
     if (this.cutsTheMustard()) this.addMustard();
