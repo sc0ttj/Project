@@ -143,7 +143,7 @@ module.exports = {
   },
 
   getCurrentService: function () {
-    var service = self.getQueryVariable('translation') || $('html').attr('lang');
+    var service = self.getQueryVariable('translation') || self.getQueryVariable('preview') || $('html').attr('lang');
     return service;
   },
 

@@ -110,7 +110,7 @@ module.exports = {
   },
 
   showPreviewInModal: function () {
-    var vocab;
+    var lang;
 
     var content = '<div class="cms-iframe-resizer">\
       <button class="cms-iframe-resizer-btn" data-width="320px"  data-height="568px">  iPhone 5  </button>\
@@ -139,14 +139,15 @@ module.exports = {
     cms.modal.show();
 
     if (cms.getQueryVariable('preview')) {
-      vocab = cms.getQueryVariable('preview') || '';
-      console.log(vocab);
+      lang = cms.getQueryVariable('preview') || '';
 
-      // if 'vocabs/[vocab].json exists, get contents of vocab file
+      // if 'vocabs/[lang].json exists, get contents of vocab file
+      cms.vocabEditor.getVocabFileContents(function vocabReturnedOK(vocab){
+        // get html of preview page (in the iframe)
+        var vocab = JSON.parse(vocab);
+        // apply vocab data to preview page html
+      });
 
-      // get html of preview page (in the iframe)
-
-      // apply vocab data to preview page html
 
     }
 
