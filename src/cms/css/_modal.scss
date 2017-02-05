@@ -143,25 +143,33 @@
   }
   .cms-vocab-input {
     box-sizing: border-box;
-    min-width: 280px;
+    min-width: 180px;
     width:95%;
   }
   .cms-vocab-uploaded {
     box-sizing: border-box;
     border: 1px solid green;
   }
-  table, tr {
+  table {
     box-sizing: border-box;
-    margin-bottom: 36px;
     width: 100%;
+  }
+  tr {
+    margin-bottom: 36px;
   }
   td {
     background-color: #eee;
     box-sizing: border-box;
+    vertical-align: top;
     width: 50%;
   }
   textarea {
     box-sizing: border-box;
+    resize: none;
+    overflow: hidden;
+    margin-bottom: 0;
+    min-height: 2rem;
+    max-height: 220px;
     width:100%;
   }
   textarea[disabled]{
@@ -170,6 +178,18 @@
     box-sizing: border-box;
     padding-left:30px;
     pointer-events: none;
+  }
+  @media (max-width: 600px) {
+    .cms-vocab-title-right {
+      display:none;
+    }
+    tr {
+      margin-bottom: 48px;
+    }
+    td {
+      display:block;
+      width:100%;
+    }
   }
 }
 

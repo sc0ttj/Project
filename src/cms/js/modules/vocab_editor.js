@@ -83,7 +83,7 @@ module.exports = {
                   vocabItem  = {};
 
               // add the item to the vocab object
-              vocabItem[key] = value;
+              vocabItem[key] = value.trim();
               pageVocab[sectionName].push(vocabItem);
             });
 
@@ -193,18 +193,18 @@ module.exports = {
         form += '<table>\n\
         <tr>\n\
         <td>\n\
-          <label class="cms-modal-title cms-vocab-title">'+key+'</label>\n\
+          <label class="cms-modal-title cms-vocab-title cms-vocab-title-left">'+key+'</label>\n\
           <textarea disabled />'+value+'</textarea>\n\
         </td>\
         <td>\n\
-          <label class="cms-modal-title cms-vocab-title">&nbsp;</label>\n\
+          <label class="cms-modal-title cms-vocab-title cms-vocab-title-right">&nbsp;</label>\n\
           <textarea \
             class="cms-modal-input \
             cms-vocab-input" \
             data-name="'+key+'" \
             data-lang="'+lang+'" \
             data-section="'+sectionName+'" \
-            name="'+key+'" />'+valFromVocabFile+'</textarea>\n\
+            name="'+key+'" />'+valFromVocabFile.trim()+'</textarea>\n\
         </td>\n\
         </tr>\n\
         </table>\n';
@@ -214,10 +214,20 @@ module.exports = {
   },
 
   addEventHandlers: function () {
+    $('.cms-modal-viewport .cms-vocab-form').find('textarea').each (function setTextareaHeights(){
+      // auto grow the textareas based on content
+      //http://stackoverflow.com/a/24676492
+      this.style.height = '8px';
+      this.style.height = (this.scrollHeight)+'px';
+    });
+
     $('.cms-vocab-input').on('keypress', function (e){
-      if (e.which === 13) {
-        e.preventDefault();
-      }
+      // auto grow the textareas based on content
+      this.style.height = '8px';
+      this.style.height = (this.scrollHeight)+'px';
+      // prevent newlines
+      if (e.which === 13) e.preventDefault();
+      // clear ajax notification stylings
       $(this).removeClass('cms-vocab-uploaded');
       $('.cms-vocab-input').removeClass('cms-upload-label-error');
     });
