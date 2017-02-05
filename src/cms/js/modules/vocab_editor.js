@@ -7,12 +7,7 @@ module.exports = {
   init: function(){
     self = this;
 
-    self.getVocabFromFile(function vocabReturnedOK(vocab){
-      // console.log('got content from vocab file OK', vocab);
-      self.vocab = JSON.parse(vocab);
-      // self.downloadVocabFile();
-      if(self.shouldShowTranslator()) self.showTranslatorUI();
-    });
+    if (self.shouldShowTranslator()) self.getPreviewPageHtml(self.getVocabFromPreview);
 
     return true // if we loaded ok
   },
@@ -22,15 +17,115 @@ module.exports = {
     return false;
   },
 
-  //https://css-tricks.com/snippets/javascript/get-url-variables/
-  getQueryVariable: function (variable) {
-    var query = window.location.search.substring(1);
-    var vars = query.split("&");
-    for (var i=0;i<vars.length;i++) {
-      var pair = vars[i].split("=");
-      if(pair[0] == variable){return pair[1];}
+  getPreviewPageHtml: function (callback) {
+    var lang = self.getCurrentService();
+
+    var onSuccessHandler = function (html){
+      // console.log(html);
+      callback(html);
+      return html;
     }
-    return(false);
+    var onErrorHandler = function (errorText){
+      console.log(errorText);
+      return false;
+    }
+
+    cms.ajax.create('GET', 'preview.html');
+    cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
+    cms.ajax.send(null);
+  },
+
+  getVocabFromPreview: function (html){
+    // create an empty vocab file and get html to build it from
+    var lang      = self.getCurrentService(),
+        pageVocab = self.createNewVocab(lang),
+        $html     = $(html),
+        sectionSelector    = cms.config.sectionSelector,
+        metaSelector       = 'meta[name^="title"], meta[name^="description"], meta[name^="author"], meta[name^="keywords"], meta[name^="news_keywords"], meta[name^="copyright"], meta[name^="twitter"], meta[property], meta[itemprop]',
+        vocabElemsSelector = 'h1, h2, p, li, video source, picture source, img',
+        i = 0; // used to make 'section1', 'section2', etc
+
+    // process the html we chose and build the vocab file
+    $html.each(function processPreviewHTML(elem){
+      var isMetaElem = ($.matches(elem, metaSelector)),
+          isSection  = ($.matches(elem, sectionSelector));
+
+      if (elem.nodeType != Node.TEXT_NODE){
+
+        // get values for META section of vocab file
+
+        if (isMetaElem){
+          // console.log('meta', elem);
+          var key   = $(elem).attr('itemprop') || $(elem).attr('property') || $(elem).attr('name'),
+              value = $(elem).attr('content'),
+              item = {};
+
+          item[key] = value;
+
+          pageVocab['meta'].push(item);
+        }
+
+        // get values for page sections part of vocabs
+
+        if (isSection){
+          var sectionName = 'section' + (i+1);
+
+          // create { 'section1' : [] } etc
+          pageVocab[sectionName] = [];
+
+          $(elem).each(function getVocabElems(el, q){
+            var vocabItems = $(el).find(vocabElemsSelector);
+
+            // get all items to be added to vocab
+            vocabItems.each(function getVocabValuesFromElem(pageElem){
+              var key   = pageElem.tagName.toLowerCase(),
+                  value = pageElem.innerText || $(pageElem).attr('src')  || $(pageElem).attr('srcset') || pageElem.innerHMTL,
+                  vocabItem  = {};
+
+              // add the item to the vocab object
+              vocabItem[key] = value;
+              pageVocab[sectionName].push(vocabItem);
+            });
+
+          });
+          i++; // increment section name
+        } // end if isSection
+
+      } // end if !== TEXT_NODE
+
+    }); //end $html.each()
+
+    // we now have the latest preview page as a vocab file, will show in left side of form
+    self.pageVocab = pageVocab;
+
+    // we now have the default text to translate, so we can get a translation for it
+
+    // lets populate the right side of form with the contents of the vocab file for this LANG
+    self.getVocabFileContents(function vocabReturnedOK(vocab){
+      self.vocab = JSON.parse(vocab);
+      self.showTranslatorUI();
+    });
+
+  },
+
+  getVocabFileContents: function (callback) {
+    var lang = self.getCurrentService();
+
+    var onSuccessHandler = function (responseText){
+      // console.log(responseText);
+      self.vocab = responseText;
+      callback(responseText);
+      return responseText;
+    }
+    var onErrorHandler = function (responseText){
+      // return default page vocab
+      callback(JSON.stringify(self.pageVocab));
+      return self.pageVocab;
+    }
+
+    cms.ajax.create('GET', 'vocabs/'+lang+'.json');
+    cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
+    cms.ajax.send(null);
   },
 
   showTranslatorUI: function () {
@@ -52,6 +147,13 @@ module.exports = {
     return service;
   },
 
+  createNewVocab: function (lang) {
+    var vocab = {};
+    vocab['html'] = [ { 'lang': lang } ];
+    vocab['meta'] = [];
+    return vocab;
+  },
+
   createVocabEditorForm: function () {
     var lang      = self.getCurrentService(),
         form      = '<form class="cms-vocab-form" data-lang="'+lang+'" action="cms/api/upload.php" method="post">\n',
@@ -64,69 +166,30 @@ module.exports = {
     return form;
   },
 
-  getVocabFromFile: function (callback) {
-    var lang      = self.getCurrentService();
-
-    cms.ajax.create('GET', 'vocabs/'+lang+'.json');
-
-    var onSuccessHandler = function (responseText){
-      // console.log(responseText);
-      self.vocab = responseText;
-      callback(responseText);
-      return responseText;
-    }
-
-    var onErrorHandler = function (responseText){
-      console.log(responseText);
-      return false;
-    }
-
-    cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
-    cms.ajax.send(null);
-  },
-
-  getPageVocab: function () {
-    var lang  = self.getCurrentService(),
-        vocab = self.createVocab(lang),
-
-    vocab = self.populateVocab(vocab);
-    return vocab;
-  },
-
-  createVocab: function (lang) {
-    var vocab = {};
-    vocab['html'] = [ { 'lang': lang } ];
-    vocab['meta'] = [];
-    return vocab;
-  },
-
-  populateVocab: function(vocab){
-    self.addMetaToVocab(vocab);
-    self.addEditablesToVocab(vocab);
-    return vocab;
-  },
-
   createVocabEditorFormFields: function (){
     var lang      = self.getCurrentService(),
-        pageVocab = self.getPageVocab(),
-        vocab     = self.vocab,
+        pageVocab = self.pageVocab,
+        vocab     = self.vocab || self.pageVocab,
         form      = '';
 
-    Object.keys(pageVocab).forEach(function (key) {
+    // build form from self.pageVocab
+    Object.keys(pageVocab).forEach(function createFormSections(key) {
       var section = pageVocab[key];
           sectionName = key;
+
       form += '<h3>'+key+'</h3>';
-      section.forEach(function (elem, i) {
-        
+      section.forEach(function createSectionFormFields(elem, i) {
+        // get form fiel values
         var key   = Object.keys(section[i]),
             value = Object.values(section[i]),
             valFromVocabFile = pageVocab[sectionName][i][key];
 
-        //replace page vocab value with value from vocab file!!
+        //replace editable values with the values from the vocab file
         if (vocab.hasOwnProperty(sectionName)){
           valFromVocabFile = vocab[sectionName][i][key];  // !!! deletions in page break ui building herre!!!
         } 
 
+        // create the form section
         form += '<table>\n\
         <tr>\n\
         <td>\n\
@@ -148,79 +211,6 @@ module.exports = {
       });
     });
     return form;
-  },
-
-  addMetaToVocab: function (vocab) {
-    var $metaElems = $('meta[name^="title"], meta[name^="description"], meta[name^="author"], meta[name^="keywords"], meta[name^="news_keywords"], meta[name^="copyright"], meta[name^="twitter"], meta[property], meta[itemprop]');
-    
-    $metaElems.each(function(elem){
-      var key   = $(elem).attr('itemprop') || $(elem).attr('property') || $(elem).attr('name'),
-          value = $(elem).attr('content');
-
-      var pair = {};
-      pair[key] = value;
-
-      vocab['meta'].push(pair);
-    });
-  },
-
-  addEditablesToVocab: function (vocab) {
-    var $sectionElems      = $(cms.config.sectionSelector),
-        vocabElemsSelector = '[contenteditable]:not(.cms-editable-region):not(.cms-media-btn), video source, picture source, img';
-
-    $sectionElems.each(function (sectionElem, sectionIndex){
-      var template     = $(this).children()[0],
-          section = 'section' + (sectionIndex+1);
-
-      //create vocab obect for this section/template
-      vocab[section] = [];
-
-      $(sectionElem).find(vocabElemsSelector).each(function(elem, i){
-        var $elem = $(elem).clone(),
-            tag   = elem.tagName.toLowerCase(),
-            value = '';
-  
-        $elem.find('.cms-media-btn').remove()
-        //get rid of trailing whitespace
-        $elem[0].innerText.trim();
-        //assign clean up elem html to value
-        value = $elem[0].innerText.trim() || $elem.attr('srcset') || $elem.attr('src') || '';
-        
-        var pair = {};
-        pair[tag] = value;
-
-        //add tags to current section of the vocab object if not empty
-        vocab[section].push(pair);
-      });
-    });
-  },
-
-  // downloadVocabFile: function () {
-  //   var lang       = self.getCurrentService(),
-  //       vocab      = self.getPageVocab(),
-  //       vocabJSON  = '',
-  //       vocabFilename  = lang+'.json';
-
-  //   vocabJSON = self.getVocabAsJSON(vocab);
-
-  //   self.downloadVocabAsFile(vocabJSON, vocabFilename);
-  // },
-
-  getVocabAsJSON: function (vocab) {
-    return JSON.stringify(vocab, undefined, 2);
-  },
-    
-  //http://stackoverflow.com/a/18197511
-  downloadVocabAsFile: function (vocabJSON, filename) {
-    var a = document.createElement('a');
-    var file = self.createVocabFile(vocabJSON);
-    a.href = URL.createObjectURL(file);
-    a.download = filename;
-    a.click();
-  },
-
-  createVocabFile: function (vocabJSON) {
-    return new Blob([vocabJSON], {type: 'text/plain'});
   },
 
   addEventHandlers: function () {
@@ -301,13 +291,17 @@ module.exports = {
     return vocabString;
    },
 
+  createVocabFile: function (vocabJSON) {
+    return new Blob([vocabJSON], {type: 'text/plain'});
+  },
+
   uploadFile: function (e, file, filename){
     var formData = new FormData(this);
+
     formData.append('vocab', file, filename);
     //prevent redirect and do ajax upload
     e.preventDefault();
-    cms.ajax.create('POST', 'cms/api/upload.php');
-
+ 
     var onSuccessHandler = function (responseText){
       console.log(responseText);
       $('.cms-vocab-input').addClass('cms-vocab-uploaded');
@@ -317,9 +311,44 @@ module.exports = {
       $('.cms-vocab-input').addClass('cms-upload-label-error');
     }
 
+    cms.ajax.create('POST', 'cms/api/upload.php');
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
-
     cms.ajax.send(formData);
+  },
+
+  // downloadVocabFile: function () {
+  //   var lang       = self.getCurrentService(),
+  //       vocab      = self.getPageVocab(),
+  //       vocabJSON  = '',
+  //       vocabFilename  = lang+'.json';
+
+  //   vocabJSON = self.getVocabAsJSON(vocab);
+
+  //   self.downloadVocabAsFile(vocabJSON, vocabFilename);
+  // },
+
+  getVocabAsJSON: function (vocab) {
+    return JSON.stringify(vocab, undefined, 2);
+  },
+    
+  //http://stackoverflow.com/a/18197511
+  downloadVocabAsFile: function (vocabJSON, filename) {
+    var a = document.createElement('a');
+    var file = self.createVocabFile(vocabJSON);
+    a.href = URL.createObjectURL(file);
+    a.download = filename;
+    a.click();
+  },
+
+  //https://css-tricks.com/snippets/javascript/get-url-variables/
+  getQueryVariable: function (variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+      var pair = vars[i].split("=");
+      if(pair[0] == variable){return pair[1];}
+    }
+    return(false);
   },
 
 }
