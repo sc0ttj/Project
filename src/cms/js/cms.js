@@ -61,6 +61,9 @@ module.exports = {
 
     if (this.cutsTheMustard()) this.addMustard();
     this.loadStylesheets();
+
+    if (this.showPreview()) this.showPreviewInModal();
+
     return true // if we loaded up ok
   },
 
@@ -107,7 +110,9 @@ module.exports = {
   },
 
   showPreviewInModal: function () {
-    content = '<div class="cms-iframe-resizer">\
+    var vocab;
+
+    var content = '<div class="cms-iframe-resizer">\
       <button class="cms-iframe-resizer-btn" data-width="320px"  data-height="568px">  iPhone 5  </button>\
       <button class="cms-iframe-resizer-btn" data-width="360px"  data-height="640px">  Galaxy S5 </button>\
       <button class="cms-iframe-resizer-btn" data-width="414px"  data-height="736px">  iPhone 6  </button>\
@@ -132,6 +137,18 @@ module.exports = {
       contents: content
     });
     cms.modal.show();
+
+    if (cms.getQueryVariable('preview')) {
+      vocab = cms.getQueryVariable('preview') || '';
+      console.log(vocab);
+
+      // if 'vocabs/[vocab].json exists, get contents of vocab file
+
+      // get html of preview page (in the iframe)
+
+      // apply vocab data to preview page html
+
+    }
 
     $('.cms-modal-viewport').addClass('cms-modal-viewport-previewer');
     cms.iframeResizeBtnClickHandler();
@@ -278,6 +295,22 @@ module.exports = {
       restored = true;
     }
     if (restored) app.reload();
+  },
+
+  showPreview: function () {
+    if (this.getQueryVariable('preview')) return true;
+    return false;
+  },
+
+  //https://css-tricks.com/snippets/javascript/get-url-variables/
+  getQueryVariable: function (variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+      var pair = vars[i].split("=");
+      if(pair[0] == variable){return pair[1];}
+    }
+    return(false);
   },
 
 };
