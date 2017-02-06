@@ -187,7 +187,11 @@ module.exports = {
         //replace editable values with the values from the vocab file
         if (vocab.hasOwnProperty(sectionName)){
           // set to value from vocab file, or default back to value from preview page
-          valFromVocabFile = vocab[sectionName][i][key] || pageVocab[sectionName][i][key];
+          valFromVocabFile = pageVocab[sectionName][i][key];
+          if (typeof vocab[sectionName][i] !== 'undefined') {
+            valFromVocabFile = vocab[sectionName][i][key] || pageVocab[sectionName][i][key];
+          }
+
         } 
 
         // create the form section
