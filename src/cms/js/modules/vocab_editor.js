@@ -13,7 +13,7 @@ module.exports = {
   },
 
   shouldShowTranslator: function () {
-    if (self.getQueryVariable('translation')) return true;
+    if (self.getQueryVariable('translate')) return true;
     return false;
   },
 
@@ -143,7 +143,7 @@ module.exports = {
   },
 
   getCurrentService: function () {
-    var service = self.getQueryVariable('translation') || self.getQueryVariable('preview') || $('html').attr('lang');
+    var service = self.getQueryVariable('translate') || self.getQueryVariable('preview') || $('html').attr('lang');
     return service;
   },
 
@@ -193,6 +193,8 @@ module.exports = {
           }
 
         } 
+
+        if (key == 'lang') value='en';
 
         // create the form section
         form += '<table>\n\

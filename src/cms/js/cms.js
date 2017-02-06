@@ -49,20 +49,22 @@ module.exports = {
     this.vocabEditor    = require('modules/vocab_editor');
     this.ui             = require('modules/ui');
 
-    this.modal.init();
-    this.editor.init();
-    this.videoManager.init();
-    this.imageManager.init();
-    this.sectionManager.init();
-    this.metaManager.init();
-    this.templater.init();
+    if (!cms.showTranslation()){
+      this.modal.init();
+      this.editor.init();
+      this.videoManager.init();
+      this.imageManager.init();
+      this.sectionManager.init();
+      this.metaManager.init();
+      this.templater.init();
+      this.ui.init();
+    }
     this.vocabEditor.init();
-    this.ui.init();
 
     if (this.cutsTheMustard()) this.addMustard();
     this.loadStylesheets();
 
-    if (this.showPreview()) this.showPreviewInModal();
+    if (this.showTranslation()) this.translatePage();
 
     return true // if we loaded up ok
   },
@@ -74,6 +76,7 @@ module.exports = {
   },
 
   reload: function (){
+    if (this.showTranslation()) return false;
     cms.editor.setEditableItems(this.config.editableItems);
     cms.editor.setEditableRegions(this.config.editableRegionClass);
     cms.editor.setEventHandlers();
@@ -138,19 +141,6 @@ module.exports = {
     });
     cms.modal.show();
 
-    if (cms.getQueryVariable('preview')) {
-      lang = cms.getQueryVariable('preview') || '';
-
-      // if 'vocabs/[lang].json exists, get contents of vocab file
-      cms.vocabEditor.getVocabFileContents(function vocabReturnedOK(vocab){
-        // get html of preview page (in the iframe)
-        var vocab = JSON.parse(vocab);
-        // apply vocab data to preview page html
-      });
-
-
-    }
-
     $('.cms-modal-viewport').addClass('cms-modal-viewport-previewer');
     cms.iframeResizeBtnClickHandler();
   },
@@ -193,6 +183,76 @@ module.exports = {
     this.ui.hideMenu();
     var html = cms.getPageHTMLWithoutCMS();
     cms.saveHtmlToFile(html, cms.saveToZip);
+  },
+
+  showTranslation: function (){
+    if (this.getQueryVariable('preview') != '') return true;
+    return false;    
+  },
+
+  translatePage: function(){
+    var $html = $html = $('html').clone(),
+        editableItemSelector='',
+        metaSelector = 'meta[name^="title"], meta[name^="description"], meta[name^="author"], meta[name^="keywords"], meta[name^="news_keywords"], meta[name^="copyright"], meta[name^="twitter"], meta[property], meta[itemprop]';
+
+    // if 'vocabs/[lang].json exists, get contents of vocab file
+    cms.vocabEditor.getVocabFileContents(function vocabReturnedOK(vocab){
+      // get html of preview page (in the iframe)
+      var vocab = JSON.parse(vocab),
+          index = '';
+
+      // replace meta items
+      $html.find(metaSelector).each(function(el, i){
+        el.content = Object.values(vocab['meta'][i])[0];
+        // console.log(Object.values(vocab['meta'][i])[0]);
+        index = i;
+      });
+
+      // get editable items in page
+      cms.config.editableItems.forEach(function (el) {
+        editableItemSelector += el + ',';
+      });
+      editableItemSelector = editableItemSelector.slice(0, -1); // remove trailing comma
+
+      var sectionIndex =1;
+      // replace editables with mustache {{holders}}
+      $html.find(editableItemSelector).each(function(el, i){
+        var sectionName = 'section'+sectionIndex,
+            prevTag = '',
+            elemCount = 0;
+
+        if (vocab[sectionName]){
+          Object.values(vocab[sectionName]).forEach(function(vocabItem, i){
+            var tag  = Object.keys(vocabItem)[0],
+                value = Object.values(vocabItem)[0];
+
+            (prevTag == tag) ? elemCount++ : elemCount=0;
+
+            var elemToUpdate = $('.'+sectionName).find(tag)[elemCount];
+
+            // console.log(sectionName, tag, elemCount, value, elemToUpdate);
+
+            if (elemToUpdate) {
+              if (tag == 'img'     && elemToUpdate.src)    elemToUpdate.src    = Object.values(vocabItem)[0];
+              if (tag == 'source'  && elemToUpdate.srcset) elemToUpdate.srcset = Object.values(vocabItem)[0];
+              if (tag !== 'source' && tag !== 'source' &&  elemToUpdate.innerHTML) elemToUpdate.innerHTML = Object.values(vocabItem)[0];
+            }
+
+            prevTag = tag;
+
+          });
+          sectionIndex++;
+        }
+
+      });
+
+      $('html').find('*').attr('contenteditable', false);
+      $('html').find('*').removeClass('cms-editable cms-editable-img cms-editable-region cms-inline-media');
+
+      // console.log($html[0]);
+
+    });
+
   },
 
   getPageHTMLWithoutCMS: function () {
@@ -258,10 +318,13 @@ module.exports = {
   },
 
   autoSave: function () {
-    setInterval(this.saveProgress, 30000);
+    if (this.showTranslation()) return false;
+      setInterval(this.saveProgress, 30000);
   },
 
   saveProgress: function(){
+    if (cms.showTranslation()) return false;
+
     var $html = $('body').clone(),
         $head = $('head').clone(),
         html  = '';
@@ -296,11 +359,6 @@ module.exports = {
       restored = true;
     }
     if (restored) app.reload();
-  },
-
-  showPreview: function () {
-    if (this.getQueryVariable('preview')) return true;
-    return false;
   },
 
   //https://css-tricks.com/snippets/javascript/get-url-variables/
