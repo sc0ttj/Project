@@ -108,7 +108,7 @@ module.exports = {
   previewPage: function () {
     this.ui.hideMenu();
     var html = cms.getPageHTMLWithoutCMS();
-
+    html = cms.addDocType(html);
     cms.saveHtmlToFile(html, cms.showPreviewInModal);
   },
 
@@ -179,12 +179,6 @@ module.exports = {
     });
   },
 
-  savePage: function(){
-    this.ui.hideMenu();
-    var html = cms.getPageHTMLWithoutCMS();
-    cms.saveHtmlToFile(html, cms.saveToZip);
-  },
-
   showTranslation: function (){
     if (this.getQueryVariable('preview') != '') return true;
     return false;    
@@ -246,24 +240,57 @@ module.exports = {
 
       });
 
-
-      // console.log($html.html());
-
-      $('html')[0].innerHTML = $html.html();
-
-      $('html').find('*').removeAttr('contenteditable');
-      $('html').find('*').removeClass('cms-editable cms-editable-img cms-editable-region cms-inline-media');
+      // remove cms scripts
+      $html.find('script[src^="cms"], #cms-init, link[href^="cms"]').remove();
+      $html.find('*[class=""]').removeAttr('class');
+      $html.find('*').removeAttr('contenteditable');
+      $html.find('*').removeClass('cms-editable cms-editable-img cms-editable-region cms-inline-media');
       // reset app templates so they work on pages with no js
       // move to a method in the main app
-      $('html').find('*').removeClass('anim-fade-1s transparent scrollmation-text-js scrollmation-image-container-top scrollmation-image-container-fixed scrollmation-image-container-bottom');
-      $('html').find('.scrollmation-text').addClass('article');
-      $('html').find('.video-overlay').removeClass('hidden');
-      $('html').find('.video-overlay-button').html('▶');
+      $html.find('html, body').removeClass('html5 js');
+      $html.find('*').removeClass('anim-fade-1s transparent scrollmation-text-js scrollmation-image-container-top scrollmation-image-container-fixed scrollmation-image-container-bottom');
+      $html.find('.scrollmation-text').addClass('article');
 
-      app.video.init();
+      cms.saveTranslatedHTML($html.html());
+      cms.previewTranslation($html.html());
 
     });
 
+  },
+
+  previewTranslation: function (html){
+    $('html')[0].innerHTML = html;
+    $('body').addClass('js');
+    $('html').find('.video-overlay').removeClass('hidden');
+    $('html').find('.video-overlay-button').html('▶');
+    app.video.init();
+  },
+
+  saveTranslatedHTML: function(html){
+    var data = new FormData();
+
+    html = cms.addDocType(html);
+
+    data.append('html', html);
+    data.append('lang', cms.vocabEditor.getCurrentService());
+
+    this.ajax.create('POST', 'cms/api/translation.php');
+    this.ajax.onFinish(
+      function success (responseText) {
+        console.log(responseText);
+      }, 
+      function error (responseText) {
+        console.log(responseText);
+      }
+    );
+    this.ajax.send(data);
+  },
+
+  savePage: function(){
+    this.ui.hideMenu();
+    var html = cms.getPageHTMLWithoutCMS();
+    html = cms.addDocType(html);
+    cms.saveHtmlToFile(html, cms.saveToZip);
   },
 
   getPageHTMLWithoutCMS: function () {
@@ -293,7 +320,12 @@ module.exports = {
     // get cleaned html
     cleanHTML = $html.html();
 
-    return '<!DOCTYPE html>\n<html lang="en">\n' + cleanHTML + '</html>';
+    return cleanHTML;
+  },
+
+  addDocType: function (html) {
+    var lang = cms.vocabEditor.getCurrentService() || 'en';
+    return '<!DOCTYPE html>\n<html lang="'+lang+'">\n' + html + '</html>';
   },
 
   saveHtmlToFile: function(html, callback) {

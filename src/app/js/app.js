@@ -168,6 +168,8 @@ module.exports = {
       var videoOverlay = videoElem.nextElementSibling,
           overlayBtn   = videoOverlay.firstChild.nextSibling;
 
+      $(videoOverlay).removeClass('hidden');
+
       $(videoElem).on('mouseover',  function (){
         $(videoOverlay).removeClass('hidden');
       });
