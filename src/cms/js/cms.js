@@ -191,7 +191,7 @@ module.exports = {
   },
 
   translatePage: function(){
-    var $html = $html = $('html').clone(),
+    var $html = $('html').clone(),
         editableItemSelector='',
         metaSelector = 'meta[name^="title"], meta[name^="description"], meta[name^="author"], meta[name^="keywords"], meta[name^="news_keywords"], meta[name^="copyright"], meta[name^="twitter"], meta[property], meta[itemprop]';
 
@@ -228,7 +228,7 @@ module.exports = {
 
             (prevTag == tag) ? elemCount++ : elemCount=0;
 
-            var elemToUpdate = $('.'+sectionName).find(tag)[elemCount];
+            var elemToUpdate = $html.find('.'+sectionName).find(tag)[elemCount];
 
             // console.log(sectionName, tag, elemCount, value, elemToUpdate);
 
@@ -246,10 +246,12 @@ module.exports = {
 
       });
 
-      $('html').find('*').attr('contenteditable', false);
-      $('html').find('*').removeClass('cms-editable cms-editable-img cms-editable-region cms-inline-media');
+      $html.find('*').attr('contenteditable', false);
+      $html.find('*').removeClass('cms-editable cms-editable-img cms-editable-region cms-inline-media');
 
-      // console.log($html[0]);
+      // console.log($html.html());
+
+      $('html')[0].innerHTML = $html.html();
 
     });
 
