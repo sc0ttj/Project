@@ -246,12 +246,21 @@ module.exports = {
 
       });
 
-      $html.find('*').attr('contenteditable', false);
-      $html.find('*').removeClass('cms-editable cms-editable-img cms-editable-region cms-inline-media');
 
       // console.log($html.html());
 
       $('html')[0].innerHTML = $html.html();
+
+      $('html').find('*').removeAttr('contenteditable');
+      $('html').find('*').removeClass('cms-editable cms-editable-img cms-editable-region cms-inline-media');
+      // reset app templates so they work on pages with no js
+      // move to a method in the main app
+      $('html').find('*').removeClass('anim-fade-1s transparent scrollmation-text-js scrollmation-image-container-top scrollmation-image-container-fixed scrollmation-image-container-bottom');
+      $('html').find('.scrollmation-text').addClass('article');
+      $('html').find('.video-overlay').removeClass('hidden');
+      $('html').find('.video-overlay-button').html('▶');
+
+      app.video.init();
 
     });
 

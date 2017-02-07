@@ -41,6 +41,8 @@ module.exports = {
     this.scrollmation.init();
     this.statText.init();
     this.video.init();
+    scrollMonitor.update();
+    scrollMonitor.recalculateLocations();
   },
 
   cutsTheMustard: function () {
