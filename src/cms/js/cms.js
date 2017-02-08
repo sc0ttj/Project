@@ -277,6 +277,7 @@ module.exports = {
     var data = new FormData();
 
     html = cms.addDocType(html);
+    html = cms.removeWhitespace(html);
 
     data.append('html', html);
     data.append('lang', cms.vocabEditor.getCurrentService());
@@ -326,6 +327,7 @@ module.exports = {
     $html.find('.video-overlay-button').html('▶');
     // get cleaned html
     cleanHTML = $html.html();
+    cleanHTML = cms.removeWhitespace(cleanHTML);
 
     return cleanHTML;
   },
@@ -333,6 +335,13 @@ module.exports = {
   addDocType: function (html) {
     var lang = cms.vocabEditor.getCurrentService() || 'en';
     return '<!DOCTYPE html>\n<html lang="'+lang+'">\n' + html + '</html>';
+  },
+
+  removeWhitespace: function(string){
+    string = string.replace(/  /g, '');
+    string = string.replace(/ \n/g, '\n');
+    string = string.replace(/\n\n/g, '');
+    return string;
   },
 
   saveHtmlToFile: function(html, callback) {
