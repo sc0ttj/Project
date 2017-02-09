@@ -114,9 +114,10 @@ module.exports = {
 
   showPreviewInModal: function (callback) {
     var lang = cms.vocabEditor.getCurrentService(),
-        page = lang; /// will be name of page to preview, example 'fr.html'
+        filename = 'index.' + lang, // name of page to preview, example 'index.fr.html'
+        langInfo = app.getLangInfo(lang);
 
-    if (lang === 'en') page = 'preview'; // if default LANG, get default preview page
+    if (lang === 'en') filename = 'preview'; // if default LANG, get default preview page
 
     var content = '<div class="cms-iframe-resizer">\
       <button class="cms-iframe-resizer-btn" data-width="320px"  data-height="568px">  iPhone 5  </button>\
@@ -128,18 +129,18 @@ module.exports = {
       <button class="cms-iframe-resizer-btn cms-iframe-resizer-btn-orientation cms-hidden" data-orientation="switch" style="display:none;"> Switch Orientation ⟳ </button>\
     </div>\
     <iframe id="pagePreview"\
-      title="Page Preview"\
+      title="Preview ('+langInfo.name+')"\
       width="100%"\
       height="100%"\
       frameborder="0"\
       marginheight="0"\
       marginwidth="0"\
-      src="'+page+'.html?c'+Math.random()+'">\
+      src="'+filename+'.html?c'+Math.random()+'">\
     </iframe>';
 
     // load modal
     cms.modal.create({
-      "title": 'Page Preview',
+      "title": 'Preview ('+langInfo.name+')',
       "contents": content,
       "callback": callback
     });
@@ -290,13 +291,14 @@ module.exports = {
   },
 
   saveTranslatedHTML: function(html){
-    var data = new FormData();
+    var data = new FormData(),
+        filename = 'index.' + cms.vocabEditor.getCurrentService();
 
     html = cms.addDocType(html);
     html = cms.removeWhitespace(html);
 
     data.append('html', html);
-    data.append('lang', cms.vocabEditor.getCurrentService());
+    data.append('lang', filename);
 
     this.ajax.create('POST', 'cms/api/translation.php');
     this.ajax.onFinish(

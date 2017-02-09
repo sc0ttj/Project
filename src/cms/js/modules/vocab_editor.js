@@ -144,7 +144,7 @@ module.exports = {
 
     // load modal
     cms.modal.create({
-      title: 'Translation Manager - '+langInfo.name,
+      title: 'Translate to '+langInfo.name,
       contents: form
     });
     cms.modal.show();
