@@ -9,10 +9,17 @@ module.exports = {
   },
 
   create: function (data) {
-    var html = self.getHtml(data);
+    var html = self.getHtml(data)
+        callback = data.callback;
+
     self.html = html;
     self.addToPage();
     self.setContents(data.contents);
+    // set a callback to run on exit
+    self.callback = '';
+    if (typeof callback === 'function') {
+      self.callback = callback;
+    }
   },
 
   getHtml: function (data) {
@@ -54,6 +61,7 @@ module.exports = {
 
   backBtnClickHandler: function (e) {
     self.hide();
+    if (typeof self.callback === 'function') self.callback();
   },
 
   hide: function () {

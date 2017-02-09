@@ -49,8 +49,9 @@ module.exports = {
     this.vocabEditor    = require('modules/vocab_editor');
     this.ui             = require('modules/ui');
 
+    this.modal.init();
+    this.vocabEditor.init();
     if (!cms.showTranslation()){
-      this.modal.init();
       this.editor.init();
       this.videoManager.init();
       this.imageManager.init();
@@ -59,7 +60,6 @@ module.exports = {
       this.templater.init();
       this.ui.init();
     }
-    this.vocabEditor.init();
 
     if (this.cutsTheMustard()) this.addMustard();
     this.loadStylesheets();
@@ -112,8 +112,11 @@ module.exports = {
     cms.saveHtmlToFile(html, cms.showPreviewInModal);
   },
 
-  showPreviewInModal: function () {
-    var lang;
+  showPreviewInModal: function (callback) {
+    var lang = cms.vocabEditor.getCurrentService(),
+        page = lang; /// will be name of page to preview, example 'fr.html'
+
+    if (lang === 'en') page = 'preview'; // if default LANG, get default preview page
 
     var content = '<div class="cms-iframe-resizer">\
       <button class="cms-iframe-resizer-btn" data-width="320px"  data-height="568px">  iPhone 5  </button>\
@@ -131,15 +134,19 @@ module.exports = {
       frameborder="0"\
       marginheight="0"\
       marginwidth="0"\
-      src="preview.html?c'+Math.random()+'">\
+      src="'+page+'.html?c'+Math.random()+'">\
     </iframe>';
 
     // load modal
     cms.modal.create({
-      title: 'Page Preview',
-      contents: content
+      "title": 'Page Preview',
+      "contents": content,
+      "callback": callback
     });
     cms.modal.show();
+
+    // hide back button if previewing via ?preview=LANG
+    if (cms.showTranslation()) $('.cms-modal-back-btn').addClass('cms-hidden');
 
     $('.cms-modal-viewport').addClass('cms-modal-viewport-previewer');
     cms.iframeResizeBtnClickHandler();
@@ -186,15 +193,16 @@ module.exports = {
 
   translatePage: function(){
     var tmpHtml = document.createElement('HTML'),
+        html = '',
         $html = '',
         editableItemSelector='',
         metaSelector = 'meta[name^="title"], meta[name^="description"], meta[name^="author"], meta[name^="keywords"], meta[name^="news_keywords"], meta[name^="copyright"], meta[name^="twitter"], meta[property], meta[itemprop]';
 
-    cms.vocabEditor.getPreviewPageHtml(function (html){
+    cms.vocabEditor.getPreviewPageHtml(function translatePreviewPageHTML(html){
       tmpHtml.innerHTML = html;
       $html = $(tmpHtml);
 
-      // if 'vocabs/[lang].json exists, get contents of vocab file
+      // if 'vocabs/[lang].json exists, add contents of vocab file to $html, then run saveTranslatedHTML
       cms.vocabEditor.getVocabFileContents(function vocabReturnedOK(vocab){
         // get html of preview page (in the iframe)
         var vocab = JSON.parse(vocab),
@@ -256,21 +264,12 @@ module.exports = {
         $html.find('*').removeClass('anim-fade-1s transparent scrollmation-text-js scrollmation-image-container-top scrollmation-image-container-fixed scrollmation-image-container-bottom');
         $html.find('.scrollmation-text').addClass('article');
 
-        cms.saveTranslatedHTML($html.html());
-        cms.previewTranslation($html.html());
-
+        html = $html.html();
+        cms.saveTranslatedHTML(html);
       });
 
     });
 
-  },
-
-  previewTranslation: function (html){
-    $('html')[0].innerHTML = html;
-    $('body').addClass('js');
-    $('html').find('.video-overlay').removeClass('hidden');
-    $('html').find('.video-overlay-button').html('▶');
-    app.video.init();
   },
 
   saveTranslatedHTML: function(html){
@@ -286,6 +285,9 @@ module.exports = {
     this.ajax.onFinish(
       function success (responseText) {
         console.log(responseText);
+        // translated html saved as LANG.html
+        // now preview the translated file we just created
+        cms.showPreviewInModal(cms.vocabEditor.init);
       }, 
       function error (responseText) {
         console.log(responseText);

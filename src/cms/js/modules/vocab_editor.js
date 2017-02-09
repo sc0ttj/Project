@@ -5,7 +5,7 @@ var self;
 
 module.exports = {
   init: function(){
-    self = this;
+    self = cms.vocabEditor;
 
     if (self.shouldShowTranslator()) self.getPreviewPageHtml(self.getVocabFromPreview);
 
@@ -138,7 +138,7 @@ module.exports = {
       contents: form
     });
     cms.modal.show();
-    $('.cms-modal-back-btn').addClass('cms-hidden');
+    $('.cms-modal-back-btn').html('Preview');
     self.addEventHandlers();
   },
 
@@ -160,7 +160,7 @@ module.exports = {
         fields    = self.createVocabEditorFormFields();
 
     form += fields;
-    form += '<button class="cms-modal-btn">Update Translation</button>\n';
+    form += '<button class="cms-modal-btn">Preview Translation</button>\n';
     form += '</form>\n';
 
     return form;
@@ -239,13 +239,21 @@ module.exports = {
       $('.cms-vocab-input').removeClass('cms-upload-label-error');
     });
 
+    // upload vocab after each change
     $('.cms-vocab-input').on('blur', function(e){
       self.uploadVocab(e);
     });
 
+    // button at bottom of page
     $('.cms-modal-btn').on('click', function (e) {
       e.preventDefault();
-      self.uploadVocab(e);
+      cms.translatePage();
+    });
+
+    // back button, top left
+    $('.cms-modal-back-btn').on('click', function(e){
+      e.preventDefault();
+      cms.translatePage();
     });
   },
 
@@ -253,9 +261,25 @@ module.exports = {
     var lang          = self.getCurrentService(),
         vocab         = self.getFormVocab(),
         vocabFile     = self.createVocabFile(vocab),
-        vocabFilename = lang+'.json';
+        vocabFilename = lang+'.json',
+        formData = new FormData(this);
 
-    self.uploadFile(e, vocabFile, vocabFilename);
+    formData.append('vocab', vocabFile, vocabFilename);
+    //prevent redirect and do ajax upload
+    e.preventDefault();
+ 
+    var onSuccessHandler = function (responseText){
+      // console.log(responseText);
+      $('.cms-vocab-input').addClass('cms-vocab-uploaded');
+    }
+    var onErrorHandler = function (responseText){
+      console.log(responseText);
+      $('.cms-vocab-input').addClass('cms-upload-label-error');
+    }
+
+    cms.ajax.create('POST', 'cms/api/upload.php');
+    cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
+    cms.ajax.send(formData);
   },
 
   getFormVocab: function() {
@@ -310,27 +334,6 @@ module.exports = {
 
   createVocabFile: function (vocabJSON) {
     return new Blob([vocabJSON], {type: 'text/plain'});
-  },
-
-  uploadFile: function (e, file, filename){
-    var formData = new FormData(this);
-
-    formData.append('vocab', file, filename);
-    //prevent redirect and do ajax upload
-    e.preventDefault();
- 
-    var onSuccessHandler = function (responseText){
-      console.log(responseText);
-      $('.cms-vocab-input').addClass('cms-vocab-uploaded');
-    }
-    var onErrorHandler = function (responseText){
-      console.log(responseText);
-      $('.cms-vocab-input').addClass('cms-upload-label-error');
-    }
-
-    cms.ajax.create('POST', 'cms/api/upload.php');
-    cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
-    cms.ajax.send(formData);
   },
 
   // downloadVocabFile: function () {
