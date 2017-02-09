@@ -1,0 +1,105 @@
+//https://css-tricks.com/almanac/properties/d/direction/
+
+// left to right
+
+// body {
+//   h1, h2, h3, h4, p, li, span, input, textarea, button {
+//     direction: ltr;
+//   }
+// }
+
+// *[dir="ltr"] { 
+//   direction: ltr; 
+//   unicode-bidi: embed; 
+// }
+
+// bdo[dir="ltr"] { 
+//   direction: ltr; 
+//   unicode-bidi: bidi-override; 
+// }
+
+
+// right to left
+
+.rtl {
+  h1, h2, h3, h4, p, li, span, input, textarea, button {
+    direction: rtl;
+    text-align: right;
+  }
+  // override text alignment of some elems
+  .section {
+    .hero-text-container .hero-text-titles-container h1,
+    .hero-text-container .hero-text-titles-container p   {
+       text-align: center;
+    }
+  }
+  @media screen and (min-width: 550px) {
+    .section .article-left img.article-left-img {
+      float: left;
+      margin-right: 1.6rem;
+      margin-left: 0;
+    }
+    .section .article-right img.article-right-img {
+        float: right;
+        margin-left: 1.6rem;
+        margin-right: 0;
+    }
+  }
+}
+
+*[dir="rtl"] { 
+  direction: rtl; 
+  unicode-bidi: embed; 
+}
+
+
+bdo[dir="rtl"] { 
+  direction: rtl; 
+  unicode-bidi: bidi-override; 
+}
+
+
+// set fonts for each language
+//https://stackoverflow.com/questions/36873507/are-web-safe-fonts-internationally-safe-as-well
+
+//arabic
+html[lang="ar"] body {
+  font-family: Tahoma, "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", sans-serif;
+}
+
+// chinese
+html[lang="zh"] body {
+  font-family: "Helvetica Neue", Helvetica, "Arial Narrow", sans-serif;
+}
+
+//pashto
+html[lang="ps"] body {
+  font-family: Tahoma, sans-serif;
+}
+
+//hindi
+html[lang="ps"] body {
+  font-family: Tahoma, Arial, Verdana, Helvetica, mangal, sans-serif;
+}
+
+//hebrew
+html[lang="ps"] body {
+  font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+}
+
+// japanese
+html[lang="jp"] body {
+  font-family: "Lato", "Meiryo", "メイリオ", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif, Helvetica, HirakakuProN-W3;
+}
+
+//urdu
+html[lang="ur"] body {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Urdu Typesetting", sans-serif;
+}
+
+
+//thai
+html[lang="th"] body {
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+}
+

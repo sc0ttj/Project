@@ -1,3 +1,4 @@
+var languages  = require('modules/languages.js')
 var loadCSS    = require('modules/loadcss').init;
 var loadJS     = require('modules/loadjs');
 var pageConfig = require('page_config.js');
@@ -21,6 +22,8 @@ module.exports = {
     this.pageConfig = pageConfig;
     // we know js is enabled now, mark it
     $('body').addClass('js');
+     // set lang info
+     this.setLang();
     // add html5 extras
     if (this.cutsTheMustard()){
       // add mustard
@@ -34,6 +37,24 @@ module.exports = {
       this.statText.init();
       this.video.init();
     }
+  },
+
+  setLang: function () {
+    var lang = this.getLang();
+
+    this.lang      = this.getLangInfo(lang),
+    this.lang.code = lang;
+  },
+
+  getLang: function () {
+    var lang = $('html')[0].getAttribute('lang');
+
+    lang.code = lang;
+    return lang || 'en';
+  },
+
+  getLangInfo: function (lang) {
+    return languages[lang];
   },
 
   reload: function () {
@@ -200,6 +221,17 @@ module.exports = {
       $(btn).on('click',  videoBtnClickHandler);
     },
 
+  },
+
+  //https://css-tricks.com/snippets/javascript/get-url-variables/
+  getQueryVariable: function (variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+      var pair = vars[i].split("=");
+      if(pair[0] == variable){return pair[1];}
+    }
+    return(false);
   },
 
 }

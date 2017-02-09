@@ -13,8 +13,17 @@ module.exports = {
   },
 
   shouldShowTranslator: function () {
-    if (self.getQueryVariable('translate')) return true;
+    var lang      = self.getCurrentService(),
+        langInfo  = app.getLangInfo(lang),
+        validLang = (self.getQueryVariable('translate') && langInfo.code != 'undefined');
+
+    if (validLang) return true;
     return false;
+  },
+
+  getCurrentService: function () {
+    var service = self.getQueryVariable('translate') || self.getQueryVariable('preview') || app.lang.code || $('html').attr('lang');
+    return service;
   },
 
   getPreviewPageHtml: function (callback) {
@@ -130,21 +139,17 @@ module.exports = {
 
   showTranslatorUI: function () {
     var lang      = self.getCurrentService(),
+        langInfo  = app.getLangInfo(lang),
         form      = self.createVocabEditorForm();
 
     // load modal
     cms.modal.create({
-      title: 'Translation Manager - '+lang,
+      title: 'Translation Manager - '+langInfo.name,
       contents: form
     });
     cms.modal.show();
     $('.cms-modal-back-btn').html('Preview');
     self.addEventHandlers();
-  },
-
-  getCurrentService: function () {
-    var service = self.getQueryVariable('translate') || self.getQueryVariable('preview') || $('html').attr('lang');
-    return service;
   },
 
   createNewVocab: function (lang) {
@@ -168,9 +173,11 @@ module.exports = {
 
   createVocabEditorFormFields: function (){
     var lang      = self.getCurrentService(),
+        langInfo  = app.getLangInfo(lang),
         pageVocab = self.pageVocab,
         vocab     = self.vocab || self.pageVocab,
-        form      = '';
+        form      = '',
+        textDirection = langInfo.direction;
 
     // build form from self.pageVocab
     Object.keys(pageVocab).forEach(function createFormSections(key) {
@@ -211,6 +218,7 @@ module.exports = {
             data-name="'+key+'" \
             data-lang="'+lang+'" \
             data-section="'+sectionName+'" \
+            dir="'+textDirection+'" \
             name="'+key+'" />'+valFromVocabFile.trim()+'</textarea>\n\
         </td>\n\
         </tr>\n\

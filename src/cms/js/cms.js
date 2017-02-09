@@ -264,6 +264,23 @@ module.exports = {
         $html.find('*').removeClass('anim-fade-1s transparent scrollmation-text-js scrollmation-image-container-top scrollmation-image-container-fixed scrollmation-image-container-bottom');
         $html.find('.scrollmation-text').addClass('article');
 
+        // get lang details for current translation LANG
+        var lang     = cms.vocabEditor.getCurrentService(),
+            langInfo = app.getLangInfo(lang);
+
+        langInfo.code = lang;
+
+        // remove from page all of the lang info that will be replaced
+        $html.find('html, body').removeClass('en');
+        $html.find('html, body').removeAttr('dir');
+        $html.find('html, body').removeClass('rtl');
+
+        // now add the correct values for lang to page
+        if (langInfo.direction === 'rtl') {
+          $html.find('html, body').attr('dir', langInfo.direction);
+          $html.find('hmtl, body').addClass(langInfo.direction);
+        }
+
         html = $html.html();
         cms.saveTranslatedHTML(html);
       });
