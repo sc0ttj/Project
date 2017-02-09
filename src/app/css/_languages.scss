@@ -64,12 +64,12 @@ bdo[dir="rtl"] {
 
 //arabic
 html[lang="ar"] body {
-  font-family: Tahoma, "Simplified Arabic", "Traditional Arabic", "Arabic Typesetting", sans-serif;
+  font-family: Tahoma, sans-serif;
 }
 
-// chinese
-html[lang="zh"] body {
-  font-family: "Helvetica Neue", Helvetica, "Arial Narrow", sans-serif;
+//kurdhish
+html[lang="ku"] body {
+  font-family: Tahoma, sans-serif;
 }
 
 //pashto
@@ -77,29 +77,40 @@ html[lang="ps"] body {
   font-family: Tahoma, sans-serif;
 }
 
-//hindi
-html[lang="ps"] body {
-  font-family: Tahoma, Arial, Verdana, Helvetica, mangal, sans-serif;
-}
-
-//hebrew
-html[lang="ps"] body {
-  font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
-}
-
-// japanese
-html[lang="jp"] body {
-  font-family: "Lato", "Meiryo", "メイリオ", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif, Helvetica, HirakakuProN-W3;
+//persian (farsi)
+html[lang="fa"] body {
+  font-family: Tahoma, sans-serif;
 }
 
 //urdu
 html[lang="ur"] body {
-  font-family: "Helvetica Neue", Helvetica, Arial, "Urdu Typesetting", sans-serif;
+  font-family: Tahoma, sans-serif;
 }
 
 
+
+// chinese
+html[lang="zh"] body {
+  font-family: "Helvetica Neue", Helvetica, Tahoma, "Arial Narrow", sans-serif;
+}
+
+//hindi
+html[lang="ps"] body {
+  font-family: Tahoma, "Helvetica Neue", Helvetica, Arial, Verdana, mangal, "Devanagari MT", sans-serif;
+}
+
+//hebrew
+html[lang="ps"] body {
+  font-family: Tahoma, "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+}
+
+// japanese
+html[lang="jp"] body {
+  font-family: "Lato", "Meiryo", "メイリオ", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", "Helvetica Neue", Helvetica, HirakakuProN-W3, sans-serif;
+}
+
 //thai
 html[lang="th"] body {
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-family: Tahoma, "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
 }
 
