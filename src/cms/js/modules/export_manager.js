@@ -92,7 +92,7 @@ module.exports = {
         // translated html saved as index.LANG.html
         // now preview the translated file we just created
         // then reload the vocab editor on preview exit
-        cms.previewManager.showPreviewInModal(cms.vocabEditor.init);
+        cms.previewManager.showUI(cms.vocabEditor.init);
       }, 
       function error (responseText) {
         console.log(responseText);

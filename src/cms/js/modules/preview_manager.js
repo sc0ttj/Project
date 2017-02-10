@@ -13,10 +13,10 @@ module.exports = {
     cms.ui.hideMenu();
     var html = cms.exportManager.getPageHTMLWithoutCMS();
     html = cms.exportManager.addDocType(html);
-    cms.exportManager.saveHtmlToFile(html, self.showPreviewInModal);
+    cms.exportManager.saveHtmlToFile(html, self.showUI);
   },
 
-  showPreviewInModal: function (callback) {
+  showUI: function (callback) {
     var lang = cms.vocabEditor.getCurrentService(),
         filename = 'index.' + lang, // name of page to preview, example 'index.fr.html'
         langInfo = app.getLangInfo(lang);
