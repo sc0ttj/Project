@@ -172,7 +172,7 @@ module.exports = {
   },
 
   menuBtnPreviewClickHandler: function (e) {
-    cms.previewPage();
+    cms.previewManager.previewPage();
   },
 
   menuBtnAddSectionClickHandler: function (e) {
