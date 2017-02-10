@@ -216,6 +216,9 @@ module.exports = {
           index = i;
         });
 
+        // update <title> tag as well
+        $html.find('title').html(vocab.meta[0].title);
+
         // get editable items in page
         cms.config.editableItems.forEach(function (el) {
           editableItemSelector += el + ',';
