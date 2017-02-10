@@ -262,7 +262,7 @@ module.exports = {
     $('.cms-modal-btn').on('click', function (e) {
       e.preventDefault();
       // get preview.html contents, use current vocab to perform translation, 
-      // then save to index.[lang].html
+      // then save to index.[lang].html and then preview it
       self.translatePage();
     });
 
@@ -270,7 +270,7 @@ module.exports = {
     $('.cms-modal-back-btn').on('click', function(e){
       e.preventDefault();
       // get preview.html contents, use current vocab to perform translation, 
-      // then save to index.[lang].html
+      // then save to index.[lang].html and then preview it
       self.translatePage();
     });
   },
@@ -423,7 +423,7 @@ module.exports = {
         editableItemSelector = editableItemSelector.slice(0, -1); // remove trailing comma
 
         var sectionIndex =1;
-        // replace editables with mustache {{holders}}
+        // replace editables with values from vocab file
         $html.find(editableItemSelector).each(function(el, i){
           var sectionName = 'section'+sectionIndex,
               prevTag = '',
