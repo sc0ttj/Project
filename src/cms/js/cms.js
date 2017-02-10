@@ -107,13 +107,6 @@ module.exports = {
     });
   },
 
-  previewPage: function () {
-    this.ui.hideMenu();
-    var html = cms.getPageHTMLWithoutCMS();
-    html = cms.addDocType(html);
-    cms.saveHtmlToFile(html, cms.previewManager.showPreviewInModal);
-  },
-
   showTranslation: function (){
     if (this.getQueryVariable('preview') != '') return true;
     return false;    
