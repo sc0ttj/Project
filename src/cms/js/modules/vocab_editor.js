@@ -6,19 +6,26 @@ var self;
 module.exports = {
   init: function(){
     self = cms.vocabEditor;
-
-    if (self.shouldShowTranslator()) self.getPreviewPageHtml(self.getVocabFromPreview);
-
+    if (self.shouldShowUI()) self.showUI();
     return true // if we loaded ok
   },
 
-  shouldShowTranslator: function () {
+  shouldShowUI: function () {
     var lang      = self.getCurrentService(),
         langInfo  = app.getLangInfo(lang),
         validLang = (self.getQueryVariable('translate') && langInfo.code != 'undefined');
 
     if (validLang) return true;
     return false;
+  },
+
+  showUI: function (){
+    // the funcs below will:
+    // - get preview page html,
+    // - then build the 'en' vocab for left side of UI
+    // - then get vocab file contents for LANG
+    // - finally add LANG vocab contents to right side of UI
+    self.getPreviewPageHtml(self.getEnVocabFromPreview);
   },
 
   getCurrentService: function () {
@@ -44,7 +51,7 @@ module.exports = {
     cms.ajax.send(null);
   },
 
-  getVocabFromPreview: function (html){
+  getEnVocabFromPreview: function (html){
     // create an empty vocab file and get html to build it from
     var lang      = self.getCurrentService(),
         pageVocab = self.createNewVocab(lang),
@@ -108,11 +115,10 @@ module.exports = {
     self.pageVocab = pageVocab;
 
     // we now have the default text to translate, so we can get a translation for it
-
-    // lets populate the right side of form with the contents of the vocab file for this LANG
     self.getVocabFileContents(function vocabReturnedOK(vocab){
       self.vocab = JSON.parse(vocab);
-      self.showTranslatorUI();
+      // now populate the form with the contents of self.pageVocab (en) and self.vocab (vocab of current LANG)
+      self.buildTranslatorUI();
     });
 
   },
@@ -137,7 +143,7 @@ module.exports = {
     cms.ajax.send(null);
   },
 
-  showTranslatorUI: function () {
+  buildTranslatorUI: function () {
     var lang      = self.getCurrentService(),
         langInfo  = app.getLangInfo(lang),
         form      = self.createVocabEditorForm();
@@ -390,12 +396,12 @@ module.exports = {
         editableItemSelector='',
         metaSelector = 'meta[name^="title"], meta[name^="description"], meta[name^="author"], meta[name^="keywords"], meta[name^="news_keywords"], meta[name^="copyright"], meta[name^="twitter"], meta[property], meta[itemprop]';
 
-    self.getPreviewPageHtml(function translatePreviewPageHTML(html){
+    self.getPreviewPageHtml(function translateHtml(html){
       tmpHtml.innerHTML = html;
       $html = $(tmpHtml);
 
       // if 'vocabs/[lang].json exists, add contents of vocab file to $html, then run saveTranslatedHMTL
-      self.getVocabFileContents(function vocabReturnedOK(vocab){
+      self.getVocabFileContents(function updateHtmlUsingVocab(vocab){
         // get html of preview page (in the iframe)
         var vocab = JSON.parse(vocab),
             index = '';

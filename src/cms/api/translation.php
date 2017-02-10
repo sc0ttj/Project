@@ -22,7 +22,7 @@ $filename = $_SERVER['DOCUMENT_ROOT'] . $url_path . $lang . '.html';
 $handle = fopen($filename,"w");
 if ( fwrite($handle,$html) ){
   chmod($filename, 0777); //fix with better vagrant permission in mounting of shared folder
-  echo "Translation $lang saved.";
+  echo "Translation $lang.html saved.";
 } else {
   echo "Translation $lang NOT saved.";
 }
