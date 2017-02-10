@@ -116,7 +116,7 @@ module.exports = {
 
   autoSave: function () {
     if (this.showTranslation()) return false;
-      setInterval(this.saveProgress, 30000);
+    setInterval(this.saveProgress, 30000);
   },
 
   saveProgress: function(){
