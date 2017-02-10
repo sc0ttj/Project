@@ -9,7 +9,7 @@ module.exports = {
   },
 
   create: function (data) {
-    var html = self.getHtml(data)
+    var html = self.getHtml(data),
         callback = data.callback;
 
     self.html = html;
