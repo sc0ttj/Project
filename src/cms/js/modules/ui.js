@@ -168,7 +168,7 @@ module.exports = {
   },
 
   menuBtnSaveClickHandler: function (e) {
-    cms.savePage();
+    cms.exportManager.savePage();
   },
 
   menuBtnPreviewClickHandler: function (e) {

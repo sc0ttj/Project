@@ -478,36 +478,11 @@ module.exports = {
 
         html = $html.html();
         // save as index.[lang].html, then preview it using preview manager
-        self.saveTranslatedHTML(html);
+        cms.exportManager.saveTranslatedHTML(html);
       });
 
     });
 
-  },
-
-  saveTranslatedHTML: function(html){
-    var data = new FormData(),
-        filename = 'index.' + self.getCurrentService();
-
-    html = cms.addDocType(html);
-    html = cms.removeWhitespace(html);
-
-    data.append('html', html);
-    data.append('lang', filename);
-
-    cms.ajax.create('POST', 'cms/api/translation.php');
-    cms.ajax.onFinish(
-      function success (responseText) {
-        console.log(responseText);
-        // translated html saved as index.LANG.html
-        // now preview the translated file we just created
-        cms.previewManager.showPreviewInModal(self.init);
-      }, 
-      function error (responseText) {
-        console.log(responseText);
-      }
-    );
-    cms.ajax.send(data);
-  },
+  }
 
 }

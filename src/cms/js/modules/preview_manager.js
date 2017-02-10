@@ -11,9 +11,9 @@ module.exports = {
 
   previewPage: function () {
     cms.ui.hideMenu();
-    var html = cms.getPageHTMLWithoutCMS();
-    html = cms.addDocType(html);
-    cms.saveHtmlToFile(html, self.showPreviewInModal);
+    var html = cms.exportManager.getPageHTMLWithoutCMS();
+    html = cms.exportManager.addDocType(html);
+    cms.exportManager.saveHtmlToFile(html, self.showPreviewInModal);
   },
 
   showPreviewInModal: function (callback) {
