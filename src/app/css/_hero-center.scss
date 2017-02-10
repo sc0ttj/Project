@@ -6,7 +6,6 @@
   height:100vh;
   position: relative;
   overflow: hidden;
-  text-align: center;
 }
 
 .hero-picture {}
@@ -26,6 +25,7 @@
   width:100%;
   .hero-text-titles-container {
     margin-bottom:4rem;
+    text-align: center;
     text-shadow: 1px 1px 3px #000;
     .hero-title {}
     .hero-subtitle {
@@ -41,9 +41,6 @@
     font-size:1.6rem;
     font-weight: bold;
     padding:10px;
-    .hero-meta-field {
-      text-align:left;
-    }
     .hero-meta {
       color:#999;
       display: inline-block;
