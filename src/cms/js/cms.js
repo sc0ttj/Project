@@ -35,6 +35,8 @@ module.exports = {
     this.pageDir    = window.location.pathname.split('/').slice(0, -1).join('/');
 
     this.restoreProgress();
+    if (this.cutsTheMustard()) this.addMustard();
+    this.loadStylesheets();
     this.setupSmoothScrolling();
     // this.autoSave();
 
@@ -64,9 +66,6 @@ module.exports = {
       this.templater.init();
       this.ui.init();
     }
-
-    if (this.cutsTheMustard()) this.addMustard();
-    this.loadStylesheets();
 
     if (this.showTranslation()) this.vocabEditor.translatePage();
 
