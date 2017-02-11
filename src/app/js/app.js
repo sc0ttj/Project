@@ -183,8 +183,23 @@ module.exports = {
       var $videos = $('video'),
           $videoBtns = $('.video-overlay-button');
 
-      $videos.forEach(this.setupVideoEvents);
-      $videoBtns.forEach(this.setupVideoBtnEvents);
+      $videos.each(this.setupVideoEvents);
+      $videoBtns.each(this.setupVideoBtnEvents);
+
+      // add auto pause behaviour when video scrolls out of viewport
+      var watchers = $('video').each(function addWatchers(video){
+        var watcher = scrollMonitor.create(video),
+            videoOverlay = video.nextElementSibling;
+
+        watcher.exitViewport(function(){
+          video.pause();
+          if (videoOverlay){
+            $(videoOverlay).removeClass('hidden');
+            $(videoOverlay.children[0]).html('▶');
+          }
+        });
+      });
+
     },
 
     setupVideoEvents: function (videoElem, i) {
