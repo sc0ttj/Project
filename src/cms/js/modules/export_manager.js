@@ -30,6 +30,7 @@ module.exports = {
     $html.find('*').removeClass(cms.config.mustardClass);
     $html.find('*').removeAttr('contenteditable');
     $html.find('*').removeAttr('spellcheck');
+    $html.find('*').removeAttr('style');
     // remove cms scripts
     $html.find('script[src^="cms"], #cms-init, link[href^="cms"]').remove();
     $html.find('*[class=""]').removeAttr('class');

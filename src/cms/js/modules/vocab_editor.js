@@ -469,6 +469,8 @@ module.exports = {
 
         langInfo.code = lang;
 
+        // workaround for chrome contenteditable bug
+        $html.find('*').removeAttr('style');
         // remove from page all of the lang info that will be replaced
         $html.find('html, body').removeClass('en');
         $html.find('html, body').removeAttr('dir');
