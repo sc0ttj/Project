@@ -75,7 +75,8 @@ module.exports = {
 
   onHighlightTextHandler: function(){
     // uses my fork of grande.js (https://github.com/sc0ttj/grande.js)
-    var editables = document.querySelectorAll(cms.config.editableRegionClass);
+    var selector = '.' + cms.config.editableRegionClass;
+    var editables = document.querySelectorAll(selector);
     grande.bind(editables);
   },
 
