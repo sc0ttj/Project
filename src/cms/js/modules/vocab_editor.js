@@ -95,12 +95,14 @@ module.exports = {
             // get all items to be added to vocab
             vocabItems.each(function getVocabValuesFromElem(pageElem){
               var key   = pageElem.tagName.toLowerCase(),
-                  value = pageElem.innerText || $(pageElem).attr('src')  || $(pageElem).attr('srcset') || pageElem.innerHMTL,
+                  value = pageElem.innerText || $(pageElem).attr('src')  || $(pageElem).attr('srcset') || pageElem.innerHTML,
                   vocabItem  = {};
 
-              // add the item to the vocab object
-              vocabItem[key] = value.trim();
-              pageVocab[sectionName].push(vocabItem);
+              // add the item to the vocab object, if value found
+              if (value) {
+                vocabItem[key] = value.trim();
+                pageVocab[sectionName].push(vocabItem);
+              }
             });
 
           });
@@ -390,11 +392,13 @@ module.exports = {
   },
 
   translatePage: function(){
-    var tmpHtml = document.createElement('HTML'),
+    var tmpHtml = '',
         html = '',
         $html = '',
         editableItemSelector='',
         metaSelector = 'meta[name^="title"], meta[name^="description"], meta[name^="author"], meta[name^="keywords"], meta[name^="news_keywords"], meta[name^="copyright"], meta[name^="twitter"], meta[property], meta[itemprop]';
+
+    tmpHtml = document.createElement('HTML');
 
     self.getPreviewPageHtml(function translateHtml(html){
       tmpHtml.innerHTML = html;
@@ -445,16 +449,21 @@ module.exports = {
               // set to a var, so we can include in elemToUpdate
               elemCount = count[tag];
 
+              // get the elem to update .. we will replace its values with values from vocab
+              // find the elem using its details from vocab (section name, tag type, index)
               elemToUpdate = $html.find('.'+sectionName).find(tag)[elemCount];
 
               // console.log(sectionName, tag, elemCount, count[tag], value, elemToUpdate);
 
+              // if we got an elem to update
               if (elemToUpdate) {
+                // get the tag type and update the correct attribute
                 if (tag == 'img'     && elemToUpdate.src)    elemToUpdate.src    = Object.values(vocabItem)[0];
                 if (tag == 'source'  && elemToUpdate.srcset) elemToUpdate.srcset = Object.values(vocabItem)[0];
                 if (tag !== 'source' && tag !== 'source' &&  elemToUpdate.innerHTML) elemToUpdate.innerHTML = Object.values(vocabItem)[0];
               }
 
+              // get ready for next loop
               prevTag = tag;
 
             });

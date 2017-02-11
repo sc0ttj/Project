@@ -29,7 +29,7 @@ module.exports = {
           $target = $el;
 
       if ($el.hasClass('cms-media-btn')) $target = $el.parent();
-      $target.append(imgHtml);
+      $target.after(imgHtml);
       $target.children('.cms-media-btn').remove();
     }
   },
