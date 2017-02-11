@@ -28,9 +28,11 @@ module.exports = {
     if (this.cutsTheMustard()){
       // add mustard
       $('body').addClass('html5');
+
       //load 'nice-to-haves'
-      this.loadStylesheet('css/full.css');
-      this.loadModules(['test', 'test1']);
+      // this.loadStylesheet('css/full.css');
+      // this.loadModules(['test', 'test1']);
+
       // init the various templates that use js
       this.fixedImage.init();
       this.scrollmation.init();
