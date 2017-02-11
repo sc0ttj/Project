@@ -9,6 +9,10 @@ div.stat-text p, div.stat-text span {
   line-height: 3.6rem;
 }
 
+.article .stat-text p, .article .stat-text span {
+  font-size: 2.4rem;
+}
+
 .stat-text-highlight {
   color: $stat-text-color;
   font-weight: 600;

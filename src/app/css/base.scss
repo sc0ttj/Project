@@ -46,11 +46,11 @@
 }
 
 // https://stackoverflow.com/questions/15015019/prevent-chrome-from-wrapping-contents-of-joined-p-with-a-span?answertab=votes#tab-top
-.article p, .article p.cms-editable, .cms-editable p, .article span, .cms-editable span {
+.article p, .article .article span  {
   font-size: 1.6rem;
 }
 
-.article blockquote, .article blockquote span, .cms-editable blockquote {
+.article blockquote, .article blockquote span {
   font-size: 2rem;
 }
 

@@ -124,6 +124,15 @@ module.exports = {
     self.nextEditableItemExists = (self.nextEditableElem === "{}" || typeof self.nextEditableElem != 'undefined');
     self.removeLeftOverMediaBtns(el);
     cms.imageManager.addResponsiveImageClickHandlers();
+    //chrome bug workaround - remove needless <span>s from <p>s
+    // select spans to unwrap
+    //https://plainjs.com/javascript/manipulation/unwrap-a-dom-element-35/
+
+    $(this).find('span:not([class="stat-text-highlight"])').each(function unwrapSpan(span){
+      var parent = span.parentNode;
+      while (span.firstChild) parent.insertBefore(span.firstChild, span);
+      parent.removeChild(span);
+    });
   },
 
   getNextEditableItem: function (el) {

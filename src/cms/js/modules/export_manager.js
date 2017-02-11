@@ -35,10 +35,10 @@ module.exports = {
     //chrome bug workaround - remove needless <span>s from <p>s
     // select spans to unwrap
     //https://plainjs.com/javascript/manipulation/unwrap-a-dom-element-35/
-    $('p[contenteditable] span').each(function unwrapSpan(span){
+    $html.find('p[contenteditable] span:not([class="stat-text-highlight"])').each(function unwrapSpan(span){
       var parent = span.parentNode;
       while (span.firstChild) parent.insertBefore(span.firstChild, span);
-      console.log(span, parent);
+      // console.log(span, parent);
       parent.removeChild(span);
     });
 
@@ -65,10 +65,10 @@ module.exports = {
   },
 
   cleanupWhitespace: function(string){
+    string = string.replace(/&nbsp;/g, ' ');
     string = string.replace(/  /g, '');
     string = string.replace(/ \n/g, '\n');
     string = string.replace(/\n\n/g, '');
-    string = string.replace(/&nbsp;/g, '');
     return string;
   },
 
