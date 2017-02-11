@@ -58,7 +58,7 @@ module.exports = {
         $html     = $(html),
         sectionSelector    = cms.config.sectionSelector,
         metaSelector       = 'meta[name^="title"], meta[name^="description"], meta[name^="author"], meta[name^="keywords"], meta[name^="news_keywords"], meta[name^="copyright"], meta[name^="twitter"], meta[property], meta[itemprop]',
-        vocabElemsSelector = 'h1, h2, p, li, video source, picture source, img',
+        vocabElemsSelector = 'h1, h2, p, blockquote, li, video source, picture source, img',
         i = 0; // used to make 'section1', 'section2', etc
 
     // process the html we chose and build the vocab file
@@ -427,18 +427,27 @@ module.exports = {
         $html.find(editableItemSelector).each(function(el, i){
           var sectionName = 'section'+sectionIndex,
               prevTag = '',
-              elemCount = 0;
+              elemCount = 0, 
+              count = [];
 
           if (vocab[sectionName]){
             Object.values(vocab[sectionName]).forEach(function(vocabItem, i){
               var tag  = Object.keys(vocabItem)[0],
-                  value = Object.values(vocabItem)[0];
+                  value = Object.values(vocabItem)[0],
+                  elemToUpdate = '';
 
-              (prevTag == tag) ? elemCount++ : elemCount=0;
+              // count each elem type, so we can reference the right ones in the vocab
+              count[tag]++;
+              // if tag not same as last, either set to zero if first time, or increment
+              if (prevTag != tag) {
+                count[tag] = count[tag]++ || 0;
+              }
+              // set to a var, so we can include in elemToUpdate
+              elemCount = count[tag];
 
-              var elemToUpdate = $html.find('.'+sectionName).find(tag)[elemCount];
+              elemToUpdate = $html.find('.'+sectionName).find(tag)[elemCount];
 
-              // console.log(sectionName, tag, elemCount, value, elemToUpdate);
+              // console.log(sectionName, tag, elemCount, count[tag], value, elemToUpdate);
 
               if (elemToUpdate) {
                 if (tag == 'img'     && elemToUpdate.src)    elemToUpdate.src    = Object.values(vocabItem)[0];
@@ -453,17 +462,6 @@ module.exports = {
           }
 
         });
-
-        // remove cms scripts
-        $html.find('script[src^="cms"], #cms-init, link[href^="cms"]').remove();
-        $html.find('*[class=""]').removeAttr('class');
-        $html.find('*').removeAttr('contenteditable');
-        $html.find('*').removeClass('cms-editable cms-editable-img cms-editable-region cms-inline-media');
-        // reset app templates so they work on pages with no js
-        // move to a method in the main app
-        $html.find('html, body').removeClass('html5 js');
-        $html.find('*').removeClass('anim-fade-1s transparent scrollmation-text-js scrollmation-image-container-top scrollmation-image-container-fixed scrollmation-image-container-bottom');
-        $html.find('.scrollmation-text').addClass('article');
 
         // get lang details for current translation LANG
         var lang     = self.getCurrentService(),
