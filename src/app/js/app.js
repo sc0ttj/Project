@@ -27,7 +27,7 @@ module.exports = {
     // add html5 extras
     if (this.cutsTheMustard()){
       // add mustard
-      $('body').addClass('html5');
+      $('body:not(.html5)').addClass('html5');
 
       //load 'nice-to-haves'
       // this.loadStylesheet('css/full.css');
