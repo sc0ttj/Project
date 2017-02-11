@@ -32,6 +32,28 @@
     .hero-text-container .hero-text-titles-container p   {
        text-align: center;
     }
+    blockquote {
+      border-right: 6px solid #900;
+      border-left: none;
+      padding: 16px 60px 1rem 50px;
+    }
+    blockquote::before{
+      content: none;
+    }
+    blockquote::after{
+      color: #333;
+      content: "\201D";
+      font-family: Georgia, serif;
+      font-size: 8rem;
+      font-style: normal;
+      font-weight: bold;
+      line-height: 6rem;
+      padding: 0;
+      position: absolute;
+      margin: 0;
+      right: 10px;
+      top: 0;
+    }
   }
   @media screen and (min-width: 550px) {
     .section .article-left img.article-left-img {
