@@ -36,6 +36,7 @@
       border-right: 6px solid #900;
       border-left: none;
       padding: 16px 60px 1rem 50px;
+      margin-right: 0;
     }
     blockquote::before{
       content: none;
@@ -59,10 +60,16 @@
     }
   }
   @media screen and (min-width: 550px) {
+    .section .article-left {
+      float: left;
+    }
     .section .article-left img.article-left-img {
       float: left;
       margin-right: 1.6rem;
       margin-left: 0;
+    }
+    .section .article-left {
+      float: right;
     }
     .section .article-right img.article-right-img {
         float: right;
