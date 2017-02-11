@@ -22,7 +22,7 @@ module.exports = {
          contenteditable="false"\
          onclick="mediaBtnClickHandler(this);">\
       ADD MEDIA\
-    </div>'
+    </div>';
     mediaBtnClickHandler = function (el){
       var imgHtml = '<picture><img class="inline-image" src=images/placeholders/550x550.png /></picture>',
           $el     = $(el),
@@ -63,11 +63,20 @@ module.exports = {
     $editables.on('focus', self.onEditableFocusHandler);
     $editables.on('blur', self.onEditableBlurHandler);
     $editables.on('keypress', self.onEditableKeyPressHandler);
+
+    // add a popup menu on text highlight
+    self.onHighlightTextHandler();
   },
 
   getEditableItems: function () {
     var $items = $('[contenteditable]');
     return $items;
+  },
+
+  onHighlightTextHandler: function(){
+    // uses my fork of grande.js (https://github.com/sc0ttj/grande.js)
+    var editables = document.querySelectorAll(cms.config.editableRegionClass);
+    grande.bind(editables);
   },
 
   onEditableKeyPressHandler: function(e){
