@@ -488,7 +488,7 @@ module.exports = {
         // now add the correct values for lang to page
         if (langInfo.direction === 'rtl') {
           $html.find('html, body').attr('dir', langInfo.direction);
-          $html.find('hmtl, body').addClass(langInfo.direction);
+          $html.find('html, body').addClass(langInfo.direction);
         }
 
         html = $html.html();
