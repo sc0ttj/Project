@@ -76,9 +76,9 @@ exports.config = {
     javascripts: {
       joinTo: {
         /* combine js files to 'js/app.js' */
-        'js/app.js': /^src\/app\/js\/(?!enhancements)/,
+        'js/app.js': /^src\/app\/js/,
         /* combine js files to 'js/enhancements.js' */
-        'js/enhancements.js': /^src\/app\/js\/enhancements/,
+        // 'js/enhancements.js': /^src\/app\/js\/enhancements/,
         /* combine js files to 'js/vendor.js' */
         'js/vendor.js': [ 
           /^src\/app\/vendor/,
@@ -106,10 +106,8 @@ exports.config = {
 
     stylesheets: {
       joinTo: {
-        /* combine scss to css/base.css */
-        'css/base.css': /^src\/app\/css\/(?!full)/,
-        /* combine scss to css/full.css */
-        'css/full.css': /^src\/app\/css\/full/,
+        /* combine scss to css/app.css */
+        'css/app.css': /^src\/app\/css/,
         /* combine scss to css/vendor.css */
         'css/vendor.css': [ 
           /^src\/app\/vendor/,
