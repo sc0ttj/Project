@@ -136,6 +136,8 @@ module.exports = {
     //get cleaned up html
     html = $html.html();
 
+    html = cms.exportManager.cleanupWhitespace(html);
+
     // save cleaned up html to localstorage
     store.set(this.pageDir + '__head', $head.html());
     store.set(this.pageDir, html);
