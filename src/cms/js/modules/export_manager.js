@@ -31,6 +31,17 @@ module.exports = {
     $html.find('*').removeAttr('contenteditable');
     $html.find('*').removeAttr('spellcheck');
     $html.find('*').removeAttr('style');
+
+    //chrome bug workaround - remove needless <span>s from <p>s
+    // select spans to unwrap
+    //https://plainjs.com/javascript/manipulation/unwrap-a-dom-element-35/
+    $('p[contenteditable] span').each(function unwrapSpan(span){
+      var parent = span.parentNode;
+      while (span.firstChild) parent.insertBefore(span.firstChild, span);
+      console.log(span, parent);
+      parent.removeChild(span);
+    });
+
     // remove cms scripts
     $html.find('script[src^="cms"], #cms-init, link[href^="cms"]').remove();
     $html.find('*[class=""]').removeAttr('class');
@@ -43,7 +54,7 @@ module.exports = {
     $html.find('.video-overlay-button').html('▶');
     // get cleaned html
     cleanHTML = $html.html();
-    cleanHTML = self.removeWhitespace(cleanHTML);
+    cleanHTML = self.cleanupWhitespace(cleanHTML);
 
     return cleanHTML;
   },
@@ -53,10 +64,11 @@ module.exports = {
     return '<!DOCTYPE html>\n<html lang="'+lang+'">\n' + html + '</html>';
   },
 
-  removeWhitespace: function(string){
+  cleanupWhitespace: function(string){
     string = string.replace(/  /g, '');
     string = string.replace(/ \n/g, '\n');
     string = string.replace(/\n\n/g, '');
+    string = string.replace(/&nbsp;/g, '');
     return string;
   },
 
@@ -81,7 +93,7 @@ module.exports = {
         filename = 'index.' + cms.vocabEditor.getCurrentService();
 
     html = self.addDocType(html);
-    html = self.removeWhitespace(html);
+    html = self.cleanupWhitespace(html);
 
     data.append('html', html);
     data.append('lang', filename);
