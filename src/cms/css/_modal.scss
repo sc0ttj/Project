@@ -242,6 +242,17 @@ input[type="file"] {
   pointer-events:all;
 }
 
+// file manager (simply uses "phpfm" in iframe)
+.cms-modal-viewport.cms-modal-file-manager {
+  padding:0;
+  margin:0;
+  overflow-y: hidden;
+  width:100%;
+  #file-manager {
+    border: 0;
+  }
+}
+
 //spinner - for ajax showing loading
 //https://projects.lukehaas.me/css-loaders/
 .cms-loader {

@@ -51,6 +51,7 @@ module.exports = {
     this.exportManager  = require('modules/export_manager');
     this.templater      = require('modules/templater');
     this.vocabEditor    = require('modules/vocab_editor');
+    this.fileManager    = require('modules/file_manager');
     this.ui             = require('modules/ui');
 
     this.modal.init();
@@ -63,6 +64,7 @@ module.exports = {
       this.imageManager.init();
       this.sectionManager.init();
       this.metaManager.init();
+      this.fileManager.init();
       this.templater.init();
       this.ui.init();
     }

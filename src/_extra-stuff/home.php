@@ -26,9 +26,26 @@ if ($_POST['url'] != ''){
   $src  = $_SERVER['DOCUMENT_ROOT']."/demo";
   $dest = $_SERVER['DOCUMENT_ROOT'] . '/' . $_POST['url'];
 
+
+  $password = 'password';
+  if (isset($_POST['password'])) {
+    $password = $_POST['password'];
+  }
+
+  $passwd_script = '<?php
+$valid_password = "'.$password.'";
+?>';
+$passwd_script_path = $dest."/cms/api/passwd.php";
+
   if ( !exec("cp -Rv ". $src . "/ " . $dest . "/") ) {
     echo "copy failed";
     exit ();
+  } else {
+
+    // copy was a success, now add the custom password for this page
+    $myfile = fopen($passwd_script_path, "w");
+    fwrite($myfile, $passwd_script);
+    fclose($myfile);
   }
 
   // page was built, so output the details
@@ -68,6 +85,7 @@ if ($_POST['url'] != ''){
       font-weight:  bold;
       font-family:  Sans-serif, serif;
       font-size: 1.2rem;
+      line-height: 1.4rem;
     }
 
     body {
@@ -82,7 +100,7 @@ if ($_POST['url'] != ''){
       margin: 0 auto;
       padding: 20px;
       position: relative;
-      max-width: 600px;
+      max-width: 450px;
     }
 
     .form-block, .box-block {
@@ -94,7 +112,7 @@ if ($_POST['url'] != ''){
 
     .form-block p, .box-block p {
       display:  block;
-      text-align: right;
+      text-align: left;
       color: #777;
       font-size: 1rem;
     }
@@ -103,16 +121,17 @@ if ($_POST['url'] != ''){
       display: inline-block;
       padding: 16px;
       width: 100%;
-      min-width: 320px;
-      text-align: right;
+      min-width: 280px;
+      text-align: left;
     }
 
-    .box .input, input[type="text"], input[type="date"], input[type="datetime"], input[type="datetime-local"] {
+    .box .input, input[type="text"], input[type="password"], input[type="date"], input[type="datetime"], input[type="datetime-local"] {
       background-color: #444;
       border: 0;
       color: #eee;
-      min-width: 300px;
+      min-width: 260px;
       padding: 8px 12px;
+      width: 100%;
     }
 
     .btn-block {
@@ -165,11 +184,14 @@ if ($_POST['url'] != ''){
     <div class="form-block">
       <label>
         <span class="span">Article URL:</span>
-        <span><?php echo 'http://' . $_SERVER['SERVER_NAME'] . '/'; ?></span>
         <input type="text" tabindex="1" name="url" pattern="^[a-zA-Z0-9\-]+$" value="<?php echo $_POST['url']; ?>" placeholder="my-article-name" required="required">
-        <span>/</span>
       </label>
       <p>The page URL. Accepts only letters A-Z, numbers and dashes.</p>
+      <label>
+        <span class="span">Password:</span>
+        <input type="password" tabindex="1" name="password" value="" required="required">
+      </label>
+      <p>The login password for this page.</p>
     </div>
 
     <div class="btn-block">
