@@ -27,16 +27,24 @@ if ($_POST['url'] != ''){
   $dest = $_SERVER['DOCUMENT_ROOT'] . '/' . $_POST['url'];
 
 
-  $password = 'password';
+  //set a default password for the page
+  $password = 'demo';
+  // replace with the passwd given by user
   if (isset($_POST['password'])) {
     $password = $_POST['password'];
   }
 
+  // create the script which will hold the passwd
   $passwd_script = '<?php
 $valid_password = "'.$password.'";
 ?>';
-$passwd_script_path = $dest."/cms/api/passwd.php";
 
+  // where to put the script
+  $passwd_script_path = $dest."/cms/api/passwd.php";
+
+  //
+  // here we copy www/demo/ to the new folder name
+  //
   if ( !exec("cp -Rv ". $src . "/ " . $dest . "/") ) {
     echo "copy failed";
     exit ();
@@ -47,6 +55,7 @@ $passwd_script_path = $dest."/cms/api/passwd.php";
     fwrite($myfile, $passwd_script);
     fclose($myfile);
   }
+
 
   // page was built, so output the details
   $header = "Page created";
