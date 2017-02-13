@@ -3,23 +3,35 @@
 ini_set('display_errors',1);
 error_reporting(E_ALL);
 
-require_once('passwd.php'); 
+require_once('passwds/admin.php');
 $loginSuccess = false;
 $msg = '';
 
 session_start();
 
+
+$qs = '';
+if (isset($_SESSION['translate'])){
+  $qs = '?translate=' . $_SESSION['translate'];
+}
+
 if (isset($_SESSION['login'])){
   print_r($_SESSION);
   $loginSuccess = true;
-  header("Location: ../../index.html");
+  header("Location: ../../".$qs);
 }
 
 function validateLogin ($pass){
   global $valid_password;
+  
+  if (isset($_SESSION['translate'])){
+    require_once('passwds/'.$_SESSION['translate'].'.php');
+  }
+  
   if ($pass == $valid_password){
     return true;
   }
+  
   return false;
 }
 
@@ -37,10 +49,10 @@ if (isset($_POST['password'])) {
   if ($loginSuccess) {
     // if login was ok, start session
     $_SESSION['login'] = true;
-    header("Location: ../../index.html");
+    header("Location: ../../".$qs);
   } else {
-    session_unset();
-    if (isset($_SESSION)) session_destroy();
+    // session_unset();
+    // if (isset($_SESSION)) session_destroy();
     $msg = 'Password not valid. Try again.';
   }
 
@@ -110,15 +122,21 @@ input[type="submit"]:hover, input[type="submit"]:focus, {
 
 <body>
 
+<center>
+
 <?php
+if (isset($_SESSION['translate'])){
+  echo "<h2>Translator login:</b>  ".$_SESSION['translate']."</h2>";
+} else {
+  echo "<h2>Admin login:</h2>";
+}
+
 if ($msg != ''){
-  echo "<h2>".$msg."</h2>";
+  echo "<h4>".$msg."</h4>";
 }
 
 if (!$loginSuccess){
 ?>
-
-<center>
 
 <form action="login.php" method="post">
   <label>Enter the password for this page:</label>

@@ -6,6 +6,7 @@ var self;
 module.exports = {
   init: function(){
     self = cms.vocabEditor;
+    $('[contenteditable]').attr('contenteditable', false);
     if (self.shouldShowUI()) self.showUI();
     return true // if we loaded ok
   },

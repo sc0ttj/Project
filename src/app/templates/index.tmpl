@@ -1,21 +1,12 @@
 <?php
 session_start();
 if (!isset($_SESSION['login'])){
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head prefix="og: http://ogp.me/ns#">
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="HandheldFriendly" content="True"/>
-  <title>Login</title>
-</head>
-<body style="padding:0;margin:0;overflow:hidden;">
-  <iframe style="width:100vw;height:100vh;padding:0;margin:0;" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0" src="cms/api/login.php"></iframe>
-</body>
-</html>
-<?php
+  if(isset($_GET['translate'])){
+    $_SESSION['translate'] = $_GET['translate'];
+  } else {
+    unset($_SESSION['translate']);
+  }
+  header('Location: cms/api/login.php');
   die;
 }
 ?>
@@ -122,6 +113,13 @@ if (!isset($_SESSION['login'])){
   var app = require('app');
   app.init();
 </script>
+<?php 
+if (isset($_SESSION['translate'])){
+  echo '<script>var translateOnly = true;</script>';
+} else {
+  echo '<script>var translateOnly = false;</script>';
+}
+?>
 {{>_cms-script}}
 </body>
 </html>

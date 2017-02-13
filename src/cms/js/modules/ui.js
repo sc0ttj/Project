@@ -35,6 +35,7 @@ module.exports = {
     self.$menuBtnMeta = $('.cms-menu-item-meta');
     self.$menuBtnFiles = $('.cms-menu-item-files');
     self.$menuBtnLogout = $('.cms-menu-item-logout');
+    self.$menuBtnTranslations = $('.cms-menu-item-translations');
   },
 
   setUIEventHandlers: function () {
@@ -49,6 +50,7 @@ module.exports = {
     self.$menuBtnMeta.on('click', self.menuBtnMetaClickHandler);
     self.$menuBtnFiles.on('click', self.menuBtnFilesClickHandler);
     self.$menuBtnLogout.on('click', self.menuBtnLogoutClickHandler);
+    self.$menuBtnTranslations.on('click', self.menuBtnTranslationsClickHandler);
   },
 
   setUIEventHandlersOff: function () {
@@ -63,6 +65,7 @@ module.exports = {
     self.$menuBtnMeta.off('click', self.menuBtnMetaClickHandler);
     self.$menuBtnFiles.off('click', self.menuBtnFilesClickHandler);
     self.$menuBtnLogout.off('click', self.menuBtnLogoutClickHandler);
+    self.$menuBtnTranslations.off('click', self.menuBtnTranslationsClickHandler);
   },
 
   getMenuHtml: function () {
@@ -88,6 +91,10 @@ module.exports = {
           class="cms-menu-item cms-menu-item-preview">\
           <span class="cms-menu-item-text">Preview</span>\
           <span class="cms-menu-item-icon cms-menu-item-icon-preview cms-anim-fade-250ms cms-unselectable">👁</span>\
+        </li>\
+        <li \
+          class="cms-menu-item cms-menu-item-translations">\
+          <span class="cms-menu-item-text">Translations</span>\
         </li>\
         <li \
           class="cms-menu-item cms-menu-item-save">\
@@ -205,6 +212,10 @@ module.exports = {
 
   menuBtnLogoutClickHandler: function (e) {
     window.location.href = 'cms/api/logout.php';
+  },
+
+  menuBtnTranslationsClickHandler: function () {
+    cms.translationManager.showUI();
   },
 
   reIndexMenuItems: function (){

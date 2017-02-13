@@ -122,6 +122,88 @@
   padding: 0;
 }
 
+// translation manager
+.cms-modal-viewport table.cms-translations-table {
+  width: 100%;
+  // responsive table
+  //https://techblog.livingsocial.com/blog/2015/04/06/responsive-tables-in-pure-css/
+  @media screen and (max-width: 500px) {
+    .cms-translations-table-header {
+      display:none;
+    }
+    tbody {
+      position: relative;
+      top:24px;
+    }
+    //override skeleton
+    td:first-child {
+        padding-left: 15px;
+        margin-top: 36px;
+    }
+    tr {
+      margin-bottom: 26px;
+    }
+    td:before {
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+      text-transform: capitalize;
+      direction: ltr;
+      text-align: left;
+    }
+    td {
+      display: block;
+    }
+    td button.cms-translation-btn {
+      margin: 0;
+      padding: 0;
+    }
+  }
+  // hide native names before we collapse to responsive table (above)
+  @media (min-width: 501px) and (max-width: 650px){
+    th.cms-translations-header-native-name, td.cms-translations-native-name {
+      display:none;
+    }
+  }
+  // styling for all screen sizes
+  tr.cms-translations-table-header {
+    th {
+      text-align:left;
+      text-transform: capitalize;
+      white-space: nowrap;
+    }
+  }
+  tr.cms-translations-row {}
+  td.cms-translations-code {}
+  td.cms-translations-name {}
+  td.cms-translations-native-name {}
+  td.cms-translations-url {
+    min-width:40px;
+  }
+  td.cms-translations-passwd {
+    min-width:40px;
+  }
+  td.cms-translations-enabled {}
+  td.cms-translations-disabled {}
+  //
+  button.cms-translation-btn {
+    color: #eee;
+    background-color: #333;
+    border: 0;
+    padding: 0 10px;
+    margin-top:10px;
+    width: 85px;
+  }
+  button.cms-translation-btn-enable {
+    background-color: #260;
+  }
+  button.cms-translation-btn-disable {
+    background-color: #900;
+  }
+}
+
+// vocab editor
+
 .cms-modal-viewport .cms-vocab-form {
   box-sizing: border-box;
   margin: 0 auto;

@@ -59,6 +59,10 @@ module.exports = {
     return languages[lang];
   },
 
+  getLanguages: function () {
+    return languages;
+  },
+
   reload: function () {
     this.fixedImage.init();
     this.scrollmation.init();

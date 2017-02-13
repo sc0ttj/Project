@@ -97,6 +97,7 @@ module.exports = {
 
     data.append('html', html);
     data.append('lang', filename);
+    data.append('save_translation', true);
 
     cms.ajax.create('POST', 'cms/api/translation.php');
     cms.ajax.onFinish(

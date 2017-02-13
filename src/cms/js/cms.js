@@ -3,6 +3,9 @@ var loadCSS       = require('modules/loadcss').init;
 var store         = require('store');
 var zenscroll     = require('zenscroll');
 
+// note: var 'translateOnly' was set either true or false by our PHP backend
+// if true, Cms should disable editing of page, and only allow editing of translation
+
 "use strict";
 
 module.exports = {
@@ -50,6 +53,7 @@ module.exports = {
     this.previewManager = require('modules/preview_manager');
     this.exportManager  = require('modules/export_manager');
     this.templater      = require('modules/templater');
+    this.translationManager = require('modules/translation_manager');
     this.vocabEditor    = require('modules/vocab_editor');
     this.fileManager    = require('modules/file_manager');
     this.ui             = require('modules/ui');
@@ -58,7 +62,7 @@ module.exports = {
     this.vocabEditor.init();
     this.previewManager.init();
     this.exportManager.init();
-    if (!cms.showTranslation()){
+    if (!cms.showTranslation() && !translateOnly){
       this.editor.init();
       this.videoManager.init();
       this.imageManager.init();
@@ -66,6 +70,7 @@ module.exports = {
       this.metaManager.init();
       this.fileManager.init();
       this.templater.init();
+      this.translationManager.init();
       this.ui.init();
     }
 

@@ -35,12 +35,24 @@ if ($_POST['url'] != ''){
   }
 
   // create the script which will hold the passwd
-  $passwd_script = '<?php
-$valid_password = "'.$password.'";
+  $passwd_script = '<?php 
+
+if ( isset($_POST["get_passwd"]) ){
+
+  # CMS admin is asking for passwd over AJAX, echo it
+  echo "'.$password.'";
+
+} else {
+
+  # login.php is requiring the passwd, so give it the $var
+  $valid_password = "'.$password.'";
+
+}
+
 ?>';
 
   // where to put the script
-  $passwd_script_path = $dest."/cms/api/passwd.php";
+  $passwd_script_path = $dest."/cms/api/passwds/admin.php";
 
   //
   // here we copy www/demo/ to the new folder name
