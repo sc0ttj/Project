@@ -80,26 +80,30 @@ body {
   color: #222;
   font-family:  sans-serif;
   font-size: 1.6rem;
-  padding: 24px;
+  margin: 0;
+  padding: 0;
 }
 
 form {
-  padding: 12px;
-  max-width: 600px;
-  margin: 10px;
+  max-width: 500px;
   min-width: 200px;
+  width: 100%;
 }
 
 label, input {
   display: block;
+  line-height: 2rem;
   margin-bottom: 24px;
   padding-top: 6px;
   padding-bottom: 6px;
-  width:  64%;
 }
 
 input[type="password"]{
-  padding:  10px;
+  font-size: 1.6rem;
+  line-height: 1.6rem;
+  padding: 6px;
+  max-width: 355px;
+  width: 100vw;
 }
 
 input[type="submit"] {

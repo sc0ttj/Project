@@ -316,7 +316,7 @@ module.exports = {
     },
     "ie":{
         "name":"Interlingue",
-        "nativeName":"Originally called Occidental; then Interlingue after WWII",
+        "nativeName":"Occidental, Interlingue",
         "direction" : "ltr"
     },
     "ga":{
@@ -590,7 +590,7 @@ module.exports = {
         "direction" : "ltr"
     },
     "cu":{
-        "name":"Old Church Slavonic, Church Slavic, Church Slavonic, Old Bulgarian, Old Slavonic",
+        "name":"Old (Church) Slavonic/Slavic, Old Bulgarian",
         "nativeName":"ѩзыкъ словѣньскъ",
         "direction" : "ltr"
     },

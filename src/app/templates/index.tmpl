@@ -1,11 +1,53 @@
 <?php
+
+#
+# Example login management
+#
+# 1. This page redirects to login until admin passwd is given, then will load as normal
+#
+# 2. If a translator is trying to login (not admin), keep this info in a php session
+#
+# 3. Admin and translators each have their own passwords, that is why
+#
+# 4. All users have unique pwords so only admin can edit english, and translators
+#    cant edit each others work
+
 session_start();
+
+# if not logged in as admin
 if (!isset($_SESSION['login'])){
+  # if translation URL
   if(isset($_GET['translate'])){
-    $_SESSION['translate'] = $_GET['translate'];
+    
+    # check if translator logged in
+    if (isset($_SESSION['translate'])){
+      
+
+      # if translator logged in but trying to get the wrong LANG
+      if ($_SESSION['translate'] != $_GET['translate']){
+        
+        # logout the translator out
+        header('Location: cms/api/logout.php');
+        die;
+      }
+
+    } else {
+      
+      # store session record of translator login attempt
+      # to ensure redirects dont delete LANG info
+      $_SESSION['translate'] = $_GET['translate'];
+
+    }
+
   } else {
+
+    # there is no ?translate=aa in query string,
+    # so remove 'translate' login attempt session
+    # this will force login.php default behaviour (to ask for admin passwd)
     unset($_SESSION['translate']);
   }
+
+  # user not logged in, redirect to login page
   header('Location: cms/api/login.php');
   die;
 }
@@ -114,12 +156,20 @@ if (!isset($_SESSION['login'])){
   app.init();
 </script>
 <?php 
+
+# disallow editing of main (english) page if login session is a translator
 if (isset($_SESSION['translate'])){
+
   echo '<script>var translateOnly = true;</script>';
+
 } else {
+
   echo '<script>var translateOnly = false;</script>';
+
 }
 ?>
+
 {{>_cms-script}}
+
 </body>
 </html>

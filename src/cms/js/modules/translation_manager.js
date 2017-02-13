@@ -38,8 +38,18 @@ module.exports = {
   },
 
   showUI: function () {
-    var content = self.buildTranslationsTable(),
+    var content = '',
         callback = self.exitModal;
+
+    content += '<input \
+      type="text" \
+      class="cms-translations-autocomplete" \
+      placeholder="Enter language code or name" />\
+      <div class="cms-translations-table-container">';
+
+    content += self.buildTranslationsTable();
+
+    content += '</div>';
 
     // load modal
     cms.modal.create({
@@ -54,7 +64,7 @@ module.exports = {
 
   buildTranslationsTable: function () {
     var languages = self.getLanguages(),
-        table = '<table class="cms-translations-table">';
+        table = '<table id="cms-translations-table" class="cms-translations-table">';
 
     // add table header
     table += '<thead>\
@@ -80,13 +90,13 @@ module.exports = {
 
       table += '\n\
       <tr class="cms-translations-row">\n\
-        <td class="cms-translations-code" data-label="code:&nbsp;&nbsp;" data-lang="'+code+'">\n\
+        <td class="cms-translations-code" data-label="code:" data-lang="'+code+'">\n\
           '+code+'\n\
         </td>\n\
-        <td class="cms-translations-name" data-label="name:&nbsp;&nbsp;" data-lang="'+code+'">\n\
+        <td class="cms-translations-name" data-label="name:" data-lang="'+code+'">\n\
           '+name+'\n\
         </td>\n\
-        <td class="cms-translations-native-name" data-label="native name:&nbsp;&nbsp;" data-lang="'+code+'" dir="'+languages[code].direction+'" >\n\
+        <td class="cms-translations-native-name" data-label="native name:" data-lang="'+code+'" dir="'+languages[code].direction+'" >\n\
           '+nativeName+'\n\
         </td>\n';
 
@@ -97,10 +107,10 @@ module.exports = {
         if (cms.translation[code].enabled === false){
 
           table += '\
-          <td class="cms-translations-url" data-label="editor:&nbsp;&nbsp;" data-lang="'+code+'">\n\
+          <td class="cms-translations-url" data-label="editor:" data-lang="'+code+'">\n\
             -\n\
           </td>\n\
-          <td class="cms-translations-passwd" data-label="password:&nbsp;&nbsp;" data-lang="'+code+'">\n\
+          <td class="cms-translations-passwd" data-label="password:" data-lang="'+code+'">\n\
             -\n\
           </td>\n\
           <td class="cms-translations-enabled" data-label="" data-lang="'+code+'">\n\
@@ -111,10 +121,10 @@ module.exports = {
         } else {
 
           table += '\
-          <td class="cms-translations-url" data-label="editor:&nbsp;&nbsp;" data-lang="'+code+'">\n\
+          <td class="cms-translations-url" data-label="editor:" data-lang="'+code+'">\n\
             <a data-lang="'+code+'" href="?translate='+code+'" target="_blank" title="Edit '+name+'">Edit</a>\n\
           </td>\n\
-          <td class="cms-translations-passwd" data-label="password:&nbsp;&nbsp;" data-lang="'+code+'">\n\
+          <td class="cms-translations-passwd" data-label="password:" data-lang="'+code+'">\n\
             '+cms.translation[code].passwd+'\n\
           </td>\n\
           <td class="cms-translations-disabled" data-label="" data-lang="'+code+'">\n\
@@ -139,8 +149,9 @@ module.exports = {
     $('.cms-translation-btn-enable').off('click',  self.enableBtnHandler);
     $('.cms-translation-btn-disable').off('click', self.disableBtnHandler);
 
-    // replace table
-    $('.cms-modal-viewport').html(table);
+    // replace table HTML, then update search settings
+    $('.cms-translations-table-container').html(table);
+    self.autocompleteHandler();
 
     // disable event handlers 
     $('.cms-translation-btn-enable').on('click',  self.enableBtnHandler);
@@ -156,8 +167,48 @@ module.exports = {
   },
 
   addEventHandlers: function () {
+    $('.cms-translations-autocomplete').on('keyup', self.autocompleteHandler);
+    $('.cms-translations-autocomplete').on('change', self.autocompleteHandler);
     $('.cms-translation-btn-enable').on('click',  self.enableBtnHandler);
     $('.cms-translation-btn-disable').on('click', self.disableBtnHandler);
+  },
+
+  autocompleteHandler: function () {
+    //http://www.w3schools.com/howto/howto_js_filter_table.asp
+    var input, filter, table, tr, td, i;
+    input   = $('.cms-translations-autocomplete')[0];
+    filter  = input.value.toUpperCase();
+    table   = document.getElementById('cms-translations-table');
+    tr      = table.getElementsByTagName('tr');
+
+    // for each row in the table
+    for (i = 0; i < tr.length; i++) {
+      var code = tr[i].getElementsByTagName('td')[0],
+          name = tr[i].getElementsByTagName('td')[1],
+          native = tr[i].getElementsByTagName('td')[2],
+          match = false;
+
+      //
+      // check code, name and native name for matching string
+      //
+      if (code && code.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        match = true;
+      } else if (name && name.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        match = true;
+      } else if (native && native.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        match = true;
+      }
+
+      // if row had TD with matching contents, dont hide it
+      if (match) {
+        tr[i].style.display = '';
+      } else {
+        // hide it cos it didnt match
+        tr[i].style.display = "none";
+      }
+
+    }
+
   },
 
   enableBtnHandler: function () {

@@ -123,6 +123,11 @@
 }
 
 // translation manager
+.cms-modal-viewport input.cms-translations-autocomplete {
+  margin-bottom: 12px;
+  width:80vw;
+}
+
 .cms-modal-viewport table.cms-translations-table {
   width: 100%;
   // responsive table
@@ -150,6 +155,7 @@
       text-transform: capitalize;
       direction: ltr;
       text-align: left;
+      min-width: 130px;
     }
     td {
       display: block;
