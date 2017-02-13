@@ -28,6 +28,8 @@ function validateLogin ($pass){
     require_once('passwds/'.$_SESSION['translate'].'.php');
   }
   
+  // should decrypt password here
+
   if ($pass == $valid_password){
     return true;
   }

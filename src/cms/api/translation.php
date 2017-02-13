@@ -47,6 +47,8 @@ if (isset($_POST["lang"])) {
     $bytes = openssl_random_pseudo_bytes(4);
     $new_passwd = bin2hex($bytes);
 
+    // should encrypt passwd here
+
     // build passwd script for this $lang
     $script     = '<?php 
 

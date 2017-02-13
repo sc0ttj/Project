@@ -19,17 +19,22 @@ if (!isset($_SESSION['login'])){
   # if translation URL
   if(isset($_GET['translate'])){
     
-    # check if translator logged in
+    # check if translator session is set
     if (isset($_SESSION['translate'])){
       
 
+      #
+      # this bit below isn't working yet..
+      #
       # if translator logged in but trying to get the wrong LANG
       if ($_SESSION['translate'] != $_GET['translate']){
-        
+
         # logout the translator out
         header('Location: cms/api/logout.php');
         die;
+
       }
+
 
     } else {
       
@@ -39,11 +44,12 @@ if (!isset($_SESSION['login'])){
 
     }
 
+
   } else {
 
     # there is no ?translate=aa in query string,
-    # so remove 'translate' login attempt session
-    # this will force login.php default behaviour (to ask for admin passwd)
+    # so remove translator login attempt session
+    # this will force login.php back to default behaviour (to ask for admin passwd)
     unset($_SESSION['translate']);
   }
 

@@ -41,15 +41,17 @@ module.exports = {
     var content = '',
         callback = self.exitModal;
 
+    // search form, filters the table below
     content += '<input \
       type="text" \
-      class="cms-translations-autocomplete" \
-      placeholder="Enter language code or name" />\
-      <div class="cms-translations-table-container">';
+      class="cms-trans-autocomplete" \
+      placeholder="Enter language name.." />\
+      <div class="cms-trans-table-container">';
 
+    // the table of translations ( fields = code|name|native name|url|pass|enable/disable)
     content += self.buildTranslationsTable();
 
-    content += '</div>';
+    content += '</div>'; // end table wrapper
 
     // load modal
     cms.modal.create({
@@ -64,14 +66,14 @@ module.exports = {
 
   buildTranslationsTable: function () {
     var languages = self.getLanguages(),
-        table = '<table id="cms-translations-table" class="cms-translations-table">';
+        table = '<table id="cms-trans-table" class="cms-trans-table">';
 
     // add table header
     table += '<thead>\
-    <tr class="cms-translations-table-header">\
+    <tr class="cms-trans-table-header">\
        <th>code</th>\
        <th>name</th>\
-       <th class="cms-translations-header-native-name">native name</th>\
+       <th class="cms-trans-header-native-name">native name</th>\
        <th>editor</th>\
        <th>password</th>\
        <th>enabled</th>\
@@ -89,14 +91,14 @@ module.exports = {
           passwd = '-';
 
       table += '\n\
-      <tr class="cms-translations-row">\n\
-        <td class="cms-translations-code" data-label="code:" data-lang="'+code+'">\n\
+      <tr class="cms-trans-row">\n\
+        <td class="cms-trans-code" data-label="code:">\n\
           '+code+'\n\
         </td>\n\
-        <td class="cms-translations-name" data-label="name:" data-lang="'+code+'">\n\
+        <td class="cms-trans-name" data-label="name:">\n\
           '+name+'\n\
         </td>\n\
-        <td class="cms-translations-native-name" data-label="native name:" data-lang="'+code+'" dir="'+languages[code].direction+'" >\n\
+        <td class="cms-trans-native-name" data-label="native name:" dir="'+languages[code].direction+'" >\n\
           '+nativeName+'\n\
         </td>\n';
 
@@ -107,28 +109,28 @@ module.exports = {
         if (cms.translation[code].enabled === false){
 
           table += '\
-          <td class="cms-translations-url" data-label="editor:" data-lang="'+code+'">\n\
+          <td class="cms-trans-url" data-label="editor:">\n\
             -\n\
           </td>\n\
-          <td class="cms-translations-passwd" data-label="password:" data-lang="'+code+'">\n\
+          <td class="cms-trans-passwd" data-label="password:">\n\
             -\n\
           </td>\n\
-          <td class="cms-translations-enabled" data-label="" data-lang="'+code+'">\n\
-            <button data-lang="'+code+'" class="cms-translation-btn cms-translation-btn-enable">Enable</button>\n\
+          <td class="cms-trans-enabled" data-label="">\n\
+            <button data-lang="'+code+'" class="cms-trans-btn cms-trans-btn-enable">Enable</button>\n\
           </td>\n';
 
         // if this translation IS enabled, show button to disable it
         } else {
 
           table += '\
-          <td class="cms-translations-url" data-label="editor:" data-lang="'+code+'">\n\
-            <a data-lang="'+code+'" href="?translate='+code+'" target="_blank" title="Edit '+name+'">Edit</a>\n\
+          <td class="cms-trans-url" data-label="editor:">\n\
+            <a href="?translate='+code+'" target="_blank" title="Edit '+name+'">Edit</a>\n\
           </td>\n\
-          <td class="cms-translations-passwd" data-label="password:" data-lang="'+code+'">\n\
+          <td class="cms-trans-passwd" data-label="password:">\n\
             '+cms.translation[code].passwd+'\n\
           </td>\n\
-          <td class="cms-translations-disabled" data-label="" data-lang="'+code+'">\n\
-            <button data-lang="'+code+'" class="cms-translation-btn cms-translation-btn-disable">Disable</button>\n\
+          <td class="cms-trans-disabled" data-label="">\n\
+            <button data-lang="'+code+'" class="cms-trans-btn cms-trans-btn-disable">Disable</button>\n\
           </td>\n';
 
         }
@@ -146,16 +148,16 @@ module.exports = {
     var table = self.buildTranslationsTable();
 
     // disable existing event handlers
-    $('.cms-translation-btn-enable').off('click',  self.enableBtnHandler);
-    $('.cms-translation-btn-disable').off('click', self.disableBtnHandler);
+    $('.cms-trans-btn-enable').off('click',  self.enableBtnHandler);
+    $('.cms-trans-btn-disable').off('click', self.disableBtnHandler);
 
     // replace table HTML, then update search settings
-    $('.cms-translations-table-container').html(table);
+    $('.cms-trans-table-container').html(table);
     self.autocompleteHandler();
 
     // disable event handlers 
-    $('.cms-translation-btn-enable').on('click',  self.enableBtnHandler);
-    $('.cms-translation-btn-disable').on('click', self.disableBtnHandler);
+    $('.cms-trans-btn-enable').on('click',  self.enableBtnHandler);
+    $('.cms-trans-btn-disable').on('click', self.disableBtnHandler);
 
     //save translation settings to localstorage
     store.set(cms.pageDir + '__translations', cms.translation);
@@ -167,18 +169,18 @@ module.exports = {
   },
 
   addEventHandlers: function () {
-    $('.cms-translations-autocomplete').on('keyup', self.autocompleteHandler);
-    $('.cms-translations-autocomplete').on('change', self.autocompleteHandler);
-    $('.cms-translation-btn-enable').on('click',  self.enableBtnHandler);
-    $('.cms-translation-btn-disable').on('click', self.disableBtnHandler);
+    $('.cms-trans-autocomplete').on('keyup', self.autocompleteHandler);
+    $('.cms-trans-autocomplete').on('change', self.autocompleteHandler);
+    $('.cms-trans-btn-enable').on('click',  self.enableBtnHandler);
+    $('.cms-trans-btn-disable').on('click', self.disableBtnHandler);
   },
 
   autocompleteHandler: function () {
-    //http://www.w3schools.com/howto/howto_js_filter_table.asp
+    // adapted from http://www.w3schools.com/howto/howto_js_filter_table.asp
     var input, filter, table, tr, td, i;
-    input   = $('.cms-translations-autocomplete')[0];
+    input   = $('.cms-trans-autocomplete')[0];
     filter  = input.value.toUpperCase();
-    table   = document.getElementById('cms-translations-table');
+    table   = document.getElementById('cms-trans-table');
     tr      = table.getElementsByTagName('tr');
 
     // for each row in the table
@@ -188,9 +190,7 @@ module.exports = {
           native = tr[i].getElementsByTagName('td')[2],
           match = false;
 
-      //
       // check code, name and native name for matching string
-      //
       if (code && code.innerHTML.toUpperCase().indexOf(filter) > -1) {
         match = true;
       } else if (name && name.innerHTML.toUpperCase().indexOf(filter) > -1) {
@@ -244,7 +244,6 @@ module.exports = {
     var onSuccessHandler = function (passwd){
       if (typeof callback == 'function') callback(passwd);
     }
-
     var onErrorHandler = function (result){
       // if not translation passwd found, create one as the translation was just enabled
       self.createTranslatorPasswd(lang, function (passwd){
@@ -270,7 +269,6 @@ module.exports = {
     var onSuccessHandler = function (passwd){
       if (typeof callback == 'function') callback(passwd);
     }
-
     var onErrorHandler = function (msg){
       console.log('error creating password for translation ' + lang, msg);
     }
@@ -281,8 +279,8 @@ module.exports = {
   },
 
   exitModal: function () {
-    $('.cms-translation-btn-enable').off('click',  self.enableBtnHandler);
-    $('.cms-translation-btn-disable').off('click', self.disableBtnHandler);
+    $('.cms-trans-btn-enable').off('click',  self.enableBtnHandler);
+    $('.cms-trans-btn-disable').off('click', self.disableBtnHandler);
   },
 
 }
