@@ -179,7 +179,7 @@ module.exports = {
     input   = $('.cms-trans-autocomplete')[0];
     filter  = input.value.toUpperCase();
     table   = document.getElementById('cms-trans-table');
-    tr      = table.getElementsByTagName('tr');
+    tr      = $(table).find('tr:not(.cms-trans-table-header)');
 
     // for each row in the table
     for (i = 0; i < tr.length; i++) {
