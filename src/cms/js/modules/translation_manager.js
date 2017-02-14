@@ -17,7 +17,7 @@ module.exports = {
   restoreTranslationSettings: function (){
     // get list of supported languages
     // and get translations settings from local storage
-    var languages = self.getLanguages(),
+    var languages = cms.getLanguages(),
         translations = store.get(cms.pageDir + '__translations');
 
     // if localStorage settings were found
@@ -65,7 +65,7 @@ module.exports = {
   },
 
   buildTranslationsTable: function () {
-    var languages = self.getLanguages(),
+    var languages = cms.getLanguages(),
         table = '<table id="cms-trans-table" class="cms-trans-table">';
 
     // add table header
@@ -159,11 +159,6 @@ module.exports = {
 
     //save translation settings to localstorage
     store.set(cms.pageDir + '__translations', cms.translation);
-  },
-
-  getLanguages: function () {
-    var languages = app.getLanguages();
-    return languages;
   },
 
   addEventHandlers: function () {

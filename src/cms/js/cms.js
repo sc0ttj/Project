@@ -1,4 +1,5 @@
 var $             = require('cash-dom');
+var languages     = require('modules/languages.js')
 var loadCSS       = require('modules/loadcss').init;
 var store         = require('store');
 var zenscroll     = require('zenscroll');
@@ -41,6 +42,8 @@ module.exports = {
     if (this.cutsTheMustard()) this.addMustard();
     this.loadStylesheets();
     this.setupSmoothScrolling();
+    // set lang info
+    this.setLang();
     // this.autoSave();
 
     this.ajax           = require('modules/ajaxer');
@@ -77,6 +80,29 @@ module.exports = {
     if (this.showTranslation()) this.vocabEditor.translatePage();
 
     return true // if we loaded up ok
+  },
+
+
+  setLang: function () {
+    var lang = this.getLang();
+
+    this.lang      = this.getLangInfo(lang),
+    this.lang.code = lang;
+  },
+
+  getLang: function () {
+    var lang = $('html')[0].getAttribute('lang');
+
+    lang.code = lang;
+    return lang || 'en';
+  },
+
+  getLangInfo: function (lang) {
+    return languages[lang];
+  },
+
+  getLanguages: function () {
+    return languages;
   },
 
   setupSmoothScrolling: function () {

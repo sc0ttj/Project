@@ -19,7 +19,7 @@ module.exports = {
   showUI: function (callback) {
     var lang = cms.vocabEditor.getCurrentService(),
         filename = 'index.' + lang, // name of page to preview, example 'index.fr.html'
-        langInfo = app.getLangInfo(lang);
+        langInfo = cms.getLangInfo(lang);
 
     if (lang === 'en') filename = 'preview'; // if default LANG, get default preview page
 

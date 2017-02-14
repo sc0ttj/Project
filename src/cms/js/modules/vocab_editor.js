@@ -13,7 +13,7 @@ module.exports = {
 
   shouldShowUI: function () {
     var lang      = self.getCurrentService(),
-        langInfo  = app.getLangInfo(lang),
+        langInfo  = cms.getLangInfo(lang),
         validLang = (self.getQueryVariable('translate') && langInfo.code != 'undefined');
 
     if (validLang) return true;
@@ -30,7 +30,7 @@ module.exports = {
   },
 
   getCurrentService: function () {
-    var service = self.getQueryVariable('translate') || self.getQueryVariable('preview') || app.lang.code || $('html').attr('lang');
+    var service = self.getQueryVariable('translate') || self.getQueryVariable('preview') || cms.lang.code || $('html').attr('lang');
     return service;
   },
 
@@ -148,7 +148,7 @@ module.exports = {
 
   buildTranslatorUI: function () {
     var lang      = self.getCurrentService(),
-        langInfo  = app.getLangInfo(lang),
+        langInfo  = cms.getLangInfo(lang),
         form      = self.createVocabEditorForm();
 
     // load modal
@@ -182,7 +182,7 @@ module.exports = {
 
   createVocabEditorFormFields: function (){
     var lang      = self.getCurrentService(),
-        langInfo  = app.getLangInfo(lang),
+        langInfo  = cms.getLangInfo(lang),
         pageVocab = self.pageVocab,
         vocab     = self.vocab || self.pageVocab,
         form      = '',
@@ -475,7 +475,7 @@ module.exports = {
 
         // get lang details for current translation LANG
         var lang     = self.getCurrentService(),
-            langInfo = app.getLangInfo(lang);
+            langInfo = cms.getLangInfo(lang);
 
         langInfo.code = lang;
 
