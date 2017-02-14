@@ -53,14 +53,6 @@ if (isset($_SESSION['translate'])){
   $qs = '?translate=' . $_SESSION['translate'];
 }
 
-# if user has logged in sucessfully
-if (isset($_SESSION['login'])){
-  
-  # set login success to true
-  # and redirect to root folder for this page (inc query string)
-  $loginSuccess = true;
-  header("Location: ../../".$qs);
-}
 
 #
 #
