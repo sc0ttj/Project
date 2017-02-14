@@ -85,16 +85,16 @@ module.exports = {
         </li>\
         <li \
           class="cms-menu-item cms-menu-item-meta">\
-          <span class="cms-menu-item-text">Edit Meta Info</span>\
+          <span class="cms-menu-item-text">Meta Info</span>\
+        </li>\
+        <li \
+          class="cms-menu-item cms-menu-item-translations">\
+          <span class="cms-menu-item-text">Translations</span>\
         </li>\
         <li \
           class="cms-menu-item cms-menu-item-preview">\
           <span class="cms-menu-item-text">Preview</span>\
           <span class="cms-menu-item-icon cms-menu-item-icon-preview cms-anim-fade-250ms cms-unselectable">👁</span>\
-        </li>\
-        <li \
-          class="cms-menu-item cms-menu-item-translations">\
-          <span class="cms-menu-item-text">Translations</span>\
         </li>\
         <li \
           class="cms-menu-item cms-menu-item-save">\
