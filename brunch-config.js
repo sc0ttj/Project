@@ -170,7 +170,7 @@ exports.config = {
       'chmod 777 www/demo/images',
       'chmod 777 www/demo/videos',
       'chmod 777 www/demo/vocabs',
-      // move the example home page out of assets, to the web root
+      // move an example home page out of assets, to the web root
       'cp src/_extra-stuff/home.php www/index.php'
     ],
   },

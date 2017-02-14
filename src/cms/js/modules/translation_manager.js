@@ -39,7 +39,7 @@ module.exports = {
 
   showUI: function () {
     var content = '',
-        callback = self.exitModal;
+        callback = self.removeEventHandlers;
 
     // search form, filters the table below
     content += '<input \
@@ -148,16 +148,14 @@ module.exports = {
     var table = self.buildTranslationsTable();
 
     // disable existing event handlers
-    $('.cms-trans-btn-enable').off('click',  self.enableBtnHandler);
-    $('.cms-trans-btn-disable').off('click', self.disableBtnHandler);
+    self.removeEventHandlers();
 
     // replace table HTML, then update search settings
     $('.cms-trans-table-container').html(table);
-    self.autocompleteHandler();
+    self.autoCompleteHandler();
 
-    // disable event handlers 
-    $('.cms-trans-btn-enable').on('click',  self.enableBtnHandler);
-    $('.cms-trans-btn-disable').on('click', self.disableBtnHandler);
+    // add event handlers 
+    self.addEventHandlers();
 
     //save translation settings to localstorage
     store.set(cms.pageDir + '__translations', cms.translation);
@@ -169,13 +167,13 @@ module.exports = {
   },
 
   addEventHandlers: function () {
-    $('.cms-trans-autocomplete').on('keyup', self.autocompleteHandler);
-    $('.cms-trans-autocomplete').on('change', self.autocompleteHandler);
+    $('.cms-trans-autocomplete').on('keyup', self.autoCompleteHandler);
+    $('.cms-trans-autocomplete').on('change', self.autoCompleteHandler);
     $('.cms-trans-btn-enable').on('click',  self.enableBtnHandler);
     $('.cms-trans-btn-disable').on('click', self.disableBtnHandler);
   },
 
-  autocompleteHandler: function () {
+  autoCompleteHandler: function () {
     // adapted from http://www.w3schools.com/howto/howto_js_filter_table.asp
     var input, filter, table, tr, td, i;
     input   = $('.cms-trans-autocomplete')[0];
@@ -278,9 +276,11 @@ module.exports = {
     cms.ajax.send(data);
   },
 
-  exitModal: function () {
+  removeEventHandlers: function () {
     $('.cms-trans-btn-enable').off('click',  self.enableBtnHandler);
     $('.cms-trans-btn-disable').off('click', self.disableBtnHandler);
-  },
+    $('.cms-trans-autocomplete').off('keyup', self.autoCompleteHandler);
+    $('.cms-trans-autocomplete').off('change', self.autoCompleteHandler);
+ },
 
 }

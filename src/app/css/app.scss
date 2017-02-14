@@ -21,6 +21,15 @@
   margin-top: 2.4rem;
   margin-left:2%;
   margin-right:2%;
+  a {
+    color: #191919;
+    border-bottom: 1px solid #dcdcdc;
+  }
+  a:hover {
+    color: #337ab7;
+    border-bottom: 1px solid #dcdcdc;
+    text-decoration: none;
+  }
   img {
     display: block;
     height: auto;
