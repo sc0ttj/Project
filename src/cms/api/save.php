@@ -5,11 +5,9 @@ error_reporting(E_ALL);
 
 if ($_POST['savetozip'] == 'true'){
 
-  // get root dir of the page being edited (/my-page-name/)
-  $url_path = pathinfo(parse_url($_SERVER['HTTP_REFERER'])['path'], PATHINFO_DIRNAME) . '/';
-  if ($url_path == '//'){
-    $url_path = parse_url($_SERVER['HTTP_REFERER'])['path'];
-  }
+  # get config for this page
+  # returns $page_dir ... 
+  require_once('config.inc.php');
 
   // save to zip
   $root = $_SERVER['DOCUMENT_ROOT'];            //   /var/www/html

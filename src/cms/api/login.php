@@ -3,6 +3,10 @@
 ini_set('display_errors',1);
 error_reporting(E_ALL);
 
+# get config for this page
+# returns $page_dir, $url_path ... 
+require_once('config.inc.php');
+
 # an example validate login func
 function validateLogin ($pass){
   global $valid_password;
@@ -35,14 +39,6 @@ $msg = '';
 
 # start session, get access to session vars
 session_start();
-
-# get the page dir, as created by the user:
-# 
-# 1. go 3 dirs up from here, that gives us the linux path where index.html lives .. example: "/var/www/html/demo"
-# 2. use basename, and that gives us the last dir name only ... example, "demo"
-#
-$page_dir = basename(dirname(dirname(dirname($_SERVER['SCRIPT_FILENAME']))));  # will equal "demo" .. or "my-page-name"
-
 
 # if ?translate=LANG in URL then keep the LANG var in session...
 #

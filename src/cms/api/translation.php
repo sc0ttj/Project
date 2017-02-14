@@ -10,11 +10,9 @@ if (isset($_POST["lang"])) {
 
   if (isset($_POST["save_translation"])) {
 
-    // get root dir of the page being edited (/my-page-name/)
-    $url_path = pathinfo(parse_url($_SERVER['HTTP_REFERER'])['path'], PATHINFO_DIRNAME) . '/';
-    if ($url_path == '//'){
-      $url_path = parse_url($_SERVER['HTTP_REFERER'])['path'];
-    }
+    # get config for this page
+    # returns $page_dir, $url_path ... 
+    require_once('config.inc.php');
 
     // get html from $_POST, save to preview
     $html     = $_POST['html'];
