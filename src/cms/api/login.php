@@ -3,33 +3,19 @@
 ini_set('display_errors',1);
 error_reporting(E_ALL);
 
-require_once('passwds/admin.php');
-$loginSuccess = false;
-$msg = '';
-
-session_start();
-
-
-$qs = '';
-if (isset($_SESSION['translate'])){
-  $qs = '?translate=' . $_SESSION['translate'];
-}
-
-if (isset($_SESSION['login'])){
-  print_r($_SESSION);
-  $loginSuccess = true;
-  header("Location: ../../".$qs);
-}
-
+# an example validate login func
 function validateLogin ($pass){
   global $valid_password;
   
+  # if translator is trying to login
   if (isset($_SESSION['translate'])){
+    # get the passwd generated for their given LANG
     require_once('passwds/'.$_SESSION['translate'].'.php');
   }
   
   // should decrypt password here
 
+  # if given pass matches, return true
   if ($pass == $valid_password){
     return true;
   }
@@ -37,25 +23,74 @@ function validateLogin ($pass){
   return false;
 }
 
-/* ------------------------ */
+#
+# require the admin pass created when this editable page was created
+#
+require_once('passwds/admin.php');
 
-// if not set, exit
+
+# reset current login attempt
+$loginSuccess = false;
+$msg = '';
+
+# start session, get access to session vars
+session_start();
+
+# get the page dir, as created by the user:
+# 
+# 1. go 3 dirs up from here, that gives us the linux path where index.html lives .. example: "/var/www/html/demo"
+# 2. use basename, and that gives us the last dir name only ... example, "demo"
+#
+$page_dir = basename(dirname(dirname(dirname($_SERVER['SCRIPT_FILENAME']))));  # will equal "demo" .. or "my-page-name"
+
+
+# if ?translate=LANG in URL then keep the LANG var in session...
+#
+# this will allow translators to re-attempt login without 
+# passing the query string around all the time
+$qs = '';
+if (isset($_SESSION['translate'])){
+  $qs = '?translate=' . $_SESSION['translate'];
+}
+
+# if user has logged in sucessfully
+if (isset($_SESSION['login'])){
+  
+  # set login success to true
+  # and redirect to root folder for this page (inc query string)
+  $loginSuccess = true;
+  header("Location: ../../".$qs);
+}
+
+#
+#
+# user not yet logged in ....
+
+# if user has sent a passwd to check
 if (isset($_POST['password'])) {
 
   // get login details
   $pass = $_POST['password'];
-
   // validate the login
   $loginSuccess = validateLogin($pass);
 
   if ($loginSuccess) {
+
     // if login was ok, start session
     $_SESSION['login'] = true;
+    # keep the dir in session, dso login is only valid for this page
+    $_SESSION['page_dir'] = $page_dir;
+    # all done, login was OK
+    # so redirect to page root, it will load the CMS
     header("Location: ../../".$qs);
-  } else {
+  
+
+  } else { # login failed
+
     // session_unset();
     // if (isset($_SESSION)) session_destroy();
     $msg = 'Password not valid. Try again.';
+
   }
 
 }
@@ -155,6 +190,5 @@ if (!$loginSuccess){
 <?php
 }
 ?>
-  
 </body>
 </html>

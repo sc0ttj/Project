@@ -53,7 +53,17 @@ if (!isset($_SESSION['login'])){
 # user is logged in
 #
 } else {
-  
+
+  $page_dir = basename(dirname($_SERVER['SCRIPT_FILENAME']));  # will equal "demo" .. or "my-page-name"
+
+  # user is logged in but for login is for another page
+  if ($_SESSION['page_dir'] != $page_dir){
+
+    # log them out
+    header('Location: cms/api/logout.php?error=wrong_page');
+    die;
+  }
+
   # we deal with logged in translators here
   if (isset($_SESSION['translate'])){
 
@@ -72,7 +82,7 @@ if (!isset($_SESSION['login'])){
       # if translator logged in but trying to get the wrong LANG
   
       # logout the translator out
-      header('Location: cms/api/logout.php');
+      header('Location: cms/api/logout.php?error=wrong_translation');
       die;
 
     }
