@@ -14,48 +14,73 @@
 
 session_start();
 
-# if not logged in as admin
+# if not logged in
 if (!isset($_SESSION['login'])){
   # if translation URL
   if(isset($_GET['translate'])){
     
     # check if translator session is set
-    if (isset($_SESSION['translate'])){
+    if (!isset($_SESSION['translate'])){
+
+      # no translator session started yet, but ?translate=foo given,
+      # so store session record of translator login attempt
+      # to ensure redirects dont delete LANG info
+
+      $_SESSION['translate'] = $_GET['translate'];
       
-
-      #
-      # this bit below isn't working yet..
-      #
-      # if translator logged in but trying to get the wrong LANG
-      if ($_SESSION['translate'] != $_GET['translate']){
-
-        # logout the translator out
-        header('Location: cms/api/logout.php');
-        die;
-
-      }
-
-
     } else {
       
-      # store session record of translator login attempt
-      # to ensure redirects dont delete LANG info
-      $_SESSION['translate'] = $_GET['translate'];
+      # ?translate=foo is present, and translator session is set, 
+      # but translator not logged in, prob gave wrong passwd
+      # ... so do nothing, they will be redirected to login.php later
 
     }
 
+  } else { 
 
-  } else {
-
-    # there is no ?translate=aa in query string,
+    # no ?translate=foo in URL
     # so remove translator login attempt session
     # this will force login.php back to default behaviour (to ask for admin passwd)
+
     unset($_SESSION['translate']);
   }
 
   # user not logged in, redirect to login page
   header('Location: cms/api/login.php');
   die;
+
+#
+# user is logged in
+#
+} else {
+  
+  # we deal with logged in translators here
+  if (isset($_SESSION['translate'])){
+
+    
+    if (!isset($_GET['translate'])){
+
+      # ?translate=foo is not present in their URL
+
+      # so their translation editor will not load up... 
+      # so we will show preview.html page, instead of the editable index.html
+      header('Location: preview.html');
+      die;
+
+    } else if ($_SESSION['translate'] != $_GET['translate']){
+
+      # if translator logged in but trying to get the wrong LANG
+  
+      # logout the translator out
+      header('Location: cms/api/logout.php');
+      die;
+
+    }
+
+    
+
+  }
+
 }
 ?>
 <!DOCTYPE html>
