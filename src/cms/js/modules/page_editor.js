@@ -18,7 +18,7 @@ module.exports = {
   createMediaBtn: function (){
     self.mediaBtn = '\
     <div id="cms-media-btn" \
-         class="cms-media-btn cms-anim-fade-250ms cms-transparent"\
+         class="cms-media-btn cms-anim-fade-500ms cms-transparent"\
          contenteditable="false"\
          onclick="mediaBtnClickHandler(this);">\
       ADD MEDIA\
@@ -35,11 +35,9 @@ module.exports = {
   },
 
   setEditableItems: function(items){
-    // document.designMode = 'on'; //makes ALL items editable, very buggy
     items.forEach(function makeItemEditable(el, i){
       var $elems = $(cms.config.sectionSelector + ' ' + el);
       $elems.attr('contenteditable', true);
-      // $elems.attr('data-placeholder', 'Enter text here...');
       $elems.addClass(cms.config.editableClass);
     });
   },

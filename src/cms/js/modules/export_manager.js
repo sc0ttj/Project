@@ -26,8 +26,7 @@ module.exports = {
     // remove elems added by cms
     $html.find('.cms-menu-container, .cms-menu, .cms-menu-bg, .cms-modal, .cms-media-btn, .cms-menu-btn, .g-options-container').remove();
     // remove all classes and attributes
-    $html.find('*').removeClass('cms-editable cms-editable-img cms-editable-region cms-inline-media');
-    $html.find('*').removeClass(cms.config.mustardClass);
+    $html.find('*').removeClass('cms-html5 cms-editable cms-editable-img cms-editable-region cms-inline-media');
     $html.find('*').removeAttr('contenteditable');
     $html.find('*').removeAttr('spellcheck');
     $html.find('*').removeAttr('style');
@@ -41,13 +40,14 @@ module.exports = {
       // console.log(span, parent);
       parent.removeChild(span);
     });
+    $html.find('span:empty').remove();
 
     // remove cms scripts
     $html.find('script[src^="cms"], #cms-init, link[href^="cms"]').remove();
     $html.find('*[class=""]').removeAttr('class');
     // reset app templates so they work on pages with no js
     // move to a method in the main app
-    $html.find('body').removeClass('js');
+    $html.find('*').removeClass(cms.config.mustardClass);
     $html.find('*').removeClass('anim-fade-1s transparent scrollmation-text-js scrollmation-image-container-top scrollmation-image-container-fixed scrollmation-image-container-bottom');
     $html.find('.scrollmation-text').addClass('article');
     $html.find('.video-overlay').removeClass('hidden');
@@ -76,7 +76,7 @@ module.exports = {
     var data = new FormData();
     data.append('html', html);
 
-    cms.ajax.create('POST', 'cms/api/preview.php');
+    cms.ajax.create('POST', cms.config.api.preview);
     var successHandler = function (responseText) {
       console.log(responseText);
       callback();
@@ -97,8 +97,9 @@ module.exports = {
 
     data.append('html', html);
     data.append('lang', filename);
+    data.append('save_translation', true);
 
-    cms.ajax.create('POST', 'cms/api/translation.php');
+    cms.ajax.create('POST', cms.config.api.translate);
     cms.ajax.onFinish(
       function success (responseText) {
         console.log(responseText);
@@ -118,7 +119,7 @@ module.exports = {
     var data = new FormData();
     data.append('savetozip', 'true');
 
-    cms.ajax.create('POST', 'cms/api/save.php');
+    cms.ajax.create('POST', cms.config.api.save);
     var successHandler = function (responseText) {
       console.log(responseText);
       window.location = responseText;

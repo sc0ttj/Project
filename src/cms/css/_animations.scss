@@ -1,4 +1,4 @@
-.html5 {
+.cms-html5 {
 
   .cms-blurred {
     -webkit-filter: blur(4px);
@@ -19,6 +19,14 @@
     transition: opacity 1s ease;
     -webkit-transition-delay: 0.1s;
     transition-delay: 0.1s;
+  }
+
+  .cms-anim-fade-500ms {
+    -webkit-transition: opacity 500ms ease;
+    -moz-transition: opacity 500ms ease;
+    -ms-transition: opacity 500ms ease;
+    -o-transition: opacity 500ms ease;
+    transition: opacity 500ms ease;
   }
 
   .cms-anim-fade-250ms {

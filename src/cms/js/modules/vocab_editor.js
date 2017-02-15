@@ -6,13 +6,14 @@ var self;
 module.exports = {
   init: function(){
     self = cms.vocabEditor;
+    $('[contenteditable]').attr('contenteditable', false);
     if (self.shouldShowUI()) self.showUI();
     return true // if we loaded ok
   },
 
   shouldShowUI: function () {
     var lang      = self.getCurrentService(),
-        langInfo  = app.getLangInfo(lang),
+        langInfo  = cms.getLangInfo(lang),
         validLang = (self.getQueryVariable('translate') && langInfo.code != 'undefined');
 
     if (validLang) return true;
@@ -29,7 +30,7 @@ module.exports = {
   },
 
   getCurrentService: function () {
-    var service = self.getQueryVariable('translate') || self.getQueryVariable('preview') || app.lang.code || $('html').attr('lang');
+    var service = self.getQueryVariable('translate') || self.getQueryVariable('preview') || cms.lang.code || $('html').attr('lang');
     return service;
   },
 
@@ -147,7 +148,7 @@ module.exports = {
 
   buildTranslatorUI: function () {
     var lang      = self.getCurrentService(),
-        langInfo  = app.getLangInfo(lang),
+        langInfo  = cms.getLangInfo(lang),
         form      = self.createVocabEditorForm();
 
     // load modal
@@ -169,7 +170,7 @@ module.exports = {
 
   createVocabEditorForm: function () {
     var lang      = self.getCurrentService(),
-        form      = '<form class="cms-vocab-form" data-lang="'+lang+'" action="cms/api/upload.php" method="post">\n',
+        form      = '<form class="cms-vocab-form" data-lang="'+lang+'" action="'+cms.config.api.upload+'" method="post">\n',
         fields    = self.createVocabEditorFormFields();
 
     form += fields;
@@ -181,7 +182,7 @@ module.exports = {
 
   createVocabEditorFormFields: function (){
     var lang      = self.getCurrentService(),
-        langInfo  = app.getLangInfo(lang),
+        langInfo  = cms.getLangInfo(lang),
         pageVocab = self.pageVocab,
         vocab     = self.vocab || self.pageVocab,
         form      = '',
@@ -289,7 +290,7 @@ module.exports = {
     e.preventDefault();
  
     var onSuccessHandler = function (responseText){
-      // console.log(responseText);
+      console.log(responseText);
       $('.cms-vocab-input').addClass('cms-vocab-uploaded');
     }
     var onErrorHandler = function (responseText){
@@ -297,7 +298,7 @@ module.exports = {
       $('.cms-vocab-input').addClass('cms-upload-label-error');
     }
 
-    cms.ajax.create('POST', 'cms/api/upload.php');
+    cms.ajax.create('POST', cms.config.api.upload);
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
     cms.ajax.send(formData);
   },
@@ -474,7 +475,7 @@ module.exports = {
 
         // get lang details for current translation LANG
         var lang     = self.getCurrentService(),
-            langInfo = app.getLangInfo(lang);
+            langInfo = cms.getLangInfo(lang);
 
         langInfo.code = lang;
 

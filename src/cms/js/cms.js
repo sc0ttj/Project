@@ -1,15 +1,18 @@
 var $             = require('cash-dom');
+var languages     = require('modules/languages.js')
 var loadCSS       = require('modules/loadcss').init;
 var store         = require('store');
 var zenscroll     = require('zenscroll');
+
+// note: var 'translateOnly' was set either true or false by our PHP backend
+// if true, Cms should disable editing of page, and only allow editing of translation
 
 "use strict";
 
 module.exports = {
 
   config: {
-    'name'            :           'default options',
-    'templates'       :           [ '_article-full-width.tmpl', '_article-left.tmpl', '_article-right.tmpl', '_hero-center.tmpl', '_image-center.tmpl', '_image-fixed.tmpl', '_scrollmation-text-left.tmpl', '_stat-text.tmpl', '_youtube-full-width.tmpl', '_video.tmpl', '_video-full-width.tmpl' ],
+    'templates'       :           [ '_hero-center.tmpl', '_article-full-width.tmpl', '_article-left.tmpl', '_article-right.tmpl', '_image-center.tmpl', '_image-fixed.tmpl', '_scrollmation-text-left.tmpl', '_stat-text.tmpl', '_youtube-full-width.tmpl', '_video.tmpl', '_video-full-width.tmpl' ],
     'sectionSelector' :           'body .section',
     'sectionContainer':           '<div class="section"></div>', 
     'editableItems'   :           [ 'h1', 'h2', 'p', 'blockquote', 'li' ],
@@ -18,7 +21,15 @@ module.exports = {
     'inlineMediaRegionSelector':  '.scrollmation-container p[contenteditable],.article:not(.article-right):not(.article-left) p[contenteditable]',
     'responsiveImageSelector':    'picture, .scrollmation-container, .inline-image',
     'videoSelector'   :           'video',
-    'mustardClass'    :           'html5-cms',
+    'mustardClass'    :           'html5 js',
+    'api': {
+      'upload'    : 'cms/api/upload.php',
+      'preview'   : 'cms/api/preview.php',
+      'translate' : 'cms/api/translation.php',
+      'save'      : 'cms/api/save.php',
+      'logout'    : 'cms/api/logout.php'
+
+    }
   },
 
   getConfig: function (){
@@ -38,6 +49,8 @@ module.exports = {
     if (this.cutsTheMustard()) this.addMustard();
     this.loadStylesheets();
     this.setupSmoothScrolling();
+    // set lang info
+    this.setLang();
     // this.autoSave();
 
     this.ajax           = require('modules/ajaxer');
@@ -50,26 +63,53 @@ module.exports = {
     this.previewManager = require('modules/preview_manager');
     this.exportManager  = require('modules/export_manager');
     this.templater      = require('modules/templater');
+    this.translationManager = require('modules/translation_manager');
     this.vocabEditor    = require('modules/vocab_editor');
+    this.fileManager    = require('modules/file_manager');
     this.ui             = require('modules/ui');
 
     this.modal.init();
     this.vocabEditor.init();
     this.previewManager.init();
     this.exportManager.init();
-    if (!cms.showTranslation()){
+    if (!cms.showTranslation() && !translateOnly){
       this.editor.init();
       this.videoManager.init();
       this.imageManager.init();
       this.sectionManager.init();
       this.metaManager.init();
+      this.fileManager.init();
       this.templater.init();
+      this.translationManager.init();
       this.ui.init();
     }
 
     if (this.showTranslation()) this.vocabEditor.translatePage();
 
     return true // if we loaded up ok
+  },
+
+
+  setLang: function () {
+    var lang = this.getLang();
+
+    this.lang      = this.getLangInfo(lang),
+    this.lang.code = lang;
+  },
+
+  getLang: function () {
+    var lang = $('html')[0].getAttribute('lang');
+
+    lang.code = lang;
+    return lang || 'en';
+  },
+
+  getLangInfo: function (lang) {
+    return languages[lang];
+  },
+
+  getLanguages: function () {
+    return languages;
   },
 
   setupSmoothScrolling: function () {
@@ -97,8 +137,7 @@ module.exports = {
   },
 
   addMustard: function (){
-    var mustardClass = this.config.mustardClass;
-    document.getElementsByTagName('body')[0].classList.add(mustardClass);
+    document.getElementsByTagName('body')[0].classList.add('cms-html5');
   },
 
   loadStylesheets: function (){

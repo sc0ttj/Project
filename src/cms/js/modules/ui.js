@@ -33,6 +33,9 @@ module.exports = {
     self.$menuBtnPreview = $('.cms-menu-item-preview');
     self.$menuBtnAddSection = $('.cms-menu-item-add-section');
     self.$menuBtnMeta = $('.cms-menu-item-meta');
+    self.$menuBtnFiles = $('.cms-menu-item-files');
+    self.$menuBtnLogout = $('.cms-menu-item-logout');
+    self.$menuBtnTranslations = $('.cms-menu-item-translations');
   },
 
   setUIEventHandlers: function () {
@@ -45,6 +48,9 @@ module.exports = {
     self.$menuBtnSave.on('click', self.menuBtnSaveClickHandler);
     self.$menuBtnAddSection.on('click', self.menuBtnAddSectionClickHandler);
     self.$menuBtnMeta.on('click', self.menuBtnMetaClickHandler);
+    self.$menuBtnFiles.on('click', self.menuBtnFilesClickHandler);
+    self.$menuBtnLogout.on('click', self.menuBtnLogoutClickHandler);
+    self.$menuBtnTranslations.on('click', self.menuBtnTranslationsClickHandler);
   },
 
   setUIEventHandlersOff: function () {
@@ -57,6 +63,9 @@ module.exports = {
     self.$menuBtnSave.off('click', self.menuBtnSaveClickHandler);
     self.$menuBtnAddSection.off('click', self.menuBtnAddSectionClickHandler);
     self.$menuBtnMeta.off('click', self.menuBtnMetaClickHandler);
+    self.$menuBtnFiles.off('click', self.menuBtnFilesClickHandler);
+    self.$menuBtnLogout.off('click', self.menuBtnLogoutClickHandler);
+    self.$menuBtnTranslations.off('click', self.menuBtnTranslationsClickHandler);
   },
 
   getMenuHtml: function () {
@@ -65,8 +74,22 @@ module.exports = {
         <ul class="cms-menu cms-ui-hidden">\
         <li class="cms-menu-top"></li>\
         <li \
+          class="cms-menu-item cms-menu-item-logout">\
+          <span class="cms-menu-item-text">Logout</span>\
+          <span class="cms-menu-item-icon cms-menu-item-icon-logout cms-anim-fade-250ms cms-unselectable"></span>\
+        </li>\
+        <li \
+          class="cms-menu-item cms-menu-item-files">\
+          <span class="cms-menu-item-text">File Manager</span>\
+          <span class="cms-menu-item-icon cms-menu-item-icon-files cms-anim-fade-250ms cms-unselectable"></span>\
+        </li>\
+        <li \
           class="cms-menu-item cms-menu-item-meta">\
-          <span class="cms-menu-item-text">Edit Meta Info</span>\
+          <span class="cms-menu-item-text">Meta Info</span>\
+        </li>\
+        <li \
+          class="cms-menu-item cms-menu-item-translations">\
+          <span class="cms-menu-item-text">Translations</span>\
         </li>\
         <li \
           class="cms-menu-item cms-menu-item-preview">\
@@ -181,6 +204,18 @@ module.exports = {
 
   menuBtnMetaClickHandler: function (e) {
     cms.metaManager.showUI();
+  },
+
+  menuBtnFilesClickHandler: function (e) {
+    cms.fileManager.showUI();
+  },
+
+  menuBtnLogoutClickHandler: function (e) {
+    window.location.href = cms.config.api.logout;
+  },
+
+  menuBtnTranslationsClickHandler: function () {
+    cms.translationManager.showUI();
   },
 
   reIndexMenuItems: function (){

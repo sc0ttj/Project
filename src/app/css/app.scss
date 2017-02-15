@@ -17,10 +17,24 @@
 
 @import 'animations';
 
+
+// the elems below exist in a variety of the templates above..
+//
+// they could be moved to a "_inline_elems.scss" or "_editables.scss", etc
+//
 .article {
   margin-top: 2.4rem;
   margin-left:2%;
   margin-right:2%;
+  a {
+    color: #191919;
+    border-bottom: 1px solid #dcdcdc;
+  }
+  a:hover {
+    color: #337ab7;
+    border-bottom: 1px solid #dcdcdc;
+    text-decoration: none;
+  }
   img {
     display: block;
     height: auto;
