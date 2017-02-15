@@ -17,6 +17,11 @@
 
 @import 'animations';
 
+
+// the elems below exist in a variety of the templates above..
+//
+// they could be moved to a "_inline_elems.scss" or "_editables.scss", etc
+//
 .article {
   margin-top: 2.4rem;
   margin-left:2%;
