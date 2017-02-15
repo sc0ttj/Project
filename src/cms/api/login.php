@@ -15,12 +15,17 @@ function validateLogin ($pass){
   if (isset($_SESSION['translate'])){
     # get the passwd generated for their given LANG
     require_once('passwds/'.$_SESSION['translate'].'.php');
+    # if given pass matches, return true
+    if ($pass == $valid_password){
+      return true;
+    }
   }
   
   // should decrypt password here
 
-  # if given pass matches, return true
-  if ($pass == $valid_password){
+  # if given admin pass matches, return true
+  # we use password_verify, cos this pass was hashed when user created page
+  if (password_verify($pass, $valid_password)){
     return true;
   }
   

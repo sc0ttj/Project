@@ -19,22 +19,8 @@ if (!isset($_SESSION['login'])){
   # if translation URL
   if(isset($_GET['translate'])){
     
-    # check if translator session is set
-    if (!isset($_SESSION['translate'])){
-
-      # no translator session started yet, but ?translate=foo given,
-      # so store session record of translator login attempt
-      # to ensure redirects dont delete LANG info
-
-      $_SESSION['translate'] = $_GET['translate'];
-      
-    } else {
-      
-      # ?translate=foo is present, and translator session is set, 
-      # but translator not logged in, prob gave wrong passwd
-      # ... so do nothing, they will be redirected to login.php later
-
-    }
+    # update to latest translate value
+    $_SESSION['translate'] = $_GET['translate'];
 
   } else { 
 
@@ -56,7 +42,7 @@ if (!isset($_SESSION['login'])){
 
   $page_dir = basename(dirname($_SERVER['SCRIPT_FILENAME']));  # will equal "demo" .. or "my-page-name"
 
-  # user is logged in but for login is for another page
+  # user is logged in but login is for another page
   if ($_SESSION['page_dir'] != $page_dir){
 
     # log them out

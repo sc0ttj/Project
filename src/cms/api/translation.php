@@ -3,6 +3,29 @@
 ini_set('display_errors',1);
 error_reporting(E_ALL);
 
+session_start();
+
+# get config for this page
+# returns $page_dir, $url_path ... 
+require_once('config.inc.php');
+
+# if not logged in
+if (!isset($_SESSION['login'])){
+  # something fishy, logout for sure
+  header('Location: cms/api/logout.php');
+  die;
+}
+
+# user is logged in but login is for another page
+if ($_SESSION['page_dir'] != $page_dir){
+  # log them out
+  header('Location: cms/api/logout.php?error=wrong_page');
+  die;
+}
+
+
+
+
 $lang = 'en';
 
 if (isset($_POST["lang"])) {
@@ -49,8 +72,12 @@ if (isset($_POST["lang"])) {
 
     // build passwd script for this $lang
     $script     = '<?php 
-
 if ( isset($_POST["get_passwd"]) ){
+
+  # if not logged in
+  if (!isset($_SESSION["login"])){
+    die;
+  }
 
   # CMS admin is asking for passwd over AJAX, echo it
   echo "'.$new_passwd.'";

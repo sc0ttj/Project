@@ -46,7 +46,7 @@ $url_path = "/'.$_POST['url'].'/";
   # then replace with the passwd given by user
   $password = 'demo';
   if (isset($_POST['password'])) {
-    $password = $_POST['password'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
   }
   # create the script which will hold the passwd
   # this will by accessed by login script and CMS translaton manager
@@ -54,11 +54,14 @@ $url_path = "/'.$_POST['url'].'/";
   # now the script
   $passwd_script = '<?php 
 if ( isset($_POST["get_passwd"]) ){
-# CMS admin is asking for passwd over AJAX, echo it
-echo "'.$password.'";
+  if ( !isset($_SESSION["login"]) ){ 
+    die; 
+  }
+  # CMS admin is asking for passwd over AJAX, echo it
+  echo \''.$password.'\';
 } else {
-# login.php is requiring the passwd, so give it the $var
-$valid_password = "'.$password.'";
+  # login.php is requiring the passwd, so give it the $var
+  $valid_password = \''.$password.'\';
 }
 ?>';
 
