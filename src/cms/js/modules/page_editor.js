@@ -35,11 +35,9 @@ module.exports = {
   },
 
   setEditableItems: function(items){
-    // document.designMode = 'on'; //makes ALL items editable, very buggy
     items.forEach(function makeItemEditable(el, i){
       var $elems = $(cms.config.sectionSelector + ' ' + el);
       $elems.attr('contenteditable', true);
-      // $elems.attr('data-placeholder', 'Enter text here...');
       $elems.addClass(cms.config.editableClass);
     });
   },

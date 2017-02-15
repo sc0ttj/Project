@@ -12,8 +12,7 @@ var zenscroll     = require('zenscroll');
 module.exports = {
 
   config: {
-    'name'            :           'default options',
-    'templates'       :           [ '_article-full-width.tmpl', '_article-left.tmpl', '_article-right.tmpl', '_hero-center.tmpl', '_image-center.tmpl', '_image-fixed.tmpl', '_scrollmation-text-left.tmpl', '_stat-text.tmpl', '_youtube-full-width.tmpl', '_video.tmpl', '_video-full-width.tmpl' ],
+    'templates'       :           [ '_hero-center.tmpl', '_article-full-width.tmpl', '_article-left.tmpl', '_article-right.tmpl', '_image-center.tmpl', '_image-fixed.tmpl', '_scrollmation-text-left.tmpl', '_stat-text.tmpl', '_youtube-full-width.tmpl', '_video.tmpl', '_video-full-width.tmpl' ],
     'sectionSelector' :           'body .section',
     'sectionContainer':           '<div class="section"></div>', 
     'editableItems'   :           [ 'h1', 'h2', 'p', 'blockquote', 'li' ],
@@ -22,7 +21,7 @@ module.exports = {
     'inlineMediaRegionSelector':  '.scrollmation-container p[contenteditable],.article:not(.article-right):not(.article-left) p[contenteditable]',
     'responsiveImageSelector':    'picture, .scrollmation-container, .inline-image',
     'videoSelector'   :           'video',
-    'mustardClass'    :           'html5-cms',
+    'mustardClass'    :           'html5 js'
   },
 
   getConfig: function (){
@@ -130,8 +129,7 @@ module.exports = {
   },
 
   addMustard: function (){
-    var mustardClass = this.config.mustardClass;
-    document.getElementsByTagName('body')[0].classList.add(mustardClass);
+    document.getElementsByTagName('body')[0].classList.add('cms-html5');
   },
 
   loadStylesheets: function (){
