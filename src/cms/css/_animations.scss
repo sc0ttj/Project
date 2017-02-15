@@ -21,6 +21,14 @@
     transition-delay: 0.1s;
   }
 
+  .cms-anim-fade-500ms {
+    -webkit-transition: opacity 500ms ease;
+    -moz-transition: opacity 500ms ease;
+    -ms-transition: opacity 500ms ease;
+    -o-transition: opacity 500ms ease;
+    transition: opacity 500ms ease;
+  }
+
   .cms-anim-fade-250ms {
     -webkit-transition: opacity 0.25s ease;
     -moz-transition: opacity 0.25s ease;

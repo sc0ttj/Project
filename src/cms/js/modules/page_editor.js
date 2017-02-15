@@ -18,7 +18,7 @@ module.exports = {
   createMediaBtn: function (){
     self.mediaBtn = '\
     <div id="cms-media-btn" \
-         class="cms-media-btn cms-anim-fade-250ms cms-transparent"\
+         class="cms-media-btn cms-anim-fade-500ms cms-transparent"\
          contenteditable="false"\
          onclick="mediaBtnClickHandler(this);">\
       ADD MEDIA\
