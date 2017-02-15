@@ -90,9 +90,8 @@ require_once('cms/api/header.inc.php');
   <meta name="msapplication-config" content="images/favicon/browserconfig.xml?v=0.1">
   <meta name="theme-color" content="#222222">
 
-  <!-- For all versions of IE: Standardise behaviour of ES5 JavaScript, JSON3, HTML5 and CSS media queries -->
-  {{>_polyfills}}
-
+  <!-- apply any polyfills that might be needed  -->
+  <script src="//cdn.polyfill.io/v2/polyfill.min.js"></script>
 </head>
 
 <body>
