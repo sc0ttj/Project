@@ -44,7 +44,7 @@ $url_path = "/'.$_POST['url'].'/";
 
   # set a default password for the page
   # then replace with the passwd given by user
-  $password = 'demo';
+  $password = password_hash('demo', PASSWORD_DEFAULT);
   if (isset($_POST['password'])) {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
   }

@@ -170,7 +170,7 @@ module.exports = {
 
   createVocabEditorForm: function () {
     var lang      = self.getCurrentService(),
-        form      = '<form class="cms-vocab-form" data-lang="'+lang+'" action="cms/api/upload.php" method="post">\n',
+        form      = '<form class="cms-vocab-form" data-lang="'+lang+'" action="'+cms.config.api.upload+'" method="post">\n',
         fields    = self.createVocabEditorFormFields();
 
     form += fields;
@@ -290,7 +290,7 @@ module.exports = {
     e.preventDefault();
  
     var onSuccessHandler = function (responseText){
-      // console.log(responseText);
+      console.log(responseText);
       $('.cms-vocab-input').addClass('cms-vocab-uploaded');
     }
     var onErrorHandler = function (responseText){
@@ -298,7 +298,7 @@ module.exports = {
       $('.cms-vocab-input').addClass('cms-upload-label-error');
     }
 
-    cms.ajax.create('POST', 'cms/api/upload.php');
+    cms.ajax.create('POST', cms.config.api.upload);
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
     cms.ajax.send(formData);
   },

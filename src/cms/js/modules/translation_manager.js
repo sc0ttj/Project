@@ -266,7 +266,7 @@ module.exports = {
       console.log('error creating password for translation ' + lang, msg);
     }
 
-    cms.ajax.create('POST', 'cms/api/translation.php');
+    cms.ajax.create('POST', cms.config.api.translate);
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
     cms.ajax.send(data);
   },

@@ -211,7 +211,7 @@ module.exports = {
   },
 
   menuBtnLogoutClickHandler: function (e) {
-    window.location.href = 'cms/api/logout.php';
+    window.location.href = cms.config.api.logout;
   },
 
   menuBtnTranslationsClickHandler: function () {

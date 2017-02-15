@@ -21,7 +21,15 @@ module.exports = {
     'inlineMediaRegionSelector':  '.scrollmation-container p[contenteditable],.article:not(.article-right):not(.article-left) p[contenteditable]',
     'responsiveImageSelector':    'picture, .scrollmation-container, .inline-image',
     'videoSelector'   :           'video',
-    'mustardClass'    :           'html5 js'
+    'mustardClass'    :           'html5 js',
+    'api': {
+      'upload'    : 'cms/api/upload.php',
+      'preview'   : 'cms/api/preview.php',
+      'translate' : 'cms/api/translation.php',
+      'save'      : 'cms/api/save.php',
+      'logout'    : 'cms/api/logout.php'
+
+    }
   },
 
   getConfig: function (){

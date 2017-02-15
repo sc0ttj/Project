@@ -131,7 +131,7 @@ module.exports = {
     formData.append('video', file, file.name);
     //prevent redirect and do ajax upload
     e.preventDefault();
-    cms.ajax.create('POST', 'cms/api/upload.php');
+    cms.ajax.create('POST', cms.config.api.upload);
     self.setUploadEventHandlers();
     cms.ajax.send(formData);
   },
@@ -218,7 +218,7 @@ module.exports = {
     formData.append('image', file, file.name);
     //prevent redirect and do ajax upload
     e.preventDefault();
-    cms.ajax.create('POST', 'cms/api/upload.php');
+    cms.ajax.create('POST', cms.config.api.upload);
     self.setImageUploadEventHandlers();
     cms.ajax.send(formData);
   },

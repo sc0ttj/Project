@@ -76,7 +76,7 @@ module.exports = {
     var data = new FormData();
     data.append('html', html);
 
-    cms.ajax.create('POST', 'cms/api/preview.php');
+    cms.ajax.create('POST', cms.config.api.preview);
     var successHandler = function (responseText) {
       console.log(responseText);
       callback();
@@ -99,7 +99,7 @@ module.exports = {
     data.append('lang', filename);
     data.append('save_translation', true);
 
-    cms.ajax.create('POST', 'cms/api/translation.php');
+    cms.ajax.create('POST', cms.config.api.translate);
     cms.ajax.onFinish(
       function success (responseText) {
         console.log(responseText);
@@ -119,7 +119,7 @@ module.exports = {
     var data = new FormData();
     data.append('savetozip', 'true');
 
-    cms.ajax.create('POST', 'cms/api/save.php');
+    cms.ajax.create('POST', cms.config.api.save);
     var successHandler = function (responseText) {
       console.log(responseText);
       window.location = responseText;
