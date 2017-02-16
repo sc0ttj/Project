@@ -29,8 +29,7 @@ module.exports = {
       <button class="cms-iframe-resizer-btn" data-width="414px"  data-height="736px">  iPhone 6  </button>\
       <button class="cms-iframe-resizer-btn cms-iframe-resizer-btn-ipad" data-width="1024px" data-height="768px">  iPad      </button>\
       <button class="cms-iframe-resizer-btn" data-width="100%" data-height="100%">     Full      </button>\
-      <br/>\
-      <button class="cms-iframe-resizer-btn cms-iframe-resizer-btn-orientation cms-hidden" data-orientation="switch" style="display:none;"> Switch Orientation ⟳ </button>\
+      <button class="cms-iframe-resizer-btn cms-iframe-resizer-btn-orientation cms-hidden" data-orientation="switch" style="display:none;"> Rotate ⟳ </button>\
     </div>\
     <iframe id="pagePreview"\
       title="Preview ('+langInfo.name+')"\
