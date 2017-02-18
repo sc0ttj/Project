@@ -1,6 +1,6 @@
 // this module will simply return array "tests" as soon as it is required
 // .. it will be required by test runner
-module.exports = (function (){
+module.exports = (function returnTests(){
 
   var tests = [];
 
@@ -22,17 +22,15 @@ module.exports = (function (){
     tests.push({name: name, test: cb});
   };
 
-  // Example tests:
+  // // Example tests, using assert()
 
-  // using assert()
-
-  // normal test
+  // /* normal test */
   // test('1+1 equals 2', function runTest(done) {
   //   assert(1+1 === 2, '1+1 should be 2');
   //   done();
   // });
 
-  // async test
+  // /* async test */
   // test('1+1 equals 2', function runTest(done) {
   //   setTimeout(function asyncAssert(){
   //     assert(1+1 === 2, '1+1 should be 2');
@@ -40,21 +38,27 @@ module.exports = (function (){
   //   });
   // });
 
-  // using expect()
+  // /* Example tests, using expect() */
 
-  // normal test
+  // /* normal test */
   // test('1+1 = 2', function runTest(done) {
   //   expect('1+1 to equal 2', 1+1 === 2);
   //   done();
   // });
 
-  // async test
+  // /* async test */
   // test('1+1 = 2', function runTest(done) {
   //   setTimeout(function asyncExpect(){
   //     expect('1+1 to equal 2', 1+1 === 2);
   //     done();
   //   });
   // });
+
+
+
+  /**
+   * Create tests here
+   */
 
   test('page has valid HTML', function runTest__pageLoaded(done) {
     expect('page <head> count to be more than zero', $('head').length > 0);
@@ -90,9 +94,7 @@ module.exports = (function (){
     done();
   });
 
-  /*
-  * Logout test should go here ... need to moc the cms/api/ stuff in test dir
-  */
+  //Logout test should go here ... need to moc the cms/api/ stuff in test dir
 
   test('the CMS menu shows the file manager', function runTest__showFileManager(done) {
     cms.fileManager.showUI();
