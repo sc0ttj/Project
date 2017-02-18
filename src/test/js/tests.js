@@ -11,6 +11,12 @@ module.exports = (function (){
     }
   };
 
+  function expect (message, condition) {
+    if (!condition) {
+      throw new Error(message);
+    }
+  };
+
   // pass the test name and func into the list "tests"
   function test (name, cb) {
     tests.push({name: name, test: cb});
@@ -18,50 +24,69 @@ module.exports = (function (){
 
   // Example tests:
 
+  // using assert()
+
+  // normal test
   // test('1+1 equals 2', function runTest(done) {
   //   assert(1+1 === 2, '1+1 should be 2');
   //   done();
   // });
 
-  // Example async test:
-
+  // async test
   // test('1+1 equals 2', function runTest(done) {
   //   setTimeout(function asyncAssert(){
   //     assert(1+1 === 2, '1+1 should be 2');
   //     done();
-  //   }, 400);
+  //   });
   // });
 
-  test('page has HTML', function runTest__pageLoaded(done) {
-    assert($('head, body').length > 0, 'page should not be empty');
+  // using expect()
+
+  // normal test
+  // test('1+1 = 2', function runTest(done) {
+  //   expect('1+1 to equal 2', 1+1 === 2);
+  //   done();
+  // });
+
+  // async test
+  // test('1+1 = 2', function runTest(done) {
+  //   setTimeout(function asyncExpect(){
+  //     expect('1+1 to equal 2', 1+1 === 2);
+  //     done();
+  //   });
+  // });
+
+  test('page has valid HTML', function runTest__pageLoaded(done) {
+    expect('page <head> count to be more than zero', $('head').length > 0);
+    expect('page <body> count to be more than zero', $('body').length > 0);
     done();
   });
 
   test('page has 1 section', function runTest__pageHasSection(done) {
-    assert($('.section').length === 1, 'page should have 1 section');
+    expect('page to have 1 section', $('.section').length === 1);
     done();
   });
 
   test('page has a CMS menu', function runTest__pageHasCMSMenu(done) {
-    assert($('.cms-menu').length === 1, 'page should have a CMS menu');
+    expect('page to have 1 CMS menu button', $('.cms-menu-btn').length === 1);
+    expect('CMS menu button to be visible', $('.cms-menu-btn').hasClass('cms-hidden') === false);
     done();
   });
 
   test('the CMS menu is hidden', function runTest__CMSMenuIsHidden(done) {
-    assert($('.cms-menu').hasClass('cms-ui-hidden') === true, 'the CMS menu should be hidden');
+    expect('CMS menu is hidden on page load', $('.cms-menu').hasClass('cms-ui-hidden') === true);
     done();
   });
 
   test('show CMS menu', function runTest__showMenu(done) {
     cms.ui.showMenu();
-    assert($('.cms-menu').hasClass('cms-ui-hidden') === false, 'the menu should show');
-    cms.ui.hideMenu();
+    expect('CMS menu to be visible"', $('.cms-menu').hasClass('cms-ui-hidden') === false);
     done();
   });
 
   test('hide CMS menu', function runTest__hideMenu(done) {
     cms.ui.hideMenu();
-    assert($('.cms-menu').hasClass('cms-ui-hidden') === true, 'the CMS menu should hide');
+    expect('CMS menu to be hidden', $('.cms-menu').hasClass('cms-ui-hidden') === true);
     done();
   });
 
@@ -118,7 +143,7 @@ module.exports = (function (){
     setTimeout(function asyncAssert(){
       assert($('.section').length == 2, 'the CMS should have 2 sections');
       done();
-    }, 400);
+    });
   });
 
   test('the CMS adds a inline images', function runTest__addInlineImage(done) {
@@ -158,10 +183,16 @@ module.exports = (function (){
       $('video')[0].click();
       assert($('.cms-modal-header')[0].innerText == 'Video Manager', 'videos should be clickable and show Video Manager');
       done();
-    }, 400);
+    });
   });
 
+  
+
+
   // more tests here
+
+
+
 
   return tests;
 

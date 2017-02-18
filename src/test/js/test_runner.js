@@ -51,7 +51,7 @@
       // Show remaining tests as skipped:
       tests.slice(i).map(function showSkippedTest(skippedTest) { console.log('-', skippedTest.name); });
       // We're finished:
-      console[err ? 'error' : 'log']('\nTests ' + (err ? 'failed!\n' + err.stack : 'succeeded!'));
+      console[err ? 'error' : 'log']('Test ' + (err ? 'failed: "'+err.toString().substring(7)+'"\n\n' + err.stack : 'succeeded!'));
       this.afterAll();
     }
 
