@@ -1,6 +1,6 @@
-<script src="cms/js/vendor.js"></script>
-<script src="cms/js/cms.js"></script>
-<script id="cms-init" type="text/javascript">
+<script class="cms-script" src="cms/js/vendor.js"></script>
+<script class="cms-script" src="cms/js/cms.js"></script>
+<script class="cms-script" id="cms-init" type="text/javascript">
 // load cms with custom options
 var cms = require('cms');
 var cmsConfig = {
@@ -45,8 +45,8 @@ This will test-runner not be included unless
 brunch is run with `BUILD=with-tests brunch b`
 or the cmd `npm test` is run..
 -->
-<script src="test/test_runner.js"></script>
-<script>
+<script class="cms-script" src="test/test_runner.js"></script>
+<script class="cms-script">
   require('test_runner.js');
 </script>
 {{/test}}

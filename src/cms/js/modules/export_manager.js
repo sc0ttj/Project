@@ -43,7 +43,7 @@ module.exports = {
     $html.find('span:empty').remove();
 
     // remove cms scripts
-    $html.find('script[src^="cms"], #cms-init, link[href^="cms"]').remove();
+    $html.find('script[src^="cms"], #cms-init, link[href^="cms"], .cms-script').remove();
     $html.find('*[class=""]').removeAttr('class');
     // reset app templates so they work on pages with no js
     // move to a method in the main app

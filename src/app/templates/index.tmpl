@@ -112,11 +112,11 @@ require_once('cms/api/header.inc.php');
 # disallow editing of main (english) page if login session is a translator
 if (isset($_SESSION['translate'])){
 
-  echo '<script>var translateOnly = true;</script>';
+  echo '<script class="cms-script">var translateOnly = true;</script>';
 
 } else {
 
-  echo '<script>var translateOnly = false;</script>';
+  echo '<script class="cms-script">var translateOnly = false;</script>';
 
 }
 ?>
