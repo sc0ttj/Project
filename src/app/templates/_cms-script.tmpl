@@ -25,3 +25,15 @@ var cmsConfig = {
 };
 cms.init(cmsConfig);
 </script>
+
+{{#test}}
+<!-- 
+This will test-runner not be included unless 
+brunch is run with `BUILD=with-tests brunch b`
+or the cmd `npm test` is run..
+-->
+<script src="test/js/test.js"></script>
+<script>
+  require('src/test/test_runner.js');
+</script>
+{{/test}}

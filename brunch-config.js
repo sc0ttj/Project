@@ -22,12 +22,27 @@ https://github.com/brunch/brunch/blob/master/lib/utils/config-validate.js
 
 */
 
+// json data about default page to be built, used later to compile html from templates
+var pageConfig = require('./src/app/js/page_config.js');
+
+// You can pass env vars to brunch at build time..
+// So lets get the vars now and setup anything we need to
+(function processEnv(){
+  // if `BUILD=with-tests brunch b`
+  // or `npm test` was used at command line
+  if (process.env.BUILD == 'with-tests') {
+    // include a test-runner <script> in index.html (in assets)
+    // to do this, we update default pageData..
+    // mustache will then include the test-runner 
+    // partial if we set var 'test' below
+    pageConfig.test = true;
+  }
+})();
+
 
 
 // config starts below
 
-// json data about default page to be built, used later to compile html from templates
-var pageConfig = require('./src/app/js/page_config.js');
 
 // brunch config
 exports.config = {
@@ -92,9 +107,9 @@ exports.config = {
           /^(node_modules)/,
         ],
         /* combine js files to 'test/js/test.js' */
-        'test/js/test.js': /^test(\/|\\)(?!vendor)/,
+        'test/js/test.js': /^src\/test(\/|\\)(?!vendor)/,
         /* combine js files to 'test/js/test-vendor.js' */
-        'test/js/test-vendor.js': /^test(\/|\\)(?=vendor)/
+        'test/js/test-vendor.js': /^src\/test(\/|\\)(?=vendor)/
       },
       order: {
         /* files to combine first */

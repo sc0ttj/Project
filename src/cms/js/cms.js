@@ -179,7 +179,7 @@ module.exports = {
     // save cleaned up html to localstorage
     store.set(this.pageDir + '__head', $head.html());
     store.set(this.pageDir, html);
-    console.log('Saved progress..');
+    // console.log('Saved progress..');
   },
 
   restoreProgress: function(){
