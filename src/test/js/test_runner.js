@@ -10,15 +10,17 @@
 
   // Function to add tests:
   this.beforeAll = function () {
-    console.log('Running tests...');
+    console.log('Running tests..');
   };
 
   // Function to add tests:
   this.afterAll = function () {
-    console.log('Tests finished...')
   };
 
-  this.beforeEach = function () {
+  this.beforeEach = function (testToRun) {
+    // show test title/scenario
+    if (testToRun) console.log('\nTest: '+testToRun.name);
+    // reset page
     cms.ui.hideMenu();
   };
 
@@ -31,14 +33,12 @@
     var i = 0, testToRun;
     
     (function next (err) {
-      // setup before each test
-      this.beforeEach();
-      // Log status for last test run:
-      if (testToRun) console[err ? 'error' : 'log'](err ? '✘' : '✔', testToRun.name);
       // Abort if last test failed or out of tests:
       if (err || !(testToRun = tests[i++])) return done(err);
       //teardown after each test
       this.afterEach();
+      // setup before each test
+      this.beforeEach(testToRun);
       // Run test:
       try {
         testToRun.test.call(testToRun.test, next);
@@ -48,10 +48,11 @@
     })();
     
     function done (err) {
+      console.log('\n');
       // Show remaining tests as skipped:
-      tests.slice(i).map(function showSkippedTest(skippedTest) { console.log('-', skippedTest.name); });
+      tests.slice(i).map(function showSkippedTest(skippedTest) { console.log('Skipped:', skippedTest.name); });
       // We're finished:
-      console[err ? 'error' : 'log']('Test ' + (err ? 'failed: "'+err.toString().substring(7)+'"\n\n' + err.stack : 'succeeded!'));
+      console[err ? 'error' : 'log']('Tests ' + (err ? 'failed ✘: "'+err.toString().substring(7)+'"\n\n' + err.stack : 'succeeded ✔'));
       this.afterAll();
     }
 
