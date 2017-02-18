@@ -24,7 +24,7 @@ module.exports = {
       $html.find(el+':empty').remove();
     });
     // remove elems added by cms
-    $html.find('.cms-menu-container, .cms-menu, .cms-menu-bg, .cms-modal, .cms-media-btn, .cms-menu-btn, .g-options-container').remove();
+    $html.find('.cms-menu-container, .cms-menu, .cms-menu-bg, .cms-modal, .cms-media-btn, .cms-menu-btn, .g-options-container, .cms-script').remove();
     // remove all classes and attributes
     $html.find('*').removeClass('cms-html5 cms-editable cms-editable-img cms-editable-region cms-inline-media');
     $html.find('*').removeAttr('contenteditable');
