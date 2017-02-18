@@ -35,7 +35,7 @@ module.exports = (function returnTests(){
   //   setTimeout(function asyncAssert(){
   //     assert(1+1 === 2, '1+1 should be 2');
   //     done();
-  //   });
+  //   }, 400);
   // });
 
   // /* Example tests, using expect() */
@@ -51,7 +51,7 @@ module.exports = (function returnTests(){
   //   setTimeout(function asyncExpect(){
   //     expect('1+1 to equal 2', 1+1 === 2);
   //     done();
-  //   });
+  //   }, 400);
   // });
 
 
@@ -145,7 +145,7 @@ module.exports = (function returnTests(){
     setTimeout(function asyncAssert(){
       assert($('.section').length == 2, 'the CMS should have 2 sections');
       done();
-    });
+    }, 400);
   });
 
   test('the CMS adds a inline images', function runTest__addInlineImage(done) {
@@ -185,7 +185,7 @@ module.exports = (function returnTests(){
       $('video')[0].click();
       assert($('.cms-modal-header')[0].innerText == 'Video Manager', 'videos should be clickable and show Video Manager');
       done();
-    });
+    }, 400);
   });
 
   
