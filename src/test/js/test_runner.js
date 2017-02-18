@@ -190,10 +190,20 @@ test('the CMS deletes a section', function runTest__deleteSection(done) {
   done();
 });
 
-test('clicking images shows Image Manager', function runTest__deleteSection(done) {
+test('clicking images shows Image Manager', function runTest__showImageManager(done) {
   $('.hero-center picture')[0].click();
   assert($('.cms-modal-header')[0].innerText == 'Image Manager', 'images should be clickable and show Image Manager');
   done();
+});
+
+test('clicking video shows Video Manager', function runTest__showVideoManager(done) {
+  cms.sectionManager.showUI();
+  cms.sectionManager.getTemplateFromFile('_video-full-width.tmpl');
+  setTimeout(function asyncAssert(){
+    $('video')[0].click();
+    assert($('.cms-modal-header')[0].innerText == 'Video Manager', 'videos should be clickable and show Video Manager');
+    done();
+  }, 400);
 });
 
 
