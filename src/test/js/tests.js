@@ -1,68 +1,39 @@
-// this module will simply return array "tests" as soon as it is required
-// .. it will be required by test runner
+// This module returns the array "tests" as soon as it is required.
+// It is required by test_runner.js
+
 module.exports = (function returnTests(){
 
   var tests = []; // the list of tests to return to test_runner
 
-  // World's smallest assertion library by @snuggsi (https://twitter.com/snuggsi/status/565531862895169536): 
-  function assert (condition, message) {
-    if (!condition) {
-      console.log('   ✘ '+message);
-      throw new Error(message);
-    }
-    console.log('   ✔ '+message);
-  };
+  /**
+   * Helper funcs: test, describe, assert, expect
+  */
 
-  // alternative syntax
-  function expect (message, condition) {
-    if (!condition) {
-      console.log('   ✘ '+message);
-      throw new Error(message);
-    }
-    console.log('   ✔ '+message);
-  };
+    // creates the list of tests to return
+    var test = function (name, cb) {
+      tests.push({name: name, test: cb});
+    };
+    // alternative cmd
+    var describe = test;
 
-  // creates the list of tests to return
-  function test (name, cb) {
-    tests.push({name: name, test: cb});
-  };
+    // World's smallest assertion library @snuggsi (https://twitter.com/snuggsi/status/565531862895169536):
+    var assert = function (condition, message) {
+      if (!condition) {
+        console.log('   ✘ '+message);
+        throw new Error(message);
+      }
+      console.log('   ✔ '+message);
+    };
+    
+    // alternative syntax
+    var expect = function (message, condition) {
+      assert(condition, message);
+    };
 
-  // // Example tests, using assert()
-
-  // /* normal test */
-  // test('1+1 equals 2', function runTest(done) {
-  //   assert(1+1 === 2, '1+1 should be 2');
-  //   done();
-  // });
-
-  // /* async test */
-  // test('1+1 equals 2', function runTest(done) {
-  //   setTimeout(function asyncAssert(){
-  //     assert(1+1 === 2, '1+1 should be 2');
-  //     done();
-  //   }, 400);
-  // });
-
-  // /* Example tests, using expect() */
-
-  // /* normal test */
-  // test('1+1 = 2', function runTest(done) {
-  //   expect('1+1 to equal 2', 1+1 === 2);
-  //   done();
-  // });
-
-  // /* async test */
-  // test('1+1 = 2', function runTest(done) {
-  //   setTimeout(function asyncExpect(){
-  //     expect('1+1 to equal 2', 1+1 === 2);
-  //     done();
-  //   }, 400);
-  // });
 
   /**
    * Create tests here
    */
-
   test('page has valid HTML', function(done){
     expect('page <head> count to be more than zero', $('head').length > 0);
     expect('page <body> count to be more than zero', $('body').length > 0);
@@ -92,7 +63,7 @@ module.exports = (function returnTests(){
 
   test('show CMS menu', function(done){
     cms.ui.showMenu();
-    expect('CMS menu to be visible"', $('.cms-menu').hasClass('cms-ui-hidden') === false);
+    expect('CMS menu to be visible', $('.cms-menu').hasClass('cms-ui-hidden') === false);
     done();
   });
   
@@ -104,8 +75,6 @@ module.exports = (function returnTests(){
   });
 
   //Logout test should go here ... need to moc the cms/api/ stuff in test dir
-
-  
 
   test('show the file manager', function(done){
     cms.fileManager.showUI();
@@ -144,7 +113,7 @@ module.exports = (function returnTests(){
     $('.cms-iframe-resizer-btn')[0].click();
     // get new height
     height = $('#pagePreview')[0].height;
-    expect('the iframe height to have changed', oldHeight !== height);
+    expect('height of iframe #pagePreview should have changed', oldHeight !== height);
     done();
   });
   
@@ -214,12 +183,48 @@ module.exports = (function returnTests(){
   });
   
 
-
-  // more tests here
-
+  // add more tests here
 
 
 
+  // we have our tests, return them to test_runner.js
   return tests;
+
+  /**
+   * Examples below
+  */
+
+  // Example tests, using assert()
+
+  /* normal test */
+  test('1+1 equals 2', function runTest(done) {
+    assert(1+1 === 2, '1+1 should be 2');
+    done();
+  });
+
+  /* async test */
+  test('1+1 equals 2', function runTest(done) {
+    setTimeout(function asyncAssert(){
+      assert(1+1 === 2, '1+1 should be 2');
+      done();
+    }, 400);
+  });
+
+  /* Example tests, using expect() */
+
+  /* normal test */
+  test('1+1 = 2', function runTest(done) {
+    expect('1+1 to equal 2', 1+1 === 2);
+    done();
+  });
+
+  /* async test */
+  test('1+1 = 2', function runTest(done) {
+    setTimeout(function asyncExpect(){
+      expect('1+1 to equal 2', 1+1 === 2);
+      done();
+    }, 400);
+  });
+
 
 })();
