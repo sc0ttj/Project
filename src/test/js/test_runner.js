@@ -50,8 +50,9 @@
     function done (err) {
       console.log('\n');
       // Show remaining tests as skipped:
-      tests.slice(i).map(function showSkippedTest(skippedTest) { console.log('Skipped:', skippedTest.name); });
+      tests.slice(i).map(function showSkippedTest(skippedTest) { console.log('skipped:', skippedTest.name); });
       // We're finished:
+      console.log('\n');
       console[err ? 'error' : 'log']('Tests ' + (err ? 'failed ✘: "'+err.toString().substring(7)+'"\n\n' + err.stack : 'succeeded ✔'));
       this.afterAll();
     }
