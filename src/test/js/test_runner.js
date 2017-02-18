@@ -4,7 +4,6 @@ function assert (condition, message) {
     throw new Error(message);
   }
 }
-
 /**
  * A Javascript test runner in 20 lines of code
  * From http://joakimbeng.eu01.aws.af.cm/a-javascript-test-runner-in-20-lines/
@@ -69,12 +68,12 @@ function assert (condition, message) {
 
 
 
+
 /*
 * 
 * Run tests
 * 
 */
-
 beforeAll();
 
 test('page has HTML', function runTest__pageLoaded(done) {
