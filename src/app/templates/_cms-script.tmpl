@@ -4,6 +4,19 @@
 // load cms with custom options
 var cms = require('cms');
 var cmsConfig = {
+  // Unit testing: disable local storage in this template 
+  // if test=true .. This value comes from an ENV var passed 
+  // to brunch at build time: `BUILD=with-tests brunch b`
+  // #name = mustache true
+  {{#test}}
+  // dont use local storage if running unit tests
+  'localStorage'    :           false,
+  {{/test}}
+  // ^name = mustache false
+  {{^test}}
+  // use local storage if not running unit tests
+  'localStorage'    :           true,
+  {{/test}}
   'templates'       :           [ '_hero-center.tmpl', '_article-full-width.tmpl', '_article-left.tmpl', '_article-right.tmpl', '_image-center.tmpl', '_image-fixed.tmpl', '_scrollmation-text-left.tmpl', '_stat-text.tmpl', '_youtube-full-width.tmpl', '_video.tmpl', '_video-full-width.tmpl' ],
   'sectionSelector' :           'body .section',
   'sectionContainer':           '<div class="section"></div>', 
