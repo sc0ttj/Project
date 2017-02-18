@@ -196,6 +196,7 @@ test('clicking images shows Image Manager', function runTest__deleteSection(done
   done();
 });
 
+
 // Run all tests:
 run();
 

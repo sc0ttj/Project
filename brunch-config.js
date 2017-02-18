@@ -73,8 +73,8 @@ exports.config = {
     /* use brunchs built in commonjs module bundler, better supports npm */
     definition: 'commonjs',
     wrapper: 'commonjs',
-    /* make js modules available at '/modules/' .. (instead of '/src/app/js/modules/') */
-    nameCleaner: path => path.replace(/^src\/(app|cms)\/js\//, '')  
+    /* nicer module paths for require(): make js modules available at 'module.js' .. (instead of '/src/{blah}/modules/') */
+    nameCleaner: path => path.replace(/^src\/(app|cms|test)\/js\//, '')  
   },
 
   /* enable full npm support in brunch */
@@ -106,10 +106,10 @@ exports.config = {
           /^src\/cms\/vendor/,
           /^(node_modules)/,
         ],
-        /* combine js files to 'test/js/test.js' */
-        'test/js/test.js': /^src\/test(\/|\\)(?!vendor)/,
-        /* combine js files to 'test/js/test-vendor.js' */
-        'test/js/test-vendor.js': /^src\/test(\/|\\)(?=vendor)/
+        /* combine js files to 'test/test.js' */
+        'test/test_runner.js': /^src\/test\/js/,
+        /* combine js files to 'test/vendor.js' */
+        'test/vendor.js': /^src\/test\/vendor\/js/
       },
       order: {
         /* files to combine first */
@@ -132,8 +132,6 @@ exports.config = {
         'cms/css/cms.css': /^src\/cms\/css/,
         /* combine scss to cms/css/vendor.css */
         'cms/css/vendor.css': /^src\/cms\/vendor/,
-        /* combine scss to cms/css/test.css */
-        'test/css/test.css': /^test/
       },
       order: {
         /* files to combine first */
