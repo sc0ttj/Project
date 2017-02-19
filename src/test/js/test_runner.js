@@ -4,11 +4,11 @@
  * and https://gist.github.com/joakimbeng/8f57dae814a4802e2ae6
  */
 (function testRunner() {
+
   // The test queue:
   // get tests from separate file
   var tests = require('tests');
 
-  // Function to add tests:
   this.beforeAll = function () {
     console.log('Running tests..');
   };
@@ -29,13 +29,14 @@
 
   this.afterEach = function (testToRun) {
     $('.cms-modal').remove();
-    cms.ui.hideMenu();
   };
 
   // the run function: will go through all tests
   this.run = function run () {
     var i = 0, testToRun;
     
+    beforeAll();
+
     (function next (err) {
       //teardown after each test
       this.afterEach(testToRun);
@@ -60,8 +61,8 @@
       console[err ? 'error' : 'log']('Tests ' + (err ? 'failed ✘: "'+err.toString().substring(7)+'"\n\n' + err.stack : 'succeeded ✔'));
       this.afterAll();
     }
-
   };
+
 })();
 
 /*
@@ -69,7 +70,4 @@
 * Run tests
 * 
 */
-beforeAll();
-
-// Run all tests:
 run();
