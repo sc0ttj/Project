@@ -2,16 +2,6 @@ var loadCSS    = require('modules/loadcss').init;
 var loadJS     = require('modules/loadjs');
 var pageConfig = require('page_config.js');
 
-//http://stackoverflow.com/a/31133401
-// add a playing property to media stuff
-// we can use this to check if a video is playing or not
-Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
-    get: function(){
-        return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
-    }
-})
-
-
 "use strict";
 
 module.exports = {
@@ -203,6 +193,17 @@ module.exports = {
       var videoBtnClickHandler = function(){
         var video = this.parentNode.previousElementSibling,
             videoOverlay = this.parentNode;
+
+        //http://stackoverflow.com/a/31133401
+        // add a playing property to media stuff
+        // we can use this to check if a video is playing or not
+        if (typeof video.playing == 'undefined'){
+          Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
+            get: function(){
+              return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
+            }
+          });
+        }
 
         if (video.playing) {
           video.pause();

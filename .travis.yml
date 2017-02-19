@@ -30,4 +30,4 @@ install:
   - bower update
   - sleep 1
 
-script: BUILD=with-tests brunch b
+script: phantomjs src/test/js/_phantom_runner.js

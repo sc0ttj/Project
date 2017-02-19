@@ -19,10 +19,15 @@ module.exports = (function returnTests(){
     // World's smallest assertion library @snuggsi (https://twitter.com/snuggsi/status/565531862895169536):
     var assert = function (condition, message) {
       if (!condition) {
-        console.log('   ✘ '+message);
+        console.error('   ✘ '+message);
         throw new Error(message);
       }
-      console.log('   ✔ '+message);
+      // is test is run by PhantomJS, dont style the console output
+      if (/PhantomJS/.test(window.navigator.userAgent)) {
+        console.log('   ✔ '+message);
+      } else {
+        console.log('%c   ✔ '+message, 'color: #005500;');
+      }
     };
     
     // alternative syntax
