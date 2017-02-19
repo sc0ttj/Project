@@ -19,7 +19,7 @@
 
   this.beforeEach = function (testToRun) {
     // show test title/scenario
-    if (testToRun) console.log('\nTest: '+testToRun.name);
+    if (testToRun) console.log('\nScenario: '+testToRun.name);
     // reset page
     cms.ui.hideMenu();
   };
