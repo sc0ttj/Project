@@ -32,7 +32,7 @@ install:
   - bower install
   - bower update
   - sleep 1
-  - brunch b
+  - BUILD=with-tests brunch b
   - sleep 2
 
-script: npm test
+script: phantomjs www/demo/
