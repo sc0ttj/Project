@@ -10,7 +10,7 @@ env:
 
 branches:
   only:
-  - unit_testing__minimalist
+  - master
 
 before_script:
   # setting the path for phantom.js 2.0.0
