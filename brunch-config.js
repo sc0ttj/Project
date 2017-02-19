@@ -22,12 +22,27 @@ https://github.com/brunch/brunch/blob/master/lib/utils/config-validate.js
 
 */
 
+// json data about default page to be built, used later to compile html from templates
+var pageConfig = require('./src/app/js/page_config.js');
+
+// You can pass env vars to brunch at build time..
+// So lets get the vars now and setup anything we need to
+(function processEnv(){
+  // if `BUILD=with-tests brunch b`
+  // or `npm test` was used at command line
+  if (process.env.BUILD == 'with-tests') {
+    // include a test-runner <script> in index.html (in assets)
+    // to do this, we update default pageData..
+    // mustache will then include the test-runner 
+    // partial if we set var 'test' below
+    pageConfig.test = true;
+  }
+})();
+
 
 
 // config starts below
 
-// json data about default page to be built, used later to compile html from templates
-var pageConfig = require('./src/app/js/page_config.js');
 
 // brunch config
 exports.config = {
@@ -58,8 +73,8 @@ exports.config = {
     /* use brunchs built in commonjs module bundler, better supports npm */
     definition: 'commonjs',
     wrapper: 'commonjs',
-    /* make js modules available at '/modules/' .. (instead of '/src/app/js/modules/') */
-    nameCleaner: path => path.replace(/^src\/(app|cms)\/js\//, '')  
+    /* nicer module paths for require(): make js modules available at 'module.js' .. (instead of '/src/{blah}/modules/') */
+    nameCleaner: path => path.replace(/^src\/(app|cms|test)\/js\//, '')  
   },
 
   /* enable full npm support in brunch */
@@ -91,10 +106,10 @@ exports.config = {
           /^src\/cms\/vendor/,
           /^(node_modules)/,
         ],
-        /* combine js files to 'test/js/test.js' */
-        'test/js/test.js': /^test(\/|\\)(?!vendor)/,
-        /* combine js files to 'test/js/test-vendor.js' */
-        'test/js/test-vendor.js': /^test(\/|\\)(?=vendor)/
+        /* combine js files to 'test/test.js' */
+        'test/test_runner.js': /^src\/test\/js/,
+        /* combine js files to 'test/vendor.js' */
+        'test/vendor.js': /^src\/test\/vendor\/js/
       },
       order: {
         /* files to combine first */
@@ -117,8 +132,6 @@ exports.config = {
         'cms/css/cms.css': /^src\/cms\/css/,
         /* combine scss to cms/css/vendor.css */
         'cms/css/vendor.css': /^src\/cms\/vendor/,
-        /* combine scss to cms/css/test.css */
-        'test/css/test.css': /^test/
       },
       order: {
         /* files to combine first */

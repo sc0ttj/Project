@@ -12,6 +12,7 @@ var zenscroll     = require('zenscroll');
 module.exports = {
 
   config: {
+    'localStorage'    :           true,
     'templates'       :           [ '_hero-center.tmpl', '_article-full-width.tmpl', '_article-left.tmpl', '_article-right.tmpl', '_image-center.tmpl', '_image-fixed.tmpl', '_scrollmation-text-left.tmpl', '_stat-text.tmpl', '_youtube-full-width.tmpl', '_video.tmpl', '_video-full-width.tmpl' ],
     'sectionSelector' :           'body .section',
     'sectionContainer':           '<div class="section"></div>', 
@@ -159,6 +160,7 @@ module.exports = {
 
   saveProgress: function(){
     if (cms.showTranslation()) return false;
+    if (!cms.config.localStorage) return false;
 
     var $html = $('body').clone(),
         $head = $('head').clone(),
@@ -179,13 +181,15 @@ module.exports = {
     // save cleaned up html to localstorage
     store.set(this.pageDir + '__head', $head.html());
     store.set(this.pageDir, html);
-    console.log('Saved progress..');
+    // console.log('Saved progress..');
   },
 
   restoreProgress: function(){
     var html = store.get(this.pageDir),
         head = store.get(this.pageDir + '__head'),
         restored = false;
+
+    if (!cms.config.localStorage) return false;
 
     if (html) {
       $('body').html(html);

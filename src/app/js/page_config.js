@@ -1,4 +1,5 @@
 module.exports = {
+  test: false,
   author: {
     name:     'Your Name Here',
     email:    'name [at] email.com',

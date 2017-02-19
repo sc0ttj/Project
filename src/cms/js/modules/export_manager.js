@@ -24,7 +24,7 @@ module.exports = {
       $html.find(el+':empty').remove();
     });
     // remove elems added by cms
-    $html.find('.cms-menu-container, .cms-menu, .cms-menu-bg, .cms-modal, .cms-media-btn, .cms-menu-btn, .g-options-container').remove();
+    $html.find('.cms-menu-container, .cms-menu, .cms-menu-bg, .cms-modal, .cms-media-btn, .cms-menu-btn, .g-options-container, .cms-script').remove();
     // remove all classes and attributes
     $html.find('*').removeClass('cms-html5 cms-editable cms-editable-img cms-editable-region cms-inline-media');
     $html.find('*').removeAttr('contenteditable');
@@ -43,7 +43,7 @@ module.exports = {
     $html.find('span:empty').remove();
 
     // remove cms scripts
-    $html.find('script[src^="cms"], #cms-init, link[href^="cms"]').remove();
+    $html.find('script[src^="cms"], #cms-init, link[href^="cms"], .cms-script').remove();
     $html.find('*[class=""]').removeAttr('class');
     // reset app templates so they work on pages with no js
     // move to a method in the main app

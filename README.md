@@ -1,4 +1,4 @@
-#Project
+# Project
 
 A scaffolding tool for building static news articles and webpages from templates.
 
@@ -78,19 +78,52 @@ A scaffolding tool for building static news articles and webpages from templates
 
 ### Testing and saving:
   
-  - To view on other devices, you can run the following command:
+##### Running Tests in the terminal:
+
+  - Write tests in `src/test/js/tests.js`
+  - Run tests in the terminal:
+
+        npm test
+
+  PhantomJS is required. You can install it globally with `npm install phantomjs -g`.
+
+##### Running Tests in your browser:
+
+  - Write tests in `src/test/js/tests.js`
+  - Build source and run tests in the browser:
+
+        npm start
+
+  You can see the tests in the console window of your browser.
+  Tests are re-run automatically each time you update any files in `/src` and save, or manually refresh the page.
+
+  NOTE: The CMS will not use localStorage if `npm test` is running. 
+  This gives the tests a fresh page to work on.
+
+  
+##### Test Driven Development (TDD)
+
+  Simply write tests while `npm start` is running:
+  
+  - Add a test then save - it'll fail. Then add some code to fix the test, save again, and see test passes in the browsers console window.
+  
+  As long as `npm start` is running, the browser will auto-refresh at each step and re-run your tests in the console.
+
+
+##### Device Testing:
+
+  To view on other devices, you can run the following command:
 
         vagrant share --name myapp
 
-  - You (and anyone else!) can then visit the following URL on any device:
+  You (and anyone else!) can then visit the following URL on any device:
 
         http://myapp.vagrantshare.com
 
-  - Also run the unit tests:
 
-        brunch test
+##### Saving your changes to the source:
 
-  - If they pass and you're happy, save to github:
+  If the tests pass and you're happy, save to github:
 
         git add .
         git commit -m 'my message'
