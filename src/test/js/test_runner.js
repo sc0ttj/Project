@@ -24,7 +24,7 @@
     cms.ui.hideMenu();
   };
 
-  this.afterEach = function () {
+  this.afterEach = function (testToRun) {
     $('.cms-modal').remove();
   };
 
@@ -36,7 +36,7 @@
       // Abort if last test failed or out of tests:
       if (err || !(testToRun = tests[i++])) return done(err);
       //teardown after each test
-      this.afterEach();
+      this.afterEach(testToRun);
       // setup before each test
       this.beforeEach(testToRun);
       // Run test:
