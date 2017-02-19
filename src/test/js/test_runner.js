@@ -1,3 +1,6 @@
+// This test runner is included in "_cms_script.tmpl" if the CMS  
+// was (re)built using `npm test` or `npm start`
+
 /**
  * A Javascript test runner in 20 lines of code
  * From http://joakimbeng.eu01.aws.af.cm/a-javascript-test-runner-in-20-lines/

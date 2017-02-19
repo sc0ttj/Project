@@ -1,3 +1,5 @@
+// this file is called when user runs `npm test`
+
 // based on https://gist.github.com/kennyu/3699039
 
 //clear screen
