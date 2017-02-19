@@ -82,16 +82,6 @@ sudo apt-get install -y apache2 -qq
 # Add vagrant user to www-data group
 sudo usermod -a -G www-data vagrant
 
-echo "Installing mySQL"
-sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password 12345"
-sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password 12345"
-sudo apt-get install -y mysql-server php5-mysql -qq
-
-echo "Installing NodeJS..."
-sudo apt-get install -y nodejs -qq
-[ ! -x /usr/bin/node ] && sudo ln -s /usr/bin/nodejs /usr/bin/node
-sudo apt-get install -y npm -qq
-
 echo "Restarting services"
 sudo service mysql restart
 sudo a2enmod rewrite
