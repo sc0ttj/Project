@@ -88,7 +88,7 @@ A scaffolding tool for building static news articles and webpages from templates
   You can see the tests in the console window of your browser.
   Tests are re-run automatically each time you update any files in `/src` and save, or manually refresh the page.
 
-  NOTE: The CMS will not not use localStorage if `npm test` is running. 
+  NOTE: The CMS will not use localStorage if `npm test` is running. 
   This gives the tests a fresh page to work on.
 
   

@@ -13,8 +13,11 @@
     console.log('Running tests..');
   };
 
-  // Function to add tests:
   this.afterAll = function () {
+    //remove any sections we added
+    while($('.section').length > 1){
+      $('.section').last().remove();
+    }
   };
 
   this.beforeEach = function (testToRun) {
@@ -26,6 +29,7 @@
 
   this.afterEach = function (testToRun) {
     $('.cms-modal').remove();
+    cms.ui.hideMenu();
   };
 
   // the run function: will go through all tests
@@ -33,10 +37,10 @@
     var i = 0, testToRun;
     
     (function next (err) {
-      // Abort if last test failed or out of tests:
-      if (err || !(testToRun = tests[i++])) return done(err);
       //teardown after each test
       this.afterEach(testToRun);
+      // Abort if last test failed or out of tests:
+      if (err || !(testToRun = tests[i++])) return done(err);
       // setup before each test
       this.beforeEach(testToRun);
       // Run test:
