@@ -78,12 +78,21 @@ A scaffolding tool for building static news articles and webpages from templates
 
 ### Testing and saving:
   
-##### Running Tests:
+##### Running Tests in the terminal:
+
+  - Write tests in `src/test/js/tests.js`
+  - Run tests in the terminal:
+
+        npm test
+
+  PhantomJS is required. You can install it globally with `npm install phantomjs -g`.
+
+##### Running Tests in your browser:
 
   - Write tests in `src/test/js/tests.js`
   - Build source and run tests in the browser:
 
-        npm test
+        npm start
 
   You can see the tests in the console window of your browser.
   Tests are re-run automatically each time you update any files in `/src` and save, or manually refresh the page.
@@ -94,11 +103,11 @@ A scaffolding tool for building static news articles and webpages from templates
   
 ##### Test Driven Development (TDD)
 
-  Simply write tests while `npm test` is running:
+  Simply write tests while `npm start` is running:
   
   - Add a test then save - it'll fail. Then add some code to fix the test, save again, and see test passes in the browsers console window.
   
-  As long as `npm test` is running, the browser will auto-refresh at each step and re-run your tests in the console.
+  As long as `npm start` is running, the browser will auto-refresh at each step and re-run your tests in the console.
 
 
 ##### Device Testing:
