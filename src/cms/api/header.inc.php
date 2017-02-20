@@ -14,6 +14,15 @@
 
 session_start();
 
+## uncomment the 3 lines below to disable user logins
+## also see validate_user.inc.php
+/*
+require_once('config.inc.php');
+$_SESSION['login'] = true;
+$_SESSION['page_dir'] = $page_dir;
+*/
+
+
 # if not logged in
 if (!isset($_SESSION['login'])){
   # if translation URL
