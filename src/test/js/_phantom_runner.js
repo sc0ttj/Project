@@ -1,9 +1,6 @@
 // this file is called when user runs `npm test`
-
 // based on https://gist.github.com/kennyu/3699039
 
-//clear screen
-// console.log('\x1Bc');
 // loading msg
 console.log("\nLoading PhantomJS.. Then tests will begin..");
 
@@ -13,9 +10,7 @@ var liveURL = "http://localhost:8080/demo/index.html";
 // create a page
 var page = require('webpage').create(), testindex = 0, loadInProgress = false;
 
-
 // Phantom Events
-
 page.onConsoleMessage = function(msg) {
   // enable logging to node console/linux term/CI term
   console.log(msg);
@@ -34,34 +29,32 @@ page.onPageLoaded = function() {
   console.log(document.title);
 }
 
-
-// steps to do once loaded and logged in
+// phantomJS will run each function in "steps" array
 var steps = [
+  //Load Login Page
   function() {
-    //Load Login Page
     page.open(liveURL);
     console.log(document.title);
   },
+  //Enter Credentials
   function() {
-    //Enter Credentials
     page.evaluate(function() {
       document.querySelector('input[type="password"]').value = "demo";
     });
   }, 
+  //Login
   function() {
-    //Login
     page.evaluate(function() {
       document.querySelector('input[type="submit"]').click();
     });
   },
+  //Run tests
   function() {
-    //go to index.html, the unit tests will log to console (and also to stdout)
-    var page = require('webpage').create(), testindex = 0, loadInProgress = false;
-    var usingPhantom = true;
-    page.open(liveURL);
+    // we're at the homepage again, this time logged in,
+    // so tests will now run (without this func, phantomJS 
+    // doesn't re-visit the page once logged in)
   }
 ];
-
 
 interval = setInterval(function() {
 
