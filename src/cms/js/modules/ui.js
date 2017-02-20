@@ -235,7 +235,6 @@ module.exports = {
   },
 
   showMenu: function(){
-    var $sections = self.getSections();
     cms.saveProgress();
     self.updateUI();
     $('.cms-menu, .cms-menu-bg').addClass('cms-anim-fade-250ms ');
@@ -243,7 +242,6 @@ module.exports = {
     self.$menuBg.removeClass('cms-ui-hidden');
     self.$menuBtn.addClass('cms-menu-btn-on');
     $('body').addClass('cms-noscroll');
-    $sections.css('pointer-events', 'none');
   },
 
   updateUI: function () {
@@ -256,9 +254,7 @@ module.exports = {
   },
 
   hideMenu: function(){
-    var $sections = self.getSections();
     $('body').removeClass('cms-noscroll');
-    $sections.css('pointer-events', 'all');
     self.$menu.addClass('cms-ui-hidden');
     self.$menuBg.addClass('cms-ui-hidden');
     self.$menuBtn.removeClass('cms-menu-btn-on');
