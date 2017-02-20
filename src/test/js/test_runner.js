@@ -17,10 +17,12 @@
   };
 
   this.afterAll = function () {
+    cms.ui.hideMenu();
     //remove any sections we added
     while($('.section').length > 1){
       $('.section').last().remove();
     }
+    cms.reload();
   };
 
   this.beforeEach = function (testToRun) {
