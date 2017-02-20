@@ -53,16 +53,8 @@ $url_path = "/'.$_POST['url'].'/";
   $passwd_script_path = $dest."/cms/api/passwds/admin.php";
   # now the script
   $passwd_script = '<?php 
-if ( isset($_POST["get_passwd"]) ){
-  if ( !isset($_SESSION["login"]) ){ 
-    die; 
-  }
-  # CMS admin is asking for passwd over AJAX, echo it
-  echo \''.$password.'\';
-} else {
-  # login.php is requiring the passwd, so give it the $var
-  $valid_password = \''.$password.'\';
-}
+# login.php is requiring the passwd, so give it the $var
+$valid_password = \''.$password.'\';
 ?>';
 
   //

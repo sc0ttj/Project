@@ -107,7 +107,7 @@ A scaffolding tool for building static news articles and webpages from templates
   
   - Add a test then save - it'll fail. Then add some code to fix the test, save again, and see test passes in the browsers console window.
   
-  As long as `npm start` is running, the browser will auto-refresh at each step and re-run your tests in the console.
+  As long as `npm start` is running, the browser will auto-refresh at each step and re-run your tests in the console window (dev tools/firebug, etc).
 
 
 ##### Device Testing:

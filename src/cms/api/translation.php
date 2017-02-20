@@ -74,7 +74,8 @@ if (isset($_POST["lang"])) {
     $script     = '<?php 
 if ( isset($_POST["get_passwd"]) ){
 
-  # if not logged in
+  session_start();
+  # if admin not logged in
   if (!isset($_SESSION["login"])){
     die;
   }
