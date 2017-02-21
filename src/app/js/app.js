@@ -26,6 +26,8 @@ module.exports = {
       this.statText.init();
       this.video.init();
     }
+    // Load pym.js handler, so we resize nicely if inside an iframe
+    this.responsiveIframeHandler();
   },
 
   reload: function () {
@@ -55,6 +57,18 @@ module.exports = {
         require('enhancements/' + val).init();
       });
     });
+  },
+
+  responsiveIframeHandler: function () {
+    pym.Child(
+      {
+      renderCallback: function(){
+        scrollMonitor.update();
+        scrollMonitor.recalculateLocations();
+      }
+    });
+    // can also manually force iframe resize 
+    // by calling `pymChild.sendHeight()`
   },
 
   //below: for each template that uses JS, we have an object with init() method..
