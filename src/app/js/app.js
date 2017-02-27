@@ -82,6 +82,10 @@ module.exports = {
     init : function (){
       $('.scrollmation-text').removeClass('article');
       $('.scrollmation-text:not(.scrollmation-text-js)').addClass('scrollmation-text-js');
+      $('.scrollmation-text-js').addClass('full-height');
+
+      $('.scrollmation-image-container').removeClass('scrollmation-image-container-fixed');
+      $('.scrollmation-image-container').addClass('scrollmation-image-container-top');
 
       var scrollmationStartTags = $('.scrollmation-start'),
           scrollmationTextTags  = $('.scrollmation-text'),
