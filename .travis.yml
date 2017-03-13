@@ -30,7 +30,7 @@ install:
 before_script:
   - "export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH"
   - cd www
-  - "echo $(pwd) && ls && ls www"
+  - "echo $(pwd) && ls"
   - sudo apt-get update
   - sudo apt-get install apache2 libapache2-mod-fastcgi
   # enable php-fpm
