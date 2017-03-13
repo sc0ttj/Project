@@ -3,12 +3,10 @@ language:
 
 php: 
   - 5.4
-  - 5.5
   - hhvm
 
 env:
   - NODE_JS_VERSION=4
-  - BUILD=with-tests
 
 branches:
   only:
@@ -26,6 +24,7 @@ install:
   - npm install -g bower
   - npm install
   - bower update
+  - BUILD=with-tests brunch b
   - sleep 1
 
 script: npm test
