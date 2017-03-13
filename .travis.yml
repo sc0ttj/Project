@@ -6,12 +6,12 @@ php:
   - hhvm
 
 env:
-    global:
-      - NODE_VERSION="4"
-      - NODE_JS_VERSION="4"
-      - TRAVIS_NODE_VERSION="4"
+  global:
+    - NODE_VERSION="4"
+    - NODE_JS_VERSION="4"
+    - TRAVIS_NODE_VERSION="4"
 
-sudo: false
+sudo: required
 
 branches:
   only:
@@ -23,6 +23,17 @@ allow_failures:
 before_script:
   - "export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH"
   - "echo $(pwd) && ls && ls www"
+  - sudo apt-get update
+  - sudo apt-get install apache2 libapache2-mod-fastcgi
+  # enable php-fpm
+  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - sudo a2enmod rewrite actions fastcgi alias
+  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  # configure apache virtual hosts
+  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
+  - sudo service apache2 restart
 
 before_install:
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
