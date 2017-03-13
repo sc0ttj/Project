@@ -8,9 +8,14 @@ php:
 env:
   - NODE_JS_VERSION=4
 
+sudo: false
+
 branches:
   only:
   - travis_ci
+
+allow_failures:
+  - php: hhvm
 
 before_script:
   - "export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH"
