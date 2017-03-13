@@ -20,9 +20,21 @@ branches:
 allow_failures:
   - php: hhvm
 
+before_install:
+  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
+  - nvm install node
+
+install:
+  - npm install -g brunch@2.9.1
+  - npm install -g bower
+  - npm install
+  - bower update
+  - sleep 1
+
 before_script:
-  - "export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH"
-  - "echo $(pwd) && ls && ls www"
+  - export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH
+  - cd www
+  - echo $(pwd) && ls && ls www
   - sudo apt-get update
   - sudo apt-get install apache2 libapache2-mod-fastcgi
   # enable php-fpm
@@ -34,17 +46,6 @@ before_script:
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
   - sudo service apache2 restart
-
-before_install:
-  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
-  - nvm install node
-
-install:
-  - npm install -g brunch@2.9.1
-  - npm install -g bower
-  - npm install
-  - bower update
-  - BUILD=with-tests brunch b
   - sleep 1
 
 script: npm test
