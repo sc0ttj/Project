@@ -38,7 +38,7 @@
     "quickly-copy-file": "^1.0.0",
     "retina-brunch": "^1.7.2",
     "sass-brunch": "^1.9.2",
-    "static-handlebars-brunch": "https://github.com/sc0ttj/static-handlebars-brunch",
+    "static-handlebars-brunch": "sc0ttj/static-handlebars-brunch",
     "uglify-js-brunch": ">= 1.0 < 1.9"
   }
 }
