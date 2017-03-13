@@ -3,7 +3,6 @@ language:
 
 php: 
   - 5.4
-  - hhvm
 
 env:
   global:
@@ -16,9 +15,6 @@ sudo: required
 branches:
   only:
   - travis_ci
-
-allow_failures:
-  - php: hhvm
 
 before_install:
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
