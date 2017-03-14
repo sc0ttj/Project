@@ -65,3 +65,4 @@ after_script:
   - sudo cat /var/log/apache2/error.log
   - sudo cat /var/log/apache2/access.log
   - ls /home/travis/build/sc0ttj/Project/www
+  - ls -R /home/travis/build/sc0ttj/Project/www/demo/
