@@ -40,9 +40,11 @@ SetEnvIfNoCase Request_URI \.(og[gv]|mp4|m4v|webm)$ no-gzip dont-vary
 
 # change upload settings
 
+<IfModule mod_php4.c>
 php_value upload_max_filesize 10M
 php_value post_max_size 20M
 php_value memory_limit 32M
+</IfModule>
 
 # make html files process php (for CMS login)
 
