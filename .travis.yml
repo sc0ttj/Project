@@ -10,6 +10,10 @@ env:
     - NODE_JS_VERSION="4"
     - TRAVIS_NODE_VERSION="4"
 
+addons:
+  hosts:
+    - localhost
+
 sudo: required
 
 branches:
@@ -17,6 +21,7 @@ branches:
   - travis_ci
 
 before_install:
+  - uname -a
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
   - nvm install node
 
@@ -29,6 +34,7 @@ install:
 
 before_script:
   - "export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH"
+  - export HOSTNAME=localhost
   - cd www
   - "echo $(pwd) && ls"
   - sudo apt-get update
@@ -41,8 +47,7 @@ before_script:
   # configure apache virtual hosts
   - sudo cp -f ../build/travis-ci-apache /etc/apache2/sites-available/default
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
-  - "sudo echo -e "\nServerName localhost" >> /etc/apache2/apache2.conf"
-  - "sudo echo -e "\nServerName localhost" >> /etc/apache2/httpd.conf"
+  - sudo echo -e "\nServerName localhost" >> /etc/apache2/sites-available/default
   - sudo service apache2 restart
   - cd ..
   - sleep 1
