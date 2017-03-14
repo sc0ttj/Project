@@ -2,7 +2,7 @@ language:
   php
 
 php: 
-  - 5.5
+  - 5.6
 
 env:
   global:
@@ -37,8 +37,8 @@ before_script:
   - export HOSTNAME=localhost
   - cd www
   - "echo $(pwd) && ls"
-  - sudo apt-get update
-  - sudo apt-get install -y php5 php5-curl php5-gd -qq
+  - sudo apt-get update > /dev/null
+  - sudo apt-get install -y php5-cgi php5-gd -qq
   - sudo apt-get install -y imagemagick php5-imagick -qq
   - sudo apt-get install apache2 -qq
   # configure apache virtual hosts
