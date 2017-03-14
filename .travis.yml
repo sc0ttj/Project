@@ -62,3 +62,8 @@ before_script:
   - sleep 1
 
 script: npm test
+
+after_script:
+  - sudo php --info | grep error
+  - sudo cat /var/log/apache2/error.log
+  - sudo cat /var/log/apache2/access.log
