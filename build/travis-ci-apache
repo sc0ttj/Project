@@ -3,6 +3,8 @@
 
   DocumentRoot %TRAVIS_BUILD_DIR%
 
+  Listen 8080
+
   <Directory "%TRAVIS_BUILD_DIR%">
     Options FollowSymLinks MultiViews ExecCGI
     AllowOverride All
