@@ -172,6 +172,7 @@ exports.config = {
         copyTo: {
           '/templates/' : [ 'src/app/templates/*.tmpl' ],
           '/cms/api/' : [ 'src/cms/api/*.php' ],
+          '/cms/api/passwds/' : [ 'src/cms/api/passwds/*.php' ],
           '/cms/images/previews/' : [ 'src/app/templates/previews/*.png' ],
         }
     },
