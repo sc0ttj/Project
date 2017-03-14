@@ -34,12 +34,14 @@ var steps = [
   //Load Login Page
   function() {
     page.open(liveURL);
-     var html = document.querySelector('html');
-     console.log(html);
-     console.log(document.title);
   },
   //Enter Credentials
   function() {
+    page.evaluate(function() {
+      var html = document.querySelector('html');
+      console.log(html.innerHTML);
+      console.log(document.title);
+    });
     page.evaluate(function() {
       document.querySelector('input[type="password"]').value = "demo";
     });
