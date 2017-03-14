@@ -4,12 +4,10 @@
   DocumentRoot %TRAVIS_BUILD_DIR%
 
   <Directory "%TRAVIS_BUILD_DIR%">
-    Options FollowSymLinks MultiViews ExecCGI
+    Options Indexes FollowSymLinks Includes ExecCGI
     AllowOverride All
-    Order deny,allow
-    Allow from all
-    # New directive needed in Apache 2.4.3: 
     Require all granted
+    Allow from all
   </Directory>
 
   # [...]

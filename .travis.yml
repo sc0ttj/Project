@@ -47,6 +47,7 @@ before_script:
   - sudo sed -e "s?Listen 80?Listen 8080?g" --in-place /etc/apache2/ports.conf
   - echo "ServerName localhost" | sudo tee -a /etc/apache2/apache2.conf
   - sudo usermod -a -G www-data travis
+  - sudo chown -R www-data:www-data /home/travis/build/sc0ttj/Project/www
   - sudo a2enmod rewrite
   - sudo service apache2 restart
   # log useful debugging info
@@ -59,8 +60,10 @@ before_script:
   # back to root dir, we will run test from there
   - cd ..
   - sleep 1
+  - BUILD=with-tests brunch b
+  - sudo chown -R www-data:www-data /home/travis/build/sc0ttj/Project/www
 
-script: npm test
+script: phantomjs src/test/js/_phantom_runner.js
 
 after_script:
   - sudo cat /var/log/apache2/error.log
