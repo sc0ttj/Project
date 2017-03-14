@@ -43,8 +43,8 @@ before_script:
   - sudo apt-get install -y imagemagick php5-imagick -qq
   - sudo apt-get install apache2 -qq
   # configure apache virtual hosts
-  - sudo cp -f ../build/travis-ci-apache /etc/apache2/sites-available/000-default
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default
+  - sudo cp -f ../build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
   - sudo sed -e "s?Listen 80?Listen 8080?g" --in-place /etc/apache2/ports.conf
   - echo "ServerName localhost" | sudo tee -a /etc/apache2/apache2.conf
   - sudo a2enmod rewrite
@@ -52,7 +52,7 @@ before_script:
   # log useful debugging info
   - sudo ls -R /etc/apache2/
   - sudo cat /etc/apache2/apache2.conf
-  - sudo cat /etc/apache2/sites-available/000-default
+  - sudo cat /etc/apache2/sites-available/000-default.conf
   - sudo cat /etc/apache2/ports.conf
   - sudo apachectl fullstatus | tail -1
   - sudo netstat -anp | grep apache2
