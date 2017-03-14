@@ -8,6 +8,8 @@
     AllowOverride All
     Order deny,allow
     Allow from all
+    # New directive needed in Apache 2.4.3: 
+    Require all granted
   </Directory>
 
   # [...]
