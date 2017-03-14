@@ -51,9 +51,11 @@ before_script:
   - sudo service apache2 restart
   # log useful debugging info
   - sudo apachectl configtest
-  - sudo ls /etc/apache2/
+  - sudo ls -R /etc/apache2/
+  - sudo cat /etc/apache2/apache2.conf
   - sudo cat /etc/apache2/httpd.conf
-  - sudo cat /etc/apache2/sites-available/default
+  - sudo cat /etc/apache2/sites-enabled/default
+  - sudo cat /etc/apache2/ports.conf
   - sudo apachectl fullstatus | tail -1
   - sudo netstat -anp | grep apache2
   # back to root dir, we will run test from there
