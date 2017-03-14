@@ -34,7 +34,9 @@ var steps = [
   //Load Login Page
   function() {
     page.open(liveURL);
-    console.log(document.title);
+     var html = document.querySelector('html');
+     console.log(html);
+     console.log(document.title);
   },
   //Enter Credentials
   function() {
