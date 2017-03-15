@@ -31,6 +31,7 @@ install:
   - npm install -g bower
   - npm install
   - bower update
+  - BUILD=with-tests brunch b
   - sleep 1
 
 before_script:
@@ -49,9 +50,8 @@ before_script:
   # permissions and groups
   - sudo usermod -a -G www-data travis
   - sudo chown -R www-data:www-data /home/travis/build/sc0ttj/Project/www
-  - sudo chmod go+x /home/travis/build/sc0ttj/Project/www
-  - sudo chmod -R g+rx /home/travis/build/sc0ttj/Project/www
-  - sudo chmod -R g+rwx /home/travis/build/sc0ttj/Project/www
+  - sudo chmod -R +rx /home/travis/build/sc0ttj/Project/www
+  - sudo chmod -R +rwx /home/travis/build/sc0ttj/Project/www
   - sudo ls -lR /home/travis/build/sc0ttj/Project/www
   - sudo a2enmod rewrite
   - sudo service apache2 restart
@@ -66,7 +66,6 @@ before_script:
   # back to root dir, we will run test from there
   - cd ..
   - sleep 1
-  - BUILD=with-tests brunch b
   - sudo chown -R www-data:www-data /home/travis/build/sc0ttj/Project/www
 
 script: phantomjs src/test/js/_phantom_runner.js
