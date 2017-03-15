@@ -49,12 +49,12 @@ before_script:
   # permissions and groups
   - sudo usermod -a -G www-data travis
   - sudo chown -R www-data:www-data /home/travis/build/sc0ttj/Project/www
-  - chmod go-rwx /home/travis/build/sc0ttj/Project/www
-  - chmod go+x /home/travis/build/sc0ttj/Project/www
-  - chgrp -R www-data /home/travis/build/sc0ttj/Project/www
-  - chmod -R go-rwx /home/travis/build/sc0ttj/Project/www
-  - chmod -R g+rx /home/travis/build/sc0ttj/Project/www
-  - chmod -R g+rwx /home/travis/build/sc0ttj/Project/www
+  - sudo chmod go-rwx /home/travis/build/sc0ttj/Project/www
+  - sudo chmod go+x /home/travis/build/sc0ttj/Project/www
+  - sudo chgrp -R www-data /home/travis/build/sc0ttj/Project/www
+  - sudo chmod -R go-rwx /home/travis/build/sc0ttj/Project/www
+  - sudo chmod -R g+rx /home/travis/build/sc0ttj/Project/www
+  - sudo chmod -R g+rwx /home/travis/build/sc0ttj/Project/www
   - ls -la /home/travis/build/sc0ttj/Project/www
   - sudo a2enmod rewrite
   - sudo service apache2 restart
