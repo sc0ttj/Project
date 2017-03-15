@@ -55,7 +55,7 @@ before_script:
   - sudo chmod -R go-rwx /home/travis/build/sc0ttj/Project/www
   - sudo chmod -R g+rx /home/travis/build/sc0ttj/Project/www
   - sudo chmod -R g+rwx /home/travis/build/sc0ttj/Project/www
-  - sudo ls -la /home/travis/build/sc0ttj/Project/www
+  - sudo ls -lR /home/travis/build/sc0ttj/Project/www
   - sudo a2enmod rewrite
   - sudo service apache2 restart
   # log useful debugging info
@@ -78,4 +78,4 @@ after_script:
   - sudo cat /var/log/apache2/error.log
   - sudo cat /var/log/apache2/access.log
   - ls /home/travis/build/sc0ttj/Project/www
-  - ls -R /home/travis/build/sc0ttj/Project/www/demo/
+  - ls -lR /home/travis/build/sc0ttj/Project/www/demo/
