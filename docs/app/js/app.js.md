@@ -17,8 +17,6 @@ var pageConfig = require('page_config.js');
 
 "use strict";
 
-module.exports = {
-
 ```
 ## Methods
 
@@ -114,9 +112,7 @@ For each template that uses JS, create an object with an init() method:
 ### Fixed Image Object
 ####  Methods:
 - init()
-```js
-  fixedImage: {
-```
+  
 #### fixedImage::init()
 ```js
     init: function() {
@@ -141,9 +137,7 @@ For each template that uses JS, create an object with an init() method:
 ### Scrollmation Object
 ####  Methods:
 - init()
-```js
-  scrollmation: {
-```
+  
 #### scrollmation::init()
 ```js
     init : function (){
@@ -203,9 +197,7 @@ For each template that uses JS, create an object with an init() method:
 ### statText Object
 ####  Methods:
 - init()
-```js
-  statText: {
-```
+  
 #### statText::init()
 ```js
     init: function() {
@@ -232,9 +224,7 @@ For each template that uses JS, create an object with an init() method:
 - init()
 - setupVideoEvents()
 - setupVideoBtnEvents()
-```js
-  video: {
-```
+  
 #### video::init()
 ```js
     init: function(){

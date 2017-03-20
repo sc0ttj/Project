@@ -11,7 +11,7 @@ was (re)built using `npm test` or `npm start`
  */
 
 ```
-### Main function: testRunner()
+## Main function: testRunner()
 ```js
 (function testRunner() {
 
@@ -22,8 +22,7 @@ See [tests.js](https://github.com/sc0ttj/Project/blob/master/src/test/js/tests.j
   var tests = require('tests');
 
 ```
-#### Test Runner Methods
-for pre and post test setup/cleanup
+## Test Runner Methods
 
 #### beforeAll(): before any tests have started
 ```js
@@ -66,7 +65,7 @@ for pre and post test setup/cleanup
 ```
 #### run(): go through tests array and run all tests:
 
-The main loop will run through all tests and:
+This function will loop through all tests and:
 
 1. run beforeAll() to setup before any tests start
 2. run beforeEach() to create setup before each test

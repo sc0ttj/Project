@@ -3,43 +3,40 @@
 This file returns the array "tests" as soon as it is required.
 It is required by [test_runner.js](https://github.com/sc0ttj/Project/blob/master/src/test/js/test_runner.js)
 
-define the module as a self executing func, 
+We define the module as a self executing func, 
 so it runs as soon as it is required 
 ```js
 module.exports = (function returnTests(){
 
 ```
-define the list of tests to return to test_runner
+Now we define the list of tests to return to test_runner
 ```js
   var tests = []; 
 
 ```
+
+## Methods
+
 #### test(name, cb)
 creates the list (array) of tests to return:
 
-@param name - the name of the test
-    
-@param cb   - the test function to run
+@param `name` - the name of the test      
+@param `cb`   - the test function to run
 ```js
     var test = function (name, cb) {
       tests.push({name: name, test: cb});
     };
 
 ```
-Use an alternative command
-```js
-    var describe = test;
 
-```
 #### assert(condition, message)
 ```js
     /* Based on "World's smallest assertion library" by @snuggsi 
      * (https://twitter.com/snuggsi/status/565531862895169536)
      */
 ```
-@param condition - the code to execute and test
-    
-@param message   - the message to print on error
+@param `condition` - the code to execute and test       
+@param `message`   - the message to print on error
 ```js
     var assert = function (condition, message) {
       if (!condition) {
@@ -58,9 +55,8 @@ Use an alternative command
 #### expect(message, condition)
 an alternative syntax for assert:
     
-@param condition - the code to execute and test
-    
-@param message   - the message to print on error
+@param `condition` - the code to execute and test       
+@param `message`   - the message to print on error
 ```js
     var expect = function (message, condition) {
       assert(condition, message);
