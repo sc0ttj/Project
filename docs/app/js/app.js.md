@@ -1,4 +1,4 @@
-#app.js
+# app.js
 The main app file    
 This file is included in [index.tmpl](https://github.com/sc0ttj/Project/blob/master/src/app/templates/index.tmpl)   
 This file will do the following:
@@ -22,7 +22,7 @@ module.exports = {
 ```
 ## Methods
 
-####init()
+#### init()
 This func is executed in index.html (the main page) 
 as soon as the page loads.
 ```js
@@ -44,7 +44,7 @@ as soon as the page loads.
   },
 
 ```
-####reload()
+#### reload()
 This func is called by the CMS after adding/removing a section.
 ```js
   reload: function () {
@@ -57,7 +57,7 @@ This func is called by the CMS after adding/removing a section.
   },
 
 ```
-####cutsTheMustard()
+#### cutsTheMustard()
 Checks if the users browser is up to scratch,
 returns either true or false
 ```js
@@ -70,7 +70,7 @@ returns either true or false
   },
 
 ```
-####loadStylesheet()
+#### loadStylesheet()
 This func is used to load stylesheets dynamically  
 @param `file` - the relative path to the css file to load
 ```js
@@ -79,7 +79,7 @@ This func is used to load stylesheets dynamically
   },
 
 ```
-####loadModules()
+#### loadModules()
 This func takes an array of module names. The names must match 
 modules in [src/app/js/enhancements/](https://github.com/sc0ttj/Project/tree/master/src/app/js/_enhancements)   
 NOTE: This func is disabled, to enable it, you need to remove the underscore from `_enhancements`   
@@ -94,7 +94,7 @@ NOTE: This func is disabled, to enable it, you need to remove the underscore fro
   },
 
 ```
-####getQueryVariable()
+#### getQueryVariable()
 ```js
   /*https://css-tricks.com/snippets/javascript/get-url-variables/ */
   getQueryVariable: function (variable) {
@@ -111,13 +111,13 @@ NOTE: This func is disabled, to enable it, you need to remove the underscore fro
 ## Template Objects
 For each template that uses JS, create an object with an init() method:
 
-###Fixed Image Object
-#### Methods:
+### Fixed Image Object
+####  Methods:
 - init()
 ```js
   fixedImage: {
 ```
-####fixedImage::init()
+#### fixedImage::init()
 ```js
     init: function() {
       var fixedImages = $('.fixed-image-text:not(.transparent)');
@@ -138,13 +138,13 @@ For each template that uses JS, create an object with an init() method:
   },
 
 ```
-###Scrollmation Object
-#### Methods:
+### Scrollmation Object
+####  Methods:
 - init()
 ```js
   scrollmation: {
 ```
-####scrollmation::init()
+#### scrollmation::init()
 ```js
     init : function (){
       $('.scrollmation-text').removeClass('article');
@@ -200,13 +200,13 @@ For each template that uses JS, create an object with an init() method:
   },
 
 ```
-###statText Object
-#### Methods:
+### statText Object
+####  Methods:
 - init()
 ```js
   statText: {
 ```
-####statText::init()
+#### statText::init()
 ```js
     init: function() {
       var statTexts = $('.stat-text:not(.transparent)');
@@ -227,15 +227,15 @@ For each template that uses JS, create an object with an init() method:
   },
 
 ```
-###Video Object
-#### Methods:
+### Video Object
+####  Methods:
 - init()
 - setupVideoEvents()
 - setupVideoBtnEvents()
 ```js
   video: {
 ```
-####video::init()
+#### video::init()
 ```js
     init: function(){
       var $videos = $('video'),
@@ -261,7 +261,7 @@ For each template that uses JS, create an object with an init() method:
     },
 
 ```
-####video::setupVideoEvents()
+#### video::setupVideoEvents()
 ```js
     setupVideoEvents: function (videoElem, i) {
       var videoOverlay = videoElem.nextElementSibling,
@@ -282,7 +282,7 @@ For each template that uses JS, create an object with an init() method:
     },
 
 ```
-####video::setupVideoBtnEvents()
+#### video::setupVideoBtnEvents()
 ```js
     setupVideoBtnEvents: function(btn, i){
       var videoBtnClickHandler = function(){
