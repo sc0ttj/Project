@@ -83,7 +83,6 @@ sudo apt-get install -y apache2 -qq
 sudo usermod -a -G www-data vagrant
 
 echo "Restarting services"
-sudo service mysql restart
 sudo a2enmod rewrite
 sudo service apache2 restart
 
