@@ -4,7 +4,8 @@
   "main": "www/js/app.js",
   "dependencies": {
     "chibi": "^3.0.8",
-    "scrollMonitor": "^1.2.0"
+    "scrollMonitor": "^1.2.0",
+    "pym.js": "^1.1.2"
   },
   "overrides": {},
   "homepage": "https://github.com/sc0ttj/Project",

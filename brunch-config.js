@@ -184,6 +184,7 @@ exports.config = {
       'chmod 777 www/demo/images',
       'chmod 777 www/demo/videos',
       'chmod 777 www/demo/vocabs',
+      'cp src/test/iframe_test_runner.html www/demo/test/',
       // move an example home page out of assets, to the web root
       'cp src/_extra-stuff/home.php www/index.php'
     ],
