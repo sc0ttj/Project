@@ -1,40 +1,102 @@
 # cms.js
 
-This file is called by [_cms-script.tmpl](https://github.com/sc0ttj/Project/blob/jdi/src/app/templates/_cms-script.tmpl) and needs a config object.    
-The [_cms-script.tmpl](https://github.com/sc0ttj/Project/blob/jdi/src/app/templates/_cms-script.tmpl) file is included by [index.tmpl](https://github.com/sc0ttj/Project/blob/jdi/src/app/templates/index.tmpl), which becomes `www/demo/index.html` after building from source.    
-    
+This file is called by [index.html]() and needs a config object.
 If no config object is passed to `init()` then a default config will be used.
 
-First, we require in the dependencies:
+First, we require in the dependencies
 ```js
-var $             = require('cash-dom');
-var languages     = require('modules/languages.js')
-var loadCSS       = require('modules/loadcss').init;
-var store         = require('store');
-var zenscroll     = require('zenscroll');
+var $         = require('cash-dom');             /* enables a lightweight jQuery alternative */
+var languages = require('modules/languages.js')  /* provides list of languages (for translations) */
+var loadCSS   = require('modules/loadcss').init; /* enables load CSS on the fly */
+var store     = require('store');                /* enables cross-browser localStorage solution */
+var zenscroll = require('zenscroll');            /* enables click to smooth scroll to anchor */
 ```
 
 ## Default Config
+This JSON object defines the classes, containers, elements and server side URLs that the CMS should look for.  
+The values in this config match values defined in the [app templates](https://github.com/sc0ttj/Project/tree/jdi/src/app/templates)
 ```js
   config: {
-    'localStorage'    :           true,
-    'templates'       :           [ '_hero-center.tmpl', '_article-full-width.tmpl', '_article-left.tmpl', '_article-right.tmpl', '_image-center.tmpl', '_image-fixed.tmpl', '_scrollmation-text-left.tmpl', '_stat-text.tmpl', '_youtube-full-width.tmpl', '_video.tmpl', '_video-full-width.tmpl' ],
-    'sectionSelector' :           'body .section',
-    'sectionContainer':           '<div class="section"></div>', 
-    'editableItems'   :           [ 'h1', 'h2', 'p', 'blockquote', 'li' ],
-    'editableClass'   :           'cms-editable',
-    'editableRegionClass' :       'cms-editable-region',
-    'inlineMediaRegionSelector':  '.scrollmation-container p[contenteditable],.article:not(.article-right):not(.article-left) p[contenteditable]',
-    'responsiveImageSelector':    'picture, .scrollmation-container, .inline-image',
-    'videoSelector'   :           'video',
-    'mustardClass'    :           'html5 js',
+    
+    /* localStorage is used to make CMS page changes persistent,
+     *  you can disable it if it is causing issues like slow page loads/edits
+     */
+    'localStorage' : true,
+    
+    /* The list of template files to make available in the Section Manager.  
+     * These files are in https://github.com/sc0ttj/Project/tree/jdi/src/app/templates
+     */
+    'templates' : [ 
+      '_hero-center.tmpl',
+      '_article-full-width.tmpl',
+      '_article-left.tmpl',
+      '_article-right.tmpl',
+      '_image-center.tmpl',
+      '_image-fixed.tmpl',
+      '_scrollmation-text-left.tmpl',
+      '_stat-text.tmpl',
+      '_youtube-full-width.tmpl',
+      '_video.tmpl',
+      '_video-full-width.tmpl'
+    ],
+    
+    /* The selector of the element which contains the added sections/templates. */
+    'sectionSelector' : 'body .section',
+    
+    /* The HTML to use as the section/template container element */
+    'sectionContainer' : '<div class="section"></div>', 
+    
+    /* The elements the CMS will make editable (using `contenteditable`) */
+    'editableItems' : [
+      'h1',
+      'h2',
+      'p',
+      'blockquote',
+      'li'
+    ],
+    
+    /* The class to add to editable elements (used by the CMS to find editable items) */
+    'editableClass' : 'cms-editable',
+    
+    /* The class given to elements which contain multiple editable items.
+     * These elements are defined in the templates, and would usually contain 
+     * paragraphs or list items.
+     */
+    'editableRegionClass' : 'cms-editable-region',
+    
+    /* The elements to which the CMS should add a 'ADD MEDIA' button, 
+     * which, when clicked, adds an image after the currently 
+     * highlighted element */
+    'inlineMediaRegionSelector' : '.scrollmation-container p[contenteditable],.article:not(.article-right):not(.article-left) p[contenteditable]',
+    
+    /* The selector to use for making image elements clickable and editable (via the CMS Image Manager) */
+    'responsiveImageSelector' : 'picture, .scrollmation-container, .inline-image',
+    
+    /* The selector to use for making video elements clickable and editable (via the CMS Video Manager) */
+    'videoSelector' : 'video',
+    
+    /* The classes to add to the `<body>` tag if the browser is HTML5 and modern JS capable.
+     * We can use these classes in the app CSS to enable CSS animations for modern browsers, for example.
+     */
+    'mustardClass' : 'html5 js',
+    
+    /* The server-side URLs which the CMS will use to POST and GET data (for uploads, etc) */
     'api': {
-      'upload'    : 'cms/api/upload.php',
-      'preview'   : 'cms/api/preview.php',
+    
+      /* The file to which images, videos and vocab files are uploaded */
+      'upload' : 'cms/api/upload.php',
+    
+      /* The file which writes POSTed html to a .html file */
+      'preview' : 'cms/api/preview.php',
+    
+      /* The file which saves, enables and disables page translations */
       'translate' : 'cms/api/translation.php',
-      'save'      : 'cms/api/save.php',
-      'logout'    : 'cms/api/logout.php'
-
+    
+      /* This file saves the current dir to a zip file */
+      'save' : 'cms/api/save.php',
+    
+      /* Logout and destroy the PHP session */
+      'logout' : 'cms/api/logout.php'
     }
   },
 
@@ -49,7 +111,7 @@ var zenscroll     = require('zenscroll');
 
 ```
 #### setConfig()
-@param `config` - a config object like the default one above
+@param `config` - a JSON object like the default one above
 ```js
   setConfig: function (config){
     this.config = config || this.config;
@@ -57,7 +119,7 @@ var zenscroll     = require('zenscroll');
 
 ```
 #### init()
-@param `config` - a config object like the default one above
+@param `config` - a JSON object like the default one above
 ```js
   init: function(config){
     this.setConfig(config);
@@ -72,6 +134,7 @@ var zenscroll     = require('zenscroll');
     this.setLang();
     /* this.autoSave(); // not used */
 
+    /* Require in all the CMS modules that we need */
     this.ajax           = require('modules/ajaxer');
     this.modal          = require('modules/modal');
     this.editor         = require('modules/page_editor');
@@ -87,6 +150,7 @@ var zenscroll     = require('zenscroll');
     this.fileManager    = require('modules/file_manager');
     this.ui             = require('modules/ui');
 
+    /* Initialise the modules required by the translation manager.  */
     this.modal.init();
     this.vocabEditor.init();
     this.previewManager.init();
@@ -94,7 +158,8 @@ var zenscroll     = require('zenscroll');
 
     /* NOTE: var 'translateOnly' was set either true or false by 
      * our PHP backend.. if true, the CMS should disable editing 
-     * of the page, and only allow editing of translations
+     * of the page, and only allow editing of translations.
+     * So, we will only load the other modules if not in translation mode.
      */
     if (!cms.showTranslation() && !translateOnly){
       this.editor.init();
@@ -108,6 +173,9 @@ var zenscroll     = require('zenscroll');
       this.ui.init();
     }
 
+    /* If the URL contains `?translate=XX`, where `XX` is a valid 2 letter    
+     * ISO language code, then show the translation manager immediately.
+     */
     if (this.showTranslation()) this.vocabEditor.translatePage();
 
     return true /* if we loaded up ok */
@@ -136,6 +204,7 @@ var zenscroll     = require('zenscroll');
 
 ```
 #### getLangInfo()
+@param `lang` - a 2 letter language ISO code
 ```js
   getLangInfo: function (lang) {
     return languages[lang];
@@ -216,6 +285,7 @@ var zenscroll     = require('zenscroll');
 
 ```
 #### saveProgress()
+Get the current HTML of the page being edited and save that HTML to localStorage
 ```js
   saveProgress: function(){
     if (cms.showTranslation()) return false;
@@ -225,6 +295,10 @@ var zenscroll     = require('zenscroll');
         $head = $('head').clone(),
         html  = '';
 
+    /* Here we clean up the HTML we got from the page, by 
+     * removing any CMS elems, classes etc. Then we reset various 
+     * things to their initial page load state.
+     */
     $html.find('.cms-menu-container, .cms-menu, .cms-modal, .cms-media-btn, .cms-menu-btn').remove();
     $html.find('#cms-init, link[href^="cms"]').remove();
     /* reset page to defaults */
@@ -234,7 +308,6 @@ var zenscroll     = require('zenscroll');
     $html.find('*').removeClass('scrollmation-image-container-fixed');
     /* get cleaned up html */
     html = $html.html();
-
     html = cms.exportManager.cleanupWhitespace(html);
 
     /* save cleaned up html to localstorage */
@@ -245,10 +318,11 @@ var zenscroll     = require('zenscroll');
 
 ```
 #### restoreProgress()
+Get HTML for this page from localStorage if it exists, then replace the page HTML with the saved version.
 ```js
   restoreProgress: function(){
-    var html = store.get(this.pageDir),
-        head = store.get(this.pageDir + '__head'),
+    var html = store.get(this.pageDir), // our namespaced HTML in storage
+        head = store.get(this.pageDir + '__head'), // our namespaced head HTML in storage
         restored = false;
 
     if (!cms.config.localStorage) return false;
@@ -278,7 +352,8 @@ var zenscroll     = require('zenscroll');
     return(false);
   },
 
+};
 ```
 ------------------------
-Generated _Mon Mar 20 2017 21:09:01 GMT+0000 (GMT)_ from [&#x24C8; cms.js](cms.js "View in source")
+Generated _Tue Mar 21 2017 18:57:07 GMT+0000 (GMT)_ from [&#x24C8; cms.js](cms.js "View in source")
 
