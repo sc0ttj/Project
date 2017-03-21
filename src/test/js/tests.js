@@ -13,8 +13,7 @@ module.exports = (function returnTests(){
     // #### test(name, cb)
     // creates the list (array) of tests to return:
 
-    // @param name - the name of the test
-    
+    // @param name - the name of the test       
     // @param cb   - the test function to run
     var test = function (name, cb) {
       tests.push({name: name, test: cb});
@@ -27,8 +26,7 @@ module.exports = (function returnTests(){
     /* Based on "World's smallest assertion library" by @snuggsi 
      * (https://twitter.com/snuggsi/status/565531862895169536)
      */
-    // @param condition - the code to execute and test
-    
+    // @param condition - the code to execute and test        
     // @param message   - the message to print on error
     var assert = function (condition, message) {
       if (!condition) {
@@ -46,8 +44,7 @@ module.exports = (function returnTests(){
     // #### expect(message, condition)
     // an alternative syntax for assert:
     
-    // @param condition - the code to execute and test
-    
+    // @param condition - the code to execute and test          
     // @param message   - the message to print on error
     var expect = function (message, condition) {
       assert(condition, message);

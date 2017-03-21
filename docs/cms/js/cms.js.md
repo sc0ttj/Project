@@ -1,20 +1,21 @@
-//# cms.js
+# cms.js
 
-// This file is called by [index.html]() and needs a config object.
-// If no config object is passed to `init()` then a default config will be used.
+This file is called by [_cms-script.tmpl](https://github.com/sc0ttj/Project/blob/jdi/src/app/templates/_cms-script.tmpl) and needs a config object.    
+The [_cms-script.tmpl](https://github.com/sc0ttj/Project/blob/jdi/src/app/templates/_cms-script.tmpl) file is included by [index.tmpl](https://github.com/sc0ttj/Project/blob/jdi/src/app/templates/index.tmpl), which becomes `www/demo/index.html` after building from source.    
+    
+If no config object is passed to `init()` then a default config will be used.
 
-// require in the dependencies
+First, we require in the dependencies:
+```js
 var $             = require('cash-dom');
 var languages     = require('modules/languages.js')
 var loadCSS       = require('modules/loadcss').init;
 var store         = require('store');
 var zenscroll     = require('zenscroll');
+```
 
-"use strict";
-
-module.exports = {
-
-  // ## Default Config
+## Default Config
+```js
   config: {
     'localStorage'    :           true,
     'templates'       :           [ '_hero-center.tmpl', '_article-full-width.tmpl', '_article-left.tmpl', '_article-right.tmpl', '_image-center.tmpl', '_image-fixed.tmpl', '_scrollmation-text-left.tmpl', '_stat-text.tmpl', '_youtube-full-width.tmpl', '_video.tmpl', '_video-full-width.tmpl' ],
@@ -37,21 +38,27 @@ module.exports = {
     }
   },
 
-  // ## Methods
+```
+## Methods
 
-  // #### getConfig()
+#### getConfig()
+```js
   getConfig: function (){
     return this.config;
   },
 
-  // #### setConfig()
-  // @param `config` - a config object like the default one above
+```
+#### setConfig()
+@param `config` - a config object like the default one above
+```js
   setConfig: function (config){
     this.config = config || this.config;
   },
 
-  // #### init()
-  // @param `config` - a config object like the default one above
+```
+#### init()
+@param `config` - a config object like the default one above
+```js
   init: function(config){
     this.setConfig(config);
     this.pageConfig = app.pageConfig;
@@ -107,7 +114,9 @@ module.exports = {
   },
 
 
-  // #### setLang()
+```
+#### setLang()
+```js
   setLang: function () {
     var lang = this.getLang();
 
@@ -115,7 +124,9 @@ module.exports = {
     this.lang.code = lang;
   },
 
-  // #### getLang()
+```
+#### getLang()
+```js
   getLang: function () {
     var lang = $('html')[0].getAttribute('lang');
 
@@ -123,24 +134,32 @@ module.exports = {
     return lang || 'en';
   },
 
-  // #### getLangInfo()
+```
+#### getLangInfo()
+```js
   getLangInfo: function (lang) {
     return languages[lang];
   },
 
-  // #### getLanguages()
+```
+#### getLanguages()
+```js
   getLanguages: function () {
     return languages;
   },
 
-  // #### setupSmoothScrolling()
+```
+#### setupSmoothScrolling()
+```js
   setupSmoothScrolling: function () {
     var defaultDuration = 400; // ms
     var edgeOffset = 0; // px
     zenscroll.setup(defaultDuration, edgeOffset);
   },
 
-  // #### reload()
+```
+#### reload()
+```js
   reload: function (){
     if (this.showTranslation()) return false;
     cms.editor.setEditableItems(this.config.editableItems);
@@ -151,7 +170,9 @@ module.exports = {
     app.reload();
   },
 
-  // #### cutsTheMustard()
+```
+#### cutsTheMustard()
+```js
   cutsTheMustard: function () {
     var cutsTheMustard = (
       'querySelector' in document
@@ -160,12 +181,16 @@ module.exports = {
     return cutsTheMustard;
   },
 
-  // #### addMustard()
+```
+#### addMustard()
+```js
   addMustard: function (){
     document.getElementsByTagName('body')[0].classList.add('cms-html5');
   },
 
-  // #### loadStylesheets()
+```
+#### loadStylesheets()
+```js
   loadStylesheets: function (){
     var stylesheets = [ 'cms/css/vendor.css', 'cms/css/cms.css' ];
     stylesheets.forEach(function(val){
@@ -173,19 +198,25 @@ module.exports = {
     });
   },
 
-  // #### showTranslation()
+```
+#### showTranslation()
+```js
   showTranslation: function (){
     if (this.getQueryVariable('preview') != '') return true;
     return false;    
   },
 
-  // #### autoSave()
+```
+#### autoSave()
+```js
   autoSave: function () {
     if (this.showTranslation()) return false;
     setInterval(this.saveProgress, 30000);
   },
 
-  // #### saveProgress()
+```
+#### saveProgress()
+```js
   saveProgress: function(){
     if (cms.showTranslation()) return false;
     if (!cms.config.localStorage) return false;
@@ -212,7 +243,9 @@ module.exports = {
     /* console.log('Saved progress..'); */
   },
 
-  // #### restoreProgress()
+```
+#### restoreProgress()
+```js
   restoreProgress: function(){
     var html = store.get(this.pageDir),
         head = store.get(this.pageDir + '__head'),
@@ -231,7 +264,9 @@ module.exports = {
     if (restored) app.reload();
   },
 
-  // #### getQueryVariable()
+```
+#### getQueryVariable()
+```js
   getQueryVariable: function (variable) {
     /* https://css-tricks.com/snippets/javascript/get-url-variables/ */
     var query = window.location.search.substring(1);
@@ -243,4 +278,7 @@ module.exports = {
     return(false);
   },
 
-};
+```
+------------------------
+Generated _Mon Mar 20 2017 21:09:01 GMT+0000 (GMT)_ from [&#x24C8; cms.js](cms.js "View in source")
+
