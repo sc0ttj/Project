@@ -1,49 +1,60 @@
-// # translation_manager.js
-// This module shows a Translation Manager UI, which lists all the 
-// languages available in a searchable table.  
+# translation_manager.js
+This module shows a Translation Manager UI, which lists all the 
+languages available in a searchable table.  
 
-// Translations can be enabled by clicking the ENABLE button next 
-// to the desired language.
+Translations can be enabled by clicking the ENABLE button next 
+to the desired language.
 
-// Enabling a translation will create a new URL and password - these 
-// should be given to whoever will do the translation work.
+Enabling a translation will create a new URL and password - these 
+should be given to whoever will do the translation work.
 
-// Once a translator has logged into the given translation URL, 
-// they'll see a form showing form fields for the English on the 
-// left, and editable fields on the right. The translators should 
-// put their translations for each item in the textboxes on the 
-// right hand side.
+Once a translator has logged into the given translation URL, 
+they'll see a form showing form fields for the English on the 
+left, and editable fields on the right. The translators should 
+put their translations for each item in the textboxes on the 
+right hand side.
 
-// Once the translations have been done, the translator can create the 
-// translated version of the page, by clicking the PREVIEW button.
+Once the translations have been done, the translator can create the 
+translated version of the page, by clicking the PREVIEW button.
 
 
-// First, we get our dependencies.
+First, we get our dependencies.
+```js
 var $ = require('cash-dom');  // like jquery
 var store = require('store'); // cross browser localStorage wrapper
 
-// Define a var the module can use to reference itself
+```
+Define a var the module can use to reference itself
+```js
 var self;
 
-// Use strict setting.
+```
+Use strict setting.
+```js
 "use strict";
 
-// Define the CommonJS module
+```
+Define the CommonJS module
+```js
 module.exports = {
 
-  // ## Module Methods
+```
+## Module Methods
 
-  // ### init()
-  // restore any previously enabled translations on page load
+### init()
+restore any previously enabled translations on page load
+```js
   init: function(){
     self = cms.translationManager;
     self.restoreTranslationSettings();
     return true // if we loaded ok
   },
 
-  // ### restoreTranslationSettings()
-  // Get list of supported languages and get translations settings from 
-  // local storage (so we can re-enable translations that have been enabled)
+```
+### restoreTranslationSettings()
+Get list of supported languages and get translations settings from 
+local storage (so we can re-enable translations that have been enabled)
+```js
   restoreTranslationSettings: function (){
     var languages = cms.getLanguages(),
         translations = store.get(cms.pageDir + '__translations');
@@ -66,8 +77,10 @@ module.exports = {
     }
   },
 
-  // ### showUI()
-  // show the Translation Manager UI
+```
+### showUI()
+show the Translation Manager UI
+```js
   showUI: function () {
     var content = '',
         callback = self.removeEventHandlers;
@@ -95,9 +108,11 @@ module.exports = {
     self.addEventHandlers();
   },
 
-  // ### buildTranslationsTable()
-  // Build the table of languages. Fields for each - name, native name, 
-  // passwd, URL, enable button and disable button.
+```
+### buildTranslationsTable()
+Build the table of languages. Fields for each - name, native name, 
+passwd, URL, enable button and disable button.
+```js
   buildTranslationsTable: function () {
     var languages = cms.getLanguages(),
         table = '<table id="cms-trans-table" class="cms-trans-table">';
@@ -174,8 +189,10 @@ module.exports = {
     return table;
   },
 
-  // ### updateTable()
-  // update the contents of the table after enabling/disabling a translation
+```
+### updateTable()
+update the contents of the table after enabling/disabling a translation
+```js
   updateTable: function () {
     var table = self.buildTranslationsTable(); // get latest table
 
@@ -193,8 +210,10 @@ module.exports = {
     store.set(cms.pageDir + '__translations', cms.translation);
   },
 
-  // ### addEventHandlers()
-  // Add events when search field is changed and translation buttons are clicked
+```
+### addEventHandlers()
+Add events when search field is changed and translation buttons are clicked
+```js
   addEventHandlers: function () {
     $('.cms-trans-autocomplete').on('keyup', self.autoCompleteHandler);
     $('.cms-trans-autocomplete').on('change', self.autoCompleteHandler);
@@ -202,10 +221,12 @@ module.exports = {
     $('.cms-trans-btn-disable').on('click', self.disableBtnHandler);
   },
 
-  // ### autoCompleteHandler()
-  // Hides table rows which do not match the given search term - 
-  // it gets the search term on input change, and applies CSS to 
-  // hide non-matching rows
+```
+### autoCompleteHandler()
+Hides table rows which do not match the given search term - 
+it gets the search term on input change, and applies CSS to 
+hide non-matching rows
+```js
   autoCompleteHandler: function () {
     /* adapted from http://www.w3schools.com/howto/howto_js_filter_table.asp */
     var input, filter, table, tr, td, i;
@@ -242,8 +263,10 @@ module.exports = {
 
   },
 
-  // ### enableBtnHandler()
-  //
+```
+### enableBtnHandler()
+
+```js
   enableBtnHandler: function () {
     var lang = $(this).attr('data-lang');
     
@@ -261,8 +284,10 @@ module.exports = {
 
   },
 
-  // ### disableBtnHandler()
-  //
+```
+### disableBtnHandler()
+
+```js
   disableBtnHandler: function () {
     var lang = $(this).attr('data-lang');
 
@@ -272,12 +297,14 @@ module.exports = {
     self.updateTable();
   },
 
-  // ### getTranslatorPasswd(lang, callback)
-  // Gets the password for the selected language/translation row, 
-  // and if no passwd file exists, it will create one.
-  //  
-  // @param `lang` - string, 2 letter ISO language code (see [languages.js](https://github.com/sc0ttj/Project/blob/master/src/cms/js/modules/languages.js))  
-  // @param `callback` - a function which takes a `passwd` string as a param
+```
+### getTranslatorPasswd(lang, callback)
+Gets the password for the selected language/translation row, 
+and if no passwd file exists, it will create one.
+
+@param `lang` - string, 2 letter ISO language code (see [languages.js](https://github.com/sc0ttj/Project/blob/master/src/cms/js/modules/languages.js))  
+@param `callback` - a function which takes a `passwd` string as a param
+```js
   getTranslatorPasswd: function (lang, callback) {
     var data = new FormData();
 
@@ -303,13 +330,15 @@ module.exports = {
     cms.ajax.send(data);
   },
 
-  // ### createTranslatorPasswd(lang, callback)
-  // POSTs an `enable_translation` and `lang` to the translation backend, 
-  // which will create a password and return it. On success, this func will 
-  // execute the given callback, passing to it the new passwd as a param.
-  //  
-  // @param `lang` - string, 2 letter ISO language code (see [languages.js](https://github.com/sc0ttj/Project/blob/master/src/cms/js/modules/languages.js))  
-  // @param `callback` - a function which takes a `passwd` string as a param
+```
+### createTranslatorPasswd(lang, callback)
+POSTs an `enable_translation` and `lang` to the translation backend, 
+which will create a password and return it. On success, this func will 
+execute the given callback, passing to it the new passwd as a param.
+
+@param `lang` - string, 2 letter ISO language code (see [languages.js](https://github.com/sc0ttj/Project/blob/master/src/cms/js/modules/languages.js))  
+@param `callback` - a function which takes a `passwd` string as a param
+```js
   createTranslatorPasswd: function (lang, callback) {
     var data = new FormData();
 
@@ -329,8 +358,10 @@ module.exports = {
     cms.ajax.send(data);
   },
 
-  // ### removeEventHandlers()
-  //
+```
+### removeEventHandlers()
+
+```js
   removeEventHandlers: function () {
     $('.cms-trans-btn-enable').off('click',  self.enableBtnHandler);
     $('.cms-trans-btn-disable').off('click', self.disableBtnHandler);
@@ -338,6 +369,12 @@ module.exports = {
     $('.cms-trans-autocomplete').off('change', self.autoCompleteHandler);
  },
 
-//  
-// End of module  
+```
+
+End of module  
+```js
 }
+```
+------------------------
+Generated _Wed Mar 22 2017 23:32:14 GMT+0000 (GMT)_ from [&#x24C8; translation_manager.js](translation_manager.js "View in source")
+

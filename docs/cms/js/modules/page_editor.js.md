@@ -1,24 +1,32 @@
-// # page_editor.js
-// This module makes elements on the index.html page editable, adds buttons to inline 
-// elements and generally provides in-place, WYSIWYG editing of HTML.
+# page_editor.js
+This module makes elements on the index.html page editable, adds buttons to inline elements and generally provides in-place, WYSIWYG editing of HTML.
 
 
-// First, we get our dependencies
+First, we get our dependencies
+```js
 var $ = require('cash-dom');
-// Set a var we can use for consistent self reference
+```
+Set a var we can use for consistent self reference
+```js
 var self;
 
-// Use strict rules
+```
+Use strict rules
+```js
 "use strict";
 
-// ## Define our CommonJS module
+```
+Define our CommonJS module
+```js
 module.exports = {
 
-  // ## Module Methods
+```
+## Module Methods
 
-  // ### init()
-  // On init, create UI buttons, make chosen elems editable, add event handlers 
-  // such as clickable elems, and editable elem actions.
+### init()
+On init, create UI buttons, make chosen elems editable, add event handlers 
+such as clickable elems, and editable elem actions.
+```js
   init: function(){
     self = this;
     document.body.setAttribute('spellcheck', false);
@@ -34,9 +42,11 @@ module.exports = {
     self.setEventHandlers();
   },
 
-  // ### createMediaBtn
-  // Creates the inline buttons, adds them to page, 
-  // and finally adds the click events to them
+```
+### createMediaBtn
+Creates the inline buttons, adds them to page, 
+and finally adds the click events to them
+```js
   createMediaBtn: function (){
     /* define the HTML */
     self.mediaBtn = '\
@@ -62,8 +72,10 @@ module.exports = {
     }
   },
 
-  // ### setEditableItems()
-  // 
+```
+### setEditableItems()
+
+```js
   setEditableItems: function(items){
     items.forEach(function makeItemEditable(el, i){
       var $elems = $(cms.config.sectionSelector + ' ' + el);
@@ -72,8 +84,10 @@ module.exports = {
     });
   },
 
-  // ### setEditableRegions()
-  //
+```
+### setEditableRegions()
+
+```js
   setEditableRegions: function(selector){
     var selector = selector.replace(/^\./, ''),
         $elems = $(cms.config.sectionSelector + ' .' + selector);
@@ -83,8 +97,10 @@ module.exports = {
     self.addMediaButtons();
   },
 
-  // ### setEventHandlers()
-  //
+```
+### setEventHandlers()
+
+```js
   setEventHandlers: function(){
     var $editables = self.getEditableItems();
     
@@ -100,28 +116,38 @@ module.exports = {
     self.onHighlightTextHandler();
   },
 
-  // ### getEditableItems()
-  //
+```
+### getEditableItems()
+
+```js
   getEditableItems: function () {
     var $items = $('[contenteditable]');
     return $items;
   },
 
-  // ### onHighlightTextHandler()
-  //
+```
+### onHighlightTextHandler()
+
+```js
   onHighlightTextHandler: function(){
-    // uses my fork of grande.js (https://github.com/sc0ttj/grande.js)
+```
+uses my fork of grande.js (https://github.com/sc0ttj/grande.js)
+```js
     var selector = '.' + cms.config.editableRegionClass;
     var editables = document.querySelectorAll(selector);
     grande.bind(editables);
   },
 
-  // ### onEditableKeyPressHandler()
-  //
+```
+### onEditableKeyPressHandler()
+
+```js
   onEditableKeyPressHandler: function(e){
     var el = this;
 
-    // crude firefox fix - dont allow total emptying of editable regions
+```
+crude firefox fix - dont allow total emptying of editable regions
+```js
     if(self.isInFirefox && self.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p></p>');
 
     if (e.which === 13) {
@@ -135,8 +161,10 @@ module.exports = {
     }
   },
 
-  // ### addMediaButtons()
-  //
+```
+### addMediaButtons()
+
+```js
   addMediaButtons: function () {
     $(cms.config.inlineMediaRegionSelector).each(function(){
       var $el = $(this),
@@ -146,8 +174,10 @@ module.exports = {
     });
   },
 
-  // ### onEditableBlurHandler()
-  //
+```
+### onEditableBlurHandler()
+
+```js
   onEditableBlurHandler: function(e){
     var el = this,
         $el = $(el),
@@ -160,8 +190,10 @@ module.exports = {
     cms.saveProgress();
   },
 
-  // ### onEditableFocusHandler()
-  //
+```
+### onEditableFocusHandler()
+
+```js
   onEditableFocusHandler: function(e){
     var el = this;
     self.nextEditableElem = self.getNextEditableItem(el);
@@ -180,15 +212,19 @@ module.exports = {
     });
   },
 
-  // ### getNextEditableItem()
-  //
+```
+### getNextEditableItem()
+
+```js
   getNextEditableItem: function (el) {
     var nextItem = $('[contenteditable]').eq($('[contenteditable]').index($(el))+1)[0];
     return nextItem;
   },
 
-  // ### elemIsEmpty()
-  //
+```
+### elemIsEmpty()
+
+```js
   elemIsEmpty: function (el) {
     var elemIsEmpty = (el.innerHTML === '' 
       || el.innerHTML.indexOf('<br>') === 0
@@ -209,16 +245,20 @@ module.exports = {
     return false;
   },
 
-  // ### elemIsContainer()
-  //
+```
+### elemIsContainer()
+
+```js
   elemIsContainer: function (el) {
     var elemIsContainer  = ($(el).children('[contenteditable]').length > 0);
     if (elemIsContainer) return true;
     return false;
   },
 
-  // ### removeLeftOverMediaBtns
-  //
+```
+### removeLeftOverMediaBtns
+
+```js
   removeLeftOverMediaBtns: function (el){
     $(el).children().each(function(elem){
       if (self.onlyContainsMediaBtn(elem)) $(elem).remove();
@@ -226,15 +266,19 @@ module.exports = {
     if (self.onlyContainsMediaBtn(el)) $(el).remove();
   },
 
-  // ### onlyContainsMediaBtn()
-  //
+```
+### onlyContainsMediaBtn()
+
+```js
   onlyContainsMediaBtn: function (el) {
     var onlyContainsBtn = (el.innerHTML.indexOf('<div id="cms-media-btn"') === 0);
     return onlyContainsBtn;
   },
 
-  // ### getTextBlockContainer()
-  //
+```
+### getTextBlockContainer()
+
+```js
   /* https://stackoverflow.com/questions/5740640/contenteditable-extract-text-from-caret-to-end-of-element?answertab=votes#tab-top */
   getTextBlockContainer: function(node) {
     while (node) {
@@ -243,8 +287,10 @@ module.exports = {
     }
   },
 
-  // ### getTextAfterCaret()
-  //
+```
+### getTextAfterCaret()
+
+```js
   getTextAfterCaret: function() {
     var sel = window.getSelection();
     if (sel.rangeCount) {
@@ -259,6 +305,13 @@ module.exports = {
     }
   },
 
-//  
-// end of module
+```
+
+end of module
+```js
 }
+
+```
+------------------------
+Generated _Wed Mar 22 2017 17:08:58 GMT+0000 (GMT)_ from [&#x24C8; page_editor.js](page_editor.js "View in source")
+
