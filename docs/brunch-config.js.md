@@ -1,8 +1,12 @@
-// # brunch_config.js
-// See [brunch.io](http://brunch.io/docs/config) for more info
+# brunch_config.js
+See [brunch.io](http://brunch.io/docs/config) for more info
+
+```js
 /*
 
-This config can use the following ways to match files/dirs etc.. Examples:
+This config can use the following ways to match files/dirs etc..
+
+Examples:
 
 - regular expressions:           /\.js$/,
 - strings with glob wildcards:   'path/to/*.css',
@@ -20,12 +24,16 @@ https://github.com/brunch/brunch/blob/master/lib/utils/config-validate.js
 
 */
 
-// Get json data about the default page to be built, used later to compile html from templates
+```
+Get json data about the default page to be built, used later to compile html from templates
+```js
 var pageConfig = require('./src/app/js/page_config.js');
 
-// #### processEnv()  
-// You can pass env vars to brunch at build time..
-// So lets get the vars now and setup anything we need to
+```
+#### processEnv()  
+You can pass env vars to brunch at build time..
+So lets get the vars now and setup anything we need to
+```js
 (function processEnv(){
   /* 
    * if `BUILD=with-tests brunch b`
@@ -42,8 +50,11 @@ var pageConfig = require('./src/app/js/page_config.js');
 
 
 
-// ## config starts below
+```
+## config starts below
+```js
 exports.config = {
+
   /* paths defines the src and output dirs */
   paths: {
     /* the dir to build our src code to */
@@ -82,12 +93,6 @@ exports.config = {
   /* enable full npm support in brunch */
   npm: { 
     enabled: true,
-    /* get the css of installed npm modules */
-    /*
-     * styles: {
-     *   leaflet: ['dist/leaflet.css']
-     * }
-     */
   },
 
   /* the hmtl, css, js files to combine, minify, etc  */
@@ -96,8 +101,6 @@ exports.config = {
       joinTo: {
         /* combine js files to 'js/app.js' */
         'js/app.js': /^src\/app\/js/,
-        /* combine js files to 'js/enhancements.js' */
-        /* 'js/enhancements.js': /^src\/app\/js\/enhancements/, */
         /* combine js files to 'js/vendor.js' */
         'js/vendor.js': [ 
           /^src\/app\/vendor/,
@@ -193,49 +196,8 @@ exports.config = {
     ],
   },
 
-  /* run extra tasks on pre-compile and post-compile .. see http://brunch.io/docs/config#-hooks-*/
-  // hooks: {
-  //   preCompile() {
-  //     console.log("About to compile...");
-  //     return Promise.resolve();
-  //   },
-  //   onCompile(files, assets) {
-  //     console.log("Compiled... Now processing..");
-  //     // list files generated from the build
-  //     console.log(files.map(f => f.path));
-  //   },
-  // },
-
-   /* override brunch environment conventions/defaults */
-  overrides: {
-    /* build page without CMS (usage on command line: `brunch build --env nocms`) */
-    // nocms: {
-    //   paths: {
-    //     'public': 'www',
-    //     'watched': ['src/app']
-    //   },
-    //   conventions: {
-    //     assets: [
-    //       /^src\/app\/assets[\\/]/
-    //     ],
-    //   },
-    //   files: {
-    //     javascripts: {
-    //       joinTo: {
-    //         'js/app.js': /^src\/app\/js/,
-    //         'js/vendor.js': [ 
-    //           /^bower_components/,
-    //           /^src\/app\/vendor/,
-    //         ],
-    //         'test/js/test.js': /^test(\/|\\)(?!vendor)/,
-    //         'test/js/test-vendor.js': /^test(\/|\\)(?=vendor)/
-    //       },
-    //       order: {
-    //         before: []
-    //       }
-    //     },
-    //   }
-    // },
-  },
-
 };
+```
+------------------------
+Generated _Thu Mar 23 2017 01:06:40 GMT+0000 (GMT)_ from [&#x24C8; brunch-config.js](brunch-config.js "View in source")
+
