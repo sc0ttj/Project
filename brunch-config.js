@@ -40,7 +40,7 @@ var pageConfig = require('./src/app/js/page_config.js');
    * or `npm test` was used at command line */
   if (process.env.BUILD == 'with-tests') {
     /*
-     * include a test-runner `<script>` in index.html (in assets)
+     * include a test-runner script in index.html (in assets)
      * to do this, we update default pageData..
      * mustache will then include the test-runner 
      * partial if we set var 'test' below */

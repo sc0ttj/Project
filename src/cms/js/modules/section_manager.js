@@ -130,6 +130,9 @@ module.exports = {
   //
   // @param `index` - int, the index of the section to remove
   removeSection: function (index) {
+    /* keep at least one section */
+    // if ($(cms.config.sectionSelector).length < 2) return false;
+    /* we're ok, so remove the section at the given index */
     var $section = $('.section'+index);
     $section.remove();
   },
