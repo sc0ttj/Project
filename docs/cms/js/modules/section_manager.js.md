@@ -1,32 +1,43 @@
-// # section_manager.js
-// This module creates a popup modal dialog, with a list of page sections.  
-// The user clicks on a section in the Section Manager to add it to the page, 
-// as a new section.
-//  
-// The 'templates' option in the [CMS config](https://github.com/sc0ttj/Project/blob/jdi/docs/cms/js/cms.js.md) defines which templates/sections are available to add.
+# section_manager.js
+This module creates a popup modal dialog, with a list of page sections.  
+The user clicks on a section in the Section Manager to add it to the page, 
+as a new section.
+
+The 'templates' option in the [CMS config](https://github.com/sc0ttj/Project/blob/jdi/docs/cms/js/cms.js.md) defines which templates/sections are available to add.
 
 
-// Let's start - first, we get our dependencies.
+Let's start - first, we get our dependencies.
+```js
 var $ = require('cash-dom');
 
-// Then set a persistent reference.
+```
+Then set a persistent reference.
+```js
 var self;
 
-// Use strict setting.
+```
+Use strict setting.
+```js
 "use strict";
 
-// Define our CommonJS module.
+```
+Define our CommonJS module.
+```js
 module.exports = {
 
-  // ## Module Methods
+```
+## Module Methods
 
-  // ### init()
+### init()
+```js
   init: function(){
     self = this;
   },
 
-  // ### showUI()
-  // Show a modal popup dialog, listing the sections that can be added
+```
+### showUI()
+Show a modal popup dialog, listing the sections that can be added
+```js
   showUI: function () {
     /* get html to be used in modal window */
     self.sectionPreviews = self.getSectionPreviewImgs();
@@ -43,8 +54,10 @@ module.exports = {
     self.$previewImgs.on('click', self.sectionPreviewClickHandler);
   },
 
-  // ### getSectionPreviewImgs()
-  // Get the preview images for each template defined in the CMS config
+```
+### getSectionPreviewImgs()
+Get the preview images for each template defined in the CMS config
+```js
   getSectionPreviewImgs: function () {
     var previewImgs = '';
     cms.config.templates.forEach(function (section, i){
@@ -54,17 +67,21 @@ module.exports = {
     return previewImgs;
   },
 
-  // ### sectionPreviewClickHandler(e)
-  // Click handler for the template preview images
+```
+### sectionPreviewClickHandler(e)
+Click handler for the template preview images
+```js
   sectionPreviewClickHandler: function (e) {
     self.getTemplateFromFile(this.id);
   },
 
-  // ### getTemplateFromFile(template)
-  // Get the markup from the chosen `.tmpl` file and the build the HTML 
-  // to be used. 
-  //  
-  // @param `template` - string, the template file name (see list of valid templates in CMS config)
+```
+### getTemplateFromFile(template)
+Get the markup from the chosen `.tmpl` file and the build the HTML 
+to be used. 
+
+@param `template` - string, the template file name (see list of valid templates in CMS config)
+```js
   getTemplateFromFile: function (template) {
     cms.ajax.create('GET', 'templates/'+template);
 
@@ -100,43 +117,53 @@ module.exports = {
     cms.ajax.send(null);
   },
   
-  // ### addTemplateToPage(html)
-  // Adds a new section to the page (index.html) then populates it with the 
-  // given HTML string
-  // 
-  // @param `html` - string, the HTML to add to the page, as a new section
+```
+### addTemplateToPage(html)
+Adds a new section to the page (index.html) then populates it with the 
+given HTML string
+
+@param `html` - string, the HTML to add to the page, as a new section
+```js
   addTemplateToPage: function (html) {
     $(cms.config.sectionSelector).last().after(cms.config.sectionContainer);
     $(cms.config.sectionSelector).last().html(html);
   },
 
-  // ### moveSectionUp(index)
-  //
-  // @param `index` - int, the index of the section to move
+```
+### moveSectionUp(index)
+
+@param `index` - int, the index of the section to move
+```js
   moveSectionUp: function (index) {
     var $section = $('.section'+index);
     $section.prev().before($section);
   },
 
-  // ### moveSectionDown(index)
-  //
-  // @param `index` - int, the index of the section to move
+```
+### moveSectionDown(index)
+
+@param `index` - int, the index of the section to move
+```js
   moveSectionDown: function (index) {
     var $section = $('.section'+index);
     $section.next().after($section);
   },
 
-  // ### removeSection(index)
-  //
-  // @param `index` - int, the index of the section to remove
+```
+### removeSection(index)
+
+@param `index` - int, the index of the section to remove
+```js
   removeSection: function (index) {
     var $section = $('.section'+index);
     $section.remove();
   },
 
-  // ### reIndexSections()
-  // Update all sections on the page (index.html), so that they are in correct 
-  // numerical order.
+```
+### reIndexSections()
+Update all sections on the page (index.html), so that they are in correct 
+numerical order.
+```js
   reIndexSections: function () {
     var $sections = $(cms.config.sectionSelector);
 
@@ -149,6 +176,12 @@ module.exports = {
     });
   },
 
-//  
-// End of module
+```
+
+End of module
+```js
 }
+```
+------------------------
+Generated _Wed Mar 22 2017 22:18:17 GMT+0000 (GMT)_ from [&#x24C8; section_manager.js](section_manager.js "View in source")
+

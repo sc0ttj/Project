@@ -1,5 +1,15 @@
 module.exports = {
+  /*
+   * If true, include a test runner <script> which will run our 
+   * tests on page load. Test will run in the browser, and can 
+   * be seen in DevTools/Firebug, or on the command line when 
+   * you run `npm test` (using PhantomJS).
+   */
   test: false,
+
+  /*
+   * Default lorem ipsum values to be inserted into page/templates.
+   */
   author: {
     name:     'Your Name Here',
     email:    'name [at] email.com',

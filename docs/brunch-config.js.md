@@ -1,11 +1,12 @@
-// # brunch_config.js
-// This file is read by `brunch`, each time a brunch build command 
-// is executed on the command line.
+# brunch_config.js
+This file is read by `brunch`, each time a brunch build command 
+is executed on the command line.
 
-// See [Using the build tool](https://github.com/sc0ttj/Project/wiki/Using-the-build-tool) in the Wiki, for the available 
-// `brunch` commands and which ones to use.  
+See [Using the build tool](https://github.com/sc0ttj/Project/wiki/Using-the-build-tool) in the Wiki, for the available 
+`brunch` commands and which ones to use.  
 
-// Also see [brunch.io](http://brunch.io/docs/config) for more info
+Also see [brunch.io](http://brunch.io/docs/config) for more info
+```js
 /*
 
 This config can use the following ways to match files/dirs etc.. Examples:
@@ -26,14 +27,18 @@ https://github.com/brunch/brunch/blob/master/lib/utils/config-validate.js
 
 */
 
-// ## Custom setup
+```
+## Custom setup
 
-// Get json data about the default page to be built, used later to compile html from templates
+Get json data about the default page to be built, used later to compile html from templates
+```js
 var pageConfig = require('./src/app/js/page_config.js');
 
-// #### processEnv()  
-// You can pass env vars to brunch at build time..
-// So lets get the vars now and setup anything we need to
+```
+#### processEnv()  
+You can pass env vars to brunch at build time..
+So lets get the vars now and setup anything we need to
+```js
 (function processEnv(){
   /* 
    * if `BUILD=with-tests brunch b`
@@ -50,7 +55,9 @@ var pageConfig = require('./src/app/js/page_config.js');
 
 
 
-// ## Config starts below
+```
+## Config starts below
+```js
 exports.config = {
   /* paths defines the src and output dirs */
   paths: {
@@ -251,3 +258,7 @@ exports.config = {
   },
 
 };
+```
+------------------------
+Generated _Fri Mar 24 2017 03:42:03 GMT+0000 (GMT)_ from [&#x24C8; brunch-config.js](brunch-config.js "View in source")
+

@@ -1,23 +1,23 @@
-// # meta_manager.js
-// This module allows users to easily edit the META information of the page 
-// (index.html) via a simple, popup form.
+# meta_manager.js
+This module allows users to easily edit the META information of the page 
+(index.html) via a simple, popup form.
 
-// Let's begin - get our dependencies 
+Let's begin - get our dependencies 
+```js
 var $ = require('cash-dom');
-var self;
+```
 
-"use strict";
+### init()
 
-module.exports = {
-  
-  // ### init()
-  // 
+```js
   init: function(){
     self = this; /* consistent self reference */
   },
 
-  // ### showUI()
-  //  
+```
+### showUI()
+
+```js
   showUI: function () {
     
     /* Get the meta values from the page */
@@ -88,9 +88,11 @@ module.exports = {
 
   },
 
-  // ### addEventHandlers()
-  // This func calls the `updateMeta()` function each time a Meta Manager 
-  // form field value changes.  
+```
+### addEventHandlers()
+This func calls the `updateMeta()` function each time a Meta Manager 
+form field value changes.  
+```js
   addEventHandlers: function () {
     $('input.cms-meta-value').on('change', function updateMetaField(e){
       var attr      = $(this).data('type'),
@@ -101,12 +103,14 @@ module.exports = {
     });
   },
 
-  // ### updateMeta()
-  // Update the meta values in the page with the ones given as parameters  
-  //
-  // @param `attr`  - string, name of the meta attribute to update  
-  // @param `key`   - string, the attribute key to update  
-  // @param `value` - string, the new value to assign to the given key  
+```
+### updateMeta()
+Update the meta values in the page with the ones given as parameters  
+
+@param `attr`  - string, name of the meta attribute to update  
+@param `key`   - string, the attribute key to update  
+@param `value` - string, the new value to assign to the given key  
+```js
   updateMeta: function (attr, key, value) {
     var elemToUpdate = $('head').find('meta['+attr+'^="'+key+'"]');
 
@@ -125,3 +129,7 @@ module.exports = {
   },
 
 }
+```
+------------------------
+Generated _Wed Mar 22 2017 14:44:04 GMT+0000 (GMT)_ from [&#x24C8; meta_manager.js](meta_manager.js "View in source")
+

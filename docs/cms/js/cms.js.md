@@ -1,22 +1,21 @@
-//# cms.js
+# cms.js
 
-// This file is called by [index.html]() and needs a config object.
-// If no config object is passed to `init()` then a default config will be used.
+This file is called by [index.html]() and needs a config object.
+If no config object is passed to `init()` then a default config will be used.
 
-// First, we require in the dependencies
+First, we require in the dependencies
+```js
 var $         = require('cash-dom');             /* enables a lightweight jQuery alternative */
 var languages = require('modules/languages.js')  /* provides list of languages (for translations) */
 var loadCSS   = require('modules/loadcss').init; /* enables load CSS on the fly */
 var store     = require('store');                /* enables cross-browser localStorage solution */
 var zenscroll = require('zenscroll');            /* enables click to smooth scroll to anchor */
+```
 
-"use strict";
-
-module.exports = {
-
-  // ## Default Config
-  // This JSON object defines the classes, containers, elements and server side URLs that the CMS should look for.  
-  // The values in this config match values defined in the [app templates](https://github.com/sc0ttj/Project/tree/jdi/src/app/templates)
+## Default Config
+This JSON object defines the classes, containers, elements and server side URLs that the CMS should look for.  
+The values in this config match values defined in the [app templates](https://github.com/sc0ttj/Project/tree/jdi/src/app/templates)
+```js
   config: {
     
     /* localStorage is used to make CMS page changes persistent,
@@ -101,21 +100,27 @@ module.exports = {
     }
   },
 
-  // ## Methods
+```
+## Methods
 
-  // #### getConfig()
+#### getConfig()
+```js
   getConfig: function (){
     return this.config;
   },
 
-  // #### setConfig()
-  // @param `config` - a JSON object like the default one above
+```
+#### setConfig()
+@param `config` - a JSON object like the default one above
+```js
   setConfig: function (config){
     this.config = config || this.config;
   },
 
-  // #### init()
-  // @param `config` - a JSON object like the default one above
+```
+#### init()
+@param `config` - a JSON object like the default one above
+```js
   init: function(config){
     this.setConfig(config);
     this.pageConfig = app.pageConfig;
@@ -177,7 +182,9 @@ module.exports = {
   },
 
 
-  // #### setLang()
+```
+#### setLang()
+```js
   setLang: function () {
     var lang = this.getLang();
 
@@ -185,7 +192,9 @@ module.exports = {
     this.lang.code = lang;
   },
 
-  // #### getLang()
+```
+#### getLang()
+```js
   getLang: function () {
     var lang = $('html')[0].getAttribute('lang');
 
@@ -193,25 +202,33 @@ module.exports = {
     return lang || 'en';
   },
 
-  // #### getLangInfo()
-  // @param `lang` - a 2 letter language ISO code
+```
+#### getLangInfo()
+@param `lang` - a 2 letter language ISO code
+```js
   getLangInfo: function (lang) {
     return languages[lang];
   },
 
-  // #### getLanguages()
+```
+#### getLanguages()
+```js
   getLanguages: function () {
     return languages;
   },
 
-  // #### setupSmoothScrolling()
+```
+#### setupSmoothScrolling()
+```js
   setupSmoothScrolling: function () {
     var defaultDuration = 400; // ms
     var edgeOffset = 0; // px
     zenscroll.setup(defaultDuration, edgeOffset);
   },
 
-  // #### reload()
+```
+#### reload()
+```js
   reload: function (){
     if (this.showTranslation()) return false;
     cms.editor.setEditableItems(this.config.editableItems);
@@ -222,7 +239,9 @@ module.exports = {
     app.reload();
   },
 
-  // #### cutsTheMustard()
+```
+#### cutsTheMustard()
+```js
   cutsTheMustard: function () {
     var cutsTheMustard = (
       'querySelector' in document
@@ -231,12 +250,16 @@ module.exports = {
     return cutsTheMustard;
   },
 
-  // #### addMustard()
+```
+#### addMustard()
+```js
   addMustard: function (){
     document.getElementsByTagName('body')[0].classList.add('cms-html5');
   },
 
-  // #### loadStylesheets()
+```
+#### loadStylesheets()
+```js
   loadStylesheets: function (){
     var stylesheets = [ 'cms/css/vendor.css', 'cms/css/cms.css' ];
     stylesheets.forEach(function(val){
@@ -244,20 +267,26 @@ module.exports = {
     });
   },
 
-  // #### showTranslation()
+```
+#### showTranslation()
+```js
   showTranslation: function (){
     if (this.getQueryVariable('preview') != '') return true;
     return false;    
   },
 
-  // #### autoSave()
+```
+#### autoSave()
+```js
   autoSave: function () {
     if (this.showTranslation()) return false;
     setInterval(this.saveProgress, 30000);
   },
 
-  // #### saveProgress()
-  // Get the current HTML of the page being edited and save that HTML to localStorage
+```
+#### saveProgress()
+Get the current HTML of the page being edited and save that HTML to localStorage
+```js
   saveProgress: function(){
     if (cms.showTranslation()) return false;
     if (!cms.config.localStorage) return false;
@@ -287,8 +316,10 @@ module.exports = {
     /* console.log('Saved progress..'); */
   },
 
-  // #### restoreProgress()
-  // Get HTML for this page from localStorage if it exists, then replace the page HTML with the saved version.
+```
+#### restoreProgress()
+Get HTML for this page from localStorage if it exists, then replace the page HTML with the saved version.
+```js
   restoreProgress: function(){
     var html = store.get(this.pageDir), // our namespaced HTML in storage
         head = store.get(this.pageDir + '__head'), // our namespaced head HTML in storage
@@ -307,7 +338,9 @@ module.exports = {
     if (restored) app.reload();
   },
 
-  // #### getQueryVariable()
+```
+#### getQueryVariable()
+```js
   getQueryVariable: function (variable) {
     /* https://css-tricks.com/snippets/javascript/get-url-variables/ */
     var query = window.location.search.substring(1);
@@ -320,3 +353,7 @@ module.exports = {
   },
 
 };
+```
+------------------------
+Generated _Tue Mar 21 2017 18:57:07 GMT+0000 (GMT)_ from [&#x24C8; cms.js](cms.js "View in source")
+

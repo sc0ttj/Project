@@ -1,45 +1,56 @@
-// # video_manager.js
+# video_manager.js
 
-// This CMS module loads up a Video Manager when a user clicks on a video in the page (index.html). 
-// Users can replace any video using the video manager - click the upload 
-// button below the source file you want to change, and choose a new file.
+This CMS module loads up a Video Manager when a user clicks on a video in the page (index.html). 
+Users can replace any video using the video manager - click the upload 
+button below the source file you want to change, and choose a new file.
 
 
-// Clickable videos are the ones the CMS can find using the `videoSelector` 
-// option in the [CMS config](https://github.com/sc0ttj/Project/blob/jdi/src/cms/js/cms.js#L20-L102).
+Clickable videos are the ones the CMS can find using the `videoSelector` 
+option in the [CMS config](https://github.com/sc0ttj/Project/blob/jdi/src/cms/js/cms.js#L20-L102).
 
-// Users can then upload and replace any videos that they have clicked in the page.
+Users can then upload and replace any videos that they have clicked in the page.
 
-// The Video Manager will show all source videos, and each can be replaced with a new 
-// uploaded video.  
-// You can also replace the poster image with a new image.
+The Video Manager will show all source videos, and each can be replaced with a new 
+uploaded video.  
+You can also replace the poster image with a new image.
 
-// ## Begin script
+## Begin script
 
-// Get our JS dependencies
+Get our JS dependencies
+```js
 var $ = require('cash-dom');
 
-// Create a persistent self reference to use across all module mthods
+```
+Create a persistent self reference to use across all module mthods
+```js
 var self;
 
-// Use strict setting
+```
+Use strict setting
+```js
 "use strict";
 
-// Define the CommonJS module
+```
+Define the CommonJS module
+```js
 module.exports = {
 
-  // ## Module Methods
+```
+## Module Methods
 
-  // ### init()
-  // Makes this module available globally as cms.fileManager,  
-  // then adds click handlers to all videos that the CMS can find
+### init()
+Makes this module available globally as cms.fileManager,  
+then adds click handlers to all videos that the CMS can find
+```js
   init: function(){
     self = this;
     self.addVideoClickHandlers();
   },
 
-  // ### addVideoClickHandlers()
-  //Get all videos on the page and assign a function to execute when they're clicked.
+```
+### addVideoClickHandlers()
+Get all videos on the page and assign a function to execute when they're clicked.
+```js
   addVideoClickHandlers: function () {
     var $videos = $(cms.config.videoSelector);
     $videos.off('click', self.videoClickHandler);
@@ -49,11 +60,13 @@ module.exports = {
     }
   },
 
-  // ### videoClickHandler()
-  // Get the source files for the clicked video, create form fields from those 
-  // source files, then pass those form fields to the `showUI()` function.  
-  // This is the function that is assigned to videos on the page. 
-  // This function is executed when videos are clicked.
+```
+### videoClickHandler()
+Get the source files for the clicked video, create form fields from those 
+source files, then pass those form fields to the `showUI()` function.  
+This is the function that is assigned to videos on the page. 
+This function is executed when videos are clicked.
+```js
   videoClickHandler: function (e) {
     var video = this,
         videoSrcElems   = self.getVideoSourceElems(video),
@@ -66,23 +79,27 @@ module.exports = {
     }
   },
 
-  // ### getVideoSourceElems()
-  // Returns the source elements of the clicked video as an HTML Collection.
-  //  
-  // @param `video` - the video element that was clicked  
-  // @return `videoSourceElems` - an HTML Collection of `<source>` and `<img>` elems.  
+```
+### getVideoSourceElems()
+Returns the source elements of the clicked video as an HTML Collection.
+
+@param `video` - the video element that was clicked  
+@return `videoSourceElems` - an HTML Collection of `<source>` and `<img>` elems.  
+```js
   getVideoSourceElems: function (video) {
     var videoSourceElems = $(video).children('source, img');
     return videoSourceElems;
   },
 
-  // ### createFieldsFromVideoSrcElems()
-  // Take an HTML Collection of the `<source>` and `<img>` elems associated 
-  // with the clicked image, then builds and returns these elems as form fields, 
-  // as an array of HTML strings.
-  //  
-  // @param  `videoSrcElems` - an HTML Collection of the `<source>`  and `<img>` elems within a `<video>` elem  
-  // @return `fields`        - an array form fields, each as a string of HTML
+```
+### createFieldsFromVideoSrcElems()
+Take an HTML Collection of the `<source>` and `<img>` elems associated 
+with the clicked image, then builds and returns these elems as form fields, 
+as an array of HTML strings.
+
+@param  `videoSrcElems` - an HTML Collection of the `<source>`  and `<img>` elems within a `<video>` elem  
+@return `fields`        - an array form fields, each as a string of HTML
+```js
   createFieldsFromVideoSrcElems: function (videoSrcElems) {
     if (videoSrcElems.length < 1) return '';
     var fields = [];
@@ -102,11 +119,13 @@ module.exports = {
     return fields;
   },
 
-  // ### showUI()
-  // Create the Video Manager modal popup contents, then show the modal, 
-  // and add the event handler functions to the upload buttons.
-  //  
-  // @param `sourceInputFields` - array of HTML strings (each item is a form field)
+```
+### showUI()
+Create the Video Manager modal popup contents, then show the modal, 
+and add the event handler functions to the upload buttons.
+
+@param `sourceInputFields` - array of HTML strings (each item is a form field)
+```js
   showUI: function (sourceInputFields) {
     var modalContent = '';
     /* for each video source src file */
@@ -143,12 +162,14 @@ module.exports = {
     self.posterImgBtnClickHandler($('.cms-modal-upload-poster-btn'));
   },
 
-  // ### fileBtnClickHandler()
-  // Get the file chosen to be uploaded, get its attributes, then 
-  // set the chosen file as  the current file to work on, 
-  // then update the upload buttons and finally upload the chosen file.
-  //  
-  // @param `$fileBtn` - cashJS object, the button to assign the event handler
+```
+### fileBtnClickHandler()
+Get the file chosen to be uploaded, get its attributes, then 
+set the chosen file as  the current file to work on, 
+then update the upload buttons and finally upload the chosen file.
+
+@param `$fileBtn` - cashJS object, the button to assign the event handler
+```js
   fileBtnClickHandler: function ($fileBtn) {
     /* force upload on choosing a file */
     $fileBtn.on('change', function uploadBtnChangeHandler(e){
@@ -185,13 +206,15 @@ module.exports = {
     });
   },
 
-  // ### updateUploadBtns()
-  // Update the buttons during upload - disabled all buttons except the 
-  // currently focused button, adds spinner to focused button
-  //  
-  // @param `$btn` - cashJS object, the current upload button 
-  // (the one that was clicked)  
-  // @param `$btns` - HTML Collection, all the upload buttons
+```
+### updateUploadBtns()
+Update the buttons during upload - disabled all buttons except the 
+currently focused button, adds spinner to focused button
+
+@param `$btn` - cashJS object, the current upload button 
+(the one that was clicked)  
+@param `$btns` - HTML Collection, all the upload buttons
+```js
   updateUploadBtns: function($btn, $btns){
     $btn.removeClass('cms-modal-upload-label-error');
     $btn.addClass('cms-modal-upload-label-uploading');
@@ -199,8 +222,10 @@ module.exports = {
     $btns.css('pointer-events', 'none');
   },
 
-  // ### uploadFile()
-  // Upload the video - POST the video file to the server side
+```
+### uploadFile()
+Upload the video - POST the video file to the server side
+```js
   uploadFile: function (e, file){
     var formData = new FormData(this);
     formData.append('video', file, file.name);
@@ -211,11 +236,13 @@ module.exports = {
     cms.ajax.send(formData);
   },
 
-  // ### setUploadEventHandlers()
-  // Add the onProgress, onSuccess and onError event handlers to the 
-  // upload event. The onProgress handler displays the upload progress as a %, 
-  // the onSuccess handler will update the video HTML on the page, and then reset 
-  // the upload buttons.
+```
+### setUploadEventHandlers()
+Add the onProgress, onSuccess and onError event handlers to the 
+upload event. The onProgress handler displays the upload progress as a %, 
+the onSuccess handler will update the video HTML on the page, and then reset 
+the upload buttons.
+```js
   setUploadEventHandlers: function () {
     var btn  = self.$currentBtn,
         btns = self.$currentBtns;
@@ -250,10 +277,12 @@ module.exports = {
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
   },
 
-  // ### updateVideoOnPage()
-  // Get the video that we're editing in the page as a cashJS object, then 
-  // get the specific `<source>` element to change, and finally update the 
-  // video source elem with the URL of the newly uploaded video.
+```
+### updateVideoOnPage()
+Get the video that we're editing in the page as a cashJS object, then 
+get the specific `<source>` element to change, and finally update the 
+video source elem with the URL of the newly uploaded video.
+```js
   updateVideoOnPage: function(){
     /* add img to src or srcset in main page */
     var videoToUpdate    = $(self.currentVideo),
@@ -268,13 +297,15 @@ module.exports = {
   },
 
 
-  // ### posterImgBtnClickHandler()
-  // 
-  // Get the file chosen to be uploaded, get its attributes, then 
-  // set the chosen file as  the current file to work on, 
-  // then update the upload buttons and finally upload the chosen file.
-  //  
-  // @param `$posterImgBtn` - cashJS object, the button to assign the event handler
+```
+### posterImgBtnClickHandler()
+
+Get the file chosen to be uploaded, get its attributes, then 
+set the chosen file as  the current file to work on, 
+then update the upload buttons and finally upload the chosen file.
+
+@param `$posterImgBtn` - cashJS object, the button to assign the event handler
+```js
   posterImgBtnClickHandler: function ($posterImgBtn) {
     /* force upload on choosing a file */
     $posterImgBtn.on('change', function uploadBtnChangeHandler(e){
@@ -314,12 +345,14 @@ module.exports = {
     });
   },
 
-  // ### updatePreviewImage()
-  // Updates the poster image shown in the Video Manager
-  //  
-  // @param `$previewImg` - a cashJS object of the poster image in the Video Manager  
-  // @param `file` - the file to be uploaded (the one chosen by the user after clicking 
-  // the upload button)  
+```
+### updatePreviewImage()
+Updates the poster image shown in the Video Manager
+
+@param `$previewImg` - a cashJS object of the poster image in the Video Manager  
+@param `file` - the file to be uploaded (the one chosen by the user after clicking 
+the upload button)  
+```js
   updatePreviewImage: function ($previewImg, file){
     var reader = new FileReader();
     reader.addEventListener('load', function () {
@@ -328,8 +361,10 @@ module.exports = {
     if (file) reader.readAsDataURL(file);
   },
 
-  // ### uploadImage()
-  // Uplaods in image to the server
+```
+### uploadImage()
+Uplaods in image to the server
+```js
   uploadImage: function (e, file){
     var formData = new FormData(this);
     formData.append('image', file, file.name);
@@ -340,11 +375,13 @@ module.exports = {
     cms.ajax.send(formData);
   },
 
-  // ### setImageUploadEventHandlers()
-  // Set the functions and events for image upload Success, Error and 
-  // Progress events. On image upload success, the poster image on the main 
-  // page itself is updated, and the uplaod buttons are reset to their 
-  // default state.
+```
+### setImageUploadEventHandlers()
+Set the functions and events for image upload Success, Error and 
+Progress events. On image upload success, the poster image on the main 
+page itself is updated, and the uplaod buttons are reset to their 
+default state.
+```js
   setImageUploadEventHandlers: function () {
     var btn  = self.$currentBtn,
         btns = self.$currentBtns;
@@ -372,8 +409,10 @@ module.exports = {
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
   },
 
-  // ### updateposterImage()
-  // Update the poster image (on the main page) of the video clicked
+```
+### updateposterImage()
+Update the poster image (on the main page) of the video clicked
+```js
   updateposterImage: function(){
     var $imgToUpdate = $(self.currentVideo).children('img');
 
@@ -381,12 +420,14 @@ module.exports = {
     $(self.currentVideo).attr('poster', self.currentImgUrl);
   },
 
-  // ### createUploadBtn()
-  // Returns an HTML string of a video upload button
-  //  
-  // @param  `i`         - an index that will give the button a unique ID  
-  // @return `uploadBtn` - a string of HTML defining an upload form, with an 
-  // input of type 'file'.
+```
+### createUploadBtn()
+Returns an HTML string of a video upload button
+
+@param  `i`         - an index that will give the button a unique ID  
+@return `uploadBtn` - a string of HTML defining an upload form, with an 
+input of type 'file'.
+```js
   createUploadBtn: function (i) {
     var uploadBtn = '\
       <form id="cms-upload-form-'+i+'" action="/api/upload.php" method="post" class="cms-upload-form cms-upload-form-'+i+'" enctype="multipart/form-data">\n\
@@ -398,12 +439,14 @@ module.exports = {
     return uploadBtn;
   },
 
-  // ### createUploadPosterBtn()
-  // Returns an HTML string of a form containing an upload button (input type file).
-  //  
-  // @param  `i`         - an index that will give the button a unique ID  
-  // @return `uploadBtn` - a string of HTML defining an upload form, with an 
-  // input of type 'file'.
+```
+### createUploadPosterBtn()
+Returns an HTML string of a form containing an upload button (input type file).
+
+@param  `i`         - an index that will give the button a unique ID  
+@return `uploadBtn` - a string of HTML defining an upload form, with an 
+input of type 'file'.
+```js
   createUploadPosterBtn: function (i) {
     var uploadBtn = '\
       <form id="cms-upload-form-'+i+'" action="/api/upload.php" method="post" class="cms-upload-form cms-upload-form-'+i+'" enctype="multipart/form-data">\n\
@@ -415,4 +458,12 @@ module.exports = {
     return uploadBtn;
   },
 
+```
+
+End of module
+```js
 }
+```
+------------------------
+Generated _Fri Mar 24 2017 01:42:12 GMT+0000 (GMT)_ from [&#x24C8; video_manager.js](video_manager.js "View in source")
+

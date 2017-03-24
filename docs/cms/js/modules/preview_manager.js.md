@@ -1,33 +1,44 @@
-// # preview_manager.js
-// This module creates a modal popup containing a preview of the edited page.  
-// The previewed page is inside an iframe which can be resized to various device sizes.
-//  
+# preview_manager.js
+This module creates a modal popup containing a preview of the edited page.  
+The previewed page is inside an iframe which can be resized to various device sizes.
 
-// First, we get our dependencies
+
+First, we get our dependencies
+```js
 var $ = require('cash-dom');
 
-// Create a persistent reference
+```
+Create a persistent reference
+```js
 var self;
 
-// Use strict setting
+```
+Use strict setting
+```js
 "use strict";
 
-// Define our CommonJS module
+```
+Define our CommonJS module
+```js
 module.exports = {
 
-  // ## Module Methods
+```
+## Module Methods
 
-  // ### init()
+### init()
+```js
   init: function(){
     /* make this module available globally as cms.previewManager */
     self = cms.previewManager; 
     return true // if we loaded ok
   },
 
-  // ### previewPage()
-  // Hide this modal and the CMS menu, then get a string of the HTML of our 
-  // page (index.html), then remove the CMS from it, then save that HTML to 
-  // a preview.html file, then re-show this preview manager UI
+```
+### previewPage()
+Hide this modal and the CMS menu, then get a string of the HTML of our 
+page (index.html), then remove the CMS from it, then save that HTML to 
+a preview.html file, then re-show this preview manager UI
+```js
   previewPage: function () {
     cms.ui.hideMenu();
     var html = cms.exportManager.getPageHTMLWithoutCMS();
@@ -35,10 +46,12 @@ module.exports = {
     cms.exportManager.saveHtmlToFile(html, self.showUI);
   },
 
-  // ### showUI(callback)
-  // Shows the Preview Manager modal dialog and enables its event handlers
-  //
-  // @param `callback` - a function that is executed on closing the modal 
+```
+### showUI(callback)
+Shows the Preview Manager modal dialog and enables its event handlers
+
+@param `callback` - a function that is executed on closing the modal 
+```js
   showUI: function (callback) {
     var lang = cms.vocabEditor.getCurrentService(),
         filename = 'index.' + lang, // name of page to preview, example 'index.fr.html'
@@ -83,8 +96,10 @@ module.exports = {
     self.iframeResizeBtnClickHandler();
   },
 
-  // ### iframeResizeBtnClickHandler()
-  // Resizes the iframe in the Preview Manager to match the given dimensions
+```
+### iframeResizeBtnClickHandler()
+Resizes the iframe in the Preview Manager to match the given dimensions
+```js
   iframeResizeBtnClickHandler: function () {
     /* on clicking the 'cms-iframe-resizer-btn' button, get the dimensions 
      * from data attributes then apply those dimensions to the iframe
@@ -121,6 +136,12 @@ module.exports = {
     });
   },
 
-//  
-// End of the module
+```
+
+End of the module
+```js
 }
+```
+------------------------
+Generated _Wed Mar 22 2017 21:52:14 GMT+0000 (GMT)_ from [&#x24C8; preview_manager.js](preview_manager.js "View in source")
+

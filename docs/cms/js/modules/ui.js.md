@@ -1,33 +1,44 @@
-// # ui.js
-// The module provides the main CMS menu. It has buttons for editing the page 
-// sections, meta info, translations and more.
+# ui.js
+The module provides the main CMS menu. It has buttons for editing the page 
+sections, meta info, translations and more.
 
-// Let's start. Get our dependencies
+Let's start. Get our dependencies
+```js
 var $ = require('cash-dom'); // like jquery
 
-// Create a persistent self reference
+```
+Create a persistent self reference
+```js
 var self;
 
-// Use strict setting
+```
+Use strict setting
+```js
 "use strict";
 
-// Define the CommonJS module 
+```
+Define the CommonJS module 
+```js
 module.exports = {
 
-  // ## Module Methods
+```
+## Module Methods
 
-  // ### init()
-  // On init, make `self` available as reference to this module in all methods, 
-  // then run addUI() to add the menu button to the page.
+### init()
+On init, make `self` available as reference to this module in all methods, 
+then run addUI() to add the menu button to the page.
+```js
   init: function(){
     self = this;
     self.addUI();
     return true // if we loaded ok
   },
 
-  // ### addUI()
-  //  Define the menu and menu button HTML, then add them to the page. The menu 
-  // will be hidden by default.
+```
+### addUI()
+Define the menu and menu button HTML, then add them to the page. The menu 
+will be hidden by default.
+```js
   addUI: function(){
     var menu     = this.getMenuHtml(),
         menuBtn  = '<button class="cms-menu-btn cms-unselectable clear">☰</button>';
@@ -39,9 +50,11 @@ module.exports = {
     self.setUIEventHandlers(); // now assign event handlers to them
   },
 
-  // ### getUIComponents()
-  // Get all the menu elements as cashJS objects and bind them to this module as 
-  // properties which can be accessed across this module.
+```
+### getUIComponents()
+Get all the menu elements as cashJS objects and bind them to this module as 
+properties which can be accessed across this module.
+```js
   getUIComponents: function () {
     self.$menu         = $('.cms-menu');
     self.$menuBg       = $('.cms-menu-bg');
@@ -59,8 +72,10 @@ module.exports = {
     self.$menuBtnTranslations = $('.cms-menu-item-translations');
   },
 
-  // ### setUIEventHandlers()
-  // Define which functions to execute when clicking the various menu items
+```
+### setUIEventHandlers()
+Define which functions to execute when clicking the various menu items
+```js
   setUIEventHandlers: function () {
     self.$menuBg.on('click', self.menuBgClickHandler);
     self.$menuBtn.on('click', self.menuBtnClickHandler);
@@ -76,8 +91,10 @@ module.exports = {
     self.$menuBtnTranslations.on('click', self.menuBtnTranslationsClickHandler);
   },
 
-  // ### setUIEventHandlersOff()
-  // Unregister all the event handlers - useful if rebuilding the menu
+```
+### setUIEventHandlersOff()
+Unregister all the event handlers - useful if rebuilding the menu
+```js
   setUIEventHandlersOff: function () {
     self.$menuBg.off('click', self.menuBgClickHandler);
     self.$menuBtn.off('click', self.menuBtnClickHandler);
@@ -93,10 +110,12 @@ module.exports = {
     self.$menuBtnTranslations.off('click', self.menuBtnTranslationsClickHandler);
   },
 
-  // ### getMenuHtml()
-  // Returns the CMS menu as a string of HTML.
-  //  
-  // @return `menu` - string, the menu HTML
+```
+### getMenuHtml()
+Returns the CMS menu as a string of HTML.
+
+@return `menu` - string, the menu HTML
+```js
   getMenuHtml: function () {
     var menu = '\
         <div class="cms-menu-bg cms-ui-hidden"></div>\
@@ -143,11 +162,13 @@ module.exports = {
     return menu;
   },
 
-  // ### getSectionsAsMenuItems()
-  // Create a menu item for each section on the (index.html) page  and 
-  // returns these items as a string of HTML.
-  //  
-  // @return `menuItems` - string, the HTML of the menu buttons for each section.
+```
+### getSectionsAsMenuItems()
+Create a menu item for each section on the (index.html) page  and 
+returns these items as a string of HTML.
+
+@return `menuItems` - string, the HTML of the menu buttons for each section.
+```js
   getSectionsAsMenuItems: function () {
     var menuItems = '',
     $sections = self.getSections();
@@ -177,29 +198,37 @@ module.exports = {
     return menuItems;
   },
 
-  // ### getSections()
-  // Get all page sections (reads index.html) and returns as an HTML Collection
-  //  
-  // @return `sections` - an HTML COllection of the sections currently on the page
+```
+### getSections()
+Get all page sections (reads index.html) and returns as an HTML Collection
+
+@return `sections` - an HTML COllection of the sections currently on the page
+```js
   getSections: function () {
     var sections = $(cms.config.sectionSelector);
     return sections;
   },
 
-  // ### menuBgClickHandler()
-  // On clicking the menu background, hide the CMS menu
+```
+### menuBgClickHandler()
+On clicking the menu background, hide the CMS menu
+```js
   menuBgClickHandler: function (e) {
     self.hideMenu();
   },
 
-  // ### menuBtnClickHandler()
-  // On clicking the menu button, hide or show the CMS menu
+```
+### menuBtnClickHandler()
+On clicking the menu button, hide or show the CMS menu
+```js
   menuBtnClickHandler: function (e) {
     self.toggleMenu();
   },
 
-  // ### menuItemUpClickHandler()
-  // Moves a section up the page and moves the related menu item up the menu.
+```
+### menuItemUpClickHandler()
+Moves a section up the page and moves the related menu item up the menu.
+```js
   menuItemUpClickHandler: function (e) {
     var $this = $(this.parentNode),
         $prev = $($this).prev(),
@@ -213,8 +242,10 @@ module.exports = {
     }
   },
 
-  // ### menuItemDownClickHandler()
-  // Moves a section down the page and moves the related menu item down the menu.
+```
+### menuItemDownClickHandler()
+Moves a section down the page and moves the related menu item down the menu.
+```js
   menuItemDownClickHandler: function (e) {
     var $this = $(this.parentNode),
         $next = $($this).next(),
@@ -226,8 +257,10 @@ module.exports = {
     cms.sectionManager.reIndexSections();
   },
 
-  // ### menuItemDeleteClickHandler()
-  // Deletes the chosen section from the page and menu.
+```
+### menuItemDeleteClickHandler()
+Deletes the chosen section from the page and menu.
+```js
   menuItemDeleteClickHandler: function (e) {
     var $this = $(this.parentNode),
         index = $this.attr('id').replace('menu-item-', '');
@@ -238,56 +271,72 @@ module.exports = {
     cms.sectionManager.reIndexSections();
   },
 
-  // ### menuBtnSaveClickHandler()
-  // Process and save the contents of the current folder to a .tar.gz file. 
-  // This method is used to exprt the page created as a bundled, self-contained 
-  // archive file.
+```
+### menuBtnSaveClickHandler()
+Process and save the contents of the current folder to a .tar.gz file. 
+This method is used to exprt the page created as a bundled, self-contained 
+archive file.
+```js
   menuBtnSaveClickHandler: function (e) {
     cms.exportManager.savePage();
   },
 
-  // ### menuBtnPreviewClickHandler()
-  // Show the Preview Manager, which displays preview.html (or index.LANG.html) 
-  // in a resizable iframe.
+```
+### menuBtnPreviewClickHandler()
+Show the Preview Manager, which displays preview.html (or index.LANG.html) 
+in a resizable iframe.
+```js
   menuBtnPreviewClickHandler: function (e) {
     cms.previewManager.previewPage();
   },
 
-  // ### menuBtnAddSectionClickHandler()
-  // Show the Section Manager, which lets users add new sections to the page.
+```
+### menuBtnAddSectionClickHandler()
+Show the Section Manager, which lets users add new sections to the page.
+```js
   menuBtnAddSectionClickHandler: function (e) {
     cms.sectionManager.showUI();
   },
 
-  // ### menuBtnMetaClickHandler()
-  // Show the META Manager - lets users edit the meta info of the page.
+```
+### menuBtnMetaClickHandler()
+Show the META Manager - lets users edit the meta info of the page.
+```js
   menuBtnMetaClickHandler: function (e) {
     cms.metaManager.showUI();
   },
 
-  // ### menuBtnFilesClickHandler()
-  // show the file manager - lets users edit, rename, add, remove files from 
-  // the current directory.
+```
+### menuBtnFilesClickHandler()
+show the file manager - lets users edit, rename, add, remove files from 
+the current directory.
+```js
   menuBtnFilesClickHandler: function (e) {
     cms.fileManager.showUI();
   },
 
-  // ### menuBtnLogoutClickHandler()
-  // Will logout the user out and redirect them to the login page. They will 
-  // need to be logged in to edit the page.
+```
+### menuBtnLogoutClickHandler()
+Will logout the user out and redirect them to the login page. They will 
+need to be logged in to edit the page.
+```js
   menuBtnLogoutClickHandler: function (e) {
     window.location.href = cms.config.api.logout;
   },
 
-  // ### menuBtnTranslationsClickHandler()
-  // show the Translation Manager - where users can create translated versions 
-  // of their page.
+```
+### menuBtnTranslationsClickHandler()
+show the Translation Manager - where users can create translated versions 
+of their page.
+```js
   menuBtnTranslationsClickHandler: function () {
     cms.translationManager.showUI();
   },
 
-  // ### reIndexMenuItems()
-  // Fix the index numbers of the menu items (needed after moving items up or down)
+```
+### reIndexMenuItems()
+Fix the index numbers of the menu items (needed after moving items up or down)
+```js
   reIndexMenuItems: function (){
     $('.cms-menu-section-item').each(function(el, i){
       var $el = $(el);
@@ -296,8 +345,10 @@ module.exports = {
     });
   },
 
-  // ### toggleMenu()
-  // Hides or shows the CMS menu.
+```
+### toggleMenu()
+Hides or shows the CMS menu.
+```js
   toggleMenu: function(){
     if (self.$menu.hasClass('cms-ui-hidden')){
       self.showMenu();
@@ -306,9 +357,11 @@ module.exports = {
     }
   },
 
-  // ### showMenu()
-  // Save the page to localStorage, then update the menu contents, then 
-  // add the classes needed to show the menu.
+```
+### showMenu()
+Save the page to localStorage, then update the menu contents, then 
+add the classes needed to show the menu.
+```js
   showMenu: function(){
     cms.saveProgress();
     self.updateUI();
@@ -319,10 +372,12 @@ module.exports = {
     $('body').addClass('cms-noscroll');
   },
 
-  // ### updateUI()
-  // Get the latest menu HTML, remove event handlers from the existing menu 
-  // items, then replace the menu HTML then re-index them and, finally, 
-  // re-register the menu items with their event handlers.
+```
+### updateUI()
+Get the latest menu HTML, remove event handlers from the existing menu 
+items, then replace the menu HTML then re-index them and, finally, 
+re-register the menu items with their event handlers.
+```js
   updateUI: function () {
     var menu = this.getMenuHtml();
     self.setUIEventHandlersOff();
@@ -332,8 +387,10 @@ module.exports = {
     self.setUIEventHandlers();
   },
 
-  // ### hideMenu()
-  // Hides the CMS meu, saves the latest pag eHTML to localStorage.
+```
+### hideMenu()
+Hides the CMS meu, saves the latest pag eHTML to localStorage.
+```js
   hideMenu: function(){
     $('body').removeClass('cms-noscroll');
     self.$menu.addClass('cms-ui-hidden');
@@ -342,6 +399,12 @@ module.exports = {
     cms.saveProgress();
   },
 
-//  
-// End of module
+```
+
+End of module
+```js
 }
+```
+------------------------
+Generated _Thu Mar 23 2017 22:29:14 GMT+0000 (GMT)_ from [&#x24C8; ui.js](ui.js "View in source")
+

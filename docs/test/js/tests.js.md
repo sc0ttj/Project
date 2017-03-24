@@ -1,33 +1,43 @@
-//# Tests.js
+# Tests.js
 
-// This file returns the array "tests" as soon as it is required.
-// It is required by [test_runner.js](https://github.com/sc0ttj/Project/blob/master/src/test/js/test_runner.js)
+This file returns the array "tests" as soon as it is required.
+It is required by [test_runner.js](https://github.com/sc0ttj/Project/blob/master/src/test/js/test_runner.js)
 
-// define the module as a self executing func, 
-// so it runs as soon as it is required 
+We define the module as a self executing func, 
+so it runs as soon as it is required 
+```js
 module.exports = (function returnTests(){
 
-  // define the list of tests to return to test_runner
+```
+Now we define the list of tests to return to test_runner
+```js
   var tests = []; 
 
-    // #### test(name, cb)
-    // creates the list (array) of tests to return:
+```
 
-    // @param name - the name of the test       
-    // @param cb   - the test function to run
+## Methods
+
+#### test(name, cb)
+creates the list (array) of tests to return:
+
+@param `name` - the name of the test      
+@param `cb`   - the test function to run
+```js
     var test = function (name, cb) {
       tests.push({name: name, test: cb});
     };
 
-    // Use an alternative command
-    var describe = test;
+```
 
-    // #### assert(condition, message)
+#### assert(condition, message)
+```js
     /* Based on "World's smallest assertion library" by @snuggsi 
      * (https://twitter.com/snuggsi/status/565531862895169536)
      */
-    // @param condition - the code to execute and test        
-    // @param message   - the message to print on error
+```
+@param `condition` - the code to execute and test       
+@param `message`   - the message to print on error
+```js
     var assert = function (condition, message) {
       if (!condition) {
         console.error('   ✘ '+message);
@@ -41,19 +51,23 @@ module.exports = (function returnTests(){
       }
     };
     
-    // #### expect(message, condition)
-    // an alternative syntax for assert:
+```
+#### expect(message, condition)
+an alternative syntax for assert:
     
-    // @param condition - the code to execute and test          
-    // @param message   - the message to print on error
+@param `condition` - the code to execute and test       
+@param `message`   - the message to print on error
+```js
     var expect = function (message, condition) {
       assert(condition, message);
     };
 
 
-  // ## Create the tests
+```
+## Create the tests
 
-  // Make sure the page has the correct number of objects and classes on init
+Make sure the page has the correct number of objects and classes on init
+```js
   test('page has valid HTML', function(done){
     expect('page <head> count to be more than zero', $('head').length > 0);
     expect('page <body> count to be more than zero', $('body').length > 0);
@@ -62,14 +76,18 @@ module.exports = (function returnTests(){
   });
   
 
-  // Make sure the page has only 1 section on init
+```
+Make sure the page has only 1 section on init
+```js
   test('page has 1 section', function(done){
     expect('page to have 1 section', $('.section').length === 1);
     done();
   });
   
 
-  // Make sure the button for the CMS menu has loaded up and is visible
+```
+Make sure the button for the CMS menu has loaded up and is visible
+```js
   test('page has a CMS menu', function(done){
     expect('page to have 1 CMS menu button', $('.cms-menu-btn').length === 1);
     expect('CMS menu button to be visible', $('.cms-menu-btn').hasClass('cms-hidden') === false);
@@ -77,14 +95,18 @@ module.exports = (function returnTests(){
   });
   
 
-  // Make sure the CMS menu itself is hidden on page load
+```
+Make sure the CMS menu itself is hidden on page load
+```js
   test('the CMS menu is hidden', function(done){
     expect('CMS menu is hidden on page load', $('.cms-menu').hasClass('cms-ui-hidden') === true);
     done();
   });
   
 
-  // Click the menu button to show the menu
+```
+Click the menu button to show the menu
+```js
   test('show CMS menu', function(done){
     cms.ui.showMenu();
     expect('CMS menu to be visible', $('.cms-menu').hasClass('cms-ui-hidden') === false);
@@ -92,7 +114,9 @@ module.exports = (function returnTests(){
   });
   
 
-  // Click the button again to hide the menu
+```
+Click the button again to hide the menu
+```js
   test('hide CMS menu', function(done){
     cms.ui.hideMenu();
     expect('CMS menu to be hidden', $('.cms-menu').hasClass('cms-ui-hidden') === true);
@@ -101,7 +125,9 @@ module.exports = (function returnTests(){
 
   /*Logout test should go here ... need to mock the cms/api/ stuff in test dir */
 
-  // show the file manager using the CMS menu
+```
+show the file manager using the CMS menu
+```js
   test('show the file manager', function(done){
     cms.fileManager.showUI();
     expect('the File Manager header to be visible', $('.cms-modal-viewport').hasClass('cms-modal-file-manager') === true);
@@ -109,7 +135,9 @@ module.exports = (function returnTests(){
   });
   
 
-  // Check the meta manager pops up OK
+```
+Check the meta manager pops up OK
+```js
   test('show the META manager', function(done){
     cms.metaManager.showUI();
     expect('the META Manager header to be visible', $('.cms-meta-form')[0].length > 0);
@@ -117,7 +145,9 @@ module.exports = (function returnTests(){
   });
   
 
-  // Check the translation manager pops up OK
+```
+Check the translation manager pops up OK
+```js
   test('show the Translation manager', function(done){
     cms.translationManager.showUI();
     expect('the Translation manager heading to be visible', $('.cms-modal-header')[0].innerText == 'Manage Translations');
@@ -125,7 +155,9 @@ module.exports = (function returnTests(){
   });
   
 
-  // Check the preview manager pops up OK
+```
+Check the preview manager pops up OK
+```js
   test('show the Preview manager', function(done){
     cms.previewManager.showUI();
     expect('the Preview Manager header to be visible', $('.cms-modal-viewport').hasClass('cms-modal-viewport-previewer'));
@@ -133,7 +165,9 @@ module.exports = (function returnTests(){
   });
   
 
-  // Check the preview manager iframe window can be resized
+```
+Check the preview manager iframe window can be resized
+```js
   test('the preview window resizes to given dimensions', function(done){
     var oldHeight, height;
     cms.previewManager.showUI();
@@ -148,7 +182,9 @@ module.exports = (function returnTests(){
   });
   
 
-  // check the section manager pops up OK
+```
+check the section manager pops up OK
+```js
   test('the CMS shows the Section Manager', function(done){
     cms.sectionManager.showUI();
     assert($('.cms-modal-header')[0].innerText == 'Section Manager', 'the Section Manager should be visible');
@@ -156,7 +192,9 @@ module.exports = (function returnTests(){
   });
   
 
-  // add a section to the page
+```
+add a section to the page
+```js
   test('the CMS adds a section', function(done){
     cms.sectionManager.showUI();
     cms.sectionManager.getTemplateFromFile('_article-full-width.tmpl');
@@ -167,7 +205,9 @@ module.exports = (function returnTests(){
   });
   
 
-  // add an inline image and make sure it appears in the correct place
+```
+add an inline image and make sure it appears in the correct place
+```js
   test('the CMS adds an inline image', function(done){
     mediaBtnClickHandler($('.section2 p')[0]);
     expect('page added one inline-image', $('.section2 .inline-image').length === 1);
@@ -177,7 +217,9 @@ module.exports = (function returnTests(){
   });
   
 
-  // move a section up the page
+```
+move a section up the page
+```js
   test('the CMS moves a section up', function(done){
     $('.cms-menu-item-icon-up')[1].click();
     assert($('.section1 .article-full-width').length > 0, 'the CMS should move a section up');
@@ -185,7 +227,9 @@ module.exports = (function returnTests(){
   });
   
 
-  // move a section down the page
+```
+move a section down the page
+```js
   test('the CMS moves a section down', function(done){
     $('.cms-menu-item-icon-down')[0].click();
     assert($('.section2 .article-full-width').length > 0, 'the CMS should move a section down');
@@ -193,7 +237,9 @@ module.exports = (function returnTests(){
   });
   
 
-  // delete a section
+```
+delete a section
+```js
   test('the CMS deletes a section', function(done){
     $('.cms-menu-item-icon-delete')[1].click();
     assert($('body .article-full-width').length === 0, 'the CMS should delete a section');
@@ -201,7 +247,9 @@ module.exports = (function returnTests(){
   });
   
 
-  // check the image manager pops up OK
+```
+check the image manager pops up OK
+```js
   test('clicking images shows Image Manager', function(done){
     $('.hero-center picture')[0].click();
     assert($('.cms-modal-header')[0].innerText == 'Image Manager', 'images should be clickable and show Image Manager');
@@ -209,7 +257,9 @@ module.exports = (function returnTests(){
   });
   
 
-  // check the video manager pops up OK
+```
+check the video manager pops up OK
+```js
   test('clicking video shows Video Manager', function(done){
     cms.sectionManager.showUI();
     cms.sectionManager.getTemplateFromFile('_video-full-width.tmpl');
@@ -223,12 +273,16 @@ module.exports = (function returnTests(){
 
   /* add more tests here */
 
-  // we have our tests, return them to test_runner.js and exit this script
+```
+we have our tests, return them to test_runner.js and exit this script
+```js
   return tests;
 
   /* Examples tests below */
 
-  // Example tests, using assert()
+```
+Example tests, using assert()
+```js
   /* normal test */
   test('1+1 equals 2', function runTest(done) {
     assert(1+1 === 2, '1+1 should be 2');
@@ -242,7 +296,9 @@ module.exports = (function returnTests(){
     }, 400);
   });
 
-  // Example tests, using expect()
+```
+Example tests, using expect()
+```js
   /* normal test */
   test('1+1 = 2', function runTest(done) {
     expect('1+1 to equal 2', 1+1 === 2);
@@ -258,3 +314,7 @@ module.exports = (function returnTests(){
 
 
 })();
+```
+------------------------
+Generated _Mon Mar 20 2017 18:57:57 GMT+0000 (GMT)_ from [&#x24C8; tests.js](tests.js "View in source")
+

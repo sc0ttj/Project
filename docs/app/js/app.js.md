@@ -1,28 +1,29 @@
-//#app.js
-//The main app file    
-//This file is included in [index.tmpl](https://github.com/sc0ttj/Project/blob/master/src/app/templates/index.tmpl)   
-//This file will do the following:
-//- include module loading deps
-//- add html5 and JS classes to page body, if those features detected
-//- initiliase the scrollMonitor (for animations, tracking)
-//- initialise the template JS behaviours (scroll anims, video auto-pause etc)
+# app.js
+The main app file    
+This file is included in [index.tmpl](https://github.com/sc0ttj/Project/blob/master/src/app/templates/index.tmpl)   
+This file will do the following:
+- include module loading deps
+- add html5 and JS classes to page body, if those features detected
+- initiliase the scrollMonitor (for animations, tracking)
+- initialise the template JS behaviours (scroll anims, video auto-pause etc)
 
-// Let's begin:
+Let's begin:
 
-// Include our dependencies
+Include our dependencies
+```js
 var loadCSS    = require('modules/loadcss').init;
 var loadJS     = require('modules/loadjs');
 var pageConfig = require('page_config.js');
 
 "use strict";
 
-module.exports = {
+```
+## Methods
 
-  //## Methods
-
-  //####init()
-  //This func is executed in index.html (the main page) 
-  //as soon as the page loads.
+#### init()
+This func is executed in index.html (the main page) 
+as soon as the page loads.
+```js
   init: function(){
     /* set page defaults */
     this.pageConfig = pageConfig;
@@ -40,8 +41,10 @@ module.exports = {
     }
   },
 
-  //####reload()
-  //This func is called by the CMS after adding/removing a section.
+```
+#### reload()
+This func is called by the CMS after adding/removing a section.
+```js
   reload: function () {
     this.fixedImage.init();
     this.scrollmation.init();
@@ -51,9 +54,11 @@ module.exports = {
     scrollMonitor.recalculateLocations();
   },
 
-  //####cutsTheMustard()
-  // Checks if the users browser is up to scratch,
-  // returns either true or false
+```
+#### cutsTheMustard()
+Checks if the users browser is up to scratch,
+returns either true or false
+```js
   cutsTheMustard: function () {
     var cutsTheMustard = (
       'querySelector' in document
@@ -62,18 +67,22 @@ module.exports = {
     return cutsTheMustard;
   },
 
-  //####loadStylesheet()
-  //This func is used to load stylesheets dynamically  
-  //@param `file` - the relative path to the css file to load
+```
+#### loadStylesheet()
+This func is used to load stylesheets dynamically  
+@param `file` - the relative path to the css file to load
+```js
   loadStylesheet: function (file) {
     loadCSS(file);
   },
 
-  //####loadModules()
-  //This func takes an array of module names. The names must match 
-  //modules in [src/app/js/enhancements/](https://github.com/sc0ttj/Project/tree/master/src/app/js/_enhancements)   
-  //NOTE: This func is disabled, to enable it, you need to remove the underscore from `_enhancements`   
-  //@param `modules` - the array of module names to load
+```
+#### loadModules()
+This func takes an array of module names. The names must match 
+modules in [src/app/js/enhancements/](https://github.com/sc0ttj/Project/tree/master/src/app/js/_enhancements)   
+NOTE: This func is disabled, to enable it, you need to remove the underscore from `_enhancements`   
+@param `modules` - the array of module names to load
+```js
   loadModules: function (modules) {
     loadJS('js/enhancements.js', function(){
       modules.forEach(function(val, i){
@@ -82,7 +91,9 @@ module.exports = {
     });
   },
 
-  //####getQueryVariable()
+```
+#### getQueryVariable()
+```js
   /*https://css-tricks.com/snippets/javascript/get-url-variables/ */
   getQueryVariable: function (variable) {
     var query = window.location.search.substring(1);
@@ -94,14 +105,16 @@ module.exports = {
     return(false);
   },
 
-  //## Template Objects
-  //For each template that uses JS, create an object with an init() method:
+```
+## Template Objects
+For each template that uses JS, create an object with an init() method:
 
-  //###Fixed Image Object
-  //#### Methods:
-  //- init()
-  fixedImage: {
-    //####fixedImage::init()
+### Fixed Image Object
+####  Methods:
+- init()
+  
+#### fixedImage::init()
+```js
     init: function() {
       var fixedImages = $('.fixed-image-text:not(.transparent)');
       fixedImages.addClass('anim-fade-1s transparent');
@@ -120,11 +133,13 @@ module.exports = {
     },
   },
 
-  //###Scrollmation Object
-  //#### Methods:
-  //- init()
-  scrollmation: {
-    //####scrollmation::init()
+```
+### Scrollmation Object
+####  Methods:
+- init()
+  
+#### scrollmation::init()
+```js
     init : function (){
       $('.scrollmation-text').removeClass('article');
       $('.scrollmation-text:not(.scrollmation-text-js)').addClass('scrollmation-text-js');
@@ -178,11 +193,13 @@ module.exports = {
     },
   },
 
-  //###statText Object
-  //#### Methods:
-  //- init()
-  statText: {
-    //####statText::init()
+```
+### statText Object
+####  Methods:
+- init()
+  
+#### statText::init()
+```js
     init: function() {
       var statTexts = $('.stat-text:not(.transparent)');
       statTexts.addClass('anim-fade-1s transparent');
@@ -201,13 +218,15 @@ module.exports = {
     },
   },
 
-  //###Video Object
-  //#### Methods:
-  //- init()
-  //- setupVideoEvents()
-  //- setupVideoBtnEvents()
-  video: {
-    //####video::init()
+```
+### Video Object
+####  Methods:
+- init()
+- setupVideoEvents()
+- setupVideoBtnEvents()
+  
+#### video::init()
+```js
     init: function(){
       var $videos = $('video'),
           $videoBtns = $('.video-overlay-button');
@@ -231,7 +250,9 @@ module.exports = {
 
     },
 
-    //####video::setupVideoEvents()
+```
+#### video::setupVideoEvents()
+```js
     setupVideoEvents: function (videoElem, i) {
       var videoOverlay = videoElem.nextElementSibling,
           overlayBtn   = videoOverlay.firstChild.nextSibling;
@@ -250,7 +271,9 @@ module.exports = {
       });
     },
 
-    //####video::setupVideoBtnEvents()
+```
+#### video::setupVideoBtnEvents()
+```js
     setupVideoBtnEvents: function(btn, i){
       var videoBtnClickHandler = function(){
         var video = this.parentNode.previousElementSibling,
@@ -284,3 +307,7 @@ module.exports = {
   },
 
 }
+```
+------------------------
+Generated _Mon Mar 20 2017 20:10:27 GMT+0000 (GMT)_ from [&#x24C8; app.js](app.js "View in source")
+
