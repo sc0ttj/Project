@@ -16,7 +16,7 @@ module.exports = {
 
   // ## Default Config
   // This JSON object defines the classes, containers, elements and server side URLs that the CMS should look for.  
-  // The values in this config match values defined in the [app templates](https://github.com/sc0ttj/Project/tree/jdi/src/app/templates)
+  // The values in this config match values defined in the [app templates](https://github.com/sc0ttj/Project/tree/master/src/app/templates)
   config: {
     
     /* localStorage is used to make CMS page changes persistent,
@@ -25,7 +25,7 @@ module.exports = {
     'localStorage' : true,
     
     /* The list of template files to make available in the Section Manager.  
-     * These files are in https://github.com/sc0ttj/Project/tree/jdi/src/app/templates
+     * These files are in https://github.com/sc0ttj/Project/tree/master/src/app/templates
      */
     'templates' : [ 
       '_hero-center.tmpl',

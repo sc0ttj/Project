@@ -3,7 +3,7 @@ This module creates a popup modal dialog, with a list of page sections.
 The user clicks on a section in the Section Manager to add it to the page, 
 as a new section.
 
-The 'templates' option in the [CMS config](https://github.com/sc0ttj/Project/blob/jdi/docs/cms/js/cms.js.md) defines which templates/sections are available to add.
+The 'templates' option in the [CMS config](https://github.com/sc0ttj/Project/blob/master/docs/cms/js/cms.js.md) defines which templates/sections are available to add.
 
 
 Let's start - first, we get our dependencies.

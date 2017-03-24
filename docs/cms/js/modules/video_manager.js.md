@@ -6,7 +6,7 @@ button below the source file you want to change, and choose a new file.
 
 
 Clickable videos are the ones the CMS can find using the `videoSelector` 
-option in the [CMS config](https://github.com/sc0ttj/Project/blob/jdi/src/cms/js/cms.js#L20-L102).
+option in the [CMS config](https://github.com/sc0ttj/Project/blob/master/src/cms/js/cms.js#L20-L102).
 
 Users can then upload and replace any videos that they have clicked in the page.
 
