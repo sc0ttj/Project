@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# This file will setup the developer environment on Ubuntu machines.
+# It will install the following (if not already installed):
+# - Sublime
+# - Vagrant
+# - VirtualBox
+# - Chrome
+# - Git
+# - Ruby
+# - Bundler
+# - NodeJS
+# - NPM
+# - Ruby
+
+
+
 set -a
 
 BOLD="\e[1m"
@@ -151,13 +166,17 @@ source ~/.bashrc
 # global npm packages
 if [ "`which npm`" != "" ] ;then
 	npm config set loglevel warn
-	# [ "`which eslint`" = "" ] 		&& npm install -g eslint
-	# [ "`which csslint`" = "" ] 		&& npm install -g csslint
-	# [ "`which phantomjs`" = "" ] 	&& npm install -g phantomjs
+	# [ "`which eslint`" = "" ] 	&& npm install -g eslint
+	# [ "`which csslint`" = "" ] 	&& npm install -g csslint
+	[ "`which brunch`" = "" ] 		&& npm install -g brunch@2.9.1
+	[ "`which phantomjs`" = "" ] 	&& npm install -g phantomjs
+	[ "`which jdi`" = "" ] 				&& npm install -g jdi
 fi
 # ESLINT_VERSION=$(eslint --version)
 # CSSLINT_VERSION=$(csslint --version)
-# PHANTOMJS_VERSION=$(phantomjs --version)
+BRUNCH_VERSION=$(brunch --version)
+PHANTOMJS_VERSION=$(phantomjs --version)
+JDI_VERSION=$(jdi --version)
 
 
 # final output
@@ -174,7 +193,9 @@ echo "    NodeJS $NODEJS_VERSION"
 echo "    NPM $NPM_VERSION"
 # echo "    ESLint $ESLINT_VERSION"
 # echo "    CSSLint $CSSLINT_VERSION"
-# echo "    PhantomJS $PHANTOMJS_VERSION"
+echo "    Brunch $BRUNCH_VERSION"
+echo "    PhantomJS $PHANTOMJS_VERSION"
+echo "    JDI $JDI_VERSION"
 echo
 
 
@@ -242,7 +263,7 @@ Setup Complete $COL_END
 
 From now on, you can just run:
 
-    ${YELLOW}cd $WORKDIR && vagrant up 
+    ${YELLOW}cd $WORKDIR && vagrant up --provision
     brunch watch $COL_END
 
 (Use Ctrl-C to kill brunch watch)
