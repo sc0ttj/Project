@@ -31,6 +31,7 @@ This is the developer documentation for this project. Here you will find the cod
     * [translation_manager.js](https://github.com/sc0ttj/Project/blob/jdi/docs/cms/js/modules/translation_manager.js.md)
     * [ui.js](https://github.com/sc0ttj/Project/blob/jdi/docs/cms/js/modules/ui.js.md)
     * [video_manager.js](https://github.com/sc0ttj/Project/blob/jdi/docs/cms/js/modules/video_manager.js.md)
+    * [vocab_editor.js](https://github.com/sc0ttj/Project/blob/jdi/docs/cms/js/modules/vocab_editor.js.md)
 
 ### Test Suite
 

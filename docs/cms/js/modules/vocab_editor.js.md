@@ -1,39 +1,48 @@
-// # vocab_editor.js
+# vocab_editor.js
 
-// This module provides a form that allows users to create and edit vocab files, 
-// as well as translating HTML using the vocab files available. 
-// The vocab files created/updated are in the `vocabs` directory.  
+This module provides a form that allows users to create and edit vocab files, 
+as well as translating HTML using the vocab files available. 
+The vocab files created/updated are in the `vocabs` directory.  
 
-// This module to creates, edits and get values from the vocab files, 
-// so it can build its UI, and the translated page(s).
+This module to creates, edits and get values from the vocab files, 
+so it can build its UI, and the translated page(s).
 
-// Vocab files are named after the 2 letter language code they are 
-// associated with.  
-//Examples: French will be `fr.json`, Arabic is `ar.json`.  
+Vocab files are named after the 2 letter language code they are 
+associated with.  
+Examples: French will be `fr.json`, Arabic is `ar.json`.  
 
-// The vocab files are JSON files which contain the text values of the 
-// page being edited, as a JSON object.
+The vocab files are JSON files which contain the text values of the 
+page being edited, as a JSON object.
 
 
-// ## Begin script
+## Begin script
 
-// Get our dependencies
+Get our dependencies
+```js
 var $ = require('cash-dom'); // jquery alternative
 
-// Set a persistent self reference for this module
+```
+Set a persistent self reference for this module
+```js
 var self;
 
-// Use strict setting
+```
+Use strict setting
+```js
 "use strict";
 
-// Define the CommonJS module
+```
+Define the CommonJS module
+```js
 module.exports = {
 
-  // ## Module Methods
+```
+## Module Methods
 
-  // ### init()
-  // Disable editable content on the main page, then check if we 
-  // should load the vocab editor, and if so, load it.
+### init()
+Disable editable content on the main page, then check if we 
+should load the vocab editor, and if so, load it.
+```js
   init: function(){
     self = cms.vocabEditor;
     $('[contenteditable]').attr('contenteditable', false);
@@ -41,9 +50,11 @@ module.exports = {
     return true // if we loaded ok
   },
 
-  // ### shouldShowUI()
-  // If `?translate=LANG` is present in the current URL, then show 
-  // the Vocab Editor. (LANG must be a valid 2 letter ISO language code).
+```
+### shouldShowUI()
+If `?translate=LANG` is present in the current URL, then show 
+the Vocab Editor. (LANG must be a valid 2 letter ISO language code).
+```js
   shouldShowUI: function () {
     var lang      = self.getCurrentService(),
         langInfo  = cms.getLangInfo(lang),
@@ -53,8 +64,10 @@ module.exports = {
     return false;
   },
 
-  // ### showUI()
-  // shows the vocab editor UI.
+```
+### showUI()
+shows the vocab editor UI.
+```js
   showUI: function (){
     /* the funcs below will:
      * - get preview page html,
@@ -64,21 +77,25 @@ module.exports = {
     self.getPreviewPageHtml(self.getEnVocabFromPreview);
   },
 
-  // ### getCurrentService()
-  // Check the current URL, getthe translate param from the query string, 
-  // the CMS settings or the page HTML.
-  //  
-  // @return `service` - string, a 2 letter country code (A.K.A the name of the service)  
+```
+### getCurrentService()
+Check the current URL, getthe translate param from the query string, 
+the CMS settings or the page HTML.
+
+@return `service` - string, a 2 letter country code (A.K.A the name of the service)  
+```js
   getCurrentService: function () {
     var service = self.getQueryVariable('translate') || self.getQueryVariable('preview') || cms.lang.code || $('html').attr('lang');
     return service;
   },
 
-  // ### getPreviewPageHtml()
-  // Get the page HTML as a string from the preview.html file
-  //  
-  // @param `callback` - the function to execute after success, 
-  // it will get the page HTML as param `html`  
+```
+### getPreviewPageHtml()
+Get the page HTML as a string from the preview.html file
+
+@param `callback` - the function to execute after success, 
+it will get the page HTML as param `html`  
+```js
   getPreviewPageHtml: function (callback) {
     var lang = self.getCurrentService();
 
@@ -96,11 +113,13 @@ module.exports = {
     cms.ajax.send(null);
   },
 
-  // ### getEnVocabFromPreview()
-  // Create the default/english vocab file (called `pageVocab`) from 
-  // the given HTML string.
-  //  
-  // @param `html` - string, the HTML from which we will build the vocab file
+```
+### getEnVocabFromPreview()
+Create the default/english vocab file (called `pageVocab`) from 
+the given HTML string.
+
+@param `html` - string, the HTML from which we will build the vocab file
+```js
   getEnVocabFromPreview: function (html){
     /* create an empty vocab file and get html to build it from */
     var lang      = self.getCurrentService(),
@@ -185,13 +204,15 @@ module.exports = {
 
   },
 
-  // ### getVocabFileContents()
-  // Read the vocab JSON fro ma JSON file, the vocab checked will be the 
-  // one that matches the current language/service.
-  //  
-  // @param `callback` - the function to run after attempting to 
-  // get the contents of the vocab file  
-  // @return `responseText` - string, the vocab JSON as a string  
+```
+### getVocabFileContents()
+Read the vocab JSON fro ma JSON file, the vocab checked will be the 
+one that matches the current language/service.
+
+@param `callback` - the function to run after attempting to 
+get the contents of the vocab file  
+@return `responseText` - string, the vocab JSON as a string  
+```js
   getVocabFileContents: function (callback) {
     
     /* get the current language */
@@ -220,8 +241,10 @@ module.exports = {
     cms.ajax.send(null);
   },
 
-  // ### buildTranslatorUI()
-  // Create a modal dialog containing a form for editing vocab files.
+```
+### buildTranslatorUI()
+Create a modal dialog containing a form for editing vocab files.
+```js
   buildTranslatorUI: function () {
     /* get the current language, and build our form HTML */
     var lang      = self.getCurrentService(),
@@ -242,11 +265,13 @@ module.exports = {
     self.addEventHandlers();
   },
 
-  // ### createNewVocab()
-  // Create an empty vocab object, contaning only the given language.
-  //  
-  // @param `lang` - string, a 2 letter ISO language code (see [languages.js](https://github.com/sc0ttj/Project/blob/master/src/cms/js/modules/languages.js))   
-  // @return `vocab` - object, the new vocab object  
+```
+### createNewVocab()
+Create an empty vocab object, contaning only the given language.
+
+@param `lang` - string, a 2 letter ISO language code (see [languages.js](https://github.com/sc0ttj/Project/blob/master/src/cms/js/modules/languages.js))   
+@return `vocab` - object, the new vocab object  
+```js
   createNewVocab: function (lang) {
     var vocab = {};
     vocab['html'] = [ { 'lang': lang } ];
@@ -254,11 +279,13 @@ module.exports = {
     return vocab;
   },
 
-  // ### createVocabEditorForm()
-  // Create the form used to edit the contents of the current 
-  // vocab file. The form HTML will be returned.
-  //  
-  // @return `form` - string, the form HTML  
+```
+### createVocabEditorForm()
+Create the form used to edit the contents of the current 
+vocab file. The form HTML will be returned.
+
+@return `form` - string, the form HTML  
+```js
   createVocabEditorForm: function () {
     var lang      = self.getCurrentService(),
         form      = '<form class="cms-vocab-form" data-lang="'+lang+'" action="'+cms.config.api.upload+'" method="post">\n',
@@ -272,11 +299,13 @@ module.exports = {
     return form;
   },
 
-  // ### createVocabEditorFormFields()
-  // Get the contents of the vocab file for the current language, and 
-  // for each item in the vocab, build the vocab editor form fields HTML.
-  //  
-  // return `form` - string, the form fields HTML  
+```
+### createVocabEditorFormFields()
+Get the contents of the vocab file for the current language, and 
+for each item in the vocab, build the vocab editor form fields HTML.
+
+return `form` - string, the form fields HTML  
+```js
   createVocabEditorFormFields: function (){
     var lang      = self.getCurrentService(),
         langInfo  = cms.getLangInfo(lang),
@@ -334,8 +363,10 @@ module.exports = {
     return form;
   },
 
-  // ### addEventHandlers()
-  // Add the event handlers to the form inputs and textareas.
+```
+### addEventHandlers()
+Add the event handlers to the form inputs and textareas.
+```js
   addEventHandlers: function () {
     $('.cms-modal-viewport .cms-vocab-form').find('textarea').each (function setTextareaHeights(){
       /* auto grow the textareas based on content */
@@ -377,13 +408,15 @@ module.exports = {
     });
   },
 
-  // ### uploadVocab()
-  // Get the translations in the Vocab Editor form (right hand side of the UI), 
-  // create a vocab from those values, then upload as a new vocab file (or 
-  // update a vocab file if it already exists for that language).
-  //  
-  // @param `e` - the upload event, we cancel it in this method to prevent 
-  // a redirect, and we use AJAX instead  
+```
+### uploadVocab()
+Get the translations in the Vocab Editor form (right hand side of the UI), 
+create a vocab from those values, then upload as a new vocab file (or 
+update a vocab file if it already exists for that language).
+
+@param `e` - the upload event, we cancel it in this method to prevent 
+a redirect, and we use AJAX instead  
+```js
   uploadVocab: function (e) {
     var lang          = self.getCurrentService(),
         vocab         = self.getFormVocab(),
@@ -416,9 +449,11 @@ module.exports = {
     cms.ajax.send(formData);
   },
 
-  // ### getFormVocab()
-  // Get the contents of the Vocab Editor form, and convert it to a vocab file 
-  // (in the form of a string, which can be converted to a JSON object later).
+```
+### getFormVocab()
+Get the contents of the Vocab Editor form, and convert it to a vocab file 
+(in the form of a string, which can be converted to a JSON object later).
+```js
   getFormVocab: function() {
     var vocabString = '{ ',
         prevSection;
@@ -472,23 +507,29 @@ module.exports = {
     return vocabString;
    },
 
-  // ### createVocabFile()
-  // Create a vocab file from a JSON object
+```
+### createVocabFile()
+Create a vocab file from a JSON object
+```js
   createVocabFile: function (vocabJSON) {
     return new Blob([vocabJSON], {type: 'text/plain'});
   },
 
-  // ### getVocabAsJSON()
+```
+### getVocabAsJSON()
+```js
   getVocabAsJSON: function (vocab) {
     return JSON.stringify(vocab, undefined, 2);
   },
     
-  // ### downloadVocabAsFile()
-  // Takes JSON as the file contents, and a file name, and 
-  // forces the browser to offer the file as a download.
-  //  
-  // @param `vocabJSON` - the JSON to put into the file   
-  // @param `filename` - the filename to use for the file created  
+```
+### downloadVocabAsFile()
+Takes JSON as the file contents, and a file name, and 
+forces the browser to offer the file as a download.
+
+@param `vocabJSON` - the JSON to put into the file   
+@param `filename` - the filename to use for the file created  
+```js
   downloadVocabAsFile: function (vocabJSON, filename) {
     /* http://stackoverflow.com/a/18197511 */
     var a = document.createElement('a');
@@ -498,10 +539,12 @@ module.exports = {
     a.click();
   },
 
-  // ### getQueryVariable(0
-  // Gets variable values from a query string
-  //  
-  // @param `variable` - the var to get the value of
+```
+### getQueryVariable(0
+Gets variable values from a query string
+
+@param `variable` - the var to get the value of
+```js
   getQueryVariable: function (variable) {
     /* https://css-tricks.com/snippets/javascript/get-url-variables/ */
     var query = window.location.search.substring(1);
@@ -513,10 +556,12 @@ module.exports = {
     return(false);
   },
 
-  // ### translatePage()
-  // Translates `preview.html`, using the vocab file for the current 
-  // language, then sends the new, translated HTML to the CMS export 
-  // module, to be saved as `index.LANG.html`.
+```
+### translatePage()
+Translates `preview.html`, using the vocab file for the current 
+language, then sends the new, translated HTML to the CMS export 
+module, to be saved as `index.LANG.html`.
+```js
   translatePage: function(){
     
     /* define our vars */
@@ -649,6 +694,12 @@ module.exports = {
 
   }
 
-//  
-// End of module
+```
+
+End of module
+```js
 }
+```
+------------------------
+Generated _Fri Mar 24 2017 17:57:09 GMT+0000 (GMT)_ from [&#x24C8; vocab_editor.js](vocab_editor.js "View in source")
+
