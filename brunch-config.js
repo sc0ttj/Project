@@ -202,48 +202,52 @@ exports.config = {
   },
 
   /* run extra tasks on pre-compile and post-compile .. see http://brunch.io/docs/config#-hooks-*/
-  // hooks: {
-  //   preCompile() {
-  //     console.log("About to compile...");
-  //     return Promise.resolve();
-  //   },
-  //   onCompile(files, assets) {
-  //     console.log("Compiled... Now processing..");
-  //     // list files generated from the build
-  //     console.log(files.map(f => f.path));
-  //   },
-  // },
+  /*
+   *hooks: {
+   *  preCompile() {
+   *    console.log("About to compile...");
+   *    return Promise.resolve();
+   *  },
+   *  onCompile(files, assets) {
+   *    console.log("Compiled... Now processing..");
+   *    // list files generated from the build 
+   *    console.log(files.map(f => f.path));
+   *  },
+   *},
+  */
 
    /* override brunch environment conventions/defaults */
   overrides: {
     /* build page without CMS (usage on command line: `brunch build --env nocms`) */
-    // nocms: {
-    //   paths: {
-    //     'public': 'www',
-    //     'watched': ['src/app']
-    //   },
-    //   conventions: {
-    //     assets: [
-    //       /^src\/app\/assets[\\/]/
-    //     ],
-    //   },
-    //   files: {
-    //     javascripts: {
-    //       joinTo: {
-    //         'js/app.js': /^src\/app\/js/,
-    //         'js/vendor.js': [ 
-    //           /^bower_components/,
-    //           /^src\/app\/vendor/,
-    //         ],
-    //         'test/js/test.js': /^test(\/|\\)(?!vendor)/,
-    //         'test/js/test-vendor.js': /^test(\/|\\)(?=vendor)/
-    //       },
-    //       order: {
-    //         before: []
-    //       }
-    //     },
-    //   }
-    // },
+    /*
+     *nocms: {
+     *  paths: {
+     *    'public': 'www',
+     *    'watched': ['src/app']
+     *  },
+     *  conventions: {
+     *    assets: [
+     *      /^src\/app\/assets[\\/]/
+     *    ],
+     *  },
+     *  files: {
+     *    javascripts: {
+     *      joinTo: {
+     *        'js/app.js': /^src\/app\/js/,
+     *        'js/vendor.js': [ 
+     *          /^bower_components/,
+     *          /^src\/app\/vendor/,
+     *        ],
+     *        'test/js/test.js': /^test(\/|\\)(?!vendor)/,
+     *        'test/js/test-vendor.js': /^test(\/|\\)(?=vendor)/
+     *      },
+     *      order: {
+     *        before: []
+     *      }
+     *    },
+     *  }
+     *},
+     */
   },
 
 };
