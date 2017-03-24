@@ -1,12 +1,15 @@
 # brunch_config.js
-See [brunch.io](http://brunch.io/docs/config) for more info
+This file is read by `brunch`, each time a brunch build command 
+is executed on the command line.
 
+See [Using the build tool](https://github.com/sc0ttj/Project/wiki/Using-the-build-tool) in the Wiki, for the available 
+`brunch` commands and which ones to use.  
+
+Also see [brunch.io](http://brunch.io/docs/config) for more info
 ```js
 /*
 
-This config can use the following ways to match files/dirs etc..
-
-Examples:
+This config can use the following ways to match files/dirs etc.. Examples:
 
 - regular expressions:           /\.js$/,
 - strings with glob wildcards:   'path/to/*.css',
@@ -25,6 +28,8 @@ https://github.com/brunch/brunch/blob/master/lib/utils/config-validate.js
 */
 
 ```
+## Custom setup
+
 Get json data about the default page to be built, used later to compile html from templates
 ```js
 var pageConfig = require('./src/app/js/page_config.js');
@@ -51,10 +56,9 @@ So lets get the vars now and setup anything we need to
 
 
 ```
-## config starts below
+## Config starts below
 ```js
 exports.config = {
-
   /* paths defines the src and output dirs */
   paths: {
     /* the dir to build our src code to */
@@ -93,6 +97,12 @@ exports.config = {
   /* enable full npm support in brunch */
   npm: { 
     enabled: true,
+    /* get the css of installed npm modules */
+    /*
+     * styles: {
+     *   leaflet: ['dist/leaflet.css']
+     * }
+     */
   },
 
   /* the hmtl, css, js files to combine, minify, etc  */
@@ -101,6 +111,8 @@ exports.config = {
       joinTo: {
         /* combine js files to 'js/app.js' */
         'js/app.js': /^src\/app\/js/,
+        /* combine js files to 'js/enhancements.js' */
+        /* 'js/enhancements.js': /^src\/app\/js\/enhancements/, */
         /* combine js files to 'js/vendor.js' */
         'js/vendor.js': [ 
           /^src\/app\/vendor/,
@@ -196,8 +208,57 @@ exports.config = {
     ],
   },
 
+  /* run extra tasks on pre-compile and post-compile .. see http://brunch.io/docs/config#-hooks-*/
+```
+hooks: {
+preCompile() {
+console.log("About to compile...");
+return Promise.resolve();
+},
+onCompile(files, assets) {
+console.log("Compiled... Now processing..");
+// list files generated from the build
+console.log(files.map(f => f.path));
+},
+},
+
+```js
+   /* override brunch environment conventions/defaults */
+  overrides: {
+    /* build page without CMS (usage on command line: `brunch build --env nocms`) */
+```
+nocms: {
+paths: {
+'public': 'www',
+'watched': ['src/app']
+},
+conventions: {
+assets: [
+/^src\/app\/assets[\\/]/
+],
+},
+files: {
+javascripts: {
+joinTo: {
+'js/app.js': /^src\/app\/js/,
+'js/vendor.js': [ 
+/^bower_components/,
+/^src\/app\/vendor/,
+],
+'test/js/test.js': /^test(\/|\\)(?!vendor)/,
+'test/js/test-vendor.js': /^test(\/|\\)(?=vendor)/
+},
+order: {
+before: []
+}
+},
+}
+},
+```js
+  },
+
 };
 ```
 ------------------------
-Generated _Thu Mar 23 2017 01:06:40 GMT+0000 (GMT)_ from [&#x24C8; brunch-config.js](brunch-config.js "View in source")
+Generated _Fri Mar 24 2017 02:33:36 GMT+0000 (GMT)_ from [&#x24C8; brunch-config.js](brunch-config.js "View in source")
 

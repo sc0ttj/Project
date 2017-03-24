@@ -349,8 +349,11 @@ Returns an HTML string of a form with an upload button (input type file).
     return uploadBtn;
   },
 
-}
+```
 
+End of module
+```js
+}
 ```
 ------------------------
 Generated _Fri Mar 24 2017 01:42:11 GMT+0000 (GMT)_ from [&#x24C8; image_manager.js](image_manager.js "View in source")

@@ -458,8 +458,11 @@ input of type 'file'.
     return uploadBtn;
   },
 
-}
+```
 
+End of module
+```js
+}
 ```
 ------------------------
 Generated _Fri Mar 24 2017 01:42:12 GMT+0000 (GMT)_ from [&#x24C8; video_manager.js](video_manager.js "View in source")

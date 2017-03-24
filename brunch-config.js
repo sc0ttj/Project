@@ -1,5 +1,11 @@
 // # brunch_config.js
-// See [brunch.io](http://brunch.io/docs/config) for more info
+// This file is read by `brunch`, each time a brunch build command 
+// is executed on the command line.
+
+// See [Using the build tool](https://github.com/sc0ttj/Project/wiki/Using-the-build-tool) in the Wiki, for the available 
+// `brunch` commands and which ones to use.  
+
+// Also see [brunch.io](http://brunch.io/docs/config) for more info
 /*
 
 This config can use the following ways to match files/dirs etc.. Examples:
@@ -19,6 +25,8 @@ Defaults for Brunch config found in source:
 https://github.com/brunch/brunch/blob/master/lib/utils/config-validate.js
 
 */
+
+// ## Custom setup
 
 // Get json data about the default page to be built, used later to compile html from templates
 var pageConfig = require('./src/app/js/page_config.js');
@@ -42,7 +50,7 @@ var pageConfig = require('./src/app/js/page_config.js');
 
 
 
-// ## config starts below
+// ## Config starts below
 exports.config = {
   /* paths defines the src and output dirs */
   paths: {

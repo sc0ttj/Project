@@ -316,4 +316,6 @@ module.exports = {
     return uploadBtn;
   },
 
+// End of module
 }
+
