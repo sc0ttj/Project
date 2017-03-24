@@ -1,8 +1,8 @@
 # image_manager.js
-This CMS module allows users to click images to load up an Image Manager. 
-Users can replace any images shown in the image manager by clicking an upload 
-button and choosing a new image.
 
+This CMS module loads up an Image Manager when a user clicks on an image in the page (index.html). 
+Users can replace images using the image manager - click the upload 
+button below the source file you want to change, and choose a new file.
 
 Clickable images are the ones the CMS can find using the `responsiveImageSelector` 
 option in the [CMS config](https://github.com/sc0ttj/Project/blob/jdi/src/cms/js/cms.js#L20-L102).
@@ -14,10 +14,30 @@ The images in the page may be responsive images
 for examples), and in this case, the Image Manager will show all source 
 images, and each can be replaced with a new uploaded image.
 
+## Begin script
+
 Get our JS dependencies
 ```js
 var $ = require('cash-dom');  /* jQuery alternative */
+
 ```
+Create a persistent self reference to use across all module mthods
+```js
+var self;
+
+```
+Use strict setting
+```js
+"use strict";
+
+```
+Define othe CommonJS module
+```js
+module.exports = {
+
+```
+## Module Methods
+
 ### init()
 Makes this module available globally as cms.fileManager,  
 then adds click handlers to all images the CMS can find
@@ -29,7 +49,7 @@ then adds click handlers to all images the CMS can find
 
 ```
 ### addResponsiveImageClickHandlers()
-
+Get all images on the page and assign a function to execute when they're clicked.
 ```js
   addResponsiveImageClickHandlers: function () {
     var $imgs = $(cms.config.responsiveImageSelector);
@@ -42,6 +62,10 @@ then adds click handlers to all images the CMS can find
 
 ```
 ### onImageClickHandler(e)
+Get the source files for the clicked iamge, create form fields from those 
+source files, then pass those form fields to the `showUI()` function.  
+This is the function that is assigned to images on the page. 
+This function is executed when images are clicked.
 
 @param `e` - the event
 ```js
@@ -65,7 +89,7 @@ then adds click handlers to all images the CMS can find
 ### getImgSourceElems(img)
 
 @param `img` - the image HTML object that was clicked  
-@return `HTML Collection` - a jQuery collection of the images 'src' elem(s)
+@return `imgSourceElems` - an HTML Collection of the images 'src' elem(s)
 ```js
   getImgSourceElems: function (img) {
     var imgSourceElems = $(img).children('source, img');
@@ -102,6 +126,8 @@ in the Image Manager.
 
 ```
 ### showUI(previewImages)
+Create the Image Manager modal popup contents, then show the modal, 
+and add the event handler functions to the upload buttons.
 
 @param `previewImages` - array of image HTML strings  
 ```js
@@ -182,12 +208,16 @@ Assign an `onchange` event to the given button, which will:
 ```
 ### updateUploadBtns(btn, btns)
 Add progress info to current upload button, disable others
+
+@param `$btn` - cashJS object, the current upload button 
+(the one that was clicked)  
+@param `$btns` - HTML Collection, all the upload buttons
 ```js
-  updateUploadBtns: function(btn, btns){
-    btn.removeClass('cms-modal-upload-label-error');
-    btn.addClass('cms-modal-upload-label-uploading');
-    $(btn).parent().children('.cms-loader').removeClass('cms-loader-hidden');
-    btns.css('pointer-events', 'none');
+  updateUploadBtns: function($btn, $btns){
+    $btn.removeClass('cms-modal-upload-label-error');
+    $btn.addClass('cms-modal-upload-label-uploading');
+    $($btn).parent().children('.cms-loader').removeClass('cms-loader-hidden');
+    $btns.css('pointer-events', 'none');
   },
 
 ```
@@ -302,6 +332,7 @@ Replace an image on the main page (index.html) with an uploaded image.
 
 ```
 ### createUploadBtn(i)
+Returns an HTML string of a form with an upload button (input type file).
 
 @param  `i`         - an index that will give the button a unique ID  
 @return `uploadBtn` - an HTML form with upload button, as a string of HTML  
@@ -322,5 +353,5 @@ Replace an image on the main page (index.html) with an uploaded image.
 
 ```
 ------------------------
-Generated _Wed Mar 22 2017 13:53:29 GMT+0000 (GMT)_ from [&#x24C8; image_manager.js](image_manager.js "View in source")
+Generated _Fri Mar 24 2017 01:42:11 GMT+0000 (GMT)_ from [&#x24C8; image_manager.js](image_manager.js "View in source")
 
