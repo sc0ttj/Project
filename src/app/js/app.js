@@ -275,7 +275,7 @@ module.exports = {
         } else {
           video.play();
           $(videoOverlay).addClass('hidden');
-          this.innerHTML = '⏸';
+          this.innerHTML = '❙❙';
         }
       };
       $(btn).on('click',  videoBtnClickHandler);
@@ -283,4 +283,4 @@ module.exports = {
 
   },
 
-}
+};

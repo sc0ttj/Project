@@ -14,12 +14,13 @@
   background-color: #222;
   color: #eee;
   display:block;
-  font-size: 50px;
+  font-size: 4.5rem;
+  line-height: 8rem;
   opacity: 1;
   position: absolute;
   bottom: 7px;
-  height: 85px;
-  width: 85px;
+  height: 8rem;
+  width: 8rem;
   text-align: center;
   &:hover {
     background-color: #911;
