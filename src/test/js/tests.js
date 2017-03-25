@@ -226,7 +226,8 @@ module.exports = (function returnTests(){
   // we have our tests, return them to test_runner.js and exit this script
   return tests;
 
-  /* Examples tests below */
+  //  
+  // Examples tests below
 
   // Example tests, using assert()
   /* normal test */

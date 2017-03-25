@@ -4,12 +4,18 @@
 
 // Let's begin - get our dependencies 
 var $ = require('cash-dom');
+
+// Create a persistent self reference to use across all module mthods
 var self;
 
+// Use strict setting
 "use strict";
 
+// Define the CommonJS module
 module.exports = {
-  
+
+  // ## Module Methods
+
   // ### init()
   // 
   init: function(){
@@ -124,4 +130,4 @@ module.exports = {
     }
   },
 
-}
+};

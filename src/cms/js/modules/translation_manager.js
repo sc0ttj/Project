@@ -249,7 +249,7 @@ module.exports = {
     
     /* button was clicked, so get the password */
     self.getTranslatorPasswd(lang, function updatePasswdInTable(passwd){
-      if (passwd != '') {
+      if (passwd !== '') {
         /* enable this translation and store passwd */
         cms.translation[lang].enabled = true;
         cms.translation[lang].passwd  = passwd;
@@ -285,7 +285,7 @@ module.exports = {
 
     var onSuccessHandler = function (passwd){
       if (typeof callback == 'function') callback(passwd);
-    }
+    };
     
     var onErrorHandler = function (result){
       /* if no translation passwd found, create one as the translation was just enabled */
@@ -296,7 +296,7 @@ module.exports = {
         /* update the table */
         self.updateTable();
       });
-    }
+    };
 
     cms.ajax.create('POST', 'cms/api/passwds/'+lang+'.php');
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
@@ -318,11 +318,11 @@ module.exports = {
 
     var onSuccessHandler = function (passwd){
       if (typeof callback == 'function') callback(passwd);
-    }
+    };
     
     var onErrorHandler = function (msg){
       console.log('error creating password for translation ' + lang, msg);
-    }
+    };
 
     cms.ajax.create('POST', cms.config.api.translate);
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
@@ -340,4 +340,4 @@ module.exports = {
 
 //  
 // End of module  
-}
+};

@@ -46,7 +46,7 @@ module.exports = {
     self.$menu         = $('.cms-menu');
     self.$menuBg       = $('.cms-menu-bg');
     self.$menuBtn      = $('.cms-menu-btn');
-    self.$menuItems    = $('.cms-menu-item'),
+    self.$menuItems    = $('.cms-menu-item');
     self.$menuItemUp   = $('.cms-menu-item-icon-up');
     self.$menuItemDown = $('.cms-menu-item-icon-down');
     self.$menuItemDelete = $('.cms-menu-item-icon-delete');
@@ -344,4 +344,4 @@ module.exports = {
 
 //  
 // End of module
-}
+};

@@ -1,4 +1,4 @@
-//#app.js
+// # app.js
 //The main app file    
 //This file is included in [index.tmpl](https://github.com/sc0ttj/Project/blob/master/src/app/templates/index.tmpl)   
 //This file will do the following:
@@ -16,11 +16,12 @@ var pageConfig = require('page_config.js');
 
 "use strict";
 
+// Define the CommonJS module
 module.exports = {
 
-  //## Methods
+  // ## Module Methods
 
-  //####init()
+  // #### init()
   //This func is executed in index.html (the main page) 
   //as soon as the page loads.
   init: function(){
@@ -40,7 +41,7 @@ module.exports = {
     }
   },
 
-  //####reload()
+  // #### reload()
   //This func is called by the CMS after adding/removing a section.
   reload: function () {
     this.fixedImage.init();
@@ -51,7 +52,7 @@ module.exports = {
     scrollMonitor.recalculateLocations();
   },
 
-  //####cutsTheMustard()
+  // #### cutsTheMustard()
   // Checks if the users browser is up to scratch,
   // returns either true or false
   cutsTheMustard: function () {
@@ -62,14 +63,14 @@ module.exports = {
     return cutsTheMustard;
   },
 
-  //####loadStylesheet()
+  // #### loadStylesheet()
   //This func is used to load stylesheets dynamically  
   //@param `file` - the relative path to the css file to load
   loadStylesheet: function (file) {
     loadCSS(file);
   },
 
-  //####loadModules()
+  // #### loadModules()
   //This func takes an array of module names. The names must match 
   //modules in [src/app/js/enhancements/](https://github.com/sc0ttj/Project/tree/master/src/app/js/_enhancements)   
   //NOTE: This func is disabled, to enable it, you need to remove the underscore from `_enhancements`   
@@ -82,7 +83,7 @@ module.exports = {
     });
   },
 
-  //####getQueryVariable()
+  // #### getQueryVariable()
   /*https://css-tricks.com/snippets/javascript/get-url-variables/ */
   getQueryVariable: function (variable) {
     var query = window.location.search.substring(1);
@@ -94,14 +95,14 @@ module.exports = {
     return(false);
   },
 
-  //## Template Objects
+  // ## Template Objects
   //For each template that uses JS, create an object with an init() method:
 
-  //###Fixed Image Object
-  //#### Methods:
+  // ### Fixed Image Object
+  // #### Methods:
   //- init()
   fixedImage: {
-    //####fixedImage::init()
+    // ####fixedImage::init()
     init: function() {
       var fixedImages = $('.fixed-image-text:not(.transparent)');
       fixedImages.addClass('anim-fade-1s transparent');
@@ -120,11 +121,11 @@ module.exports = {
     },
   },
 
-  //###Scrollmation Object
-  //#### Methods:
+  // ### Scrollmation Object
+  // #### Methods:
   //- init()
   scrollmation: {
-    //####scrollmation::init()
+    // ####scrollmation::init()
     init : function (){
       $('.scrollmation-text').removeClass('article');
       $('.scrollmation-text:not(.scrollmation-text-js)').addClass('scrollmation-text-js');
@@ -178,11 +179,11 @@ module.exports = {
     },
   },
 
-  //###statText Object
-  //#### Methods:
+  // ### statText Object
+  // #### Methods:
   //- init()
   statText: {
-    //####statText::init()
+    // #### statText::init()
     init: function() {
       var statTexts = $('.stat-text:not(.transparent)');
       statTexts.addClass('anim-fade-1s transparent');
@@ -201,13 +202,13 @@ module.exports = {
     },
   },
 
-  //###Video Object
-  //#### Methods:
+  // ### Video Object
+  // #### Methods:
   //- init()
   //- setupVideoEvents()
   //- setupVideoBtnEvents()
   video: {
-    //####video::init()
+    // #### video::init()
     init: function(){
       var $videos = $('video'),
           $videoBtns = $('.video-overlay-button');
@@ -231,7 +232,7 @@ module.exports = {
 
     },
 
-    //####video::setupVideoEvents()
+    // #### video::setupVideoEvents()
     setupVideoEvents: function (videoElem, i) {
       var videoOverlay = videoElem.nextElementSibling,
           overlayBtn   = videoOverlay.firstChild.nextSibling;
@@ -250,7 +251,7 @@ module.exports = {
       });
     },
 
-    //####video::setupVideoBtnEvents()
+    // #### video::setupVideoBtnEvents()
     setupVideoBtnEvents: function(btn, i){
       var videoBtnClickHandler = function(){
         var video = this.parentNode.previousElementSibling,

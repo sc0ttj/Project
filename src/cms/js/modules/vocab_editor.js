@@ -85,11 +85,11 @@ module.exports = {
     var onSuccessHandler = function (html){
       callback(html);
       return html;
-    }
+    };
     var onErrorHandler = function (errorText){
       console.log(errorText);
       return false;
-    }
+    };
 
     cms.ajax.create('GET', 'preview.html');
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
@@ -207,13 +207,13 @@ module.exports = {
       
       /* return the vocab contents */
       return responseText;
-    }
+    };
 
     var onErrorHandler = function (responseText){
       /* return default page vocab */
       callback(JSON.stringify(self.pageVocab));
       return self.pageVocab;
-    }
+    };
 
     cms.ajax.create('GET', 'vocabs/'+lang+'.json');
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
@@ -403,12 +403,12 @@ module.exports = {
      var onSuccessHandler = function (responseText){
       console.log(responseText);
       $('.cms-vocab-input').addClass('cms-vocab-uploaded');
-    }
+    };
 
     var onErrorHandler = function (responseText){
       console.log(responseText);
       $('.cms-vocab-input').addClass('cms-upload-label-error');
-    }
+    };
 
     /* now let's do our AJAX request, and upload the vocab */
     cms.ajax.create('POST', cms.config.api.upload);
@@ -651,4 +651,4 @@ module.exports = {
 
 //  
 // End of module
-}
+};

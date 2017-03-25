@@ -223,7 +223,7 @@ module.exports = {
     var onProgressHandler = function (e) {
       var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
       btn.html('Uploading '+ratio);
-    }
+    };
 
     var onSuccessHandler = function (responseText){
       console.log(responseText);
@@ -236,7 +236,7 @@ module.exports = {
       btn.removeClass('cms-modal-upload-label-uploading');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
       btns.css('pointer-events', 'all');
-    }
+    };
 
     var onErrorHandler = function (responseText){
       console.log(responseText);
@@ -244,7 +244,7 @@ module.exports = {
       btn.html('Upload error');
       btn.addClass('cms-modal-upload-label-error');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
-    }
+    };
 
     cms.ajax.onProgress(onProgressHandler);
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
@@ -323,7 +323,7 @@ module.exports = {
   updatePreviewImage: function ($previewImg, file){
     var reader = new FileReader();
     reader.addEventListener('load', function () {
-      $previewImg.attr('src', reader.result)
+      $previewImg.attr('src', reader.result);
     }, false);
     if (file) reader.readAsDataURL(file);
   },
@@ -352,7 +352,7 @@ module.exports = {
     var onProgressHandler = function (e) {
       var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
       btn.html('Uploading '+ratio);
-    }
+    };
     var onSuccessHandler = function (responseText){
       console.log(responseText);
       self.updateposterImage();
@@ -360,13 +360,13 @@ module.exports = {
       btn.removeClass('cms-modal-upload-label-uploading');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
       btns.css('pointer-events', 'all');
-    }
+    };
     var onErrorHandler = function (responseText){
       console.log(responseText);
       btn.html('Upload error');
       btn.addClass('cms-modal-upload-label-error');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
-    }
+    };
 
     cms.ajax.onProgress(onProgressHandler);
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
@@ -415,4 +415,5 @@ module.exports = {
     return uploadBtn;
   },
 
-}
+// End of module
+};

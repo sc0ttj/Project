@@ -2,14 +2,23 @@
 // This CMS module parses then saves the current page HTML    
 // to .html files, and saves the current dir to a .tar.gz file.
 
+// ## Begin script
+ 
+// Get dependencies
 var $ = require('cash-dom'); /* jQuery alternative */
+
+// Create a self reference 
 var self;
 
+// Use strict setting
 "use strict";
 
+// Define CommonJS module
 module.exports = {
   
-  // ## init()
+  // ## Module Methods
+
+  // ### init()
   //
   init: function(){
     /* make this module available globally as cms.exportManager */
@@ -17,7 +26,7 @@ module.exports = {
     return true // if we loaded ok
   },
 
-  // ## savePage()
+  // ### savePage()
   // Hide the CMS menu, get the current page HTML,    
   // clean up the HTML (remove the CMS from the html),    
   // then save the cleaned HTML to a .html file.
@@ -28,7 +37,7 @@ module.exports = {
     self.saveHtmlToFile(html, self.saveToZip);
   },
 
-  // ## getPageHTMLWithoutCMS()
+  // ### getPageHTMLWithoutCMS()
   // Get the page HTML as a string, remove all CMS elems and classes,    
   // remove excess whitespace, then reset the HTML to its default, onload settings.    
   // 
@@ -81,7 +90,7 @@ module.exports = {
     return cleanHTML;
   },
 
-  // ## addDocType()
+  // ### addDocType()
   // Wraps the given html string in a `<html>` tag with DOCTYPE  
   // 
   // @param `html` - the html string to add the doctype to  
@@ -91,7 +100,7 @@ module.exports = {
     return '<!DOCTYPE html>\n<html lang="'+lang+'">\n' + html + '</html>';
   },
 
-  // ## cleanupWhitespace()
+  // ### cleanupWhitespace()
   // Clean up the spaces, tabs and excess newlines from the given string
   // 
   // @param `string` - the string to clean  
@@ -104,7 +113,7 @@ module.exports = {
     return string;
   },
 
-  // ## saveHtmlToFile()
+  // ### saveHtmlToFile()
   // 
   // @param `html` - string of html to save to file  
   // @param `callback` - the func to exec on save file success  
@@ -116,15 +125,15 @@ module.exports = {
     var successHandler = function (responseText) {
       console.log(responseText);
       callback();
-    }
+    };
     var errorHandler = function (responseText) {
       console.log(responseText);
-    }
+    };
     cms.ajax.onFinish(successHandler, errorHandler);
     cms.ajax.send(data);
   },
 
-  // ## saveTranslatedHTML()
+  // ### saveTranslatedHTML()
   // save a translated version of the current page.    
   // Will save to index.LANG.html, where LANG is the current language
   // 
@@ -156,7 +165,7 @@ module.exports = {
     cms.ajax.send(data);
   },
 
-  // ## saveToZip()
+  // ### saveToZip()
   // Save the current directory to a tar.gz file.
   saveToZip: function () {
     var data = new FormData();
@@ -166,12 +175,13 @@ module.exports = {
     var successHandler = function (responseText) {
       console.log(responseText);
       window.location = responseText;
-    }
+    };
     var errorHandler = function (responseText) {
       console.log(responseText);
-    }
+    };
     cms.ajax.onFinish(successHandler, errorHandler);
     cms.ajax.send(data);
   }
 
-}
+// End of module
+};

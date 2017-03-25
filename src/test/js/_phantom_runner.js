@@ -30,7 +30,7 @@ page.onLoadFinished = function() {
 
 page.onPageLoaded = function() {
   console.log(document.title);
-}
+};
 
 // PhantomJS will run each function in "steps" array
 var steps = [

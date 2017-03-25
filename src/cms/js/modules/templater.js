@@ -51,4 +51,6 @@ module.exports = {
     m.parse(template); // caching
     return m.render(template, data);
   },
-}
+
+// End of module
+};

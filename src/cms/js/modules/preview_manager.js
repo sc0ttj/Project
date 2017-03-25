@@ -123,4 +123,4 @@ module.exports = {
 
 //  
 // End of the module
-}
+};

@@ -4,13 +4,17 @@
 
 // Let's start.. Get our dependencies: 
 var $ = require('cash-dom'); /* jquery alternative */
+
+// Create a persistent self reference to use across all module mthods
 var self;
 
+// Use strict setting
 "use strict";
 
+// Define the CommonJS module
 module.exports = {
-  
-  // ## Methods
+
+  // ## Module Methods
 
   // ### init()
   init: function(){
@@ -125,4 +129,5 @@ module.exports = {
     $('.cms-modal').remove();
   },
 
-}
+// End of module
+};

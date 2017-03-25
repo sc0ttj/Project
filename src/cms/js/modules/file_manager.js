@@ -3,20 +3,26 @@
 
 // Get our JS dependencies
 var $ = require('cash-dom'); /* jQuery alternative */
+
+// Create a self reference 
 var self;
 
+// Use strict setting
 "use strict";
 
+// Define CommonJS module
 module.exports = {
+  
+  // ## Module Methods
 
-  // ## init()
+  // ### init()
   // Makes this module available globally as cms.fileManager
   init: function(){
     self = cms.fileManager;
     return true // if we loaded ok
   },
 
-  // ## showUI()
+  // ### showUI()
   // Creates an iframe which contains PHPFM, then loads  
   // a CMS modal with that iframe as its main content.
   showUI: function (){
@@ -46,4 +52,5 @@ module.exports = {
     $('.cms-modal-viewport').addClass('cms-modal-file-manager')
   },
 
-}
+// End of module
+};

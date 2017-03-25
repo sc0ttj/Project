@@ -5,11 +5,13 @@
 var xhr = [],
     i = i || 0;
 
+// Use strict setting
 "use strict";
 
+// Define the CommonJS module
 module.exports = {
 
-  // ## Methods
+  // ## Module Methods
 
   // ### create(method, url)
   // @param `method` - POST or GET  
@@ -35,7 +37,7 @@ module.exports = {
       if (e.lengthComputable) {
         callback(e);
       }
-    }
+    };
   },
 
   // ### onFinish(successCallback, errorCallback)
@@ -49,7 +51,8 @@ module.exports = {
       } else {
         errorCallback(xhr[i].responseText);
       }
-    }
+    };
   },
 
-}
+// End of module
+};

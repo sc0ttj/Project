@@ -25,7 +25,7 @@ var self;
 // Use strict setting
 "use strict";
 
-// Define othe CommonJS module
+// Define the CommonJS module
 module.exports = {
 
   // ## Module Methods
@@ -207,7 +207,7 @@ module.exports = {
     * preview image to the image data, if the image exists */
     var reader = new FileReader();
     reader.addEventListener('load', function () {
-      $previewImg.attr('src', reader.result)
+      $previewImg.attr('src', reader.result);
     }, false);
     if (file) reader.readAsDataURL(file);
   },
@@ -245,7 +245,7 @@ module.exports = {
     var onProgressHandler = function (e) {
       var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
       btn.html('Uploading '+ratio);
-    }
+    };
 
     var onSuccessHandler = function (responseText){
       console.log(responseText);
@@ -257,7 +257,7 @@ module.exports = {
       btn.removeClass('cms-modal-upload-label-uploading');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
       btns.css('pointer-events', 'all');
-    }
+    };
 
     var onErrorHandler = function (responseText){
       console.log(responseText);
@@ -265,7 +265,7 @@ module.exports = {
       btn.html('Upload error');
       btn.addClass('cms-modal-upload-label-error');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
-    }
+    };
 
     /* now apply the handlers to this AJAX request */
     cms.ajax.onProgress(onProgressHandler);
@@ -317,5 +317,5 @@ module.exports = {
   },
 
 // End of module
-}
+};
 

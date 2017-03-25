@@ -86,14 +86,14 @@ module.exports = {
       /* setup the newly added section with the cms */
       cms.ui.showMenu();
       cms.reload();
-    }
+    };
 
     /* onErrorHandler()
      * handle failure to GET the template
      */
     var onErrorHandler = function (){
       alert('error');
-    }
+    };
 
     /* run the ajax request */
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
@@ -154,4 +154,4 @@ module.exports = {
 
 //  
 // End of module
-}
+};
