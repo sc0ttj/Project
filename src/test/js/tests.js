@@ -1,4 +1,4 @@
-//# Tests.js
+// # Tests.js
 
 // This file returns the array "tests" as soon as it is required.
 // It is required by [test_runner.js](https://github.com/sc0ttj/Project/blob/master/src/test/js/test_runner.js)
@@ -227,7 +227,8 @@ module.exports = (function returnTests(){
   return tests;
 
   //  
-  // Examples tests below
+  //  
+  // ## Examples tests below
 
   // Example tests, using assert()
   /* normal test */

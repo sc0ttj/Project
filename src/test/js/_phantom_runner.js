@@ -1,4 +1,4 @@
-//#Phantom Runner
+// # Phantom Runner
 
 //This file runs our tests (see [tests.js](https://github.com/sc0ttj/Project/blob/master/src/test/js/tests.js])) in the terminal.   
 //To execute this file, run `npm test` in your terminal.    

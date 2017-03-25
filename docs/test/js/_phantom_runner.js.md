@@ -39,7 +39,7 @@ page.onLoadFinished = function() {
 
 page.onPageLoaded = function() {
   console.log(document.title);
-}
+};
 
 ```
 PhantomJS will run each function in "steps" array
@@ -90,7 +90,8 @@ interval = setInterval(function() {
   }
 
 }, 2000);
+
 ```
 ------------------------
-Generated _Mon Mar 20 2017 18:57:57 GMT+0000 (GMT)_ from [&#x24C8; _phantom_runner.js](_phantom_runner.js "View in source")
+Generated _Sat Mar 25 2017 04:40:38 GMT+0000 (GMT)_ from [&#x24C8; _phantom_runner.js](_phantom_runner.js "View in source")
 

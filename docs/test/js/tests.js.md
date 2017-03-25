@@ -3,40 +3,41 @@
 This file returns the array "tests" as soon as it is required.
 It is required by [test_runner.js](https://github.com/sc0ttj/Project/blob/master/src/test/js/test_runner.js)
 
-We define the module as a self executing func, 
+define the module as a self executing func, 
 so it runs as soon as it is required 
 ```js
 module.exports = (function returnTests(){
 
 ```
-Now we define the list of tests to return to test_runner
+define the list of tests to return to test_runner
 ```js
   var tests = []; 
 
 ```
-
-## Methods
-
 #### test(name, cb)
 creates the list (array) of tests to return:
 
-@param `name` - the name of the test      
-@param `cb`   - the test function to run
+@param name - the name of the test       
+@param cb   - the test function to run
 ```js
     var test = function (name, cb) {
       tests.push({name: name, test: cb});
     };
 
 ```
+Use an alternative command
+```js
+    var describe = test;
 
+```
 #### assert(condition, message)
 ```js
     /* Based on "World's smallest assertion library" by @snuggsi 
      * (https://twitter.com/snuggsi/status/565531862895169536)
      */
 ```
-@param `condition` - the code to execute and test       
-@param `message`   - the message to print on error
+@param condition - the code to execute and test        
+@param message   - the message to print on error
 ```js
     var assert = function (condition, message) {
       if (!condition) {
@@ -55,8 +56,8 @@ creates the list (array) of tests to return:
 #### expect(message, condition)
 an alternative syntax for assert:
     
-@param `condition` - the code to execute and test       
-@param `message`   - the message to print on error
+@param condition - the code to execute and test          
+@param message   - the message to print on error
 ```js
     var expect = function (message, condition) {
       assert(condition, message);
@@ -278,9 +279,11 @@ we have our tests, return them to test_runner.js and exit this script
 ```js
   return tests;
 
-  /* Examples tests below */
-
 ```
+
+
+## Examples tests below
+
 Example tests, using assert()
 ```js
   /* normal test */
@@ -314,7 +317,8 @@ Example tests, using expect()
 
 
 })();
+
 ```
 ------------------------
-Generated _Mon Mar 20 2017 18:57:57 GMT+0000 (GMT)_ from [&#x24C8; tests.js](tests.js "View in source")
+Generated _Sat Mar 25 2017 04:40:38 GMT+0000 (GMT)_ from [&#x24C8; tests.js](tests.js "View in source")
 
