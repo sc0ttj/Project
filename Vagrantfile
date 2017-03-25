@@ -70,6 +70,9 @@ sudo apt-get update -qq
 echo "Upgrading packages..."
 sudo apt-get upgrade -qq
 
+echo "Installing some helpful stuff..."
+sudo apt-get install -y ranger htop -qq
+
 echo "Installing PHP..."
 sudo apt-get install -y php5 php5-curl php5-gd -qq
 
@@ -81,6 +84,16 @@ sudo apt-get install -y apache2 -qq
 
 # Add vagrant user to www-data group
 sudo usermod -a -G www-data vagrant
+
+# fix 'cannot get server name' error
+echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/servername.conf
+
+# reload Apache with new server name
+sudo a2enconf servername
+sudo service apache2 reload
+
+# enable .htaccess in folders
+sudo sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/apache2.conf
 
 echo "Restarting services"
 sudo a2enmod rewrite
