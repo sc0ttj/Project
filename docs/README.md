@@ -33,7 +33,7 @@ This is the developer documentation for this project. Here you will find the cod
     * [video_manager.js](https://github.com/sc0ttj/Project/blob/master/docs/cms/js/modules/video_manager.js.md)
     * [vocab_editor.js](https://github.com/sc0ttj/Project/blob/master/docs/cms/js/modules/vocab_editor.js.md)
 
-### Test Suite
+* ### Test Suite
 
   * [_phantom_runner.js](https://github.com/sc0ttj/Project/blob/master/docs/test/js/_phantom_runner.js.md)
   * [test_runner.js](https://github.com/sc0ttj/Project/blob/master/docs/test/js/test_runner.js.md)
