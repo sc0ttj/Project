@@ -1,10 +1,12 @@
 # page_editor.js
-This module makes elements on the index.html page editable, adds buttons to inline elements and generally provides in-place, WYSIWYG editing of HTML.
+This module makes elements on the index.html page editable, adds buttons to inline 
+elements and generally provides in-place, WYSIWYG editing of HTML.
 
 
 First, we get our dependencies
 ```js
 var $ = require('cash-dom');
+
 ```
 Set a var we can use for consistent self reference
 ```js
@@ -37,7 +39,7 @@ such as clickable elems, and editable elem actions.
     /* setup the editable elements */
     self.setEditableItems(cms.config.editableItems);
     self.setEditableRegions(cms.config.editableRegionClass);
-    self.nextEditableElem = $('contenteditable')[0],
+    self.nextEditableElem = $('contenteditable')[0];
     /* setup the events for keypress etc on editable items */
     self.setEventHandlers();
   },
@@ -69,7 +71,7 @@ and finally adds the click events to them
       if ($el.hasClass('cms-media-btn')) $target = $el.parent();
       $target.after(imgHtml);
       $target.children('.cms-media-btn').remove();
-    }
+    };
   },
 
 ```
@@ -88,8 +90,8 @@ and finally adds the click events to them
 ### setEditableRegions()
 
 ```js
-  setEditableRegions: function(selector){
-    var selector = selector.replace(/^\./, ''),
+  setEditableRegions: function(sel){
+    var selector = sel.replace(/^\./, ''),
         $elems = $(cms.config.sectionSelector + ' .' + selector);
     
     $elems.attr('contenteditable', true);
@@ -145,17 +147,15 @@ uses my fork of grande.js (https://github.com/sc0ttj/grande.js)
   onEditableKeyPressHandler: function(e){
     var el = this;
 
-```
-crude firefox fix - dont allow total emptying of editable regions
-```js
-    if(self.isInFirefox && self.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p></p>');
+    /* crude firefox fix - dont allow total emptying of editable regions */
+    /* if(self.isInFirefox && self.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p contenteditable="true"></p>'); */
 
     if (e.which === 13) {
       if(!self.elemIsContainer(el)){
         e.preventDefault();
         if (self.nextEditableItemExists) self.nextEditableElem.focus();
       } else {
-        if (!self.isInFirefox) $(':focus')[0].blur();
+        /* if (!self.isInFirefox) $(':focus')[0].blur(); */
       }
       return false;
     }
@@ -307,11 +307,11 @@ crude firefox fix - dont allow total emptying of editable regions
 
 ```
 
-end of module
+End of module
 ```js
-}
+};
 
 ```
 ------------------------
-Generated _Wed Mar 22 2017 17:08:58 GMT+0000 (GMT)_ from [&#x24C8; page_editor.js](page_editor.js "View in source")
+Generated _Sat Mar 25 2017 02:55:05 GMT+0000 (GMT)_ from [&#x24C8; page_editor.js](page_editor.js "View in source")
 

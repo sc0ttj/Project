@@ -5,13 +5,14 @@
 
 // First, we get our dependencies
 var $ = require('cash-dom');
+
 // Set a var we can use for consistent self reference
 var self;
 
 // Use strict rules
 "use strict";
 
-// ## Define our CommonJS module
+// Define our CommonJS module
 module.exports = {
 
   // ## Module Methods
@@ -29,7 +30,7 @@ module.exports = {
     /* setup the editable elements */
     self.setEditableItems(cms.config.editableItems);
     self.setEditableRegions(cms.config.editableRegionClass);
-    self.nextEditableElem = $('contenteditable')[0],
+    self.nextEditableElem = $('contenteditable')[0];
     /* setup the events for keypress etc on editable items */
     self.setEventHandlers();
   },
@@ -59,7 +60,7 @@ module.exports = {
       if ($el.hasClass('cms-media-btn')) $target = $el.parent();
       $target.after(imgHtml);
       $target.children('.cms-media-btn').remove();
-    }
+    };
   },
 
   // ### setEditableItems()
@@ -74,8 +75,8 @@ module.exports = {
 
   // ### setEditableRegions()
   //
-  setEditableRegions: function(selector){
-    var selector = selector.replace(/^\./, ''),
+  setEditableRegions: function(sel){
+    var selector = sel.replace(/^\./, ''),
         $elems = $(cms.config.sectionSelector + ' .' + selector);
     
     $elems.attr('contenteditable', true);
@@ -121,15 +122,15 @@ module.exports = {
   onEditableKeyPressHandler: function(e){
     var el = this;
 
-    // crude firefox fix - dont allow total emptying of editable regions
-    if(self.isInFirefox && self.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p></p>');
+    /* crude firefox fix - dont allow total emptying of editable regions */
+    /* if(self.isInFirefox && self.elemIsEmpty(el)) document.execCommand("insertHTML", false, '<p contenteditable="true"></p>'); */
 
     if (e.which === 13) {
       if(!self.elemIsContainer(el)){
         e.preventDefault();
         if (self.nextEditableItemExists) self.nextEditableElem.focus();
       } else {
-        if (!self.isInFirefox) $(':focus')[0].blur();
+        /* if (!self.isInFirefox) $(':focus')[0].blur(); */
       }
       return false;
     }
@@ -260,5 +261,5 @@ module.exports = {
   },
 
 //  
-// end of module
-}
+// End of module
+};
