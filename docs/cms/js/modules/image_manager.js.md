@@ -31,7 +31,7 @@ Use strict setting
 "use strict";
 
 ```
-Define othe CommonJS module
+Define the CommonJS module
 ```js
 module.exports = {
 
@@ -232,7 +232,7 @@ Updates the preview images in the Image Manager
     * preview image to the image data, if the image exists */
     var reader = new FileReader();
     reader.addEventListener('load', function () {
-      $previewImg.attr('src', reader.result)
+      $previewImg.attr('src', reader.result);
     }, false);
     if (file) reader.readAsDataURL(file);
   },
@@ -274,7 +274,7 @@ so users can see progress and success/fail messages for their uploads.
     var onProgressHandler = function (e) {
       var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
       btn.html('Uploading '+ratio);
-    }
+    };
 
     var onSuccessHandler = function (responseText){
       console.log(responseText);
@@ -286,7 +286,7 @@ so users can see progress and success/fail messages for their uploads.
       btn.removeClass('cms-modal-upload-label-uploading');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
       btns.css('pointer-events', 'all');
-    }
+    };
 
     var onErrorHandler = function (responseText){
       console.log(responseText);
@@ -294,7 +294,7 @@ so users can see progress and success/fail messages for their uploads.
       btn.html('Upload error');
       btn.addClass('cms-modal-upload-label-error');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
-    }
+    };
 
     /* now apply the handlers to this AJAX request */
     cms.ajax.onProgress(onProgressHandler);
@@ -350,11 +350,12 @@ Returns an HTML string of a form with an upload button (input type file).
   },
 
 ```
-
 End of module
 ```js
-}
+};
+
+
 ```
 ------------------------
-Generated _Fri Mar 24 2017 01:42:11 GMT+0000 (GMT)_ from [&#x24C8; image_manager.js](image_manager.js "View in source")
+Generated _Sat Mar 25 2017 03:19:45 GMT+0000 (GMT)_ from [&#x24C8; image_manager.js](image_manager.js "View in source")
 

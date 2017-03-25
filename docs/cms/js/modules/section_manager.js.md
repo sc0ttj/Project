@@ -103,14 +103,14 @@ to be used.
       /* setup the newly added section with the cms */
       cms.ui.showMenu();
       cms.reload();
-    }
+    };
 
     /* onErrorHandler()
      * handle failure to GET the template
      */
     var onErrorHandler = function (){
       alert('error');
-    }
+    };
 
     /* run the ajax request */
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
@@ -156,7 +156,9 @@ given HTML string
 ```js
   removeSection: function (index) {
     /* keep at least one section */
-    if ($(cms.config.sectionSelector).length < 2) return false;
+```
+if ($(cms.config.sectionSelector).length < 2) return false;
+```js
     /* we're ok, so remove the section at the given index */
     var $section = $('.section'+index);
     $section.remove();
@@ -183,8 +185,9 @@ numerical order.
 
 End of module
 ```js
-}
+};
+
 ```
 ------------------------
-Generated _Wed Mar 22 2017 22:18:17 GMT+0000 (GMT)_ from [&#x24C8; section_manager.js](section_manager.js "View in source")
+Generated _Sat Mar 25 2017 03:19:45 GMT+0000 (GMT)_ from [&#x24C8; section_manager.js](section_manager.js "View in source")
 

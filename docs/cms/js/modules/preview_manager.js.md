@@ -140,8 +140,9 @@ Resizes the iframe in the Preview Manager to match the given dimensions
 
 End of the module
 ```js
-}
+};
+
 ```
 ------------------------
-Generated _Wed Mar 22 2017 21:52:14 GMT+0000 (GMT)_ from [&#x24C8; preview_manager.js](preview_manager.js "View in source")
+Generated _Sat Mar 25 2017 03:19:45 GMT+0000 (GMT)_ from [&#x24C8; preview_manager.js](preview_manager.js "View in source")
 

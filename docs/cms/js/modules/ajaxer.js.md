@@ -5,8 +5,19 @@ Store the xhr requests in an array for easier logging/debugging:
 ```js
 var xhr = [],
     i = i || 0;
+
 ```
-## Methods
+Use strict setting
+```js
+"use strict";
+
+```
+Define the CommonJS module
+```js
+module.exports = {
+
+```
+## Module Methods
 
 ### create(method, url)
 @param `method` - POST or GET  
@@ -37,7 +48,7 @@ var xhr = [],
       if (e.lengthComputable) {
         callback(e);
       }
-    }
+    };
   },
 
 ```
@@ -53,11 +64,15 @@ var xhr = [],
       } else {
         errorCallback(xhr[i].responseText);
       }
-    }
+    };
   },
 
-}
+```
+End of module
+```js
+};
+
 ```
 ------------------------
-Generated _Tue Mar 21 2017 19:34:11 GMT+0000 (GMT)_ from [&#x24C8; ajaxer.js](ajaxer.js "View in source")
+Generated _Sat Mar 25 2017 03:19:45 GMT+0000 (GMT)_ from [&#x24C8; ajaxer.js](ajaxer.js "View in source")
 

@@ -5,9 +5,24 @@ the modal can be set using the `create()` method.
 Let's start.. Get our dependencies: 
 ```js
 var $ = require('cash-dom'); /* jquery alternative */
-```
 
-## Methods
+```
+Create a persistent self reference to use across all module mthods
+```js
+var self;
+
+```
+Use strict setting
+```js
+"use strict";
+
+```
+Define the CommonJS module
+```js
+module.exports = {
+
+```
+## Module Methods
 
 ### init()
 ```js
@@ -140,7 +155,13 @@ Remove the modal HTML from the page (index.html) entirely.
   remove: function () {
     $('.cms-modal').remove();
   },
+
+```
+End of module
+```js
+};
+
 ```
 ------------------------
-Generated _Wed Mar 22 2017 15:23:21 GMT+0000 (GMT)_ from [&#x24C8; modal.js](modal.js "View in source")
+Generated _Sat Mar 25 2017 03:19:45 GMT+0000 (GMT)_ from [&#x24C8; modal.js](modal.js "View in source")
 

@@ -102,11 +102,11 @@ it will get the page HTML as param `html`
     var onSuccessHandler = function (html){
       callback(html);
       return html;
-    }
+    };
     var onErrorHandler = function (errorText){
       console.log(errorText);
       return false;
-    }
+    };
 
     cms.ajax.create('GET', 'preview.html');
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
@@ -228,13 +228,13 @@ get the contents of the vocab file
       
       /* return the vocab contents */
       return responseText;
-    }
+    };
 
     var onErrorHandler = function (responseText){
       /* return default page vocab */
       callback(JSON.stringify(self.pageVocab));
       return self.pageVocab;
-    }
+    };
 
     cms.ajax.create('GET', 'vocabs/'+lang+'.json');
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
@@ -436,12 +436,12 @@ a redirect, and we use AJAX instead
      var onSuccessHandler = function (responseText){
       console.log(responseText);
       $('.cms-vocab-input').addClass('cms-vocab-uploaded');
-    }
+    };
 
     var onErrorHandler = function (responseText){
       console.log(responseText);
       $('.cms-vocab-input').addClass('cms-upload-label-error');
-    }
+    };
 
     /* now let's do our AJAX request, and upload the vocab */
     cms.ajax.create('POST', cms.config.api.upload);
@@ -698,8 +698,9 @@ module, to be saved as `index.LANG.html`.
 
 End of module
 ```js
-}
+};
+
 ```
 ------------------------
-Generated _Fri Mar 24 2017 17:57:09 GMT+0000 (GMT)_ from [&#x24C8; vocab_editor.js](vocab_editor.js "View in source")
+Generated _Sat Mar 25 2017 03:19:45 GMT+0000 (GMT)_ from [&#x24C8; vocab_editor.js](vocab_editor.js "View in source")
 

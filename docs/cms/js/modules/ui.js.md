@@ -59,7 +59,7 @@ properties which can be accessed across this module.
     self.$menu         = $('.cms-menu');
     self.$menuBg       = $('.cms-menu-bg');
     self.$menuBtn      = $('.cms-menu-btn');
-    self.$menuItems    = $('.cms-menu-item'),
+    self.$menuItems    = $('.cms-menu-item');
     self.$menuItemUp   = $('.cms-menu-item-icon-up');
     self.$menuItemDown = $('.cms-menu-item-icon-down');
     self.$menuItemDelete = $('.cms-menu-item-icon-delete');
@@ -403,8 +403,9 @@ Hides the CMS meu, saves the latest pag eHTML to localStorage.
 
 End of module
 ```js
-}
+};
+
 ```
 ------------------------
-Generated _Thu Mar 23 2017 22:29:14 GMT+0000 (GMT)_ from [&#x24C8; ui.js](ui.js "View in source")
+Generated _Sat Mar 25 2017 03:19:45 GMT+0000 (GMT)_ from [&#x24C8; ui.js](ui.js "View in source")
 

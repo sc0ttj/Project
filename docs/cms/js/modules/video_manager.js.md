@@ -250,7 +250,7 @@ the upload buttons.
     var onProgressHandler = function (e) {
       var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
       btn.html('Uploading '+ratio);
-    }
+    };
 
     var onSuccessHandler = function (responseText){
       console.log(responseText);
@@ -263,7 +263,7 @@ the upload buttons.
       btn.removeClass('cms-modal-upload-label-uploading');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
       btns.css('pointer-events', 'all');
-    }
+    };
 
     var onErrorHandler = function (responseText){
       console.log(responseText);
@@ -271,7 +271,7 @@ the upload buttons.
       btn.html('Upload error');
       btn.addClass('cms-modal-upload-label-error');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
-    }
+    };
 
     cms.ajax.onProgress(onProgressHandler);
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
@@ -356,7 +356,7 @@ the upload button)
   updatePreviewImage: function ($previewImg, file){
     var reader = new FileReader();
     reader.addEventListener('load', function () {
-      $previewImg.attr('src', reader.result)
+      $previewImg.attr('src', reader.result);
     }, false);
     if (file) reader.readAsDataURL(file);
   },
@@ -389,7 +389,7 @@ default state.
     var onProgressHandler = function (e) {
       var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
       btn.html('Uploading '+ratio);
-    }
+    };
     var onSuccessHandler = function (responseText){
       console.log(responseText);
       self.updateposterImage();
@@ -397,13 +397,13 @@ default state.
       btn.removeClass('cms-modal-upload-label-uploading');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
       btns.css('pointer-events', 'all');
-    }
+    };
     var onErrorHandler = function (responseText){
       console.log(responseText);
       btn.html('Upload error');
       btn.addClass('cms-modal-upload-label-error');
       $(btn).parent().children('.cms-loader').addClass('cms-loader-hidden');
-    }
+    };
 
     cms.ajax.onProgress(onProgressHandler);
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
@@ -459,11 +459,11 @@ input of type 'file'.
   },
 
 ```
-
 End of module
 ```js
-}
+};
+
 ```
 ------------------------
-Generated _Fri Mar 24 2017 01:42:12 GMT+0000 (GMT)_ from [&#x24C8; video_manager.js](video_manager.js "View in source")
+Generated _Sat Mar 25 2017 03:19:45 GMT+0000 (GMT)_ from [&#x24C8; video_manager.js](video_manager.js "View in source")
 

@@ -272,7 +272,7 @@ hide non-matching rows
     
     /* button was clicked, so get the password */
     self.getTranslatorPasswd(lang, function updatePasswdInTable(passwd){
-      if (passwd != '') {
+      if (passwd !== '') {
         /* enable this translation and store passwd */
         cms.translation[lang].enabled = true;
         cms.translation[lang].passwd  = passwd;
@@ -312,7 +312,7 @@ and if no passwd file exists, it will create one.
 
     var onSuccessHandler = function (passwd){
       if (typeof callback == 'function') callback(passwd);
-    }
+    };
     
     var onErrorHandler = function (result){
       /* if no translation passwd found, create one as the translation was just enabled */
@@ -323,7 +323,7 @@ and if no passwd file exists, it will create one.
         /* update the table */
         self.updateTable();
       });
-    }
+    };
 
     cms.ajax.create('POST', 'cms/api/passwds/'+lang+'.php');
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
@@ -347,11 +347,11 @@ execute the given callback, passing to it the new passwd as a param.
 
     var onSuccessHandler = function (passwd){
       if (typeof callback == 'function') callback(passwd);
-    }
+    };
     
     var onErrorHandler = function (msg){
       console.log('error creating password for translation ' + lang, msg);
-    }
+    };
 
     cms.ajax.create('POST', cms.config.api.translate);
     cms.ajax.onFinish(onSuccessHandler, onErrorHandler);
@@ -373,8 +373,9 @@ execute the given callback, passing to it the new passwd as a param.
 
 End of module  
 ```js
-}
+};
+
 ```
 ------------------------
-Generated _Wed Mar 22 2017 23:32:14 GMT+0000 (GMT)_ from [&#x24C8; translation_manager.js](translation_manager.js "View in source")
+Generated _Sat Mar 25 2017 03:19:45 GMT+0000 (GMT)_ from [&#x24C8; translation_manager.js](translation_manager.js "View in source")
 

@@ -64,8 +64,13 @@ renders HTML from mustache templates
     m.parse(template); // caching
     return m.render(template, data);
   },
-}
+
+```
+End of module
+```js
+};
+
 ```
 ------------------------
-Generated _Wed Mar 22 2017 22:42:28 GMT+0000 (GMT)_ from [&#x24C8; templater.js](templater.js "View in source")
+Generated _Sat Mar 25 2017 03:19:45 GMT+0000 (GMT)_ from [&#x24C8; templater.js](templater.js "View in source")
 

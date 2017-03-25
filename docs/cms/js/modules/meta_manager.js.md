@@ -5,7 +5,24 @@ This module allows users to easily edit the META information of the page
 Let's begin - get our dependencies 
 ```js
 var $ = require('cash-dom');
+
 ```
+Create a persistent self reference to use across all module mthods
+```js
+var self;
+
+```
+Use strict setting
+```js
+"use strict";
+
+```
+Define the CommonJS module
+```js
+module.exports = {
+
+```
+## Module Methods
 
 ### init()
 
@@ -128,8 +145,9 @@ Update the meta values in the page with the ones given as parameters
     }
   },
 
-}
+};
+
 ```
 ------------------------
-Generated _Wed Mar 22 2017 14:44:04 GMT+0000 (GMT)_ from [&#x24C8; meta_manager.js](meta_manager.js "View in source")
+Generated _Sat Mar 25 2017 03:19:45 GMT+0000 (GMT)_ from [&#x24C8; meta_manager.js](meta_manager.js "View in source")
 
