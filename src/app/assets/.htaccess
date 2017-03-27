@@ -1,5 +1,3 @@
-Options +FollowSymLinks
-
 # pass the default character set
 
 AddDefaultCharset utf-8
