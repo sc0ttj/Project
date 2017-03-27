@@ -99,6 +99,10 @@ echo "Restarting services"
 sudo a2enmod rewrite
 sudo service apache2 restart
 
+echo "Suppress ssh welcome msg"
+touch ~/.hushlogin
+sudo service ssh restart
+
 echo "Cleaning up packages"
 sudo apt-get -y autoremove
 sudo apt-get clean -qq
