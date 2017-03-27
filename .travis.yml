@@ -46,8 +46,10 @@ before_script:
   # configure apache virtual hosts
   - sudo cp -f ../build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
-  - sudo sed -e "s?Listen 80?Listen 8080?g" --in-place /etc/apache2/ports.conf
   - echo "ServerName localhost" | sudo tee -a /etc/apache2/apache2.conf
+
+  # use port 80, not 8080
+  - sudo sed -e "s?:8080?:80?g" --in-place ../src/test/js/_phantom_runner.js
 
   # enable .htaccess in folders
   - sudo sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/apache2.conf
@@ -55,11 +57,9 @@ before_script:
   # permissions and groups
   - sudo usermod -a -G www-data $USER
   - sudo chown -R $USER:$USER $(pwd)
-  - sudo chown -R $USER:$USER /var/www
-  - sudo chmod -R 755 /var/www
-
   - sudo chown -R $USER:$USER /home/travis/build/
   - sudo chmod -R 755 /home/travis/build/
+  - sudo chmod -R +x /home/travis/build/
 
   # restart services
   - sudo a2enmod rewrite
@@ -73,7 +73,6 @@ script: phantomjs src/test/js/_phantom_runner.js
 
 after_script:
   # view apache configs
-  - sudo ls -R /etc/apache2/
   - sudo cat /etc/apache2/apache2.conf
   - sudo cat /etc/apache2/sites-available/000-default.conf
   - sudo cat /etc/apache2/ports.conf
@@ -82,5 +81,3 @@ after_script:
   - sudo netstat -anp | grep apache2
   - sudo cat /var/log/apache2/error.log
   - sudo cat /var/log/apache2/access.log
-  # view files
-  - ls -lR /home/travis/build/sc0ttj/Project/www
