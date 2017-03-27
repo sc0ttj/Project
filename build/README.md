@@ -56,5 +56,5 @@ it (uses `scp`, `ssh` and `dpkg`).
 ##### Example Usage:
 
 ```
-deploy.sh 1.2.3 ~/mycert.pem root@83.128.32.64
+deploy.sh 1.2.3 ~/mycert.pem user@mysite.com
 ```
