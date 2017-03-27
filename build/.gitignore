@@ -1,0 +1,2 @@
+# ignore the built packages, we dont wanna commit them to source
+*.deb
