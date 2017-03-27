@@ -48,11 +48,11 @@ before_script:
   - sudo chmod -R +x /home/travis/
 
   # update permission to allow uploads via CMS
-  - sudo chmod 777 /var/www/html/demo
-  - sudo chmod 777 /var/www/html/demo/images
-  - sudo chmod 777 /var/www/html/demo/videos
-  - sudo chmod 777 /var/www/html/demo/vocabs
-  - sudo chmod 777 /var/www/html/downloads
+  - sudo chmod 777 demo
+  - sudo chmod 777 demo/images
+  - sudo chmod 777 demo/videos
+  - sudo chmod 777 demo/vocabs
+  - sudo chmod 777 downloads
 
   # install php pkgs
   - sudo apt-get update
