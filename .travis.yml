@@ -82,11 +82,11 @@ script: phantomjs src/test/js/_phantom_runner.js
 
 after_script:
   # view apache configs
-  - sudo cat /etc/apache2/apache2.conf
-  - sudo cat /etc/apache2/sites-available/000-default.conf
-  - sudo cat /etc/apache2/ports.conf
+  # - sudo cat /etc/apache2/apache2.conf
+  # - sudo cat /etc/apache2/sites-available/000-default.conf
+  # - sudo cat /etc/apache2/ports.conf
   # view apache logs
-  - sudo apachectl fullstatus | tail -1
-  - sudo netstat -anp | grep apache2
-  - sudo cat /var/log/apache2/error.log
-  - sudo cat /var/log/apache2/access.log
+  # - sudo apachectl fullstatus | tail -1
+  # - sudo netstat -anp | grep apache2
+  # - sudo cat /var/log/apache2/error.log
+  # - sudo cat /var/log/apache2/access.log
