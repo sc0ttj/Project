@@ -1,3 +1,16 @@
+# This is the releases branch, so we only want this branch 
+# to contain the compiled CMS, so lets hide the src
+.travis.yml
+bower.json
+brunch-config.js
+build
+docs
+package.json
+setup-host-osx-env.sh
+setup-host-ubuntu-env.sh
+src
+Vagrantfile
+
 # Logs
 logs
 *.log
