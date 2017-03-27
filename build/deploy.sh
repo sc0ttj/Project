@@ -83,6 +83,12 @@ ssh -i "$CERT" "$ADDR" << RUN
   echo "-----------------------------------"
   echo
   echo "Package version $VER installed OK!"
+  # make folders 777 - enables CMS uploads
+  sudo chmod 777 /var/www/html/demo
+  sudo chmod 777 /var/www/html/demo/images
+  sudo chmod 777 /var/www/html/demo/videos
+  sudo chmod 777 /var/www/html/demo/vocabs
+  sudo chmod 777 /var/www/html/downloads
 RUN
 
 
