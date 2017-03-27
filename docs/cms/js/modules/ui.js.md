@@ -124,20 +124,17 @@ Returns the CMS menu as a string of HTML.
         <li \
           class="cms-menu-item cms-menu-item-logout">\
           <span class="cms-menu-item-text">Logout</span>\
-          <span class="cms-menu-item-icon cms-menu-item-icon-logout cms-anim-fade-250ms cms-unselectable"></span>\
+          <span class="cms-menu-item-icon cms-menu-item-icon-logout cms-anim-fade-250ms cms-unselectable">↳</span>\
         </li>\
         <li \
           class="cms-menu-item cms-menu-item-files">\
           <span class="cms-menu-item-text">File Manager</span>\
-          <span class="cms-menu-item-icon cms-menu-item-icon-files cms-anim-fade-250ms cms-unselectable"></span>\
+          <span class="cms-menu-item-icon cms-menu-item-icon-files cms-anim-fade-250ms cms-unselectable">📂</span>\
         </li>\
         <li \
           class="cms-menu-item cms-menu-item-meta">\
           <span class="cms-menu-item-text">Meta Info</span>\
-        </li>\
-        <li \
-          class="cms-menu-item cms-menu-item-translations">\
-          <span class="cms-menu-item-text">Translations</span>\
+          <span class="cms-menu-item-icon cms-menu-item-icon-meta cms-anim-fade-250ms cms-unselectable">📝</span>\
         </li>\
         <li \
           class="cms-menu-item cms-menu-item-preview">\
@@ -145,8 +142,13 @@ Returns the CMS menu as a string of HTML.
           <span class="cms-menu-item-icon cms-menu-item-icon-preview cms-anim-fade-250ms cms-unselectable">👁</span>\
         </li>\
         <li \
+          class="cms-menu-item cms-menu-item-translations">\
+          <span class="cms-menu-item-text">Translations</span>\
+          <span class="cms-menu-item-icon cms-menu-item-icon-translations cms-anim-fade-250ms cms-unselectable">🌎</span>\
+        </li>\
+        <li \
           class="cms-menu-item cms-menu-item-save">\
-          <span class="cms-menu-item-text">Save</span>\
+          <span class="cms-menu-item-text">Save to zip</span>\
           <span class="cms-menu-item-icon cms-menu-item-icon-save cms-anim-fade-250ms cms-unselectable">💾</span>\
         </li>\
         <li id="menu-header-sections" class="cms-menu-header cms-menu-header-sections">\
@@ -330,7 +332,20 @@ show the Translation Manager - where users can create translated versions
 of their page.
 ```js
   menuBtnTranslationsClickHandler: function () {
-    cms.translationManager.showUI();
+
+    /* hide the CMS menu */
+    cms.ui.hideMenu();
+
+    /* the translation manager needs preview.html to exist, so let's 
+     * create it, to be safe - get the latest page HTML as a string */
+    var html = cms.exportManager.getPageHTMLWithoutCMS();
+
+    /* make it a string containing a proper HTML doc */
+    html = cms.exportManager.addDocType(html);
+
+    /* save the HTML to preview.html, then 
+     * load up the Translation Manager */
+    cms.exportManager.saveHtmlToFile(html, cms.translationManager.showUI);
   },
 
 ```
@@ -407,5 +422,5 @@ End of module
 
 ```
 ------------------------
-Generated _Sat Mar 25 2017 03:19:45 GMT+0000 (GMT)_ from [&#x24C8; ui.js](ui.js "View in source")
+Generated _Mon Mar 27 2017 19:30:43 GMT+0100 (BST)_ from [&#x24C8; ui.js](ui.js "View in source")
 
