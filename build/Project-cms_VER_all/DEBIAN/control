@@ -1,0 +1,14 @@
+Package: Project-cms
+Version: VER
+Installed-Size: 864
+Maintainer: sc0ttj <S.jarvis2@uni.brighton.ac.uk>
+Section: news
+Source: https://github.com/sc0ttj/Project
+Homepage: https://github.com/sc0ttj/Project
+Architecture: all
+Priority: optional
+Depends: apache2 (>=2.4), php5 (>=5.5)
+Description: A browser-based CMS for creating news style web pages
+ Needs to be run on a PHP-enabled web-server (like Apache or Nginx). PHP must be able to process .html files for all the features to work.
+ .
+ See .htaccess in the package.

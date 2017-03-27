@@ -1,26 +1,39 @@
+// # app.js
+//The main app file    
+//This file is included in [index.tmpl](https://github.com/sc0ttj/Project/blob/master/src/app/templates/index.tmpl)   
+//This file will do the following:
+//- include module loading deps
+//- add html5 and JS classes to page body, if those features detected
+//- initiliase the scrollMonitor (for animations, tracking)
+//- initialise the template JS behaviours (scroll anims, video auto-pause etc)
+
+// Let's begin:
+
+// Include our dependencies
 var loadCSS    = require('modules/loadcss').init;
 var loadJS     = require('modules/loadjs');
 var pageConfig = require('page_config.js');
 
 "use strict";
 
+// Define the CommonJS module
 module.exports = {
 
+  // ## Module Methods
+
+  // #### init()
+  //This func is executed in index.html (the main page) 
+  //as soon as the page loads.
   init: function(){
-    //set page defaults
+    /* set page defaults */
     this.pageConfig = pageConfig;
-    // we know js is enabled now, mark it
+    /* we know js is enabled now, mark it */
     $('body').addClass('js');
-    // add html5 extras
+    /* add html5 extras */
     if (this.cutsTheMustard()){
-      // add mustard
+      /* add mustard (enables css animations) */
       $('body:not(.html5)').addClass('html5');
-
-      //load 'nice-to-haves'
-      // this.loadStylesheet('css/full.css');
-      // this.loadModules(['test', 'test1']);
-
-      // init the various templates that use js
+      /* init the various templates that use js */
       this.fixedImage.init();
       this.scrollmation.init();
       this.statText.init();
@@ -28,6 +41,8 @@ module.exports = {
     }
   },
 
+  // #### reload()
+  //This func is called by the CMS after adding/removing a section.
   reload: function () {
     this.fixedImage.init();
     this.scrollmation.init();
@@ -37,6 +52,9 @@ module.exports = {
     scrollMonitor.recalculateLocations();
   },
 
+  // #### cutsTheMustard()
+  // Checks if the users browser is up to scratch,
+  // returns either true or false
   cutsTheMustard: function () {
     var cutsTheMustard = (
       'querySelector' in document
@@ -45,10 +63,18 @@ module.exports = {
     return cutsTheMustard;
   },
 
+  // #### loadStylesheet()
+  //This func is used to load stylesheets dynamically  
+  //@param `file` - the relative path to the css file to load
   loadStylesheet: function (file) {
     loadCSS(file);
   },
 
+  // #### loadModules()
+  //This func takes an array of module names. The names must match 
+  //modules in [src/app/js/enhancements/](https://github.com/sc0ttj/Project/tree/master/src/app/js/_enhancements)   
+  //NOTE: This func is disabled, to enable it, you need to remove the underscore from `_enhancements`   
+  //@param `modules` - the array of module names to load
   loadModules: function (modules) {
     loadJS('js/enhancements.js', function(){
       modules.forEach(function(val, i){
@@ -57,9 +83,26 @@ module.exports = {
     });
   },
 
-  //below: for each template that uses JS, we have an object with init() method..
+  // #### getQueryVariable()
+  /*https://css-tricks.com/snippets/javascript/get-url-variables/ */
+  getQueryVariable: function (variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+      var pair = vars[i].split("=");
+      if(pair[0] == variable){return pair[1];}
+    }
+    return(false);
+  },
 
+  // ## Template Objects
+  //For each template that uses JS, create an object with an init() method:
+
+  // ### Fixed Image Object
+  // #### Methods:
+  //- init()
   fixedImage: {
+    // ####fixedImage::init()
     init: function() {
       var fixedImages = $('.fixed-image-text:not(.transparent)');
       fixedImages.addClass('anim-fade-1s transparent');
@@ -78,7 +121,11 @@ module.exports = {
     },
   },
 
+  // ### Scrollmation Object
+  // #### Methods:
+  //- init()
   scrollmation: {
+    // ####scrollmation::init()
     init : function (){
       $('.scrollmation-text').removeClass('article');
       $('.scrollmation-text:not(.scrollmation-text-js)').addClass('scrollmation-text-js');
@@ -132,7 +179,11 @@ module.exports = {
     },
   },
 
+  // ### statText Object
+  // #### Methods:
+  //- init()
   statText: {
+    // #### statText::init()
     init: function() {
       var statTexts = $('.stat-text:not(.transparent)');
       statTexts.addClass('anim-fade-1s transparent');
@@ -151,7 +202,13 @@ module.exports = {
     },
   },
 
+  // ### Video Object
+  // #### Methods:
+  //- init()
+  //- setupVideoEvents()
+  //- setupVideoBtnEvents()
   video: {
+    // #### video::init()
     init: function(){
       var $videos = $('video'),
           $videoBtns = $('.video-overlay-button');
@@ -159,7 +216,7 @@ module.exports = {
       $videos.each(this.setupVideoEvents);
       $videoBtns.each(this.setupVideoBtnEvents);
 
-      // add auto pause behaviour when video scrolls out of viewport
+      /* add auto pause behaviour when video scrolls out of viewport */
       var watchers = $('video').each(function addWatchers(video){
         var watcher = scrollMonitor.create(video),
             videoOverlay = video.nextElementSibling;
@@ -175,6 +232,7 @@ module.exports = {
 
     },
 
+    // #### video::setupVideoEvents()
     setupVideoEvents: function (videoElem, i) {
       var videoOverlay = videoElem.nextElementSibling,
           overlayBtn   = videoOverlay.firstChild.nextSibling;
@@ -193,14 +251,16 @@ module.exports = {
       });
     },
 
+    // #### video::setupVideoBtnEvents()
     setupVideoBtnEvents: function(btn, i){
       var videoBtnClickHandler = function(){
         var video = this.parentNode.previousElementSibling,
             videoOverlay = this.parentNode;
 
-        //http://stackoverflow.com/a/31133401
-        // add a playing property to media stuff
-        // we can use this to check if a video is playing or not
+        /*http://stackoverflow.com/a/31133401
+         * add a playing property to media stuff
+         * we can use this to check if a video is playing or not
+         */
         if (typeof video.playing == 'undefined'){
           Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
             get: function(){
@@ -216,7 +276,7 @@ module.exports = {
         } else {
           video.play();
           $(videoOverlay).addClass('hidden');
-          this.innerHTML = '⏸';
+          this.innerHTML = 'II';
         }
       };
       $(btn).on('click',  videoBtnClickHandler);
@@ -224,15 +284,4 @@ module.exports = {
 
   },
 
-  //https://css-tricks.com/snippets/javascript/get-url-variables/
-  getQueryVariable: function (variable) {
-    var query = window.location.search.substring(1);
-    var vars = query.split("&");
-    for (var i=0;i<vars.length;i++) {
-      var pair = vars[i].split("=");
-      if(pair[0] == variable){return pair[1];}
-    }
-    return(false);
-  },
-
-}
+};

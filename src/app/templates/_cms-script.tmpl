@@ -1,15 +1,14 @@
+<!-- this will include the CMS in the index.html page -->
 <script class="cms-script" src="cms/js/vendor.js"></script>
 <script class="cms-script" src="cms/js/cms.js"></script>
 <script class="cms-script" id="cms-init" type="text/javascript">
+var translateOnly = false;
 /*<?php
 # disallow editing of main (english) page if login session is a translator
 if (isset($_SESSION['translate'])){
-  echo '*/var translateOnly = true;/*';
-} else {
-  echo '*/var translateOnly = false;/*';
+  echo '*/translateOnly = true;/*';
 }
 ?>**/
-
 // load cms with custom options
 var cms = require('cms');
 var cmsConfig = {
@@ -50,7 +49,7 @@ cms.init(cmsConfig);
 
 {{#test}}
 <!-- 
-This will test-runner not be included unless 
+This test-runner will not be included unless 
 brunch is run with `BUILD=with-tests brunch b`
 or the cmd `npm test` is run..
 -->
