@@ -1,33 +1,92 @@
 language: 
-  node_js
+  php
 
-node_js:
-  - 5.11
-  - 4.2
+php: 
+  - 5.5
 
 env:
-  - BUILD=with-tests
+  global:
+    - NODE_VERSION="4"
+    - NODE_JS_VERSION="4"
+    - TRAVIS_NODE_VERSION="4"
 
-branches:
-  only:
-  - master
+addons:
+  hosts:
+    - localhost
 
-before_script:
-  - "export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH"
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3
-  - "echo $(pwd) && ls && ls www"
+dist: trusty
+sudo: required
+
+# branches:
+#   only:
+#   - travis_ci
 
 before_install:
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
+  - nvm install node
 
 install:
   - npm install -g brunch@2.9.1
   - npm install -g bower
   - npm install
-  - bower install
   - bower update
+  - BUILD=with-tests brunch b
   - sleep 1
 
+before_script:
+  - "export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH"
+  - export HOSTNAME=localhost
+  - cd www
+  
+  # permissions and groups
+  - sudo usermod -a -G www-data $USER
+  - sudo chown -R $USER:$USER $(pwd)
+  - sudo chown -R $USER:$USER /home/travis/build/
+  - sudo chmod -R 755 /home/travis/build/
+  - sudo chmod -R +x /home/travis/build/
+  - sudo chmod -R 755 /home/travis/
+  - sudo chmod -R +x /home/travis/
+
+  # update permission to allow uploads via CMS
+  - sudo chmod 777 demo
+  - sudo chmod 777 demo/images
+  - sudo chmod 777 demo/videos
+  - sudo chmod 777 demo/vocabs
+  - sudo chmod 777 downloads
+
+  # install php pkgs
+  - sudo apt-get update
+  - sudo apt-get install -y php5 php5-mcrypt php5-curl php5-cli php5-gd -qq
+  - sudo apt-get install -y imagemagick php5-imagick -qq
+
+  # configure apache virtual hosts
+  - sudo cp -f ../build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
+  - echo "ServerName localhost" | sudo tee -a /etc/apache2/apache2.conf
+
+  # use port 80, not 8080
+  - sudo sed -e "s?:8080?:80?g" --in-place ../src/test/js/_phantom_runner.js
+
+  # enable .htaccess in folders
+  - sudo sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/apache2.conf
+
+  # restart services
+  - sudo a2enmod rewrite
+  - sudo a2enmod php5
+  - sudo service apache2 restart
+
+  # back to root dir, we will run test from there
+  - cd ..
+
 script: phantomjs src/test/js/_phantom_runner.js
+
+after_script:
+  # view apache configs
+  # - sudo cat /etc/apache2/apache2.conf
+  # - sudo cat /etc/apache2/sites-available/000-default.conf
+  # - sudo cat /etc/apache2/ports.conf
+  # view apache logs
+  # - sudo apachectl fullstatus | tail -1
+  # - sudo netstat -anp | grep apache2
+  # - sudo cat /var/log/apache2/error.log
+  # - sudo cat /var/log/apache2/access.log
