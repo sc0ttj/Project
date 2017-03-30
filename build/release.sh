@@ -118,8 +118,6 @@ RUN
 # remove our tmp build dir, we don't want it any more
 rm -rf "build/Project-cms_"${VER}"_all/"
 
-exit 
-
 # now we need to commit this CMS build to a releases branch, 
 # where each commit is a compiled CMS build linked to a 
 # versioned, downloadable GitHub release (on the releases page).
