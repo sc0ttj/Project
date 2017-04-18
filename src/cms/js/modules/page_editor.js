@@ -50,7 +50,7 @@ module.exports = {
     
     /* mediaBtnClickHandler() - the event handler function */
     mediaBtnClickHandler = function (el){
-      var imgHtml = '<picture><img class="inline-image" src=images/placeholders/550x550.png /></picture>',
+      var imgHtml = '<picture><img class="inline-image" alt="inline image" src=images/placeholders/550x550.png /></picture>',
           $el     = $(el),
           $target = $el;
 

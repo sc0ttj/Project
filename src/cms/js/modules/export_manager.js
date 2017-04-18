@@ -97,7 +97,7 @@ module.exports = {
   // @return `string` - the full html, including html5 doctype  
   addDocType: function (html) {
     var lang = cms.vocabEditor.getCurrentService() || 'en';
-    return '<!DOCTYPE html>\n<html lang="'+lang+'">\n' + html + '</html>';
+    return '<!DOCTYPE html>\n<html lang="'+lang+'" itemscope itemtype="http://schema.org/Article">\n' + html + '</html>';
   },
 
   // ### cleanupWhitespace()

@@ -38,6 +38,9 @@ module.exports = {
     });
     cms.modal.show();
 
+    /* set custom styling for export manager viewport items */
+    $('.cms-modal-viewport').addClass('cms-modal-viewport-sections');
+
     /* get modal contents and add event handlers */
     self.$previewImgs = $('.cms-modal-viewport').children();
     self.$previewImgs.on('click', self.sectionPreviewClickHandler);
@@ -131,7 +134,7 @@ module.exports = {
   // @param `index` - int, the index of the section to remove
   removeSection: function (index) {
     /* keep at least one section */
-    // if ($(cms.config.sectionSelector).length < 2) return false;
+    if ($(cms.config.sectionSelector).length < 2) return false;
     /* we're ok, so remove the section at the given index */
     var $section = $('.section'+index);
     $section.remove();

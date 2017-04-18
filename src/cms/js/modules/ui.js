@@ -234,6 +234,9 @@ module.exports = {
     var $this = $(this.parentNode),
         index = $this.attr('id').replace('menu-item-', '');
 
+    /* keep at least one section */
+    if ($(cms.config.sectionSelector).length < 2) return false;
+
     $this.remove();
     self.reIndexMenuItems();
     cms.sectionManager.removeSection(index);

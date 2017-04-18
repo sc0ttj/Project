@@ -12,6 +12,7 @@
   padding: 0;
   position: fixed;
   text-align: center;
+  text-shadow: white 1px -1px 3px;
   top: 0;
   right: 0;
   z-index: 101;
@@ -20,10 +21,12 @@
 
 .cms-menu-btn-on {
   color: #ffa !important;
+  text-shadow: transparent 0px 0px 0px;
 }
 
 .cms-menu-btn-white {
   color: #fff !important;
+  text-shadow: transparent 0px 0px 0px;
 }
 
 .cms-menu-bg {
