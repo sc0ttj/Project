@@ -76,12 +76,18 @@
 *[dir="rtl"] { 
   direction: rtl; 
   unicode-bidi: embed; 
+  h1, h2, h3, h4 {
+    font-weight:bold;
+  }
 }
 
 
 bdo[dir="rtl"] { 
   direction: rtl; 
   unicode-bidi: bidi-override; 
+  h1, h2, h3, h4 {
+    font-weight:bold;
+  }
 }
 
 
