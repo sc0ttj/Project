@@ -60,7 +60,7 @@ See the [Wiki](https://github.com/sc0ttj/Project/wiki), or the [Developer Docs](
   
 To fork, and develop this project, read the info below.
 
-## Project Structure
+#### Project Structure
 
 * This is two apps - a static page and a CMS addon for editing the page
 * The static page is in `src/app/`, and the CMS is in `src/cms/`
@@ -70,9 +70,8 @@ To fork, and develop this project, read the info below.
 This project uses a dev environment (a VM) to spin up a pre-configured, PHP-enabled Apache webserver.  
 The dev environment requires: `Vagrant and VirtualBox`.
 
---------------------------------------------------------
 
-## Optional auto-setup of host and dev environment (Ubuntu only!)
+## 1. Optional auto-setup of host and dev environment (Ubuntu only!)
 
 Installs Vagrant, Node, NPM, Bower, Sublime, etc
 
@@ -83,9 +82,8 @@ Installs Vagrant, Node, NPM, Bower, Sublime, etc
   - if you already have them, you can skip this step
   - if you dont, you need to install Node, NPM, Bower, Vagrant and VirtualBox
 
---------------------------------------------------------
 
-## Project setup and config:
+## 2. Project setup and config:
 
 After downloading this repo, and once you have NPM, Bower and Vagrant setup, you're ready to run the dev environment. 
 
@@ -101,9 +99,8 @@ Now you are ready to build the CMS from source.
 
         brunch build
 
---------------------------------------------------------
 
-## Do your dev work:
+## 3. Do your dev work:
 
   - in a terminal, run this command to auto build the app after each save:
 
@@ -121,9 +118,8 @@ Now you are ready to build the CMS from source.
 
   - *If any `.tmpl` files were changed, restart `brunch watch` to recompile them!*
 
---------------------------------------------------------
 
-## Adding new dependencies:
+## 4. Adding new dependencies:
 
   - Install static page deps with:   `bower install --save`
     - these end up in `www/demo/js/vendor.js`
@@ -134,13 +130,11 @@ Now you are ready to build the CMS from source.
   - Install build tool deps with:   `npm install --save-dev`
     - use this for things like brunch plugins and addons, etc
 
---------------------------------------------------------
-
-## Testing and saving:
+## 5. Testing:
   
 Write your tests in `src/test/js/tests.js`
 
-### Running tests in the terminal:
+#### Running tests in the terminal:
 
   - Run tests in the terminal:
 
@@ -148,7 +142,7 @@ Write your tests in `src/test/js/tests.js`
 
   PhantomJS is required. You can install it globally with `npm install phantomjs -g`.
 
-### Auto running tests in the browser:
+#### Auto running tests in the browser:
 
   - Build source with tests included (they will run in the browser):
 
@@ -161,7 +155,7 @@ Tests will re-run automatically each time you update any files in `/src` and sav
 NOTE: The CMS will not use localStorage if `npm start` is running. 
 This gives the tests a fresh page to work on.
   
-### Test Driven Development (TDD)
+#### Test Driven Development (TDD)
 
 Simply write tests while `npm start` is running:
   
@@ -169,7 +163,7 @@ Add a test then save, it will auto run, then fail. Then add some code to fix the
   
 As long as `npm start` is running, the browser will auto-refresh at each step and re-run your tests in the console window (dev tools/firebug, etc).
 
-### Device Testing:
+#### Device Testing:
 
 To view on other devices, you can run the following command:
 
@@ -179,13 +173,19 @@ You (and anyone else!) can then visit the following URL on any device:
 
         http://myapp.vagrantshare.com
 
-### Saving your changes to GitHub:
+## 6. Saving your changes to GitHub:
 
 If the tests pass and you're happy, save to github:
 
         git add .
         git commit -m 'my message'
         git push origin my_new_branch
+
+## 7. Release and Deploy
+
+You can create downloadable, versioned releases of the CMS that can also be easily installed to a remote server.
+
+Just follow the steps in [Release and Deploy](https://github.com/sc0ttj/Project/tree/master/build)
 
 --------------------------------------------------------
 

@@ -143,6 +143,9 @@ git status
 git commit -m "new release v"${VER}", built from master commit ${HASH}: ${MSG}"
 git push origin releases
 
+# return to our previous branch (master)
+git checkout master
+
 # we will use the commit we just made to `releases` to make our 
 # github release downloads page as well.. tell the user how to do it:
 echo "
@@ -152,7 +155,7 @@ Now you should:
 
 1. visit the Github releases page 
 2. click 'Draft a new release'
-3. add the tag 'v"${VER}"', and choose the 'releases' branch
+3. add the tag 'v"${VER}"', and CHOOSE THE 'releases' BRANCH
 4. attach the 'build/Project-cms_"${VER}"_all.deb' file
 5. publish the release"
 

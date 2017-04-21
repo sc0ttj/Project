@@ -30,6 +30,9 @@ error() {
   exit 1
 }
 
+# we should to be in the master branch
+git checkout master
+
 #
 # validation
 if [ "${VER}" = "" -o "${CERT}" = "" -o "${ADDR}" = "" ];then
