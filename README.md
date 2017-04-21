@@ -3,7 +3,8 @@
 A CMS for building 'long form' news articles using a simple, browser-based UI.  
 It's a very simple, open source alternative to services like [Shorthand.com](http://shorthand.com) and [Atavist.com](http://atavist.com).
 
-View an example article made using this CMS: [Trump-story](https://sc0ttj.github.io/Project/trump-story/)
+* View an example article made using this CMS: [Trump-story](https://sc0ttj.github.io/Project/trump-story/)
+* View the Arabic translation of the above article, also created using this CMS: [Trump-story-arabic](https://example-trump-story-arabic.netlify.com/)
 
 Watch a quick demo:
   
@@ -25,7 +26,7 @@ Apache 2, PHP 5.5, .htaccess files allowed
 
 ## ii. Installation
 
-Download the latest release from the [Releases page](https://github.com/sc0ttj/Project/releases).
+Download the latest release and User Guide from the [Releases page](https://github.com/sc0ttj/Project/releases).
   
 Upload contents of the `www` folder inside the `.tar.gz` file to the root folder of your PHP-enabled Apache web server.
 
@@ -42,6 +43,8 @@ NOTE: You could also visit `http://yoursite.com/demo/` (password is 'demo'), but
 ## iv. Editing your pages
 
 See the video above for a basic demo of how to use the CMS.
+
+Then download the [User Guide](https://github.com/sc0ttj/Project/releases/download/v1.1.1/CMS.User.Guide.pdf) pdf.
 
 ## v. Exporting your pages
 
